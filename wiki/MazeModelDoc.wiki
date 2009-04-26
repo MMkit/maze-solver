@@ -1,15 +1,8 @@
 #summary Documentation for the maze model interface.
+#labels Phase-Design
 
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= UML =
 
 http://maze-solver.googlecode.com/files/maze-model-interface-uml.png
+
+The above diagram shows the UML for the Maze Model Interfaces. It is broken up into 2 parts, the getter methods and the setter methods. This allows an immutable reference of the model to be passed to code that should not be changing it.
