@@ -12,4 +12,4 @@ Add your content here.  Format your content with:
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
 
-file:///C:/Users/LukeLast/Desktop/maze%20solver%20model.png
+http://maze-solver.googlecode.com/files/maze-model-interface-uml.png
