@@ -8,13 +8,13 @@ import javax.swing.JFrame;
  */
 public final class PrimaryFrame extends JFrame
 {
-	/**
-	 * Constructor.
-	 */
-	public PrimaryFrame()
-	{
-		this.setSize( 800, 700 );
+   /**
+    * Constructor.
+    */
+   public PrimaryFrame()
+   {
+      this.setSize( 800, 700 );
 
-		this.add( new MazeView() );
-	}
+      this.add( new MazeView() );
+   }
 }

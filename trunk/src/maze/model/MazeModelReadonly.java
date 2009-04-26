@@ -8,15 +8,15 @@ import java.awt.Point;
  */
 public interface MazeModelReadonly
 {
-	public int getSizeX();
+   public int getSizeX();
 
-	public int getSizeY();
+   public int getSizeY();
 
-	public boolean isWallNorth( Point p );
+   public boolean isWallNorth( Point p );
 
-	public boolean isWallSouth( Point p );
+   public boolean isWallSouth( Point p );
 
-	public boolean isWallEast( Point p );
+   public boolean isWallEast( Point p );
 
-	public boolean isWallWest( Point p );
+   public boolean isWallWest( Point p );
 }

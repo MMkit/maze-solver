@@ -10,40 +10,40 @@ import java.awt.Point;
 public class MazeModelStub implements MazeModelReadonly
 {
 
-	@Override
-	public int getSizeX()
-	{
-		return 16;
-	}
+   @Override
+   public int getSizeX()
+   {
+      return 16;
+   }
 
-	@Override
-	public int getSizeY()
-	{
-		return 16;
-	}
+   @Override
+   public int getSizeY()
+   {
+      return 16;
+   }
 
-	@Override
-	public boolean isWallEast( Point p )
-	{
-		return true;
-	}
+   @Override
+   public boolean isWallEast( Point p )
+   {
+      return true;
+   }
 
-	@Override
-	public boolean isWallNorth( Point p )
-	{
-		return true;
-	}
+   @Override
+   public boolean isWallNorth( Point p )
+   {
+      return true;
+   }
 
-	@Override
-	public boolean isWallSouth( Point p )
-	{
-		return true;
-	}
+   @Override
+   public boolean isWallSouth( Point p )
+   {
+      return true;
+   }
 
-	@Override
-	public boolean isWallWest( Point p )
-	{
-		return true;
-	}
+   @Override
+   public boolean isWallWest( Point p )
+   {
+      return true;
+   }
 
 }
