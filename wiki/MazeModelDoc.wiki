@@ -1,0 +1,15 @@
+#summary Documentation for the maze model interface.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+file:///C:/Users/LukeLast/Desktop/maze%20solver%20model.png
