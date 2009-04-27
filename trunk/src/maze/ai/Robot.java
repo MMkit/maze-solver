@@ -24,7 +24,7 @@ import java.util.*;
 
 import maze.model.Maze;
 
-public class Robot
+public class Robot implements RobotInterface
 {
    //The robot's knowledge of the maze
    int[] explored;
@@ -131,6 +131,30 @@ public class Robot
          loadQueue();
          return moveQueue.remove( 0 );
       }
+   }
+
+   @Override
+   public RobotStep nextStep()
+   {
+      switch ( this.takeNextStep() )
+      {
+         case AHEAD_ONE :
+            return RobotStep.Forward;
+         case BACK_ONE :
+            return RobotStep.Back;
+         case RIGHT_TURN :
+            return RobotStep.Right;
+         case LEFT_TURN :
+            return RobotStep.Left;
+         default :
+            return RobotStep.Forward;
+      }
+   }
+
+   @Override
+   public boolean isInTurboMode()
+   {
+      return this.speedRun;
    }
 
    private void loadQueue()
