@@ -30,6 +30,20 @@ public final class MazeCell
       this.y = yCoordinate;
    }
 
+   @Override
+   public boolean equals( Object obj )
+   {
+      if ( obj instanceof MazeCell )
+      {
+         MazeCell other = (MazeCell) obj;
+         if ( this.x == other.x && this.y == other.y )
+         {
+            return true;
+         }
+      }
+      return false;
+   }
+
    public int getX()
    {
       return this.x;
