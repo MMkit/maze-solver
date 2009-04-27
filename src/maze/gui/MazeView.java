@@ -12,8 +12,15 @@ import maze.model.MazeCell;
 import maze.model.MazeModelReadonly;
 import maze.model.MazeModelStub;
 
+/**
+ * A view of the maze model. This swing component will render a GUI of a maze
+ * model displaying the maze, allowing the maze to be edited, and animating the
+ * robot in the maze.
+ * @author Luke Last
+ */
 public class MazeView extends JPanel
 {
+   //Temporary model.
    private MazeModelReadonly model = new MazeModelStub();
    private int cellWidth = 40;
    private int cellHeight = 40;
@@ -34,9 +41,11 @@ public class MazeView extends JPanel
       return this.wallWidth / 2;
    }
 
+   /**
+    * Constructor.
+    */
    public MazeView()
    {
-      // TODO Auto-generated constructor stub
    }
 
    @Override
@@ -65,7 +74,7 @@ public class MazeView extends JPanel
             g.fillRect( locX, locY, this.wallWidth, this.wallWidth );
             g.fill( this.getTopLeft( cell ) );
 
-            g.setColor( Color.GREEN );
+            g.setColor( Color.gray );
             g.fill( this.getWallNorth( cell ) );
 
          }
