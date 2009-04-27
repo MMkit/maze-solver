@@ -44,6 +44,12 @@ public final class MazeCell
       return false;
    }
 
+   @Override
+   public int hashCode()
+   {
+      return this.x | ( this.y << 16 ); //Merge the 2 coordinates.
+   }
+
    public int getX()
    {
       return this.x;
