@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
@@ -26,6 +28,8 @@ public class MazeView extends JPanel
    private int cellHeight = 40;
    private int wallWidth = 12;
 
+   private MazeCell active;
+
    private int getHalfCellWidth()
    {
       return this.cellWidth / 2;
@@ -46,6 +50,15 @@ public class MazeView extends JPanel
     */
    public MazeView()
    {
+      this.addMouseMotionListener( new MouseMotionAdapter()
+      {
+         @Override
+         public void mouseMoved( MouseEvent e )
+         {
+            active = getHostMazeCell( e.getPoint() );
+            repaint();
+         }
+      } );
    }
 
    @Override
@@ -77,6 +90,16 @@ public class MazeView extends JPanel
             g.setColor( Color.gray );
             g.fill( this.getWallNorth( cell ) );
 
+            if ( this.active != null && this.active.equals( cell ) )
+            {
+               g.setColor( Color.RED );
+               //g.fill( this.getWallNorth( cell ) );
+               g.fillRect( cell.getXZeroBased() * this.cellWidth + this.getHalfWallWidth(),
+                           cell.getYZeroBased() * this.cellHeight + this.getHalfWallWidth(),
+                           this.cellWidth - this.wallWidth,
+                           this.cellHeight - this.wallWidth );
+            }
+
          }
       }
    }
@@ -104,5 +127,11 @@ public class MazeView extends JPanel
                             center.y - ( this.getHalfCellHeight() + this.getHalfWallWidth() ),
                             this.wallWidth,
                             this.wallWidth );
+   }
+
+   private MazeCell getHostMazeCell( Point pointerLocation )
+   {
+      return new MazeCell( ( pointerLocation.x / this.cellWidth ) + 1,
+                           ( pointerLocation.y / this.cellHeight ) + 1 );
    }
 }
