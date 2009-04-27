@@ -28,6 +28,7 @@ public final class Main
     */
    public static void main( String[] args )
    {
+      //Set the GUI to be constructed on the Swing Event Dispatch Thread.
       SwingUtilities.invokeLater( new Runnable()
       {
          @Override
@@ -39,5 +40,4 @@ public final class Main
          }
       } );
    }
-
 }
