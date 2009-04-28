@@ -1,0 +1,23 @@
+#summary Some info on getting Tortoise SVN set up with the Subversion repository.
+#labels Featured
+
+Download link.
+
+http://tortoisesvn.net/downloads
+
+Heres a guide and checking out a repository with Tortoise SVN (Subversion).
+
+http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-dug-checkout.html
+
+This is the URL of the repository.
+
+https://maze-solver.googlecode.com/svn/trunk/
+
+Your username is just your gmail username.
+
+You can find your password on your settings page.
+
+http://code.google.com/hosting/settings
+
+
+Once you get your local working copy downloaded to your machine the 2 most important operations are "Update" which will download the latest files from the repository, and "Commit..." which will send your changes to the server. You should see both options when right clicking on the project directory in windows explorer.
