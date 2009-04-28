@@ -1,5 +1,8 @@
 package maze.model;
 
+import java.awt.Point;
+import java.util.Vector;
+
 /*
  * Maze.java This program is meant to act as a model for the maze in a
  * MicroMouse competition.
@@ -269,4 +272,221 @@ public class Maze
       }
       cwalls[0] = 1;
    }
-};
+
+   public boolean isPegLegal( int x, int y )
+   {
+      //This function is designed to give a lower-level view to the isLegal
+      //method by telling about a specific peg
+
+      //The peg location is based off of the cell that it is in the NORTHEAST
+      //corner of.  Peg (0,0) is the only peg touching cell (0,0)
+      if ( ( x < 0 ) || ( y < 0 ) || ( x >= ( SIZE - 1 ) ) || ( y >= ( SIZE - 1 ) ) )
+      {
+         return false;
+      }
+      //Every peg should have at least one wall attached to it
+      if ( ( getWall( x, y, NORTH ) == true ) ||
+           ( getWall( x, y, EAST ) == true ) ||
+           ( getWall( x + 1, y, NORTH ) == true ) ||
+           ( getWall( x, y + 1, EAST ) == true ) )
+      {
+         //There are only three cases with walls that must be checked
+         //First is the starting square
+         if ( ( x == 0 ) && ( y == 0 ) )
+         {
+            if ( ( getWall( 0, 0, EAST ) == true ) && ( getWall( 0, 0, NORTH ) == false ) )
+            {
+               return true;
+            }
+            else
+            {
+               return false;
+            }
+         }
+         //Second is that it is not the center peg
+         else if ( ( x == ( SIZE / 2 - 1 ) ) && ( y == ( SIZE / 2 - 1 ) ) )
+         {
+            return false;
+         }
+         //Third is the pegs surrounding the center square
+         else if ( ( ( x <= SIZE / 2 ) && ( y <= SIZE / 2 ) ) &&
+                   ( ( x >= ( SIZE / 2 - 2 ) ) && ( y >= ( SIZE / 2 - 2 ) ) ) )
+         {
+
+            int walls = 0;
+            int square1 = SIZE / 2;
+            int square2 = square1 - 1;
+
+            if ( getWall( square1, square1, NORTH ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square1, square1, EAST ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square2, square1, WEST ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square2, square1, NORTH ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square1, square2, SOUTH ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square1, square2, EAST ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square2, square2, SOUTH ) == true )
+            {
+               walls += 1;
+            }
+            if ( getWall( square2, square2, WEST ) == true )
+            {
+               walls += 1;
+            }
+
+            //All of the center pegs are connected
+            if ( walls == 7 )
+            {
+               return true;
+            }
+
+         }
+         //There are no more reasons to check the walls
+         else
+         {
+            return true;
+         }
+      }
+      else
+      {
+         //The only exception to no wall is the center peg
+         if ( ( x == ( SIZE / 2 - 1 ) ) && ( y == ( SIZE / 2 - 1 ) ) )
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      return false;
+   }
+
+   public Vector<Point> whereIllegal()
+   {
+      //This function is basically isLegal with the added capability of
+      //returning the peg locations that are bad
+
+      //Can return multiple instances of a Point if that Point is bad for
+      //More than one reason.
+      //Example: if somehow there were no walls off of peg(0,0) then the
+      //Point would be included since
+
+      Vector<Point> badPoints = new Vector<Point>();
+      //There are rules that must be upheld to be a valid maze
+      //Rule 1: There is a wall next to the starting square
+      if ( ( getWall( 0, 0, EAST ) == false ) || ( getWall( 0, 0, NORTH ) == true ) )
+      {
+         badPoints.add( new Point() );
+      }
+      //Rule 2: There is one and only one way into the center of the maze
+      //Even though I've coded this to accept a variable size in the future
+      //I shall still assume here that the total size will always be even
+      int walls = 0;
+      int square1 = SIZE / 2;
+      int square2 = square1 - 1;
+      if ( getWall( square1, square1, NORTH ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square1, square1, EAST ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square2, square1, WEST ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square2, square1, NORTH ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square1, square2, SOUTH ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square1, square2, EAST ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square2, square2, SOUTH ) == true )
+      {
+         walls += 1;
+      }
+      if ( getWall( square2, square2, WEST ) == true )
+      {
+         walls += 1;
+      }
+      if ( walls != 7 )
+      {
+         badPoints.add( new Point( ( square2 - 1 ), ( square2 - 1 ) ) );
+         badPoints.add( new Point( ( square2 ), ( square2 - 1 ) ) );
+         badPoints.add( new Point( ( square1 ), ( square2 - 1 ) ) );
+         badPoints.add( new Point( ( square2 - 1 ), ( square2 ) ) );
+         badPoints.add( new Point( ( square1 ), ( square2 ) ) );
+         badPoints.add( new Point( ( square2 - 1 ), ( square1 ) ) );
+         badPoints.add( new Point( ( square2 ), ( square1 ) ) );
+         badPoints.add( new Point( ( square1 ), ( square1 ) ) );
+      } //All of the center pegs are connected
+
+      //Offshoot of Rule 2 is that the center of the maze is an open peg
+      if ( ( getWall( square1, square1, SOUTH ) == true ) ||
+           ( getWall( square1, square1, WEST ) == true ) ||
+           ( getWall( square2, square2, NORTH ) == true ) ||
+           ( getWall( square2, square2, EAST ) == true ) )
+      {
+         badPoints.add( new Point( square2, square2 ) );
+      }
+
+      //Rule 3: There must be at least one wall coming from every peg
+      //Except for the lone center peg
+      for ( int i = 0; i < SIZE; i++ )
+      {
+         for ( int j = 0; j < SIZE; j++ )
+         {
+            if ( getWall( i, j, NORTH ) == true )
+            {
+               continue;
+            }
+            if ( getWall( i, j, EAST ) == true )
+            {
+               continue;
+            }
+            if ( getWall( i + 1, j + 1, SOUTH ) == true )
+            {
+               continue;
+            }
+            if ( getWall( i + 1, j + 1, WEST ) == true )
+            {
+               continue;
+            }
+
+            //Check for center peg
+            if ( ( i == square2 ) && ( j == square2 ) )
+            {
+               continue;
+            }
+
+            badPoints.add( new Point( i, j ) );
+         }
+      }
+      return badPoints;
+   }
+
+}
