@@ -33,7 +33,7 @@ public class MazeView extends JPanel
 
    private int cellWidth = 44;
    private int cellHeight = 44;
-   private int wallWidth = 16;
+   private int wallWidth = 14;
 
    private MazeCell active;
 
@@ -100,6 +100,7 @@ public class MazeView extends JPanel
       final Color emptyWall = new Color( 220, 220, 220 );
       Graphics2D g = (Graphics2D) arg;
       g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+      g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
       g.setColor( Color.white );
       g.fillRect( 0, 0, 1024, 768 );
 

@@ -9,13 +9,28 @@ import java.awt.Dimension;
  */
 public class MazeModelStub implements MazeModelWriteable
 {
+   //Holds vertical wall segments.
    WallStatus[][] horizontalRows = new WallStatus[16][15];
+   //Holds horizontal wall segments.
    WallStatus[][] verticalRows = new WallStatus[16][15];
 
    public MazeModelStub()
    {
       this.initRows( this.horizontalRows );
       this.initRows( this.verticalRows );
+      this.getWallStatus( new MazeCell( 1, this.getSize().height ), WallDirection.East ).value = true;
+      MazeCell cell = new MazeCell( this.getSize().width / 2, this.getSize().height / 2 );
+      this.getWallStatus( cell, WallDirection.West ).value = true;
+      this.getWallStatus( cell, WallDirection.North ).value = true;
+      cell = cell.plusX( 1 );
+      this.getWallStatus( cell, WallDirection.North ).value = true;
+      this.getWallStatus( cell, WallDirection.East ).value = true;
+      cell = cell.plusY( 1 );
+      this.getWallStatus( cell, WallDirection.East ).value = true;
+      this.getWallStatus( cell, WallDirection.South ).value = true;
+      cell = cell.plusX( -1 );
+      this.getWallStatus( cell, WallDirection.South ).value = true;
+      this.getWallStatus( cell, WallDirection.West ).value = true;
    }
 
    private void initRows( WallStatus[][] array )
