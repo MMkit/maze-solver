@@ -30,6 +30,16 @@ public final class MazeCell
       this.y = yCoordinate;
    }
 
+   public MazeCell plusX( int x )
+   {
+      return new MazeCell( this.x + x, this.y );
+   }
+
+   public MazeCell plusY( int y )
+   {
+      return new MazeCell( this.x, this.y + y );
+   }
+
    @Override
    public boolean equals( Object obj )
    {
