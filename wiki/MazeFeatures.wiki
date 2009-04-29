@@ -1,0 +1,70 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Feel free to edit this and correct anything or add anything...
+
+= Maze Features =
+
+*Maze build display*
+  * 2d graphics custom drawings
+  * mouse press select wall - mouse press listener
+  * maze templates to drag into maze build
+  * have tools in toolbar
+
+*Maze test AI display*
+  * show timer
+  * show mouse animation based on display settings
+
+*Save/load Map and AI*
+  * File chooser
+  * File filter
+
+*Maze Statistics*
+  * choose maze and algorithm to view the stats
+  * or a static stat for the current run algorithm and maze
+  * show how many cells traversed to show how fast
+
+*Mouse AI options*
+  * choose preset algorithms
+  * options to change display settings Ex. checkbox
+      * speed runs
+      * turbo mode - jump back fast
+      * fog of war
+      * skip everything
+      * show path
+  * have user input how fast the mouse can go for timer
+
+*Mouse AI script editor*
+  * in a text area
+  * script to modify mouse AI
+  * or just display the code of the Algorithm
+
+= Overview of GUI =
+
+*tabs*
+  * Maze builder
+  * Maze AI test
+  * statistics
+  * script editor
+
+disable menu items base on which tab is on
+
+*Menu*
+  * file
+    * Load Maze
+    * Save Maze
+    * Load AI
+    * Save AI
+    * Save all
+    * exit
+  * maze options
+  * mouse options
+
+
+= Assigned work =
+
+  * *Norwit* - Menu
+  * *Vince*  - ?
+  * *Luke*   - ?
+  * *John*   - ?
