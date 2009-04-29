@@ -12,7 +12,7 @@ public final class PrimaryFrame extends JFrame
     */
    public PrimaryFrame()
    {
-      this.setSize( 800, 700 );
+      this.setSize( 1000, 750 );
 
       this.add( new MazeView() );
    }

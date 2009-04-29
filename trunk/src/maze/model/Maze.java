@@ -1,5 +1,6 @@
 package maze.model;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Vector;
 
@@ -24,7 +25,7 @@ import java.util.Vector;
  * love so much though
  */
 
-public class Maze
+public class Maze implements MazeModelWriteable
 {
    int[] rwalls;
    int[] cwalls;
@@ -487,6 +488,36 @@ public class Maze
          }
       }
       return badPoints;
+   }
+
+   @Override
+   public void clearWall( MazeCell cell, WallDirection wall )
+   {
+      this.clearWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+   }
+
+   @Override
+   public void enableWall( MazeCell cell, WallDirection wall )
+   {
+      this.setWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+   }
+
+   @Override
+   public void setSize( Dimension size )
+   {
+      throw new RuntimeException( "Not implemented" );
+   }
+
+   @Override
+   public boolean isWall( MazeCell cell, WallDirection wall )
+   {
+      return this.getWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+   }
+
+   @Override
+   public Dimension getSize()
+   {
+      return new Dimension( SIZE - 1, SIZE - 1 );
    }
 
 }

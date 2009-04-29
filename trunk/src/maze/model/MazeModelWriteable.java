@@ -1,19 +1,13 @@
 package maze.model;
 
-import java.awt.Point;
+import java.awt.Dimension;
 
 public interface MazeModelWriteable extends MazeModelReadonly
 {
-   public void setSizeX( int x );
+   public void setSize( Dimension size );
 
-   public void setSizeY( int y );
+   public void clearWall( MazeCell cell, WallDirection wall );
 
-   public void setWallNorth( Point p );
-
-   public void setWallSouth( Point p );
-
-   public void setWallEast( Point p );
-
-   public void setWallWest( Point p );
+   public void enableWall( MazeCell cell, WallDirection wall );
 
 }
