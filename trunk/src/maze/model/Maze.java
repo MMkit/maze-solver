@@ -38,8 +38,8 @@ public class Maze implements MazeModelWriteable
 
    public Maze()
    {
-      rwalls = new int[NUM_ELEMENTS];
-      cwalls = new int[NUM_ELEMENTS];
+      rwalls = new int[SIZE];
+      cwalls = new int[SIZE];
       cwalls[0] = 1; //This is the only wall that is guaranteed
    }
 
@@ -493,13 +493,13 @@ public class Maze implements MazeModelWriteable
    @Override
    public void clearWall( MazeCell cell, WallDirection wall )
    {
-      this.clearWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+      this.clearWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
    }
 
    @Override
    public void enableWall( MazeCell cell, WallDirection wall )
    {
-      this.setWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+      this.setWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
    }
 
    @Override
@@ -511,13 +511,13 @@ public class Maze implements MazeModelWriteable
    @Override
    public boolean isWall( MazeCell cell, WallDirection wall )
    {
-      return this.getWall( cell.getXZeroBased(), cell.getYZeroBased(), wall.getIndex() );
+      return this.getWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
    }
 
    @Override
    public Dimension getSize()
    {
-      return new Dimension( SIZE - 1, SIZE - 1 );
+      return new Dimension( SIZE, SIZE );
    }
 
 }

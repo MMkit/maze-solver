@@ -139,15 +139,15 @@ public class Robot implements RobotInterface
       switch ( this.takeNextStep() )
       {
          case AHEAD_ONE :
-            return RobotStep.Forward;
+            return RobotStep.MoveForward;
          case BACK_ONE :
-            return RobotStep.Back;
+            return RobotStep.MoveBackward;
          case RIGHT_TURN :
-            return RobotStep.Right;
+            return RobotStep.RotateRight;
          case LEFT_TURN :
-            return RobotStep.Left;
+            return RobotStep.RotateLeft;
          default :
-            return RobotStep.Forward;
+            return RobotStep.MoveForward;
       }
    }
 

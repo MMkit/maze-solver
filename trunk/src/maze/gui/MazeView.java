@@ -14,6 +14,7 @@ import java.util.EnumSet;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
+import maze.model.Maze;
 import maze.model.MazeCell;
 import maze.model.MazeModelStub;
 import maze.model.MazeModelWriteable;
@@ -28,8 +29,8 @@ import maze.model.WallDirection;
 public class MazeView extends JPanel
 {
    //Temporary model.
-   private MazeModelWriteable model = new MazeModelStub();
-   //private MazeModelWriteable model = new Maze();
+   //private MazeModelWriteable model = new MazeModelStub();
+   private MazeModelWriteable model = new Maze();
 
    private int cellWidth = 44;
    private int cellHeight = 44;
@@ -64,9 +65,17 @@ public class MazeView extends JPanel
          public void mouseMoved( MouseEvent e )
          {
             active = getHostMazeCell( e.getPoint() );
+            //System.out.println( e.getModifiers() );
             repaint();
          }
+
+         @Override
+         public void mouseDragged( MouseEvent e )
+         {
+            //System.out.println( e.getModifiers() );
+         }
       } );
+
       this.addMouseListener( new MouseInputAdapter()
       {
          @Override

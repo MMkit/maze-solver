@@ -7,10 +7,10 @@ package maze.ai;
 public enum RobotStep
 {
    //Move forward one cell.
-   Forward,
+   MoveForward,
    //Move back one cell.
-   Back,
-   //I believe this is supposed to be rotate and not will not actually move.
-   Left,
-   Right,
+   MoveBackward,
+   //Rotates the robot left.
+   RotateLeft,
+   RotateRight,
 }
