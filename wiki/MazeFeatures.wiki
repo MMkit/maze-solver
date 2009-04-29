@@ -16,6 +16,8 @@ Feel free to edit this and correct anything or add anything...
   * show timer
   * show mouse animation based on display settings
 
+Need to translate coordinate system between gui and model
+
 *Save/load Map and AI*
   * File chooser
   * File filter
