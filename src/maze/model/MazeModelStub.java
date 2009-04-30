@@ -117,4 +117,10 @@ public class MazeModelStub implements MazeModelWriteable
       public boolean value = false;
    }
 
+   @Override
+   public boolean isPegLegal( MazeCell cell, PegLocation peg )
+   {
+      throw new RuntimeException( "Not implemented." );
+   }
+
 }

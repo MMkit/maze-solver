@@ -16,7 +16,6 @@ import javax.swing.event.MouseInputAdapter;
 
 import maze.model.Maze;
 import maze.model.MazeCell;
-import maze.model.MazeModelStub;
 import maze.model.MazeModelWriteable;
 import maze.model.WallDirection;
 
@@ -29,7 +28,7 @@ import maze.model.WallDirection;
 public class MazeView extends JPanel
 {
    //Temporary model.
-   //private MazeModelWriteable model = new MazeModelStub();
+   //private MazeModelWriteable model = new maze.model.MazeModelStub();
    private MazeModelWriteable model = new Maze();
 
    private int cellWidth = 44;
@@ -106,7 +105,7 @@ public class MazeView extends JPanel
    @Override
    protected void paintComponent( Graphics arg )
    {
-      final Color emptyWall = new Color( 220, 220, 220 );
+      //final Color emptyWall = new Color( 220, 220, 220 );
       Graphics2D g = (Graphics2D) arg;
       g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
       g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
@@ -119,7 +118,6 @@ public class MazeView extends JPanel
                                      Color.WHITE,
                                      new Point( mazeWidth / 2, mazeHeight / 2 ),
                                      new Color( 229, 236, 255 ),
-                                     //new Color( 153, 179, 255 ),
                                      true ) );
       g.fillRect( 0, 0, mazeWidth, mazeHeight );
 
@@ -149,11 +147,10 @@ public class MazeView extends JPanel
             {
                if ( this.model.isWall( cell, wall ) )
                {
-                  g.setColor( Color.RED );
+                  //g.setColor( Color.RED );
                   g.setPaint( new GradientPaint( new Point( 0, 0 ),
                                                  new Color( 0, 94, 189 ),
                                                  new Point( mazeWidth / 2, mazeHeight / 2 ),
-                                                 //new Color(134,45,45),
                                                  new Color( 0, 56, 112 ),
                                                  true ) );
                }
@@ -162,7 +159,7 @@ public class MazeView extends JPanel
                {
                   final Color lightBlue = new Color( 229, 236, 255 );
                   final Color blue = new Color( 204, 218, 255 );
-                  g.setColor( emptyWall );
+                  //g.setColor( emptyWall );
                   g.setPaint( new GradientPaint( new Point( 0, 0 ),
                                                  lightBlue,
                                                  new Point( mazeWidth / 2, mazeHeight / 2 ),
