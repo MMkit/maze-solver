@@ -520,4 +520,10 @@ public class Maze implements MazeModelWriteable
       return new Dimension( SIZE, SIZE );
    }
 
+   @Override
+   public boolean isPegLegal( MazeCell cell, PegLocation peg )
+   {
+      throw new RuntimeException( "Not yet implemented" );
+   }
+
 }

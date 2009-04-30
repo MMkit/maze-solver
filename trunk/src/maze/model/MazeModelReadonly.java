@@ -8,6 +8,11 @@ import java.awt.Dimension;
  */
 public interface MazeModelReadonly
 {
+   /**
+    * The maze model size defined by the number of cells/boxes/squares in each
+    * dimension.
+    * @return The size of the maze model.
+    */
    public Dimension getSize();
 
    /**
@@ -17,4 +22,6 @@ public interface MazeModelReadonly
     * @return true if a wall segment exists.
     */
    public boolean isWall( MazeCell cell, WallDirection wall );
+
+   public boolean isPegLegal( MazeCell cell, PegLocation peg );
 }
