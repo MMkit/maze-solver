@@ -3,73 +3,126 @@
 
 = Introduction =
 
-Feel free to edit this and correct anything or add anything...
+== Team Micromouse Sim: ==
+  * Norwit Veun
+  * Luke
+  * Vince
+  * John
+
+== Assigned work ==
+
+  * Norwit - Menus and related JDialogs
+  * Vince  - Models for Maze, Mouse, Display for Statistics
+  * Luke   - Maze Rendering and Animations, Script editor
+  * John   - Maze Builder with templates
 
 = Maze Features =
 
-*Maze build display*
+== Maze build display ==
+swing classes: Jpanel, Jtoolbar, tooltips, overlay layout, mouse press listener, Jcolorchooser
+
   * 2d graphics custom drawings
   * mouse press select wall - mouse press listener
   * maze templates to drag into maze build
   * have tools in toolbar
-  * auto randomly generated mazes
 
-*Maze test AI display*
+== Maze test AI display ==
+swing classes: Jbutton, spinner, Jcolorchooser, Jpanel
+
   * show timer
   * show mouse animation based on display settings
   * show current number of steps/moves taken by the AI
+  * 10 min max run
+  * stop and start button
+  * auto stop when finish by reaching center
 
-*Save/load Map and AI*
-  * File chooser
-  * File filter
+== Save/load Map and AI ==
+swing classes: Jmenubar, Filechooser, FileFilter
 
-*Maze Statistics*
+  * Save maze map as binary
+
+== Maze Statistics ==
+swing classes: 
+
   * choose maze and algorithm to view the stats
   * or a static stat for the current run algorithm and maze
   * show how many cells traversed to show how fast
 
-*Mouse AI options*
-  * choose preset algorithms
-  * options to change display settings Ex. checkbox
-      * speed runs
-      * turbo mode - jump back fast
+== Mouse AI options ==
+swing classes: Jmenubar, Jcheckbox, Jradiobuttons
+
+  * choose preset algorithms - 6 defaults
+  * options to change display settings
+      * speed runs - after first run, goes pre-explored places
+      * turbo mode - jump back fast, goes faster on explored places
       * fog of war
       * skip everything
       * show path(s)
   * have user input how fast the mouse can go for timer
 
-*Mouse AI script editor*
+== Mouse AI script editor ==
+swing classes: textarea
+
   * in a text area
   * script to modify mouse AI
   * ability to view the Java source code of the built in Algorithms
   * save/load Python AI scripts
 
+= Model Description =
+
+== Maze ==
+
+== AI ==
+
 = Overview of GUI =
 
-*Tabs*
-  * Maze Builder: This tab will allow the user to design a maze that can be saved for later or used to watch different algorithms responses immediately in the Micromouse Testing Area or the Statistics Area
-  * Micromouse Testing Area: This tab will allow the user to watch a Micromouse traverse the maze using the algorithm selected from the other areas of the program
-  * Statistics Area: This tab will display relevant statistics related to how the Micromouse would respond to the current maze.  Statistics will include, but are not limited to, how many squares the Micromouse will traverse, how many moves until the mouse solves the maze the first time, how many moves will the mouse take to solve on its best run and how many total moves will the mouse take before it completes this best run.
-  * Script Editor: This tab will display the algorithm used by the Micromouse to traverse the maze.  It is a hope that this tab will also allow the users to design their own algorithms for testing.
+== Tabs ==
+  * *Maze Builder*: This tab will allow the user to design a maze that can be saved for later or used to watch different algorithms responses immediately in the Micromouse Testing Area or the Statistics Area
+  * *Micromouse Testing Area*: This tab will allow the user to watch a Micromouse traverse the maze using the algorithm selected from the other areas of the program
+  * *Statistics Area*: This tab will display relevant statistics related to how the Micromouse would respond to the current maze.  Statistics will include, but are not limited to, how many squares the Micromouse will traverse, how many moves until the mouse solves the maze the first time, how many moves will the mouse take to solve on its best run and how many total moves will the mouse take before it completes this best run.
+  * *Script Editor*: This tab will display the algorithm used by the Micromouse to traverse the maze.  It is a hope that this tab will also allow the users to design their own algorithms for testing.
 
 disable menu items based upon which tab is currently visible
 or switch to the relevant tab when the menu item is chosen
 
-*Menu*
-  * file
+== Menu ==
+  * *file*
+    * Save..
+    * Load..
+    * exit
+  * *maze options*
     * Load Maze
     * Save Maze
+    * maze templetes
+  * *mouse options*
     * Load AI
     * Save AI
-    * Save all
-    * exit
-  * maze options
-  * mouse options
+    * algorithms
+    * mouse speed
+    * display settings
 
+= Swing classes =
 
-= Assigned work =
-
-  * *Norwit* - Menus and related JDialogs
-  * *Vince*  - Models for Maze, Mouse, Display for Statistics
-  * *Luke*   - Maze Rendering and Animations, Script editor.
-  * *John*   - ?
+  * Mouse press listener
+  * File chooser
+  * File filter
+  * Jcheckbox
+  * Jmenubar
+  * Jmenuitem
+  * Jtabepane
+  * Jtoolbar
+  * Jcolorchooser
+  * JRadiobuttons
+  * JPanel - custom drawings
+  * sliders
+  * Jcombobox
+  * Jtable
+  * Jtextarea
+  * splitpane
+  * textfeilds
+  * Joptionpane
+  * Jbutton
+  * Jlabel
+  * tooltips
+  * a overlay layout - for maze template pieces
+  * spinner?
