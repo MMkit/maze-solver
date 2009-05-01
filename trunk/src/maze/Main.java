@@ -3,6 +3,7 @@ package maze;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import maze.gui.CodeEditorPanel;
 import maze.gui.PrimaryFrame;
 
 /**
@@ -37,6 +38,12 @@ public final class Main
             primaryFrame = new PrimaryFrame();
             primaryFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
             primaryFrame.setVisible( true );
+
+            //Test code for the script code editor panel.
+            JFrame f = new JFrame();
+            f.add( new CodeEditorPanel() );
+            f.setSize( 800, 800 );
+            f.setVisible( true );
          }
       } );
    }
