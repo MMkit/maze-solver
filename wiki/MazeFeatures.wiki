@@ -9,7 +9,7 @@
   * Vincent Frey
   * John
 
-== Assigned work ==
+== Assigned Work ==
 
   * Norwit - Menus and related JDialogs
   * Vince  - Models for Maze, Mouse, Display for Statistics
@@ -18,31 +18,31 @@
 
 = Maze Features =
 
-== Maze build display ==
-swing classes: Jpanel, Jtoolbar, tooltips, overlay layout, mouse press listener, Jcolorchooser
+== Maze Build Display ==
+Swing Classes: JPanel, JToolbar, JToolTip, OverlayLayout, MouseListener, JColorChooser
 
   * 2d graphics custom drawings
-  * mouse press select wall - mouse press listener
-  * maze templates to drag into maze build
-  * have tools in toolbar
+  * Mouse press select wall - mouse press listener
+  * Maze templates to drag into maze build
+  * Have tools in toolbar
 
-== Maze test AI display ==
-swing classes: Jbutton, spinner, Jcolorchooser, Jpanel
+== Maze Test AI Tisplay ==
+Swing Classes: JButton, JSpinner, JColorChooser, JPanel
 
-  * show timer
-  * show mouse animation based on display settings
-  * show current number of steps/moves taken by the AI
+  * Show timer
+  * Show mouse animation based on display settings
+  * Show current number of steps/moves taken by the AI
   * 10 min max run
-  * stop and start button
-  * auto stop when finish by reaching center
+  * Stop and start button
+  * Auto stop when finish by reaching center
 
-== Save/load Map and AI ==
-swing classes: Jmenubar, Filechooser, FileFilter
+== Save/Load Map and AI ==
+Swing Classes: JMenuBar, JFileChooser, FileFilter
 
   * Save maze map as binary
 
 == Maze Statistics ==
-swing classes: JTable, JSplitPane, JPanel
+Swing Classes: JTable, JSplitPane, JPanel
 
   * For the current maze, statistics will be shown covering each of the supplied algorithms and the most recently loaded custom algorithm
   * The statistics covered will be:
@@ -53,25 +53,25 @@ swing classes: JTable, JSplitPane, JPanel
   * These statistics will be in regard to the algorithm only so they will ignore the timer limitations of the competition
   * If an algorithm will not solve the maze then the last three sets of statistics will be ignored
 
-== Mouse AI options ==
-swing classes: Jmenubar, Jcheckbox, Jradiobuttons
+== Mouse AI Options ==
+Swing Classes: JMenuBar, JCheckBox, JRadioButtons
 
-  * choose preset algorithms - 6 defaults
-  * options to change display settings
-      * speed runs - after first run, all timed runs will only go through previously explored places
-      * turbo mode - visually goes faster through explored cells
-      * fog of war - shows the maze as the robot knows it so that the user may see how the robot learns
-      * skip everything
-      * show path(s) - show the course that the robot took
-  * have user input how fast the mouse can go for timer considerations
+  * Choose preset algorithms - 6 defaults
+  * Options to change display settings
+      * Speed runs - after first run, all timed runs will only go through previously explored places
+      * Turbo mode - visually goes faster through explored cells
+      * Fog of war - shows the maze as the robot knows it so that the user may see how the robot learns
+      * Skip everything
+      * Show path(s) - show the course that the robot took
+  * Have user input how fast the mouse can go for timer considerations
 
-== Mouse AI script editor ==
-swing classes: textarea
+== Mouse AI Script Editor ==
+Swing Classes: JTextArea
 
-  * in a text area
-  * script to modify mouse AI
-  * ability to view the Java source code of the built in Algorithms
-  * save/load Python AI scripts
+  * In a text area
+  * Script to modify mouse AI
+  * Ability to view the Java source code of the built in Algorithms
+  * Save/load Python AI scripts
 
 = Model Description =
 
@@ -102,43 +102,44 @@ disable menu items based upon which tab is currently visible
 or switch to the relevant tab when the menu item is chosen
 
 == Menu ==
-  * *file*
+  * *File*
     * Save..
     * Load..
-    * exit
-  * *maze options*
+    * Exit
+  * *Maze Options*
     * Load Maze
     * Save Maze
-    * maze templetes
-  * *mouse options*
+    * Maze Templetes
+  * *Mouse Options*
     * Load AI
     * Save AI
-    * algorithms
-    * mouse speed
-    * display settings
+    * Algorithms
+    * Mouse Speed
+    * Display Settings
 
-= Swing classes =
+= Swing Classes =
 
-  * Mouse press listener
-  * File chooser
-  * File filter
-  * Jcheckbox
-  * Jmenubar
-  * Jmenuitem
-  * Jtabepane
-  * Jtoolbar
-  * Jcolorchooser
-  * JRadiobuttons
+  * MouseListener
+  * JFileChooser
+  * FileFilter
+  * JCheckBox
+  * JMenuBar
+  * JMenu
+  * JMenuItem
+  * JTabbedPane
+  * JToolBar
+  * JColorChooser
+  * JRadioButton
   * JPanel - custom drawings
-  * sliders
-  * Jcombobox
-  * Jtable
-  * Jtextarea
-  * splitpane
-  * textfeilds
-  * Joptionpane
-  * Jbutton
-  * Jlabel
-  * tooltips
-  * an overlay layout - for maze template pieces
-  * spinner?
+  * JSlider
+  * JComboBox
+  * JTable
+  * JTextArea
+  * JSplitPane
+  * JTextField
+  * JOptionPane
+  * JButton
+  * JLabel
+  * JToolTip
+  * OverlayLayout - for maze template pieces
+  * JSpinner
