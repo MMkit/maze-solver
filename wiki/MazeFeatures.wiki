@@ -12,6 +12,7 @@ Feel free to edit this and correct anything or add anything...
   * mouse press select wall - mouse press listener
   * maze templates to drag into maze build
   * have tools in toolbar
+  * auto randomly generated mazes
 
 *Maze test AI display*
   * show timer
