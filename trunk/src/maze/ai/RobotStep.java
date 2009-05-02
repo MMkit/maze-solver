@@ -6,11 +6,20 @@ package maze.ai;
  */
 public enum RobotStep
 {
-   //Move forward one cell.
+   /**
+    * Move forward one cell.
+    */
    MoveForward,
-   //Move back one cell.
+   /**
+    * Move back one cell.
+    */
    MoveBackward,
-   //Rotates the robot left.
+   /**
+    * Rotates the robot left.
+    */
    RotateLeft,
+   /**
+    * Rotates the robot to the right.
+    */
    RotateRight,
 }

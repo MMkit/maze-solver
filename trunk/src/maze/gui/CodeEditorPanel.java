@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import maze.model.Maze;
-import maze.model.MazeModelReadonly;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -148,7 +147,11 @@ public class CodeEditorPanel extends RTextScrollPane
       final PythonInterpreter interp = new PythonInterpreter();
       interp.exec( "from maze.ai import RobotStep" );
       interp.exec( "from maze.model import WallDirection, MazeCell" );
-      interp.set( "maze", (MazeModelReadonly) new Maze() );
+      interp.set( "maze", new Maze() );
+
+      SuperClass dude = new Extender();
+      interp.set( "test", dude );
+
       interp.exec( this.textArea.getText() );
       return interp;
    }
@@ -176,6 +179,22 @@ public class CodeEditorPanel extends RTextScrollPane
                                         "Script Error",
                                         JOptionPane.ERROR_MESSAGE,
                                         null );
+      }
+   }
+
+   static abstract class SuperClass
+   {
+      public String superClass()
+      {
+         return "Hello from abstract super class.";
+      }
+   }
+
+   public static class Extender extends SuperClass
+   {
+      public String writer()
+      {
+         return "Hello from class you shouldn't have access to.";
       }
    }
 }

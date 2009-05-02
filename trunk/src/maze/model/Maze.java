@@ -24,9 +24,9 @@ import java.util.Vector;
  * http://www.tcp4me.com/mmr/mazes/ I can't find any of the Seoul mazes that I
  * love so much though
  */
-
-public class Maze implements MazeModelWriteable
+public class Maze extends MazeModel
 {
+
    int[] rwalls;
    int[] cwalls;
    public static final int SIZE = 16; //A maze is generally 16 x 16
@@ -303,13 +303,11 @@ public class Maze implements MazeModelWriteable
             {
                return false;
             }
-         }
-         //Second is that it is not the center peg
+         } //Second is that it is not the center peg
          else if ( ( x == ( SIZE / 2 - 1 ) ) && ( y == ( SIZE / 2 - 1 ) ) )
          {
             return false;
-         }
-         //Third is the pegs surrounding the center square
+         } //Third is the pegs surrounding the center square
          else if ( ( ( x <= SIZE / 2 ) && ( y <= SIZE / 2 ) ) &&
                    ( ( x >= ( SIZE / 2 - 2 ) ) && ( y >= ( SIZE / 2 - 2 ) ) ) )
          {
@@ -357,8 +355,7 @@ public class Maze implements MazeModelWriteable
                return true;
             }
 
-         }
-         //There are no more reasons to check the walls
+         } //There are no more reasons to check the walls
          else
          {
             return true;
@@ -491,39 +488,35 @@ public class Maze implements MazeModelWriteable
    }
 
    @Override
-   public void clearWall( MazeCell cell, WallDirection wall )
-   {
-      this.clearWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
-   }
-
-   @Override
-   public void enableWall( MazeCell cell, WallDirection wall )
-   {
-      this.setWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
-   }
-
-   @Override
    public void setSize( Dimension size )
    {
       throw new RuntimeException( "Not implemented" );
    }
 
    @Override
-   public boolean isWall( MazeCell cell, WallDirection wall )
+   public MazeWall getWall( final MazeCell cell, final Direction direction )
    {
-      return this.getWall( cell.getXZeroBased(), SIZE - cell.getY(), wall.getIndex() );
-   }
+      return new MazeWall()
+      {
 
-   @Override
-   public Dimension getSize()
-   {
-      return new Dimension( SIZE, SIZE );
-   }
+         @Override
+         public boolean isSet()
+         {
+            return getWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+         }
 
-   @Override
-   public boolean isPegLegal( MazeCell cell, PegLocation peg )
-   {
-      throw new RuntimeException( "Not yet implemented" );
+         @Override
+         public void set( boolean value )
+         {
+            if ( value )
+            {
+               setWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+            }
+            else
+            {
+               clearWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+            }
+         }
+      };
    }
-
 }

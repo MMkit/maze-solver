@@ -7,17 +7,19 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.EnumSet;
 
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
+import javax.swing.SwingUtilities;
 
+import maze.model.Direction;
 import maze.model.Maze;
 import maze.model.MazeCell;
-import maze.model.MazeModelWriteable;
-import maze.model.WallDirection;
+import maze.model.MazeModel;
+import maze.model.PegLocation;
+import maze.model.MazeModel.MazeWall;
 
 /**
  * A view of the maze model. This swing component will render a GUI of a maze
@@ -28,28 +30,28 @@ import maze.model.WallDirection;
 public class MazeView extends JPanel
 {
    //Temporary model.
-   //private MazeModelWriteable model = new maze.model.MazeModelStub();
-   private MazeModelWriteable model = new Maze();
-
-   private int cellWidth = 44;
-   private int cellHeight = 44;
-   private int wallWidth = 14;
-
+   //private MazeModel model = new maze.model.MazeModelStub();
+   /**
+    * The maze model that stores the configuration of the maze.
+    */
+   private MazeModel model = new Maze();
+   /**
+    * This holds the sizes of the cells and walls.
+    */
+   private final CellSizeModel csm = new CellSizeModel();
+   /**
+    * Holds the active cell that the mouse is hovering over.
+    */
    private MazeCell active;
 
-   private int getHalfCellWidth()
+   public MazeModel getModel()
    {
-      return this.cellWidth / 2;
+      return model;
    }
 
-   private int getHalfCellHeight()
+   public void setModel( MazeModel model )
    {
-      return this.cellHeight / 2;
-   }
-
-   private int getHalfWallWidth()
-   {
-      return this.wallWidth / 2;
+      this.model = model;
    }
 
    /**
@@ -57,63 +59,80 @@ public class MazeView extends JPanel
     */
    public MazeView()
    {
-
-      this.addMouseMotionListener( new MouseMotionAdapter()
+      //Create an event handler to handle mouse events.
+      MouseAdapter mouseAdapter = new MouseAdapter()
       {
          @Override
          public void mouseMoved( MouseEvent e )
          {
-            active = getHostMazeCell( e.getPoint() );
-            //System.out.println( e.getModifiers() );
-            repaint();
+            try
+            {
+               active = getHostMazeCell( e.getPoint() );
+               repaint();
+            }
+            catch ( Exception ex )
+            {
+            }
          }
 
          @Override
          public void mouseDragged( MouseEvent e )
          {
-            //System.out.println( e.getModifiers() );
+            try
+            {
+               MazeWall wall = getWall( e.getPoint() );
+               if ( SwingUtilities.isLeftMouseButton( e ) )
+               {
+                  wall.set( true );
+               }
+               else if ( SwingUtilities.isRightMouseButton( e ) )
+               {
+                  wall.set( false );
+               }
+               repaint();
+            }
+            catch ( Exception ex )
+            {
+            }
          }
-      } );
 
-      this.addMouseListener( new MouseInputAdapter()
-      {
          @Override
          public void mousePressed( MouseEvent e )
          {
-            MazeCell cell = getHostMazeCell( e.getPoint() );
-            for ( WallDirection wall : WallDirection.values() )
+            try
             {
-               if ( getWallLocation( cell, wall ).contains( e.getPoint() ) )
-               {
-                  if ( model.isWall( cell, wall ) )
-                  {
-                     model.clearWall( cell, wall );
-                  }
-                  else
-                  {
-                     model.enableWall( cell, wall );
-                  }
-                  repaint();
-                  break;
-               }
+               final MazeWall wall = getWall( e.getPoint() );
+               //Flip the status of the wall.
+               wall.set( !wall.isSet() );
+               repaint();
             }
-
+            catch ( Exception ex )
+            {
+            }
          }
-      } );
+      };
+      this.addMouseListener( mouseAdapter );
+      this.addMouseMotionListener( mouseAdapter );
    }
 
+   /**
+    * This is where the graphics of this component gets painted.
+    */
    @Override
    protected void paintComponent( Graphics arg )
    {
-      //final Color emptyWall = new Color( 220, 220, 220 );
+      this.csm.setCellWidth( this.getSize().width / this.model.getSize().width );
+      this.csm.setCellHeight( this.getSize().height / this.model.getSize().height );
+      this.csm.setWallWidth( this.csm.getCellWidth() / 4 );
+      this.csm.setWallHeight( this.csm.getCellHeight() / 4 );
       Graphics2D g = (Graphics2D) arg;
       g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
       g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
       g.setColor( Color.white );
       g.fillRect( 0, 0, 1024, 768 );
 
-      final int mazeWidth = this.model.getSize().width * this.cellWidth;
-      final int mazeHeight = this.model.getSize().height * this.cellHeight;
+      final int mazeWidth = this.model.getSize().width * this.csm.getCellWidth();
+      final int mazeHeight = this.model.getSize().height * this.csm.getCellHeight();
       g.setPaint( new GradientPaint( new Point( 0, 0 ),
                                      Color.WHITE,
                                      new Point( mazeWidth / 2, mazeHeight / 2 ),
@@ -126,28 +145,36 @@ public class MazeView extends JPanel
          for ( int y = 0; y < this.model.getSize().height; y++ )
          {
             final MazeCell cell = new MazeCell( x + 1, y + 1 );
-            final int locX = ( x + 1 ) * this.cellWidth - ( this.wallWidth / 2 );
-            final int locY = ( y + 1 ) * this.cellWidth - ( this.wallWidth / 2 );
 
             g.setColor( Color.black );
-            g.fillRect( locX, locY, this.wallWidth, this.wallWidth );
-            g.fill( this.getTopLeft( cell ) );
+            g.fill( this.getPegRegion( cell, PegLocation.BottomRight ) );
 
-            EnumSet<WallDirection> wallsToPaint = EnumSet.of( WallDirection.South,
-                                                              WallDirection.East );
+            final EnumSet<Direction> wallsToPaint = EnumSet.of( Direction.South, Direction.East );
+
+            //We are painting the first cell in the row.
             if ( cell.getX() == 1 )
             {
-               wallsToPaint.add( WallDirection.West );
+               wallsToPaint.add( Direction.West );
+               g.setColor( Color.black );
+               g.fill( this.getPegRegion( cell, PegLocation.TopLeft ) );
+               //We in the bottom left corner cell.
+               if ( cell.getY() == this.model.getSize().height )
+               {
+                  g.fill( this.getPegRegion( cell, PegLocation.BottomLeft ) );
+               }
             }
+
+            //We are painting the top horizontal row.
             if ( cell.getY() == 1 )
             {
-               wallsToPaint.add( WallDirection.North );
+               wallsToPaint.add( Direction.North );
+               g.setColor( Color.black );
+               g.fill( this.getPegRegion( cell, PegLocation.TopRight ) );
             }
-            for ( WallDirection wall : wallsToPaint )
+            for ( Direction wall : wallsToPaint )
             {
-               if ( this.model.isWall( cell, wall ) )
+               if ( this.model.getWall( cell, wall ).isSet() )
                {
-                  //g.setColor( Color.RED );
                   g.setPaint( new GradientPaint( new Point( 0, 0 ),
                                                  new Color( 0, 94, 189 ),
                                                  new Point( mazeWidth / 2, mazeHeight / 2 ),
@@ -155,99 +182,266 @@ public class MazeView extends JPanel
                                                  true ) );
                }
                else
-               //No wall here.
                {
+                  //No wall is set so paint the light colored wall segment.
                   final Color lightBlue = new Color( 229, 236, 255 );
                   final Color blue = new Color( 204, 218, 255 );
-                  //g.setColor( emptyWall );
                   g.setPaint( new GradientPaint( new Point( 0, 0 ),
                                                  lightBlue,
                                                  new Point( mazeWidth / 2, mazeHeight / 2 ),
                                                  blue,
                                                  true ) );
                }
-
-               //Composite def = g.getComposite();
-               //g.setComposite( AlphaComposite.getInstance( AlphaComposite.XOR, 0.1f ) );
                g.fill( this.getWallLocation( cell, wall ) );
-               //g.setComposite( def );
             }
 
             if ( this.active != null && this.active.equals( cell ) )
             {
                g.setColor( Color.YELLOW );
-               //g.fill( this.getWallNorth( cell ) );
-               g.fillRect( cell.getXZeroBased() * this.cellWidth + this.getHalfWallWidth(),
-                           cell.getYZeroBased() * this.cellHeight + this.getHalfWallWidth(),
-                           this.cellWidth - this.wallWidth,
-                           this.cellHeight - this.wallWidth );
+               g.fillRect( cell.getXZeroBased() *
+                                 this.csm.getCellWidth() +
+                                 this.csm.getWallWidthHalf(),
+                           cell.getYZeroBased() *
+                                 this.csm.getCellHeight() +
+                                 this.csm.getWallHeightHalf(),
+                           this.csm.getCellWidth() - this.csm.getWallWidth(),
+                           this.csm.getCellHeight() - this.csm.getWallHeight() );
             }
 
-         }
-      }
-   }
+         } //End y loop.
+      } //End x loop.
+   } //End paintComponent().
 
+   /**
+    * Turns a maze cell into global coordinates for the center of the cell.
+    */
    private Point getCellCenter( MazeCell cell )
    {
-      return new Point( ( cell.getXZeroBased() * this.cellWidth ) + this.cellWidth / 2,
-                        ( cell.getYZeroBased() * this.cellHeight ) + this.cellHeight / 2 );
+      return new Point( ( cell.getXZeroBased() * this.csm.getCellWidth() ) +
+                              this.csm.getCellWidthHalf(),
+                        ( cell.getYZeroBased() * this.csm.getCellHeight() ) +
+                              this.csm.getCellHeightHalf() );
    }
 
-   private Rectangle getWallLocation( MazeCell cell, WallDirection wall )
+   /**
+    * Get a rectangle covering the wall segment with component relative
+    * coordinates.
+    */
+   private Rectangle getWallLocation( MazeCell cell, Direction wall )
    {
       Point center = this.getCellCenter( cell );
-      if ( wall == WallDirection.North )
+      if ( wall == Direction.North )
       {
-         return new Rectangle( center.x - ( this.getHalfCellWidth() - this.getHalfWallWidth() ),
-                               center.y - ( this.getHalfCellHeight() + this.getHalfWallWidth() ),
-                               this.cellWidth - this.wallWidth,
-                               this.wallWidth );
+         return new Rectangle( center.x -
+                                     ( this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf() ),
+                               center.y -
+                                     ( this.csm.getCellHeightHalf() + this.csm.getWallHeightHalf() ),
+                               this.csm.getCellWidth() - this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
       }
-      else if ( wall == WallDirection.South )
+      else if ( wall == Direction.South )
       {
-         return new Rectangle( center.x - ( this.getHalfCellWidth() - this.getHalfWallWidth() ),
-                               center.y + ( this.getHalfCellHeight() - this.getHalfWallWidth() ),
-                               this.cellWidth - this.wallWidth,
-                               this.wallWidth );
+         return new Rectangle( center.x -
+                                     ( this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf() ),
+                               center.y +
+                                     ( this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf() ),
+                               this.csm.getCellWidth() - this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
       }
-      else if ( wall == WallDirection.East )
+      else if ( wall == Direction.East )
       {
-         return new Rectangle( center.x + ( this.getHalfCellWidth() - this.getHalfWallWidth() ),
-                               center.y - ( this.getHalfCellHeight() - this.getHalfWallWidth() ),
-                               this.wallWidth,
-                               this.cellWidth - this.wallWidth );
+         return new Rectangle( center.x +
+                                     ( this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf() ),
+                               center.y -
+                                     ( this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf() ),
+                               this.csm.getWallWidth(),
+                               this.csm.getCellHeight() - this.csm.getWallHeight() );
       }
-      else if ( wall == WallDirection.West )
+      else if ( wall == Direction.West )
       {
-         return new Rectangle( center.x - ( this.getHalfCellWidth() + this.getHalfWallWidth() ),
-                               center.y - ( this.getHalfCellHeight() - this.getHalfWallWidth() ),
-                               this.wallWidth,
-                               this.cellWidth - this.wallWidth );
+         return new Rectangle( center.x -
+                                     ( this.csm.getCellWidthHalf() + this.csm.getWallWidthHalf() ),
+                               center.y -
+                                     ( this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf() ),
+                               this.csm.getWallWidth(),
+                               this.csm.getCellHeight() - this.csm.getWallHeight() );
       }
-
-      return new Rectangle();
+      return new Rectangle(); //should never get here.
    }
 
-   private Rectangle getTopLeft( MazeCell cell )
+   /**
+    * Get the absolute region of a peg with respect to the given maze cell.
+    */
+   private Rectangle getPegRegion( MazeCell cell, PegLocation peg )
    {
-      Point center = this.getCellCenter( cell );
-      return new Rectangle( center.x - ( this.getHalfCellWidth() + this.getHalfWallWidth() ),
-                            center.y - ( this.getHalfCellHeight() + this.getHalfWallWidth() ),
-                            this.wallWidth,
-                            this.wallWidth );
+      if ( peg == PegLocation.TopLeft )
+      {
+         return new Rectangle( ( cell.getX() * this.csm.getCellWidth() ) -
+                                     this.csm.getWallWidthHalf() -
+                                     this.csm.getCellWidth(),
+                               ( cell.getY() * this.csm.getCellHeight() ) -
+                                     this.csm.getCellHeight() -
+                                     this.csm.getWallHeightHalf(),
+                               this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
+      }
+      else if ( peg == PegLocation.TopRight )
+      {
+         return new Rectangle( cell.getX() * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),
+                               ( cell.getY() * this.csm.getCellHeight() ) -
+                                     this.csm.getCellHeight() -
+                                     this.csm.getWallHeightHalf(),
+                               this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
+      }
+      else if ( peg == PegLocation.BottomRight )
+      {
+         return new Rectangle( cell.getX() * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),
+                               cell.getY() *
+                                     this.csm.getCellHeight() -
+                                     this.csm.getWallHeightHalf(),
+                               this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
+      }
+      else if ( peg == PegLocation.BottomLeft )
+      {
+         return new Rectangle( cell.getXZeroBased() *
+                                     this.csm.getCellWidth() -
+                                     this.csm.getWallWidthHalf(),
+                               cell.getY() *
+                                     this.csm.getCellHeight() -
+                                     this.csm.getWallHeightHalf(),
+                               this.csm.getWallWidth(),
+                               this.csm.getWallHeight() );
+      }
+      return new Rectangle(); //Should never get here.
    }
 
-   private MazeCell getHostMazeCell( Point pointerLocation )
+   /**
+    * Converts a mouse pointer position into the maze cell that it is in.
+    * @throws Exception If the pointer location is not within the maze.
+    */
+   private MazeCell getHostMazeCell( Point pointerLocation ) throws Exception
    {
-      return new MazeCell( ( pointerLocation.x / this.cellWidth ) + 1,
-                           ( pointerLocation.y / this.cellHeight ) + 1 );
+      MazeCell cell = new MazeCell( ( pointerLocation.x / this.csm.getCellWidth() ) + 1,
+                                    ( pointerLocation.y / this.csm.getCellHeight() ) + 1 );
+      if ( cell.isInRange( this.model.getSize() ) )
+      {
+         return cell;
+      }
+      else
+      {
+         throw new Exception( "The pointer location is outside of the current maze." );
+      }
    }
 
+   /**
+    * @param cell
+    * @param mouseLocation
+    * @return
+    * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.
+    */
+   private Direction getWallDirection( MazeCell cell, Point mouseLocation ) throws Exception
+   {
+      for ( Direction direction : Direction.values() )
+      {
+         if ( getWallLocation( cell, direction ).contains( mouseLocation ) )
+         {
+            return direction;
+         }
+      }
+      throw new Exception( "Not inside a wall." );
+   }
+
+   /**
+    * Converts a mouse pointer location into an actual maze wall object.
+    * @param mouseLocation
+    * @return
+    * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.
+    */
+   private MazeWall getWall( Point mouseLocation ) throws Exception
+   {
+      final MazeCell cell = getHostMazeCell( mouseLocation );
+      return model.getWall( cell, getWallDirection( cell, mouseLocation ) );
+   }
+
+   /**
+    * This model stores the sizes of the cells and wall segments that are drawn
+    * to the screen.
+    */
    static class CellSizeModel
    {
-      private int cellWidth = 40;
-      private int cellHeight = 40;
-      private int wallWidth = 14;
-      private int wallHeight = 14;
+      private int cellWidth = 44;
+      private int cellHeight = 50;
+      private int wallWidth = 10;
+      private int wallHeight = 10;
+
+      public void setCellWidth( int cellWidth )
+      {
+         this.cellWidth = cellWidth;
+         if ( ( this.cellWidth & 1 ) == 1 )
+            this.cellWidth--;
+      }
+
+      public void setCellHeight( int cellHeight )
+      {
+         this.cellHeight = cellHeight;
+         if ( ( this.cellHeight & 1 ) == 1 )
+            this.cellHeight--;
+      }
+
+      public void setWallWidth( int wallWidth )
+      {
+         this.wallWidth = wallWidth;
+         if ( ( this.wallWidth & 1 ) == 1 )
+            this.wallWidth++;
+      }
+
+      public void setWallHeight( int wallHeight )
+      {
+         this.wallHeight = wallHeight;
+         if ( ( this.wallHeight & 1 ) == 1 )
+            this.wallHeight++;
+      }
+
+      public int getCellWidth()
+      {
+         return cellWidth;
+      }
+
+      public int getCellHeight()
+      {
+         return cellHeight;
+      }
+
+      public int getWallWidth()
+      {
+         return wallWidth;
+      }
+
+      public int getWallHeight()
+      {
+         return wallHeight;
+      }
+
+      public int getCellWidthHalf()
+      {
+         return cellWidth / 2;
+      }
+
+      public int getCellHeightHalf()
+      {
+         return cellHeight / 2;
+      }
+
+      public int getWallWidthHalf()
+      {
+         return wallWidth / 2;
+      }
+
+      public int getWallHeightHalf()
+      {
+         return wallHeight / 2;
+      }
    }
 }

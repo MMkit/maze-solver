@@ -27,9 +27,9 @@ public abstract class MazeModel
       this.height = size.height;
    }
 
-   public abstract MazeWall getWall( MazeCell cell, WallDirection direction );
+   public abstract MazeWall getWall( MazeCell cell, Direction direction );
 
-   public MazeWall getWall( int x, int y, WallDirection direction )
+   public MazeWall getWall( int x, int y, Direction direction )
    {
       return this.getWall( new MazeCell( x, y ), direction );
    }

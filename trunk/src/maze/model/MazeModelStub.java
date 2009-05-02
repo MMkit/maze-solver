@@ -7,30 +7,31 @@ import java.awt.Dimension;
  * have a real maze model.
  * @author Luke Last
  */
-public class MazeModelStub implements MazeModelWriteable
+public class MazeModelStub extends MazeModel
 {
+   private static final int SIZE = 32;
    //Holds vertical wall segments.
-   WallStatus[][] horizontalRows = new WallStatus[16][15];
+   WallStatus[][] horizontalRows = new WallStatus[SIZE][SIZE - 1];
    //Holds horizontal wall segments.
-   WallStatus[][] verticalRows = new WallStatus[16][15];
+   WallStatus[][] verticalRows = new WallStatus[SIZE][SIZE - 1];
 
    public MazeModelStub()
    {
       this.initRows( this.horizontalRows );
       this.initRows( this.verticalRows );
-      this.getWallStatus( new MazeCell( 1, this.getSize().height ), WallDirection.East ).value = true;
+      this.getWallStatus( new MazeCell( 1, this.getSize().height ), Direction.East ).value = true;
       MazeCell cell = new MazeCell( this.getSize().width / 2, this.getSize().height / 2 );
-      this.getWallStatus( cell, WallDirection.West ).value = true;
-      this.getWallStatus( cell, WallDirection.North ).value = true;
+      this.getWallStatus( cell, Direction.West ).value = true;
+      this.getWallStatus( cell, Direction.North ).value = true;
       cell = cell.plusX( 1 );
-      this.getWallStatus( cell, WallDirection.North ).value = true;
-      this.getWallStatus( cell, WallDirection.East ).value = true;
+      this.getWallStatus( cell, Direction.North ).value = true;
+      this.getWallStatus( cell, Direction.East ).value = true;
       cell = cell.plusY( 1 );
-      this.getWallStatus( cell, WallDirection.East ).value = true;
-      this.getWallStatus( cell, WallDirection.South ).value = true;
+      this.getWallStatus( cell, Direction.East ).value = true;
+      this.getWallStatus( cell, Direction.South ).value = true;
       cell = cell.plusX( -1 );
-      this.getWallStatus( cell, WallDirection.South ).value = true;
-      this.getWallStatus( cell, WallDirection.West ).value = true;
+      this.getWallStatus( cell, Direction.South ).value = true;
+      this.getWallStatus( cell, Direction.West ).value = true;
    }
 
    private void initRows( WallStatus[][] array )
@@ -55,72 +56,67 @@ public class MazeModelStub implements MazeModelWriteable
    {
    }
 
-   @Override
-   public boolean isWall( MazeCell cell, WallDirection wall )
+   private WallStatus getWallStatus( MazeCell cell, Direction wall )
    {
-      final WallStatus foundWall = this.getWallStatus( cell, wall );
-      if ( foundWall != null )
-      {
-         return foundWall.value;
-      }
-      return true;
-   }
-
-   @Override
-   public void clearWall( MazeCell cell, WallDirection wall )
-   {
-      this.setWall( cell, wall, false );
-   }
-
-   @Override
-   public void enableWall( MazeCell cell, WallDirection wall )
-   {
-      this.setWall( cell, wall, true );
-   }
-
-   private void setWall( MazeCell cell, WallDirection wall, boolean set )
-   {
-      final WallStatus foundWall = this.getWallStatus( cell, wall );
-      if ( foundWall != null )
-      {
-         foundWall.value = set;
-      }
-   }
-
-   private WallStatus getWallStatus( MazeCell cell, WallDirection wall )
-   {
-      if ( wall == WallDirection.North )
+      if ( wall == Direction.North )
       {
          if ( cell.getY() > 1 )
+         {
             return this.verticalRows[cell.getXZeroBased()][cell.getYZeroBased() - 1];
+         }
       }
-      else if ( wall == WallDirection.South )
+      else if ( wall == Direction.South )
       {
          if ( cell.getYZeroBased() < this.verticalRows[0].length )
+         {
             return this.verticalRows[cell.getXZeroBased()][cell.getYZeroBased()];
+         }
       }
-      else if ( wall == WallDirection.West )
+      else if ( wall == Direction.West )
       {
          if ( cell.getXZeroBased() > 0 )
+         {
             return this.horizontalRows[cell.getYZeroBased()][cell.getXZeroBased() - 1];
+         }
       }
-      else if ( wall == WallDirection.East )
+      else if ( wall == Direction.East )
       {
          if ( cell.getXZeroBased() < this.horizontalRows[0].length )
+         {
             return this.horizontalRows[cell.getYZeroBased()][cell.getXZeroBased()];
+         }
       }
       return null; //No valid wall was found.
    }
 
    static class WallStatus
    {
-      public boolean value = false;
+      boolean value = false;
    }
 
    @Override
-   public boolean isPegLegal( MazeCell cell, PegLocation peg )
+   public MazeWall getWall( final MazeCell cell, final Direction direction )
    {
-      throw new RuntimeException( "Not implemented." );
-   }
+      return new MazeWall()
+      {
 
+         private final WallStatus status = getWallStatus( cell, direction );
+
+         @Override
+         public boolean isSet()
+         {
+            if ( status != null )
+               return this.status.value;
+            else
+               return true;
+         }
+
+         @Override
+         public void set( boolean value )
+         {
+            if ( status != null )
+               this.status.value = value;
+         }
+      };
+   }
 }
