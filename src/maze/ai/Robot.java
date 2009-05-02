@@ -24,7 +24,7 @@ import java.util.*;
 
 import maze.model.Maze;
 
-public class Robot implements RobotInterface
+public class Robot extends RobotBase
 {
    //The robot's knowledge of the maze
    int[] explored;
