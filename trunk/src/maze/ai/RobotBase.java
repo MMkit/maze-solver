@@ -1,6 +1,6 @@
 package maze.ai;
 
-import maze.model.RobotModelClient;
+import maze.model.RobotModel;
 
 /**
  * This is the interface for the robot AI that is used by the GUI.
@@ -8,12 +8,12 @@ import maze.model.RobotModelClient;
 public abstract class RobotBase
 {
 
-   protected RobotModelClient robotLocation;
+   protected RobotModel robotLocation;
 
    /**
     * Sets the instance of the robot model to use.
     */
-   public void setRobotLocation( RobotModelClient model )
+   public void setRobotLocation( RobotModel model )
    {
       this.robotLocation = model;
    }
