@@ -1,9 +1,11 @@
 package maze.gui;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  * This is the primary frame for the application.
@@ -63,8 +65,46 @@ public final class PrimaryFrame extends JFrame
       mouseMenu.add(mouseSave);
       
       // Algorithms
-      JMenuItem mouseAlgorithms = new JMenuItem("AI Algrithms");
+      JMenu mouseAlgorithms = new JMenu("AI Algrithms");
       mouseMenu.add(mouseAlgorithms);
+      
+      // Algorithm Radio buttons
+      ButtonGroup algorithmGroup = new ButtonGroup();
+      
+      // Left-Wall Follower
+      JRadioButtonMenuItem leftWallFollowAI = new JRadioButtonMenuItem("Left-Wall Follower", true);
+      mouseAlgorithms.add(leftWallFollowAI);
+      algorithmGroup.add(leftWallFollowAI);
+      
+      // Right-Wall Follower
+      JRadioButtonMenuItem rightWallFollowAI = new JRadioButtonMenuItem("Right-Wall Follower");
+      mouseAlgorithms.add(rightWallFollowAI);
+      algorithmGroup.add(rightWallFollowAI);
+      
+      // Tremaux's Method
+      JRadioButtonMenuItem tremauxMethodAI = new JRadioButtonMenuItem("Tremaux's Method");
+      mouseAlgorithms.add(tremauxMethodAI);
+      algorithmGroup.add(tremauxMethodAI);
+      
+      // Floodfill
+      JRadioButtonMenuItem floodFillAI = new JRadioButtonMenuItem("Floodfill");
+      mouseAlgorithms.add(floodFillAI);
+      algorithmGroup.add(floodFillAI);
+      
+      // Modified Floodfill
+      JRadioButtonMenuItem mFloodFillAI = new JRadioButtonMenuItem("Modified Floodfill");
+      mouseAlgorithms.add(mFloodFillAI);
+      algorithmGroup.add(mFloodFillAI);
+      
+      // Telly
+      JRadioButtonMenuItem tellyAI = new JRadioButtonMenuItem("Telly");
+      mouseAlgorithms.add(tellyAI);
+      algorithmGroup.add(tellyAI);
+      
+      // Custom?
+      JRadioButtonMenuItem customAI = new JRadioButtonMenuItem("Custom");
+      mouseAlgorithms.add(customAI);
+      algorithmGroup.add(customAI);
       
       // Mouse Speed
       JMenuItem mouseSpeed = new JMenuItem("Mouse Speed");
