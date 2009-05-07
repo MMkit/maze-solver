@@ -3,7 +3,7 @@ package maze.model;
 import java.awt.Dimension;
 
 /**
- * This is a temporary maze model stub used for testing the gui stuff before we
+ * This is a temporary maze model stub used for testing the GUI stuff before we
  * have a real maze model.
  * @author Luke Last
  */
