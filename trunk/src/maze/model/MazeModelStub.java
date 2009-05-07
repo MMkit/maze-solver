@@ -9,7 +9,7 @@ import java.awt.Dimension;
  */
 public class MazeModelStub extends MazeModel
 {
-   private static final int SIZE = 32;
+   private static final int SIZE = 16;
    //Holds vertical wall segments.
    WallStatus[][] horizontalRows = new WallStatus[SIZE][SIZE - 1];
    //Holds horizontal wall segments.

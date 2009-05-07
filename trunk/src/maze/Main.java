@@ -39,7 +39,7 @@ public final class Main
             primaryFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
             primaryFrame.setVisible( true );
 
-            //Test code for the script code editor panel.
+            // Test code for the script code editor panel.
             JFrame f = new JFrame();
             f.add( new CodeEditorPanel() );
             f.setSize( 800, 800 );
