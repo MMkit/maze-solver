@@ -10,12 +10,12 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EnumSet;
+import java.util.Observable;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import maze.model.Direction;
-import maze.model.Maze;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
 import maze.model.PegLocation;
@@ -34,7 +34,7 @@ public class MazeView extends JPanel
    /**
     * The maze model that stores the configuration of the maze.
     */
-   private MazeModel model = new Maze();
+   private MazeModel model = new maze.model.Maze();
    /**
     * This holds the sizes of the cells and walls.
     */
@@ -119,25 +119,48 @@ public class MazeView extends JPanel
     * This is where the graphics of this component gets painted.
     */
    @Override
-   protected void paintComponent( Graphics arg )
+   protected void paintComponent( final Graphics arg )
    {
-      this.csm.setCellWidth( this.getSize().width / this.model.getSize().width );
-      this.csm.setCellHeight( this.getSize().height / this.model.getSize().height );
+      final Graphics2D g = (Graphics2D) arg;
+      this.csm.setCellWidth( this.getWidth() / this.model.getSize().width );
+      this.csm.setCellHeight( this.getHeight() / this.model.getSize().height );
       this.csm.setWallWidth( this.csm.getCellWidth() / 4 );
       this.csm.setWallHeight( this.csm.getCellHeight() / 4 );
-      Graphics2D g = (Graphics2D) arg;
-      g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-      g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
+
+      g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED );
+      //g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+      //g.setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
+      this.redrawAll( g );
+
+   }
+
+   private void redrawAll( final Graphics2D g )
+   {
+      //Fill in the background.
       g.setColor( Color.white );
-      g.fillRect( 0, 0, 1024, 768 );
+      g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
 
       final int mazeWidth = this.model.getSize().width * this.csm.getCellWidth();
       final int mazeHeight = this.model.getSize().height * this.csm.getCellHeight();
-      g.setPaint( new GradientPaint( new Point( 0, 0 ),
-                                     Color.WHITE,
-                                     new Point( mazeWidth / 2, mazeHeight / 2 ),
-                                     new Color( 229, 236, 255 ),
-                                     true ) );
+      final GradientPaint bgPaint = new GradientPaint( new Point( 0, 0 ),
+                                                       Color.WHITE,
+                                                       new Point( mazeWidth / 2, mazeHeight / 2 ),
+                                                       new Color( 229, 236, 255 ),
+                                                       true );
+      final GradientPaint wallPaintEmpty = new GradientPaint( new Point( 0, 0 ), //Gradient start corner.
+                                                              new Color( 229, 236, 255 ), //Really light blue.
+                                                              new Point( mazeWidth / 2,
+                                                                         mazeHeight / 2 ),
+                                                              new Color( 204, 218, 255 ), //Light blue.
+                                                              true );
+      final GradientPaint wallPaintSet = new GradientPaint( new Point( 0, 0 ),
+                                                            new Color( 0, 94, 189 ),
+                                                            new Point( mazeWidth / 2,
+                                                                       mazeHeight / 2 ),
+                                                            new Color( 0, 56, 112 ),
+                                                            true );
+      //Paint the gradient maze background.
+      g.setPaint( bgPaint );
       g.fillRect( 0, 0, mazeWidth, mazeHeight );
 
       for ( int x = 0; x < this.model.getSize().width; x++ )
@@ -175,22 +198,11 @@ public class MazeView extends JPanel
             {
                if ( this.model.getWall( cell, wall ).isSet() )
                {
-                  g.setPaint( new GradientPaint( new Point( 0, 0 ),
-                                                 new Color( 0, 94, 189 ),
-                                                 new Point( mazeWidth / 2, mazeHeight / 2 ),
-                                                 new Color( 0, 56, 112 ),
-                                                 true ) );
+                  g.setPaint( wallPaintSet );
                }
                else
-               {
-                  //No wall is set so paint the light colored wall segment.
-                  final Color lightBlue = new Color( 229, 236, 255 );
-                  final Color blue = new Color( 204, 218, 255 );
-                  g.setPaint( new GradientPaint( new Point( 0, 0 ),
-                                                 lightBlue,
-                                                 new Point( mazeWidth / 2, mazeHeight / 2 ),
-                                                 blue,
-                                                 true ) );
+               { //No wall is set so paint the light colored wall segment.
+                  g.setPaint( wallPaintEmpty );
                }
                g.fill( this.getWallLocation( cell, wall ) );
             }
@@ -210,7 +222,7 @@ public class MazeView extends JPanel
 
          } //End y loop.
       } //End x loop.
-   } //End paintComponent().
+   } //End method.
 
    /**
     * Turns a maze cell into global coordinates for the center of the cell.
@@ -369,7 +381,7 @@ public class MazeView extends JPanel
     * This model stores the sizes of the cells and wall segments that are drawn
     * to the screen.
     */
-   static class CellSizeModel
+   static class CellSizeModel extends Observable
    {
       private int cellWidth = 44;
       private int cellHeight = 50;
@@ -378,30 +390,46 @@ public class MazeView extends JPanel
 
       public void setCellWidth( int cellWidth )
       {
-         this.cellWidth = cellWidth;
-         if ( ( this.cellWidth & 1 ) == 1 )
-            this.cellWidth--;
+         if ( ( cellWidth & 1 ) == 1 )
+            cellWidth--;
+         if ( this.cellWidth != cellWidth )
+         {
+            this.cellWidth = cellWidth;
+            super.setChanged();
+         }
       }
 
       public void setCellHeight( int cellHeight )
       {
-         this.cellHeight = cellHeight;
-         if ( ( this.cellHeight & 1 ) == 1 )
-            this.cellHeight--;
+         if ( ( cellHeight & 1 ) == 1 )
+            cellHeight--;
+         if ( this.cellHeight != cellHeight )
+         {
+            this.cellHeight = cellHeight;
+            super.setChanged();
+         }
       }
 
       public void setWallWidth( int wallWidth )
       {
-         this.wallWidth = wallWidth;
-         if ( ( this.wallWidth & 1 ) == 1 )
-            this.wallWidth++;
+         if ( ( wallWidth & 1 ) == 1 )
+            wallWidth++;
+         if ( this.wallWidth != wallWidth )
+         {
+            this.wallWidth = wallWidth;
+            super.setChanged();
+         }
       }
 
       public void setWallHeight( int wallHeight )
       {
-         this.wallHeight = wallHeight;
-         if ( ( this.wallHeight & 1 ) == 1 )
-            this.wallHeight++;
+         if ( ( wallHeight & 1 ) == 1 )
+            wallHeight++;
+         if ( this.wallHeight != wallHeight )
+         {
+            this.wallHeight = wallHeight;
+            super.setChanged();
+         }
       }
 
       public int getCellWidth()
