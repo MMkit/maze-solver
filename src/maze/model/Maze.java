@@ -3,7 +3,7 @@ package maze.model;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Vector;
-import java.awt.EventQueue;	//used only in the main function
+//import java.awt.EventQueue;	//used only in the main function
 
 /*
  * Maze.java This program is meant to act as a model for the maze in a
@@ -450,6 +450,11 @@ public class Maze extends MazeModel
    {
       throw new RuntimeException( "Not implemented" );
    }
+   
+   public Dimension getSize()
+   {
+	   return new Dimension(width,height);
+   }
 
    @Override
    public MazeWall getWall( final MazeCell cell, final Direction direction )
@@ -460,7 +465,7 @@ public class Maze extends MazeModel
          @Override
          public boolean isSet()
          {
-            return getWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+            return getWall( cell.getX(), cell.getY(), direction.getIndex() );
          }
 
          @Override

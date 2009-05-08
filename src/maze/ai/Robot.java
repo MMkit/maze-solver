@@ -22,7 +22,6 @@ package maze.ai;
 
 import java.util.*;
 import java.awt.*;
-import java.awt.event.*; //only used in the run function
 
 import maze.model.Maze;
 
@@ -277,6 +276,7 @@ public class Robot extends RobotBase
 		  int target2 = target1 + 1;
 		  if( ( (x == target1) || (x ==target2) )
 		      && ( (y == target1) || (y == target2) ) ) {
+			speedRunCapable = true;
 			return true;
 		  }
 		  else {
