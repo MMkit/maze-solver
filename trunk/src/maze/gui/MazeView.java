@@ -34,7 +34,7 @@ public class MazeView extends JPanel implements ComponentListener
 {
    //Temporary model.
 
-   private MazeModel model = new maze.model.MazeModelStub();
+   protected MazeModel model = new maze.model.MazeModelStub();
    /**
     * The maze model that stores the configuration of the maze.
     */
@@ -42,11 +42,11 @@ public class MazeView extends JPanel implements ComponentListener
    /**
     * This holds the sizes of the cells and walls.
     */
-   private final CellSizeModel csm = new CellSizeModel();
+   protected final CellSizeModel csm = new CellSizeModel();
    /**
     * Holds the active cell that the mouse is hovering over.
     */
-   private MazeCell active;
+   protected MazeCell active;
 
    /**
     * True if this MazeView object can edit it's model, false otherwise
@@ -88,10 +88,6 @@ public class MazeView extends JPanel implements ComponentListener
    protected void paintComponent(final Graphics arg)
    {
       final Graphics2D g = (Graphics2D) arg;
-      this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);
-      this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);
-      this.csm.setWallWidth(this.csm.getCellWidth() / 4);
-      this.csm.setWallHeight(this.csm.getCellHeight() / 4);
       this.redrawAll(g);
    }
 
@@ -192,22 +188,23 @@ public class MazeView extends JPanel implements ComponentListener
                if (this.model.getWall(cell, wall).isSet())
                   g.fill(this.getWallLocation(cell, wall));
 
-            //Draw the yellow hover box. This could get axed.
-            if (this.active != null && this.active.equals(cell))
-            {
-               g.setColor(Color.YELLOW);
-               g.fillRect(cell.getXZeroBased() *
-                       this.csm.getCellWidth() +
-                       this.csm.getWallWidthHalf(),
-                          cell.getYZeroBased() *
-                       this.csm.getCellHeight() +
-                       this.csm.getWallHeightHalf(),
-                          this.csm.getCellWidth() - this.csm.getWallWidth(),
-                          this.csm.getCellHeight() - this.csm.getWallHeight());
-            }
+            
 
          } //End y loop.
       } //End x loop.
+      //Draw the yellow hover box. This could get axed.
+      if (this.active != null)
+      {
+         g.setColor(Color.YELLOW);
+         g.fillRect(active.getXZeroBased() *
+                 this.csm.getCellWidth() +
+                 this.csm.getWallWidthHalf(),
+                    active.getYZeroBased() *
+                 this.csm.getCellHeight() +
+                 this.csm.getWallHeightHalf(),
+                    this.csm.getCellWidth() - this.csm.getWallWidth(),
+                    this.csm.getCellHeight() - this.csm.getWallHeight());
+      }
    } //End method.
 
    /**
@@ -270,7 +267,7 @@ public class MazeView extends JPanel implements ComponentListener
    /**
     * Get the absolute region of a peg with respect to the given maze cell.
     */
-   private Rectangle getPegRegion(MazeCell cell, PegLocation peg)
+   protected Rectangle getPegRegion(MazeCell cell, PegLocation peg)
    {
       if (peg == PegLocation.TopLeft)
       {
@@ -319,7 +316,7 @@ public class MazeView extends JPanel implements ComponentListener
     * Converts a mouse pointer position into the maze cell that it is in.
     * @throws Exception If the pointer location is not within the maze.
     */
-   private MazeCell getHostMazeCell(Point pointerLocation) throws Exception
+   protected MazeCell getHostMazeCell(Point pointerLocation) throws Exception
    {
       MazeCell cell = new MazeCell((pointerLocation.x / this.csm.getCellWidth()) + 1,
                                    (pointerLocation.y / this.csm.getCellHeight()) + 1);
@@ -357,7 +354,7 @@ public class MazeView extends JPanel implements ComponentListener
     * @return
     * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.
     */
-   private MazeWall getWall(Point mouseLocation) throws Exception
+   protected MazeWall getWall(Point mouseLocation) throws Exception
    {
       final MazeCell cell = getHostMazeCell(mouseLocation);
       return model.getWall(cell, getWallDirection(cell, mouseLocation));
@@ -371,6 +368,10 @@ public class MazeView extends JPanel implements ComponentListener
    public void componentResized(ComponentEvent e)
    {
       background = null;
+      this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);
+      this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);
+      this.csm.setWallWidth(this.csm.getCellWidth() / 4);
+      this.csm.setWallHeight(this.csm.getCellHeight() / 4);
    }
 
    @Override
@@ -442,8 +443,10 @@ public class MazeView extends JPanel implements ComponentListener
       } // if (editable)
       else
       {
+         active = null;
          this.removeMouseListener(mouseAdapter);
          this.removeMouseMotionListener(mouseAdapter);
+         repaint();
       } // else
    }
 
@@ -451,7 +454,7 @@ public class MazeView extends JPanel implements ComponentListener
     * This model stores the sizes of the cells and wall segments that are drawn
     * to the screen.
     */
-   static class CellSizeModel extends Observable
+   public static class CellSizeModel extends Observable
    {
 
       private int cellWidth = 44;
