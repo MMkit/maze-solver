@@ -134,8 +134,10 @@ public final class PrimaryFrame extends JFrame
       this.setSize(1000, 750);
 
       JTabbedPane jtp = new JTabbedPane();
+      this.add(jtp);
       jtp.add("Maze View", new MazeView());
       jtp.add("Maze Editor", new MazeEditor());
-      add(jtp);
+      jtp.add("AI Script Editor", new CodeEditorPanel());
+
    }
 }
