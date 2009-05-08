@@ -10,7 +10,8 @@ public enum Direction
    North( 0 ),
    South( 2 ),
    East( 1 ),
-   West( 3 );
+   West( 3 ),
+   Directionless( 4 );
    private final int index;
 
    private Direction( int index )

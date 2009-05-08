@@ -9,6 +9,7 @@ public abstract class RobotBase
 {
 
    protected RobotModel robotLocation;
+   protected boolean speedRun = false;
 
    /**
     * Sets the instance of the robot model to use.
@@ -43,5 +44,10 @@ public abstract class RobotBase
    public boolean isInTurboMode()
    {
       return false;
+   }
+   
+   public void setSpeedRun(boolean choice)
+   {
+	   speedRun = choice;
    }
 }

@@ -1,7 +1,10 @@
 package maze.model;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+
+import maze.ai.RobotStep;
 
 /**
  * @author Luke Last
@@ -14,6 +17,11 @@ public class RobotModel
    public RobotModel( RobotModelMaster parent )
    {
       this.parent = parent;
+   }
+   
+   public Dimension getMazeSize()
+   {
+	   return this.parent.getMazeSize();
    }
 
    public boolean isWallFront()
@@ -36,6 +44,26 @@ public class RobotModel
       return this.parent.isWallRight();
    }
 
+   public boolean isWallNorth(MazeCell location)
+   {
+      return this.parent.isWallNorth(location);
+   }
+
+   public boolean isWallSouth(MazeCell location)
+   {
+      return this.parent.isWallSouth(location);
+   }
+
+   public boolean isWallEast(MazeCell location)
+   {
+      return this.parent.isWallEast(location);
+   }
+
+   public boolean isWallWest(MazeCell location)
+   {
+      return this.parent.isWallWest(location);
+   }
+
    public MazeCell getCurrentLocation()
    {
       return this.parent.getCurrentLocation();
@@ -54,5 +82,9 @@ public class RobotModel
    public List<MazeCell> getPathTaken()
    {
       return new ArrayList<MazeCell>( this.parent.getPathTaken() );
+   }
+
+   public void takeNextStep(RobotStep nextStep) {
+	   this.parent.takeNextStep(nextStep);
    }
 }
