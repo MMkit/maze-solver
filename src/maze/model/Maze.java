@@ -461,7 +461,6 @@ public class Maze extends MazeModel
    {
       return new MazeWall()
       {
-
          @Override
          public boolean isSet()
          {
@@ -480,6 +479,7 @@ public class Maze extends MazeModel
                clearWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
             }
          }
+
       };
    }
 }
