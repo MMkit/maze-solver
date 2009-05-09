@@ -1,12 +1,13 @@
 package maze.model;
 
 import java.awt.Dimension;
+import java.util.Observable;
 
 /**
  * This is a potential new design for the model API.
  * @author Luke Last
  */
-public abstract class MazeModel
+public abstract class MazeModel extends Observable
 {
    protected int width = 16;
    protected int height = 16;
