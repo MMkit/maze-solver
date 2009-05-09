@@ -3,14 +3,11 @@ package maze.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 
@@ -22,6 +19,8 @@ import maze.gui.mazeeditor.MazeEditor;
  */
 public final class PrimaryFrame extends JFrame
 {
+   private final MazeViewerPanel mazeViewer = new MazeViewerPanel();
+
    /**
     * Constructor.
     */
@@ -134,7 +133,7 @@ public final class PrimaryFrame extends JFrame
       mouseMenu.add(mouseDisplay);
 
       //Add the start animation item.
-      mouseMenu.add(this.startAnimationAction);
+      mouseMenu.add(this.mazeViewer.startAnimationAction);
 
       this.setJMenuBar(menuBar);
 
@@ -143,7 +142,7 @@ public final class PrimaryFrame extends JFrame
       JTabbedPane jtp = new JTabbedPane();
       this.add(jtp);
 
-      jtp.add("Maze Viewer", new MazeViewerPanel(this));
+      jtp.add("Maze Viewer", this.mazeViewer);
       jtp.add("Maze Editor", new MazeEditor());
       jtp.add("AI Script Editor", new CodeEditorPanel());
    }
@@ -159,20 +158,4 @@ public final class PrimaryFrame extends JFrame
       return Main.getPrimaryFrameInstance().getMazeList();
    }
 
-   /**
-    * An action used to create menu items and buttons to start the robot
-    * animation sequence.
-    */
-   final Action startAnimationAction = new AbstractAction()
-   {
-      {
-         this.putValue(Action.NAME, "Start Mouse Animation");
-      }
-
-      @Override
-      public void actionPerformed(ActionEvent e)
-      {
-         JOptionPane.showMessageDialog(PrimaryFrame.this, "I don't feel like it.");
-      }
-   };
 }
