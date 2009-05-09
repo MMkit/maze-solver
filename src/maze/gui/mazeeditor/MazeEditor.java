@@ -18,23 +18,30 @@ import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import maze.Main;
+import maze.gui.PrimaryFrame;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 
@@ -79,33 +86,18 @@ public class MazeEditor extends JPanel
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
 
-      mOpenMazes = new JList();
+      mOpenMazes = createOpenMazeList();
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
       rightPanel.add(mOpenMazes, BorderLayout.CENTER);
-      JButton newMaze = new JButton("New Maze");
-      newMaze.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            String newName = "";
-            while (newName.equals(""))
-               newName = JOptionPane.showInputDialog(null,
-                        "What would you like to call you're new maze?",
-                        "New Maze", JOptionPane.QUESTION_MESSAGE);
-            MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
-            mOpenMazes.setSelectedValue(mim.createNew(newName), true);
-         }
-      });
+      
 
-      rightPanel.add(newMaze, BorderLayout.SOUTH);
+      rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
       mOpenMazes.setBorder(new TitledBorder("Mazes"));
       splitPane.setRightComponent(rightPanel);
       splitPane.addPropertyChangeListener("dividerLocation",
                                           new PropertyChangeListener()
       {
-
          @Override
          public void propertyChange(PropertyChangeEvent evt)
          {
@@ -144,10 +136,6 @@ public class MazeEditor extends JPanel
       bg.setSelected(tb.getModel(), true);
       tBar.add(tb);
 
-      mMazeView = new EditableMazeView();
-
-
-
       for (MazeTemplate mt : mTemplates)
       {
          Image iconImage = mt.getTemplateIcon().getImage();
@@ -161,86 +149,12 @@ public class MazeEditor extends JPanel
 
       add(tBar, BorderLayout.WEST);
 
-      mMouseAdapter = new MouseAdapter()
-      {
-         @Override
-         public void mouseMoved(MouseEvent e)
-         {
-            if (mCurrentTemplate != null)
-            {
-               mCurrentTemplate.updatePosition(e.getPoint());
-               mMazeView.repaint();
-            }
-         } // public void mouseMoved(MouseEvent e)
-
-         @Override
-         public void mouseDragged(MouseEvent e)
-         {
-            if (mCurrentTemplate != null)
-            {
-               boolean left = SwingUtilities.isLeftMouseButton(e);
-               boolean right = SwingUtilities.isRightMouseButton(e);
-               mMazeView.repaint();
-            }
-         } // public void mouseDragged(MouseEvent e)
-
-         @Override
-         public void mousePressed(MouseEvent e)
-         {
-            if (mCurrentTemplate != null)
-            {
-               if (e.getButton() == MouseEvent.BUTTON2)
-                  mCurrentTemplate.nextOrientation();
-               else if (e.getButton() == MouseEvent.BUTTON1)
-                  mMazeView.applyTemplate(true);
-               else if (e.getButton() == MouseEvent.BUTTON3)
-                  mMazeView.applyTemplate(false);
-               mMazeView.repaint();
-            }
-         } // public void mousePressed(MouseEvent e)
-
-         @Override
-         public void mouseWheelMoved(MouseWheelEvent e)
-         {
-            if (mCurrentTemplate == null)
-               return;
-            int amount = e.getWheelRotation();
-            boolean neg = amount < 0;
-            amount = Math.abs(amount);
-            for (int i = 0; i < amount; i++)
-            {
-               if (neg)
-                  mCurrentTemplate.grow();
-               else
-                  mCurrentTemplate.shrink();
-            }
-            mMazeView.repaint();
-         }
-
-      };
+      mMouseAdapter = new TemplateMouseAdapter();
+      
       mMazeView.addMouseListener(mMouseAdapter);
       mMazeView.addMouseMotionListener(mMouseAdapter);
       mMazeView.addMouseWheelListener(mMouseAdapter);
 
-      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
-                              .getMazeInfoComboBoxModel();
-      mOpenMazes.setCellRenderer(new OpenMazeRender());
-      mOpenMazes.setModel(cbm);
-      mOpenMazes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-      //mMazeView.setModel(Main.getPrimaryFrameInstance().getMazeInfoModel().createNew("Test").getModel());
-
-      mOpenMazes.addListSelectionListener(new ListSelectionListener()
-      {
-         @Override
-         public void valueChanged(ListSelectionEvent e)
-         {
-            int index = e.getFirstIndex();
-            Object o = mOpenMazes.getModel().getElementAt(index);
-            MazeInfo mi = (MazeInfo)o;
-            mMazeView.setModel(mi.getModel());
-         }
-      });
 
    } // void buildPanel()
 
@@ -262,6 +176,84 @@ public class MazeEditor extends JPanel
          
    }
 
+   private JButton makeNewMazeButton()
+   {
+      JButton newMaze = new JButton("New Maze");
+      newMaze.addActionListener(new ActionListener()
+      {
+         private String query = "What would you like to call your new maze?";
+         private Box messagePanel;
+         private JTextField input = new JTextField();
+
+         {
+            JLabel message = new JLabel(query);
+            messagePanel = new Box(BoxLayout.Y_AXIS);
+            messagePanel.add(message);
+            messagePanel.add(input);
+            input.addAncestorListener(new AncestorListener()
+            {
+               @Override
+               public void ancestorAdded(AncestorEvent event)
+               {
+                  input.requestFocus();
+               }
+
+               @Override
+               public void ancestorRemoved(AncestorEvent event){}
+               @Override
+               public void ancestorMoved(AncestorEvent event){}
+            });
+         }
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            input.setText("");
+            PrimaryFrame instance = Main.getPrimaryFrameInstance();
+            String newName = "";
+            while (newName.equals(""))
+            {
+               int result = JOptionPane.showConfirmDialog(instance,
+                        messagePanel, "New Maze", JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+               if (result == JOptionPane.OK_OPTION)
+                  newName = input.getText();
+               else
+                  return;
+            }
+            MazeInfoModel mim = instance.getMazeInfoModel();
+            mOpenMazes.setSelectedValue(mim.createNew(newName), true);
+         }
+      });
+      return newMaze;
+   }
+
+   private JList createOpenMazeList()
+   {
+      final JList newList = new JList();
+      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
+                              .getMazeInfoComboBoxModel();
+      newList.setCellRenderer(new OpenMazeRender());
+      newList.setModel(cbm);
+      newList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+      newList.getSelectionModel().addListSelectionListener(
+      new ListSelectionListener()
+      {
+         @Override
+         public void valueChanged(ListSelectionEvent e)
+         {
+            int index = ((ListSelectionModel)e.getSource()).getMaxSelectionIndex();
+            if (index == -1)
+               return;
+            Object o = newList.getModel().getElementAt(index);
+            MazeInfo mi = (MazeInfo)o;
+            System.out.println("Changing model to" + mi.getName());
+            mMazeView.setModel(mi.getModel());
+         }
+      });
+      return newList;
+   }
+
    class TemplateActionListener implements ActionListener
    {
       private MazeTemplate mt;
@@ -274,6 +266,63 @@ public class MazeEditor extends JPanel
       public void actionPerformed(ActionEvent e)
       {
          setTemplate(mt);
+      }
+   }
+
+   private class TemplateMouseAdapter extends MouseAdapter
+   {
+      @Override
+      public void mouseMoved(MouseEvent e)
+      {
+         if (mCurrentTemplate != null)
+         {
+            mCurrentTemplate.updatePosition(e.getPoint());
+            mMazeView.repaint();
+         }
+      } // public void mouseMoved(MouseEvent e)
+
+      @Override
+      public void mouseDragged(MouseEvent e)
+      {
+         if (mCurrentTemplate != null)
+         {
+            boolean left = SwingUtilities.isLeftMouseButton(e);
+            boolean right = SwingUtilities.isRightMouseButton(e);
+            mMazeView.repaint();
+         }
+      } // public void mouseDragged(MouseEvent e)
+
+      @Override
+      public void mousePressed(MouseEvent e)
+      {
+         if (mCurrentTemplate != null)
+         {
+            if (e.getButton() == MouseEvent.BUTTON2)
+               mCurrentTemplate.nextOrientation();
+            else if (e.getButton() == MouseEvent.BUTTON1)
+               mMazeView.applyTemplate(true);
+            else if (e.getButton() == MouseEvent.BUTTON3)
+               mMazeView.applyTemplate(false);
+            mMazeView.repaint();
+         }
+      } // public void mousePressed(MouseEvent e)
+
+      @Override
+      public void mouseWheelMoved(MouseWheelEvent e)
+      {
+         if (mCurrentTemplate == null)
+            return;
+         int amount = e.getWheelRotation();
+         boolean neg = amount < 0;
+         amount = Math.abs(amount);
+         for (int i = 0; i < amount; i++)
+         {
+            if (neg)
+               mCurrentTemplate.grow();
+            else
+               mCurrentTemplate.shrink();
+         }
+         mMazeView.repaint();
       }
    }
 
