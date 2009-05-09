@@ -64,6 +64,9 @@ public enum Direction
       }
    }
 
+   /**
+    * Get the opposite direction.
+    */
    public Direction getOpposite()
    {
       switch ( this )
@@ -76,6 +79,26 @@ public enum Direction
             return North;
          case West :
             return East;
+         default :
+            throw new RuntimeException( "Unkown Direction: " + this );
+      }
+   }
+   
+   /**
+    * Turn the current direction into Radians.
+    */
+   public double getRadians()
+   {
+      switch ( this )
+      {
+         case North :
+            return Math.PI * 1.5;
+         case East :
+            return 0;
+         case South :
+            return Math.PI / 2;
+         case West :
+            return Math.PI;
          default :
             throw new RuntimeException( "Unkown Direction: " + this );
       }

@@ -1,20 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.net.URL;
+
 import javax.swing.ImageIcon;
+
 import maze.gui.CellSize;
 
 /**
  *
- * @author desolc
+ * @author John Smith
  */
 public abstract class MazeTemplate
 {

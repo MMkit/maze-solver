@@ -2,7 +2,10 @@ package maze.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,7 +23,7 @@ public class MazeViewerPanel extends JPanel
    private static final int SIDEBAR_WIDTH = 150;
    private final MazeView myMazeView = new MazeView();
 
-   public MazeViewerPanel(PrimaryFrame primaryFrame)
+   public MazeViewerPanel()
    {
       this.setLayout(new BorderLayout());
       this.add(this.myMazeView);
@@ -52,7 +55,7 @@ public class MazeViewerPanel extends JPanel
 
       //Add the start animation button.
       final JPanel startButtonPanel = new JPanel(new BorderLayout());
-      startButtonPanel.add(new JButton(primaryFrame.startAnimationAction), BorderLayout.NORTH);
+      startButtonPanel.add(new JButton(this.startAnimationAction), BorderLayout.NORTH);
       sidePanel.add(startButtonPanel);
 
       //Temporary
@@ -66,5 +69,35 @@ public class MazeViewerPanel extends JPanel
       });
 
    }
+
+   /**
+    * An action used to create menu items and buttons to start the robot
+    * animation sequence.
+    */
+   final Action startAnimationAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Start Mouse Animation");
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         this.setEnabled(false);
+         //Create a callback to enable the action after the animator is done running.
+         Runnable callback = new Runnable()
+         {
+            @Override
+            public void run()
+            {
+               startAnimationAction.setEnabled(true);
+            }
+         };
+         //TODO Will have to save this reference somewhere so we can talk to it later.
+         RobotAnimator animator = new RobotAnimator(myMazeView, callback);
+         animator.start();
+
+      }
+   };
 
 }
