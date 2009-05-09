@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import maze.ai.LeftWallFollower;
 import maze.ai.RobotController;
+import maze.model.Direction;
 import maze.model.RobotModelMaster;
 
 /**
@@ -22,7 +23,7 @@ public final class RobotAnimator extends Thread
    /**
     * The time to sleep between rendering frames.
     */
-   private int sleepTime = 1000 / 60;
+   private int sleepTime = 1000 / 50;
 
    /**
     * Number of frames of animation to display between steps.
@@ -54,13 +55,22 @@ public final class RobotAnimator extends Thread
          {
             //Get the robots current position.
             final Point srcLocation = this.view.getCellCenter(model.getCurrentLocation());
-            final double srcRotation = model.getDirection().getRadians();
+            final Direction srcDirection = model.getDirection();
+            final double srcRotation = srcDirection.getRadians();
 
             controller.nextStep(); //Move robot.
 
             //Get the robots new position.
             final Point destLocation = this.view.getCellCenter(model.getCurrentLocation());
-            final double destRotation = model.getDirection().getRadians();
+            final Direction destDirection = model.getDirection();
+            //Set our new rotation based on which way we turned.
+            final double destRotation;
+            if (srcDirection.getLeft() == destDirection)
+               destRotation = srcRotation - Math.PI / 2;
+            else if (srcDirection.getRight() == destDirection)
+               destRotation = srcRotation + Math.PI / 2;
+            else
+               destRotation = srcRotation; //Didn't rotate.
 
             //Increment is fraction at a time to the destination position.
             for (int inc = 1; inc <= this.movesPerStep; inc++)
