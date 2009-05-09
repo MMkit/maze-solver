@@ -3,6 +3,4 @@
 
 = UML =
 
-http://maze-solver.googlecode.com/files/maze-model-interface-uml.png
-
-The above diagram shows the UML for the Maze Model Interfaces. It is broken up into 2 parts, the getter methods and the setter methods. This allows an immutable reference of the model to be passed to code that should not be changing it.
+http://maze-solver.googlecode.com/files/Class%20Diagram%20Master.png
