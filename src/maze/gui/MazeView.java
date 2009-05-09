@@ -104,6 +104,8 @@ public class MazeView extends JPanel implements ComponentListener
    public void setModel(MazeModel model)
    {
       this.model = model;
+      componentResized(null);
+      repaint();
    }
 
    /**
@@ -142,8 +144,13 @@ public class MazeView extends JPanel implements ComponentListener
    @Override
    protected void paintComponent(final Graphics arg)
    {
-      final Graphics2D g = (Graphics2D) arg;
-      this.redrawAll(g);
+      if (model != null)
+      {
+         final Graphics2D g = (Graphics2D) arg;
+         this.redrawAll(g);
+      }
+      else
+         super.paintComponent(arg);
    }
 
    /**
@@ -246,6 +253,9 @@ public class MazeView extends JPanel implements ComponentListener
                     this.csm.getCellWidth() - this.csm.getWallWidth(),
                     this.csm.getCellHeight() - this.csm.getWallHeight());
       }
+
+      if (editable)
+         return;
 
       // Draw the robot onto the maze.
       if (this.robotLocation != null)
@@ -414,6 +424,8 @@ public class MazeView extends JPanel implements ComponentListener
    @Override
    public void componentResized(ComponentEvent e)
    {
+      if (model == null)
+         return;
       background = null;
       this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);
       this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);
@@ -454,6 +466,8 @@ public class MazeView extends JPanel implements ComponentListener
             @Override
             public void mouseMoved(MouseEvent e)
             {
+               if (model == null)
+                  return;
                try
                {
                   active = getHostMazeCell(e.getPoint());
@@ -467,6 +481,8 @@ public class MazeView extends JPanel implements ComponentListener
             @Override
             public void mouseDragged(MouseEvent e)
             {
+               if (model == null)
+                  return;
                try
                {
                   active = getHostMazeCell(e.getPoint());
@@ -485,6 +501,8 @@ public class MazeView extends JPanel implements ComponentListener
             @Override
             public void mousePressed(MouseEvent e)
             {
+               if (model == null)
+                  return;
                try
                {
                   final MazeWall wall = getWall(e.getPoint());

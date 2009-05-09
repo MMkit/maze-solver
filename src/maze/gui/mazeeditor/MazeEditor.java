@@ -5,6 +5,7 @@
 package maze.gui.mazeeditor;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +19,24 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import maze.Main;
+import maze.model.MazeInfo;
+import maze.model.MazeInfoModel;
 
 /**
  *
@@ -66,11 +77,29 @@ public class MazeEditor extends JPanel
       mMazeView = new EditableMazeView();
       mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
+      mMazeView.setModel(null);
 
       mOpenMazes = new JList();
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
       rightPanel.add(mOpenMazes, BorderLayout.CENTER);
+      JButton newMaze = new JButton("New Maze");
+      newMaze.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            String newName = "";
+            while (newName.equals(""))
+               newName = JOptionPane.showInputDialog(null,
+                        "What would you like to call you're new maze?",
+                        "New Maze", JOptionPane.QUESTION_MESSAGE);
+            MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
+            mOpenMazes.setSelectedValue(mim.createNew(newName), true);
+         }
+      });
+
+      rightPanel.add(newMaze, BorderLayout.SOUTH);
       mOpenMazes.setBorder(new TitledBorder("Mazes"));
       splitPane.setRightComponent(rightPanel);
       splitPane.addPropertyChangeListener("dividerLocation",
@@ -114,6 +143,10 @@ public class MazeEditor extends JPanel
       bg.add(tb);
       bg.setSelected(tb.getModel(), true);
       tBar.add(tb);
+
+      mMazeView = new EditableMazeView();
+
+
 
       for (MazeTemplate mt : mTemplates)
       {
@@ -188,6 +221,27 @@ public class MazeEditor extends JPanel
       mMazeView.addMouseListener(mMouseAdapter);
       mMazeView.addMouseMotionListener(mMouseAdapter);
       mMazeView.addMouseWheelListener(mMouseAdapter);
+
+      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
+                              .getMazeInfoComboBoxModel();
+      mOpenMazes.setCellRenderer(new OpenMazeRender());
+      mOpenMazes.setModel(cbm);
+      mOpenMazes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+      //mMazeView.setModel(Main.getPrimaryFrameInstance().getMazeInfoModel().createNew("Test").getModel());
+
+      mOpenMazes.addListSelectionListener(new ListSelectionListener()
+      {
+         @Override
+         public void valueChanged(ListSelectionEvent e)
+         {
+            int index = e.getFirstIndex();
+            Object o = mOpenMazes.getModel().getElementAt(index);
+            MazeInfo mi = (MazeInfo)o;
+            mMazeView.setModel(mi.getModel());
+         }
+      });
+
    } // void buildPanel()
 
    private void setTemplate(MazeTemplate mt)
@@ -222,4 +276,24 @@ public class MazeEditor extends JPanel
          setTemplate(mt);
       }
    }
+
+   private static class OpenMazeRender extends DefaultListCellRenderer
+   {
+
+      @Override
+      public Component getListCellRendererComponent(JList list, Object value,
+                                             int index, boolean isSelected,
+                                             boolean cellHasFocus)
+      {
+         MazeInfo mi = (MazeInfo)value;
+         String postfix = "";
+         if (mi.isDirty())
+            postfix = "*";
+         return super.getListCellRendererComponent(list, mi.getName() + postfix,
+                                                   index, isSelected,
+                                                   cellHasFocus);
+      }
+
+   }
+
 }
