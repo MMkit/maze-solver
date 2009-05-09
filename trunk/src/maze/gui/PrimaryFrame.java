@@ -11,8 +11,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 
-import maze.Main;
 import maze.gui.mazeeditor.MazeEditor;
+import maze.model.MazeInfoModel;
 
 /**
  * This is the primary frame for the application.
@@ -20,11 +20,18 @@ import maze.gui.mazeeditor.MazeEditor;
 public final class PrimaryFrame extends JFrame
 {
    private final MazeViewerPanel mazeViewer = new MazeViewerPanel();
+   private MazeInfoModel mMazeInfoModel = new MazeInfoModel();
 
    /**
     * Constructor.
     */
-   public PrimaryFrame()
+   public PrimaryFrame(){}
+
+
+   /**
+    * Initlaizes the contents of this frame.
+    */
+   public void init()
    {
       // menu bar
       JMenuBar menuBar = new JMenuBar();
@@ -148,14 +155,13 @@ public final class PrimaryFrame extends JFrame
    }
 
    /**
-    * Gets the global master list of current mazes.<br>
-    * TODO: This should actually return a custom object with a method to get a
-    * ListModel.
+    * Returns a MazeInfoModel object containing all of the currently loaded
+    * mazes.
+    * @return said MazeInfoModel object.
     */
-   public javax.swing.ListModel getMazeList()
+   public MazeInfoModel getMazeInfoModel()
    {
-      //Example for calling this method. Gotta live infinite recursion.
-      return Main.getPrimaryFrameInstance().getMazeList();
+      return mMazeInfoModel;
    }
 
 }

@@ -35,6 +35,7 @@ public final class Main
          public void run()
          {
             primaryFrame = new PrimaryFrame();
+            primaryFrame.init();
             primaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             primaryFrame.setVisible(true);
          }
