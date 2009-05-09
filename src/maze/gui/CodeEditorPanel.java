@@ -67,7 +67,7 @@ public class CodeEditorPanel extends JSplitPane
       //Set up split pane.
       this.setLeftComponent(scrollPane);
       this.setRightComponent(docTabs);
-      //TODO set divider location.
+      this.setResizeWeight(.8);
 
       JMenuItem menuItem = new JMenuItem("Analyze Object");
       this.textArea.getPopupMenu().addSeparator();
