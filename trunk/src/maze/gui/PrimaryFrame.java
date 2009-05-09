@@ -3,13 +3,18 @@ package maze.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
+
+import maze.Main;
 import maze.gui.mazeeditor.MazeEditor;
 
 /**
@@ -17,7 +22,6 @@ import maze.gui.mazeeditor.MazeEditor;
  */
 public final class PrimaryFrame extends JFrame
 {
-
    /**
     * Constructor.
     */
@@ -129,15 +133,46 @@ public final class PrimaryFrame extends JFrame
       JMenuItem mouseDisplay = new JMenuItem("Display Settings");
       mouseMenu.add(mouseDisplay);
 
+      //Add the start animation item.
+      mouseMenu.add(this.startAnimationAction);
+
       this.setJMenuBar(menuBar);
 
       this.setSize(1000, 750);
 
       JTabbedPane jtp = new JTabbedPane();
       this.add(jtp);
-      jtp.add("Maze View", new MazeView());
+
+      jtp.add("Maze Viewer", new MazeViewerPanel(this));
       jtp.add("Maze Editor", new MazeEditor());
       jtp.add("AI Script Editor", new CodeEditorPanel());
-
    }
+
+   /**
+    * Gets the global master list of current mazes.<br>
+    * TODO: This should actually return a custom object with a method to get a
+    * ListModel.
+    */
+   public javax.swing.ListModel getMazeList()
+   {
+      //Example for calling this method. Gotta live infinite recursion.
+      return Main.getPrimaryFrameInstance().getMazeList();
+   }
+
+   /**
+    * An action used to create menu items and buttons to start the robot
+    * animation sequence.
+    */
+   final Action startAnimationAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Start Mouse Animation");
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         JOptionPane.showMessageDialog(PrimaryFrame.this, "I don't feel like it.");
+      }
+   };
 }
