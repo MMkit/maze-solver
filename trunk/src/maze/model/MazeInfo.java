@@ -20,7 +20,7 @@ import java.util.Observer;
  */
 public class MazeInfo implements Observer
 {
-   private Maze mModel;
+   private MazeModel mModel;
    private String mPath;
    private String mName;
    private boolean isDirty = false;
@@ -56,14 +56,15 @@ public class MazeInfo implements Observer
       MazeInfo mi = new MazeInfo();
       mi.mName = name;
       mi.mPath = "";
-      mi.mModel = new Maze();
+      mi.mModel = new MazeModelStub();
       mi.isDirty = true;
       return mi;
    }
 
    public boolean store()
    {
-      boolean success = false;
+      return true;
+      /*boolean success = false;
       DataOutputStream dos;
       try
       {
@@ -81,7 +82,7 @@ public class MazeInfo implements Observer
       }
       catch(Exception ex){}
 
-      return success;
+      return success;*/
    }
 
    public String getName()
@@ -106,7 +107,13 @@ public class MazeInfo implements Observer
 
    public void setPath(String path)
    {
-      mPath = path;
+      if (mPath.equalsIgnoreCase(path))
+         return;
+      else
+      {
+         mPath = path;
+         isDirty = true;
+      }
    }
 
    private MazeInfo(){}
