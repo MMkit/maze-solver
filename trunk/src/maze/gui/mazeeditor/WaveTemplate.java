@@ -5,49 +5,25 @@
 
 package maze.gui.mazeeditor;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.net.URL;
-import java.util.TreeSet;
 import javax.swing.ImageIcon;
-import maze.gui.CellSize;
 
 /**
  *
  * @author desolc
  */
-public class WaveTemplate extends MazeTemplate
+public class WaveTemplate extends ConjointedMazeTemplate
 {
-   private TemplatePeg mCenter = null;
-   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 0;
    private int mSize = MIN_SIZE;
    private int rotation = 0;
 
    public WaveTemplate()
    {
-      URL iconResource = BoxTemplate.class.getResource("images/Wave.png");
+      URL iconResource = MazeTemplate.class.getResource("images/Wave.png");
       this.mIcon = new ImageIcon(iconResource);
       this.mDesc = "Square Wave";
       updateTemplate();
-   }
-
-   @Override
-   public TemplatePeg[] getCenterPegs()
-   {
-      return new TemplatePeg[]{mCenter};
-   }
-
-   @Override
-   public Point[] getCenterPoints()
-   {
-      return new Point[]{mCenterPoint};
-   }
-
-   @Override
-   public void updatePosition(Point p, CellSize size)
-   {
-      mCenterPoint = (Point)p.clone();
    }
 
    @Override
@@ -72,18 +48,6 @@ public class WaveTemplate extends MazeTemplate
          mSize--;
          updateTemplate();
       }
-   }
-
-   @Override
-   public void draw(Graphics2D g, CellSize size)
-   {
-      g.translate(mCenterPoint.x-size.getWallWidth(),
-                  mCenterPoint.y-size.getWallHeightHalf());
-
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      drawPeg(mCenter,visited, g, size);
-      g.translate(-(mCenterPoint.x-size.getWallWidth()),
-                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -140,7 +104,7 @@ public class WaveTemplate extends MazeTemplate
          walls[i] = new TemplateWall();
       }
       
-      if (rotation == 0 || rotation == 1)
+      if (rotation < 2)
       {
          walls[0].mLeftBottom = center;
          walls[0].mRightTop = pegs[0];

@@ -5,26 +5,20 @@
 
 package maze.gui.mazeeditor;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.net.URL;
-import java.util.TreeSet;
 import javax.swing.ImageIcon;
-import maze.gui.CellSize;
 
 /**
  *
  * @author desolc
  */
-public class CrossTemplate extends MazeTemplate
+public class CrossTemplate extends ConjointedMazeTemplate
 {
-   private TemplatePeg mCenter = null;
-   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;
    public CrossTemplate()
    {
-      URL iconResource = BoxTemplate.class.getResource("images/Cross.png");
+      URL iconResource = MazeTemplate.class.getResource("images/Cross.png");
       this.mIcon = new ImageIcon(iconResource);
       this.mDesc = "Cross";
       updateTemplate();
@@ -47,18 +41,6 @@ public class CrossTemplate extends MazeTemplate
          mSize--;
          updateTemplate();
       }
-   }
-
-   @Override
-   public void draw(Graphics2D g, CellSize size)
-   {
-      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
-                  mCenterPoint.y-size.getWallHeightHalf());
-
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      drawPeg(mCenter,visited, g, size);
-      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
-                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -127,23 +109,5 @@ public class CrossTemplate extends MazeTemplate
          newWall.mLeftBottom = newPeg;
          last = newPeg;
       }
-   }
-
-   @Override
-   public TemplatePeg[] getCenterPegs()
-   {
-      return new TemplatePeg[]{mCenter};
-   }
-
-   @Override
-   public Point[] getCenterPoints()
-   {
-      return new Point[]{mCenterPoint};
-   }
-
-   @Override
-   public void updatePosition(Point p, CellSize size)
-   {
-      mCenterPoint = (Point)p.clone();
    }
 }

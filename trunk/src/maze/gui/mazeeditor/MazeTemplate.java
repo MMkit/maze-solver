@@ -21,7 +21,7 @@ public abstract class MazeTemplate
    protected String mDesc = "";
 
    public abstract TemplatePeg[] getCenterPegs();
-   public abstract Point[] getCenterPoints();
+   public abstract Point[] getCenterPoints(CellSize size);
    public abstract void updatePosition(Point p, CellSize size);
    public abstract void nextOrientation();
    public abstract void grow();

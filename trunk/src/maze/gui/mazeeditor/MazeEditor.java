@@ -51,6 +51,15 @@ import maze.model.MazeInfoModel;
  */
 public class MazeEditor extends JPanel
 {
+   private static final String TOP_HELP =
+           "Left-Click: Add walls, Right-Click: " +
+           "Remove walls, Middle-Click: Change template Orientation, "+
+           "Wheelup: Grow template, Wheeldown: Shrink template";
+   private static final String POPUP_HELP =
+           "<html><b>Left-Click</b>: Add walls<br /><b>Right-Click</b>: " +
+           "Remove walls<br /><b>Middle-Click</b>: Change template " +
+           "Orientation<br /><b>Wheelup</b>: Grow template<br />" +
+           "<b>Wheeldown</b>: Shrink template</btml>";
    private ImageIcon mPointIcon;
    private MazeTemplate mCurrentTemplate = null;
    private EditableMazeView mMazeView;
@@ -64,12 +73,17 @@ public class MazeEditor extends JPanel
       new CornerTemplate(),
       new CrossTemplate(),
       new ZigZagTemplate(),
-      new WaveTemplate()
+      new WaveTemplate(),
+      new StaggeredTemplate(),
+      new JungleTemplate(),
+      new RungTemplate(),
+      new GappedTemplate()
    };
 
    public MazeEditor()
    {
       buildPanel();
+
    }
 
    private void buildPanel()
@@ -78,6 +92,10 @@ public class MazeEditor extends JPanel
       mPointIcon = new ImageIcon(iconResource);
 
       setLayout(new BorderLayout());
+      JLabel instr = new JLabel(TOP_HELP);
+      instr.setToolTipText(POPUP_HELP);
+      add(instr, BorderLayout.NORTH);
+
       final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
       splitPane.setResizeWeight(.8);
       splitPane.setOneTouchExpandable(true);
@@ -175,6 +193,7 @@ public class MazeEditor extends JPanel
    private JButton makeNewMazeButton()
    {
       JButton newMaze = new JButton("New Maze");
+      newMaze.setToolTipText("Create a new maze");
       newMaze.addActionListener(new ActionListener()
       {
          private String query = "What would you like to call your new maze?";
