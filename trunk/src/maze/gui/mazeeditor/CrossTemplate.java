@@ -6,7 +6,9 @@
 package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.net.URL;
+import java.util.TreeSet;
 import javax.swing.ImageIcon;
 import maze.gui.CellSize;
 
@@ -16,6 +18,8 @@ import maze.gui.CellSize;
  */
 public class CrossTemplate extends MazeTemplate
 {
+   private TemplatePeg mCenter = null;
+   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;
    public CrossTemplate()
@@ -48,59 +52,13 @@ public class CrossTemplate extends MazeTemplate
    @Override
    public void draw(Graphics2D g, CellSize size)
    {
-      int initX = mCenterPoint.x - size.getWallWidthHalf();
-      int initY = mCenterPoint.y - size.getWallHeightHalf();
+      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
+                  mCenterPoint.y-size.getWallHeightHalf());
 
-      g.translate(initX, initY);
-
-      g.setColor(PEG_COLOR);
-      g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-
-      for(int i = 0; i < mSize; i++)
-      {
-         g.translate(0, -size.getCellHeight());
-         g.setColor(WALL_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-         g.translate(0, -size.getWallHeight());
-         g.setColor(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-      g.translate(0, mSize*(size.getWallHeight()+size.getCellHeight()));
-
-      for(int i = 0; i < mSize; i++)
-      {
-         g.translate(0, size.getWallHeight());
-         g.setColor(WALL_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-         g.translate(0, size.getCellHeight());
-         g.setColor(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-      g.translate(0, -mSize*(size.getWallHeight()+size.getCellHeight()));
-
-      for(int i = 0; i < mSize; i++)
-      {
-         g.translate(-size.getCellWidth(), 0);
-         g.setColor(WALL_COLOR);
-         g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-         g.translate(-size.getWallWidth(), 0);
-         g.setColor(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-      g.translate(mSize*(size.getWallWidth()+size.getCellWidth()), 0);
-
-      for(int i = 0; i < mSize; i++)
-      {
-         g.translate(size.getWallWidth(), 0);
-         g.setColor(WALL_COLOR);
-         g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-         g.translate(size.getCellWidth(), 0);
-         g.setColor(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-      g.translate(-mSize*(size.getWallWidth()+size.getCellWidth()), 0);
-
-      g.translate(-initX, -initY);
+      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
+      drawPeg(mCenter,visited, g, size);
+      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
+                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -123,10 +81,10 @@ public class CrossTemplate extends MazeTemplate
       for (int i = 0; i < mSize; i++)
       {
          newWall = new TemplateWall();
-         last.mTop = newWall;
+         last.top = newWall;
          newWall.mLeftBottom = last;
          newPeg = new TemplatePeg();
-         newPeg.mBottom = newWall;
+         newPeg.bottom = newWall;
          newWall.mRightTop = newPeg;
          last = newPeg;
       }
@@ -136,10 +94,10 @@ public class CrossTemplate extends MazeTemplate
       for (int i = 0; i < mSize; i++)
       {
          newWall = new TemplateWall();
-         last.mBottom = newWall;
+         last.bottom = newWall;
          newWall.mRightTop = last;
          newPeg = new TemplatePeg();
-         newPeg.mTop = newWall;
+         newPeg.top = newWall;
          newWall.mLeftBottom = newPeg;
          last = newPeg;
       }
@@ -149,10 +107,10 @@ public class CrossTemplate extends MazeTemplate
       for (int i = 0; i < mSize; i++)
       {
          newWall = new TemplateWall();
-         last.mRight = newWall;
+         last.right = newWall;
          newWall.mLeftBottom = last;
          newPeg = new TemplatePeg();
-         newPeg.mLeft = newWall;
+         newPeg.left = newWall;
          newWall.mRightTop = newPeg;
          last = newPeg;
       }
@@ -162,12 +120,30 @@ public class CrossTemplate extends MazeTemplate
       for (int i = 0; i < mSize; i++)
       {
          newWall = new TemplateWall();
-         last.mLeft = newWall;
+         last.left = newWall;
          newWall.mRightTop = last;
          newPeg = new TemplatePeg();
-         newPeg.mRight = newWall;
+         newPeg.right = newWall;
          newWall.mLeftBottom = newPeg;
          last = newPeg;
       }
+   }
+
+   @Override
+   public TemplatePeg[] getCenterPegs()
+   {
+      return new TemplatePeg[]{mCenter};
+   }
+
+   @Override
+   public Point[] getCenterPoints()
+   {
+      return new Point[]{mCenterPoint};
+   }
+
+   @Override
+   public void updatePosition(Point p, CellSize size)
+   {
+      mCenterPoint = (Point)p.clone();
    }
 }

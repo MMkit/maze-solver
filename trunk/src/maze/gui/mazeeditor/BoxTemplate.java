@@ -6,7 +6,9 @@
 package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.net.URL;
+import java.util.TreeSet;
 import javax.swing.ImageIcon;
 import maze.gui.CellSize;
 
@@ -16,6 +18,8 @@ import maze.gui.CellSize;
  */
 public class BoxTemplate extends MazeTemplate
 {
+   private TemplatePeg mCenter = null;
+   private Point mCenterPoint = new Point(0,0);
    private boolean mAbove = true;
    private static int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;
@@ -35,18 +39,18 @@ public class BoxTemplate extends MazeTemplate
       TemplatePeg last = mCenter;
       if (mAbove)
       {
-         while(last.mBottom != null)
-            last = last.mBottom.mLeftBottom;
-         while(last.mRight != null)
-            last = last.mRight.mRightTop;
+         while(last.bottom != null)
+            last = last.bottom.mLeftBottom;
+         while(last.right != null)
+            last = last.right.mRightTop;
          mCenter = last;
       }
       else
       {
-         while(last.mTop != null)
-            last = last.mTop.mRightTop;
-         while(last.mLeft != null)
-            last = last.mLeft.mLeftBottom;
+         while(last.top != null)
+            last = last.top.mRightTop;
+         while(last.left != null)
+            last = last.left.mLeftBottom;
          mCenter = last;
       }
    }
@@ -71,56 +75,13 @@ public class BoxTemplate extends MazeTemplate
    @Override
    public void draw(Graphics2D g, CellSize size)
    {
-      int[] translate = {mCenterPoint.x-size.getWallWidthHalf(),
-                         mCenterPoint.y-size.getWallHeightHalf()};
-      if (!mAbove)
-      {
-         translate[0] += (size.getCellWidth() + size.getWallWidth())*mSize;
-         translate[1] += (size.getCellHeight() + size.getWallHeight())*mSize;
-      }
+      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
+                  mCenterPoint.y-size.getWallHeightHalf());
 
-      g.translate(translate[0], translate[1]);
-      
-      for (int i = 0; i < mSize; i++)
-      {
-         g.translate(0, -size.getCellHeight());
-         g.setPaint(WALL_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-         g.translate(0, -size.getWallHeight());
-         g.setPaint(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-
-      for (int i = 0; i < mSize; i++)
-      {
-         g.translate(-size.getCellWidth(), 0);
-         g.setPaint(WALL_COLOR);
-         g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-         g.translate(-size.getWallWidth(), 0);
-         g.setPaint(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-
-      for (int i = 0; i < mSize; i++)
-      {
-         g.translate(0, size.getWallHeight());
-         g.setPaint(WALL_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-         g.translate(0, size.getCellHeight());
-         g.setPaint(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-
-      for (int i = 0; i < mSize; i++)
-      {
-         g.translate(size.getWallWidth(), 0);
-         g.setPaint(WALL_COLOR);
-         g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-         g.translate(size.getCellWidth(), 0);
-         g.setPaint(PEG_COLOR);
-         g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-      }
-      g.translate(-translate[0], -translate[1]);
+      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
+      drawPeg(mCenter,visited, g, size);
+      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
+                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -140,53 +101,71 @@ public class BoxTemplate extends MazeTemplate
       for (int i= 0; i < mSize; i++)
       {
          TemplateWall tw = new TemplateWall();
-         last.mTop = tw;
+         last.top = tw;
          tw.mLeftBottom = last;
          last = new TemplatePeg();
          tw.mRightTop = last;
-         last.mBottom = tw;
+         last.bottom = tw;
       }
 
       for (int i= 0; i < mSize; i++)
       {
          TemplateWall tw = new TemplateWall();
-         last.mLeft = tw;
+         last.left = tw;
          tw.mRightTop = last;
          last = new TemplatePeg();
          tw.mLeftBottom = last;
-         last.mRight = tw;
+         last.right = tw;
       }
 
       for (int i= 0; i < mSize; i++)
       {
          TemplateWall tw = new TemplateWall();
-         last.mBottom = tw;
+         last.bottom = tw;
          tw.mRightTop = last;
          last = new TemplatePeg();
          tw.mLeftBottom = last;
-         last.mTop = tw;
+         last.top = tw;
       }
 
       for (int i= 0; i < mSize; i++)
       {
          TemplateWall tw = new TemplateWall();
-         last.mRight = tw;
+         last.right = tw;
          tw.mLeftBottom = last;
          last = new TemplatePeg();
          tw.mRightTop = last;
-         last.mLeft = tw;
+         last.left = tw;
       }
-      last.mLeft.mRightTop = mCenter;
-      mCenter.mLeft = last.mLeft;
+      last.left.mRightTop = mCenter;
+      mCenter.left = last.left;
 
       if (!mAbove)
       {
          last = mCenter;
-         while(last.mTop != null)
-            last = last.mTop.mRightTop;
-         while(last.mLeft != null)
-            last = last.mLeft.mLeftBottom;
+         while(last.top != null)
+            last = last.top.mRightTop;
+         while(last.left != null)
+            last = last.left.mLeftBottom;
          mCenter = last;
       }
+   }
+
+   @Override
+   public TemplatePeg[] getCenterPegs()
+   {
+      return new TemplatePeg[]{mCenter};
+   }
+
+   @Override
+   public Point[] getCenterPoints()
+   {
+      return new Point[]{mCenterPoint};
+   }
+
+   @Override
+   public void updatePosition(Point p, CellSize size)
+   {
+      mCenterPoint = (Point)p.clone();
    }
 }

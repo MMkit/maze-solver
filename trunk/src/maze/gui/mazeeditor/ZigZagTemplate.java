@@ -6,7 +6,9 @@
 package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.net.URL;
+import java.util.TreeSet;
 import javax.swing.ImageIcon;
 import maze.gui.CellSize;
 
@@ -16,6 +18,8 @@ import maze.gui.CellSize;
  */
 public class ZigZagTemplate extends MazeTemplate
 {
+   private TemplatePeg mCenter = null;
+   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 2;
    private int mSize = MIN_SIZE;
    private boolean mForward = true;
@@ -55,100 +59,13 @@ public class ZigZagTemplate extends MazeTemplate
    @Override
    public void draw(Graphics2D g, CellSize size)
    {
-      int initX = mCenterPoint.x - size.getWallWidthHalf();
-      int initY = mCenterPoint.y - size.getWallHeightHalf();
+      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
+            mCenterPoint.y-size.getWallHeightHalf());
 
-      int up = mSize/2;
-      int down = mSize/2 + mSize%2;
-
-      g.translate(initX, initY);
-      
-      g.setColor(PEG_COLOR);
-      g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-
-      int totalTransX = 0, totalTransY = 0;
-
-      for (int i = 0; i < up; i++)
-      {
-         if (i%2 == 0)
-         {
-            g.translate(0, -size.getCellHeight());
-            g.setColor(WALL_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-            g.translate(0, -size.getWallHeight());
-            g.setColor(PEG_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-            totalTransY -= size.getCellHeight()+size.getWallHeight();
-         }
-         else
-         {
-            int firstTrans, secondTrans;
-            if (mForward)
-            {
-               firstTrans = size.getWallWidth();
-               secondTrans = size.getCellWidth();
-            }
-            else
-            {
-               firstTrans = -size.getCellWidth();
-               secondTrans = -size.getWallWidth();
-            }
-
-            totalTransX += firstTrans+secondTrans;
-            
-            g.translate(firstTrans, 0);
-            g.setColor(WALL_COLOR);
-            g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-            g.translate(secondTrans, 0);
-            g.setColor(PEG_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-         }
-      }
-
-      g.translate(-totalTransX, -totalTransY);
-
-      totalTransX = totalTransY = 0;
-
-      for (int i = 0; i < down; i++)
-      {
-         if (i%2 == 0)
-         {
-            int firstTrans, secondTrans;
-            if (mForward)
-            {
-               firstTrans = -size.getCellWidth();
-               secondTrans = -size.getWallWidth();
-            }
-            else
-            {
-               firstTrans = size.getWallWidth();
-               secondTrans = size.getCellWidth();
-            }
-
-            totalTransX += firstTrans+secondTrans;
-            
-            g.translate(firstTrans, 0);
-            g.setColor(WALL_COLOR);
-            g.fillRect(0, 0, size.getCellWidth(), size.getWallHeight());
-            g.translate(secondTrans, 0);
-            g.setColor(PEG_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-         }
-         else
-         {
-            g.translate(0, size.getWallHeight());
-            g.setColor(WALL_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getCellHeight());
-            g.translate(0, size.getCellHeight());
-            g.setColor(PEG_COLOR);
-            g.fillRect(0, 0, size.getWallWidth(), size.getWallHeight());
-            totalTransY += size.getCellHeight()+size.getWallHeight();
-         }
-      }
-
-      g.translate(-totalTransX, -totalTransY);
-
-      g.translate(-initX, -initY);
+      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
+      drawPeg(mCenter,visited, g, size);
+      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
+                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -176,11 +93,11 @@ public class ZigZagTemplate extends MazeTemplate
          if (i%2 == 0)
          {
             newWall = new TemplateWall();
-            last.mTop = newWall;
+            last.top = newWall;
             newWall.mLeftBottom = last;
             newPeg = new TemplatePeg();
             newWall.mRightTop = newPeg;
-            newPeg.mBottom = newWall;
+            newPeg.bottom = newWall;
             
          }
          else
@@ -189,16 +106,16 @@ public class ZigZagTemplate extends MazeTemplate
             newWall = new TemplateWall();
             if (mForward)
             {
-               last.mRight = newWall;
+               last.right = newWall;
                newWall.mLeftBottom = last;
-               newPeg.mLeft = newWall;
+               newPeg.left = newWall;
                newWall.mRightTop = newPeg;
             }
             else
             {
-               last.mLeft = newWall;
+               last.left = newWall;
                newWall.mRightTop = last;
-               newPeg.mRight = newWall;
+               newPeg.right = newWall;
                newWall.mLeftBottom = newPeg;
             }
          }
@@ -215,30 +132,46 @@ public class ZigZagTemplate extends MazeTemplate
             newWall = new TemplateWall();
             if (mForward)
             {
-               last.mLeft = newWall;
+               last.left = newWall;
                newWall.mRightTop = last;
-               newPeg.mRight = newWall;
+               newPeg.right = newWall;
                newWall.mLeftBottom = newPeg;
             }
             else
             {
-               last.mRight = newWall;
+               last.right = newWall;
                newWall.mLeftBottom = last;
-               newPeg.mLeft = newWall;
+               newPeg.left = newWall;
                newWall.mRightTop = newPeg;
             }
          }
          else
          {
             newWall = new TemplateWall();
-            last.mBottom = newWall;
+            last.bottom = newWall;
             newWall.mRightTop = last;
             newPeg = new TemplatePeg();
             newWall.mLeftBottom = newPeg;
-            newPeg.mTop = newWall;
+            newPeg.top = newWall;
          }
          last = newPeg;
       }
    }
+   @Override
+   public TemplatePeg[] getCenterPegs()
+   {
+      return new TemplatePeg[]{mCenter};
+   }
 
+   @Override
+   public Point[] getCenterPoints()
+   {
+      return new Point[]{mCenterPoint};
+   }
+
+   @Override
+   public void updatePosition(Point p, CellSize size)
+   {
+      mCenterPoint = (Point)p.clone();
+   }
 }

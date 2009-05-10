@@ -63,7 +63,8 @@ public class MazeEditor extends JPanel
       new StraightTemplate(),
       new CornerTemplate(),
       new CrossTemplate(),
-      new ZigZagTemplate()
+      new ZigZagTemplate(),
+      new WaveTemplate()
    };
 
    public MazeEditor()
@@ -93,7 +94,6 @@ public class MazeEditor extends JPanel
       
 
       rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
-      mOpenMazes.setBorder(new TitledBorder("Mazes"));
       splitPane.setRightComponent(rightPanel);
       splitPane.addPropertyChangeListener("dividerLocation",
                                           new PropertyChangeListener()
@@ -154,8 +154,6 @@ public class MazeEditor extends JPanel
       mMazeView.addMouseListener(mMouseAdapter);
       mMazeView.addMouseMotionListener(mMouseAdapter);
       mMazeView.addMouseWheelListener(mMouseAdapter);
-
-
    } // void buildPanel()
 
    private void setTemplate(MazeTemplate mt)
@@ -172,8 +170,6 @@ public class MazeEditor extends JPanel
          mt.reset();
       }
       mMazeView.setTemplate(mt);
-      //mTDP.repaint();
-         
    }
 
    private JButton makeNewMazeButton()
@@ -251,6 +247,7 @@ public class MazeEditor extends JPanel
             mMazeView.setModel(mi.getModel());
          }
       });
+      newList.setBorder(new TitledBorder("Mazes"));
       return newList;
    }
 
@@ -276,7 +273,8 @@ public class MazeEditor extends JPanel
       {
          if (mCurrentTemplate != null)
          {
-            mCurrentTemplate.updatePosition(e.getPoint());
+            mCurrentTemplate.updatePosition(e.getPoint(),
+                                            mMazeView.getCellSize());
             mMazeView.repaint();
          }
       } // public void mouseMoved(MouseEvent e)
