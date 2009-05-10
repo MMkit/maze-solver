@@ -11,10 +11,6 @@ package maze.gui;
 public class CellSize implements Comparable<CellSize>
 {
    private int[] sizes = {44, 50, 10, 10};
-   private int cellWidth = 44;
-   private int cellHeight = 50;
-   private int wallWidth = 10;
-   private int wallHeight = 10;
 
    public CellSize(int cw, int ch, int ww, int wh)
    {

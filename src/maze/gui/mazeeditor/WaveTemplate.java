@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author desolc
  */
-public class WaveTemplate extends ConjointedMazeTemplate
+public class WaveTemplate extends ConjoinedMazeTemplate
 {
    private static final int MIN_SIZE = 0;
    private int mSize = MIN_SIZE;
@@ -53,11 +53,9 @@ public class WaveTemplate extends ConjointedMazeTemplate
    @Override
    public void reset()
    {
-      if (mSize != MIN_SIZE)
-      {
-         mSize = MIN_SIZE;
-         updateTemplate();
-      }
+      rotation = 0;
+      mSize = MIN_SIZE;
+      updateTemplate();
    }
 
    private void updateTemplate()

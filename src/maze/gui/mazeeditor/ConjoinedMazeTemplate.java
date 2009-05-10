@@ -14,7 +14,7 @@ import maze.gui.CellSize;
  *
  * @author desolc
  */
-public abstract class ConjointedMazeTemplate extends MazeTemplate
+public abstract class ConjoinedMazeTemplate extends MazeTemplate
 {
    protected TemplatePeg mCenter = null;
    protected Point mCenterPoint = new Point(0,0);

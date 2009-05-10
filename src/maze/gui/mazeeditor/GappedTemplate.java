@@ -111,11 +111,9 @@ public class GappedTemplate extends MazeTemplate
    @Override
    public void reset()
    {
-      if (mSize > MIN_SIZE)
-      {
-         mSize = MIN_SIZE;
-         updateTemplate();
-      }
+      mVert = true;
+      mSize = MIN_SIZE;
+      updateTemplate();
    }
 
    private void updateTemplate()

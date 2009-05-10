@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author desolc
  */
-public class CornerTemplate extends ConjointedMazeTemplate
+public class CornerTemplate extends ConjoinedMazeTemplate
 {
    private static final int MIN_SIZE = 1;
    private Corner currentCorner = Corner.BottomLeft;
@@ -54,11 +54,9 @@ public class CornerTemplate extends ConjointedMazeTemplate
    @Override
    public void reset()
    {
-      if (mSize > MIN_SIZE)
-      {
-         mSize = MIN_SIZE;
-         updateTemplate();
-      }
+      mSize = MIN_SIZE;
+      currentCorner = Corner.BottomLeft;
+      updateTemplate();
    }
 
    public void updateTemplate()

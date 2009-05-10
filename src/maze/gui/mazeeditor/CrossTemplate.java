@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author desolc
  */
-public class CrossTemplate extends ConjointedMazeTemplate
+public class CrossTemplate extends ConjoinedMazeTemplate
 {
    private static final int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;

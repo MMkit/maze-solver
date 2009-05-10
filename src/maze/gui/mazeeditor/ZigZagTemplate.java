@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author desolc
  */
-public class ZigZagTemplate extends ConjointedMazeTemplate
+public class ZigZagTemplate extends ConjoinedMazeTemplate
 {
    private static final int MIN_SIZE = 2;
    private int mSize = MIN_SIZE;
@@ -53,11 +53,9 @@ public class ZigZagTemplate extends ConjointedMazeTemplate
    @Override
    public void reset()
    {
-      if (mSize > MIN_SIZE)
-      {
-         mSize = MIN_SIZE;
-         updateTemplate();
-      }
+      mForward = true;
+      mSize = MIN_SIZE;
+      updateTemplate();
    }
 
    public void updateTemplate()
