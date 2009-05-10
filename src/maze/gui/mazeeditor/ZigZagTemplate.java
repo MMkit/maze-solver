@@ -5,28 +5,22 @@
 
 package maze.gui.mazeeditor;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.net.URL;
-import java.util.TreeSet;
 import javax.swing.ImageIcon;
-import maze.gui.CellSize;
 
 /**
  *
  * @author desolc
  */
-public class ZigZagTemplate extends MazeTemplate
+public class ZigZagTemplate extends ConjointedMazeTemplate
 {
-   private TemplatePeg mCenter = null;
-   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 2;
    private int mSize = MIN_SIZE;
    private boolean mForward = true;
 
    public ZigZagTemplate()
    {
-      URL iconResource = BoxTemplate.class.getResource("images/ZigZag.png");
+      URL iconResource = MazeTemplate.class.getResource("images/ZigZag.png");
       this.mIcon = new ImageIcon(iconResource);
       this.mDesc = "Zig Zag";
       updateTemplate();
@@ -54,18 +48,6 @@ public class ZigZagTemplate extends MazeTemplate
          mSize--;
          updateTemplate();
       }
-   }
-
-   @Override
-   public void draw(Graphics2D g, CellSize size)
-   {
-      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
-            mCenterPoint.y-size.getWallHeightHalf());
-
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      drawPeg(mCenter,visited, g, size);
-      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
-                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -156,22 +138,5 @@ public class ZigZagTemplate extends MazeTemplate
          }
          last = newPeg;
       }
-   }
-   @Override
-   public TemplatePeg[] getCenterPegs()
-   {
-      return new TemplatePeg[]{mCenter};
-   }
-
-   @Override
-   public Point[] getCenterPoints()
-   {
-      return new Point[]{mCenterPoint};
-   }
-
-   @Override
-   public void updatePosition(Point p, CellSize size)
-   {
-      mCenterPoint = (Point)p.clone();
    }
 }

@@ -8,7 +8,6 @@ package maze.gui.mazeeditor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.Vector;
 import maze.gui.CellSize;
@@ -51,16 +50,23 @@ public class EditableMazeView extends maze.gui.MazeView
    public void applyTemplate(boolean setWall)
    {
       TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
-      Point[] cp = mCurrentTemplate.getCenterPoints();
+      Point[] cp = mCurrentTemplate.getCenterPoints(getCellSize());
       Vector<MazeWall> walls = new Vector<MazeWall>();
+      TreeSet<TemplatePeg> applied = new TreeSet<TemplatePeg>();
       for (int i = 0; i < Math.min(tp.length, cp.length); i++)
       {
+         if (applied.contains(tp[i]))
+            continue;
+
          MazeCell hostCell;
          try
          {
             hostCell = this.getHostMazeCell(cp[i]);
          }
-         catch (Exception ex){return;}
+         catch (Exception ex)
+         {
+            continue;
+         }
 
          int[] coords = {hostCell.getXZeroBased(), hostCell.getYZeroBased()};
 
@@ -91,6 +97,7 @@ public class EditableMazeView extends maze.gui.MazeView
          TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
 
          applyPeg(tp[i], visited, walls, coords);
+         applied.addAll(visited);
       }
       for (MazeWall ms : walls)
             ms.set(setWall);

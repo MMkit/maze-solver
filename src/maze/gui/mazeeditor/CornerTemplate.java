@@ -5,28 +5,22 @@
 
 package maze.gui.mazeeditor;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.net.URL;
-import java.util.TreeSet;
 import javax.swing.ImageIcon;
-import maze.gui.CellSize;
 
 /**
  *
  * @author desolc
  */
-public class CornerTemplate extends MazeTemplate
+public class CornerTemplate extends ConjointedMazeTemplate
 {
-   private TemplatePeg mCenter = null;
-   private Point mCenterPoint = new Point(0,0);
    private static final int MIN_SIZE = 1;
    private Corner currentCorner = Corner.BottomLeft;
    private int mSize = MIN_SIZE;
 
    public CornerTemplate()
    {
-      URL iconResource = BoxTemplate.class.getResource("images/Corner.png");
+      URL iconResource = MazeTemplate.class.getResource("images/Corner.png");
       this.mIcon = new ImageIcon(iconResource);
       this.mDesc = "Corner";
       updateTemplate();
@@ -55,18 +49,6 @@ public class CornerTemplate extends MazeTemplate
          mSize--;
          updateTemplate();
       }
-   }
-
-   @Override
-   public void draw(Graphics2D g, CellSize size)
-   {
-      g.translate(mCenterPoint.x-size.getWallWidthHalf(),
-                  mCenterPoint.y-size.getWallHeightHalf());
-
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      drawPeg(mCenter,visited, g, size);
-      g.translate(-(mCenterPoint.x-size.getWallWidthHalf()),
-                  -(mCenterPoint.y-size.getWallHeightHalf()));
    }
 
    @Override
@@ -142,24 +124,6 @@ public class CornerTemplate extends MazeTemplate
             last = newPeg;
          }
       }
-   }
-
-   @Override
-   public TemplatePeg[] getCenterPegs()
-   {
-      return new TemplatePeg[]{mCenter};
-   }
-
-   @Override
-   public Point[] getCenterPoints()
-   {
-      return new Point[]{mCenterPoint};
-   }
-
-   @Override
-   public void updatePosition(Point p, CellSize size)
-   {
-      mCenterPoint = (Point)p.clone();
    }
 
    private static enum Corner

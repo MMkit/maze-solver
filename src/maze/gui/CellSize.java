@@ -8,9 +8,9 @@ package maze.gui;
  * This model stores the sizes of the cells and wall segments that are drawn
  * to the screen.
  */
-public class CellSize
+public class CellSize implements Comparable<CellSize>
 {
-
+   private int[] sizes = {44, 50, 10, 10};
    private int cellWidth = 44;
    private int cellHeight = 50;
    private int wallWidth = 10;
@@ -18,49 +18,58 @@ public class CellSize
 
    public CellSize(int cw, int ch, int ww, int wh)
    {
-      cellWidth = cw;
-      cellHeight = ch;
-      wallWidth = ww;
-      wallHeight = wh;
+      sizes[0] = cw;
+      sizes[1] = ch;
+      sizes[2] = ww;
+      sizes[3] = wh;
    }
 
    public int getCellWidth()
    {
-      return cellWidth;
+      return sizes[0];
    }
 
    public int getCellHeight()
    {
-      return cellHeight;
+      return sizes[1];
    }
 
    public int getWallWidth()
    {
-      return wallWidth;
+      return sizes[2];
    }
 
    public int getWallHeight()
    {
-      return wallHeight;
+      return sizes[3];
    }
 
    public int getCellWidthHalf()
    {
-      return cellWidth / 2;
+      return sizes[0] / 2;
    }
 
    public int getCellHeightHalf()
    {
-      return cellHeight / 2;
+      return sizes[1] / 2;
    }
 
    public int getWallWidthHalf()
    {
-      return wallWidth / 2;
+      return sizes[2] / 2;
    }
 
    public int getWallHeightHalf()
    {
-      return wallHeight / 2;
+      return sizes[3] / 2;
+   }
+
+   @Override
+   public int compareTo(CellSize o)
+   {
+      for (int i = 0; i < 4; i++)
+         if (sizes[i]-o.sizes[i] != 0)
+            return sizes[i]-o.sizes[i];
+      return 0;
    }
 }
