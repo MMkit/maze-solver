@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author desolc
  */
-public class BoxTemplate extends ConjointedMazeTemplate
+public class BoxTemplate extends ConjoinedMazeTemplate
 {
    private boolean mAbove = true;
    private static int MIN_SIZE = 1;
@@ -69,11 +69,9 @@ public class BoxTemplate extends ConjointedMazeTemplate
    @Override
    public void reset()
    {
-      if (mSize != MIN_SIZE)
-      {
-         mSize = MIN_SIZE;
-         updateTemplate();
-      }
+      mAbove = true;
+      mSize = MIN_SIZE;
+      updateTemplate();
    }
 
    private void updateTemplate()
