@@ -10,14 +10,15 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
-
 import java.awt.event.ComponentEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -34,12 +35,12 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import maze.Main;
 import maze.gui.PrimaryFrame;
 import maze.model.MazeInfo;
@@ -303,8 +304,8 @@ public class MazeEditor extends JPanel
       {
          if (mCurrentTemplate != null)
          {
-            boolean left = SwingUtilities.isLeftMouseButton(e);
-            boolean right = SwingUtilities.isRightMouseButton(e);
+            //boolean left = SwingUtilities.isLeftMouseButton(e);
+            //boolean right = SwingUtilities.isRightMouseButton(e);
             mMazeView.repaint();
          }
       } // public void mouseDragged(MouseEvent e)
@@ -323,6 +324,18 @@ public class MazeEditor extends JPanel
             mMazeView.repaint();
          }
       } // public void mousePressed(MouseEvent e)
+      
+      @Override
+      public void mouseClicked(MouseEvent e)
+      {
+         //If a mouse button is clicked while both left and right mouse buttons are down then rotate.
+         if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0 ||
+             (e.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0)
+         {
+            mCurrentTemplate.nextOrientation();
+            mMazeView.repaint();
+         }
+      }
 
       @Override
       public void mouseWheelMoved(MouseWheelEvent e)
