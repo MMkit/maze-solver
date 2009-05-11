@@ -2,7 +2,10 @@ package maze.gui;
 
 import java.awt.Point;
 
-import maze.ai.LeftWallFollower;
+import javax.swing.JOptionPane;
+
+import maze.Main;
+import maze.ai.RobotBase;
 import maze.ai.RobotController;
 import maze.model.Direction;
 import maze.model.RobotModelMaster;
@@ -35,11 +38,11 @@ public final class RobotAnimator extends Thread
     * @param mazeView
     * @param finishedCallback
     */
-   public RobotAnimator(final MazeView mazeView, Runnable finishedCallback)
+   public RobotAnimator(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
       this.view = mazeView;
       this.finishedCallback = finishedCallback;
-      this.controller = new RobotController(this.view.getModel(), new LeftWallFollower());
+      this.controller = new RobotController(this.view.getModel(), robotAlgorithm);
       super.setDaemon(true);
    }
 
@@ -83,9 +86,18 @@ public final class RobotAnimator extends Thread
                Thread.sleep(this.sleepTime);
             }
          }
+         catch (InterruptedException e)
+         {
+            // Means the thread is being shutdown.
+         }
          catch (Exception e)
          {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(Main.getPrimaryFrameInstance(),
+                                          e.getMessage(),
+                                          "Error",
+                                          JOptionPane.ERROR_MESSAGE,
+                                          null);
             this.isRunning = false;
          }
       }

@@ -10,6 +10,12 @@ public class LeftWallFollower extends RobotBase
 {
    private List<RobotStep> moveQueue = new ArrayList<RobotStep>();
 
+   @Override
+   public String toString()
+   {
+      return "Left Wall Follower";
+   }
+
    /**
     * Called to before any steps are requested of the robot. This can be
     * overridden to do any initialization of the AI.

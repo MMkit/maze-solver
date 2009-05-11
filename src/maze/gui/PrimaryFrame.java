@@ -2,12 +2,12 @@ package maze.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
+
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -28,21 +28,25 @@ import maze.model.MazeInfoModel;
  */
 public final class PrimaryFrame extends JFrame implements WindowListener
 {
-   private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();   
-   private final MazeViewerPanel mazeViewer = new MazeViewerPanel();
-
+   private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
+   private MazeViewerPanel mazeViewer;
+   private CodeEditorPanel codeEditorPanel;
 
    /**
     * Constructor.
     */
-   public PrimaryFrame(){}
-
+   public PrimaryFrame()
+   {
+   }
 
    /**
     * Initializes the contents of this frame.
     */
    public void init()
    {
+      this.mazeViewer = new MazeViewerPanel();
+      this.codeEditorPanel = new CodeEditorPanel();
+
       // menu bar
       JMenuBar menuBar = new JMenuBar();
 
@@ -160,7 +164,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
       jtp.add("Micro Mouse Simulator", this.mazeViewer);
       jtp.add("Maze Editor", new MazeEditor());
-      jtp.add("AI Script Editor", new CodeEditorPanel());
+      jtp.add("AI Script Editor", this.codeEditorPanel);
       jtp.add("Statistics Display", new StatViewPanel());
    }
 
@@ -178,9 +182,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    {
       DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
       TreeSet<String> paths = new TreeSet<String>();
-      for (int i= 0; i < cbm.getSize(); i++)
+      for (int i = 0; i < cbm.getSize(); i++)
       {
-         String path = ((MazeInfo)cbm.getElementAt(i)).getPath();
+         String path = ((MazeInfo) cbm.getElementAt(i)).getPath();
          if (!path.equals(""))
             paths.add(path.toLowerCase());
       }
@@ -191,8 +195,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             JFileChooser chooser = new JFileChooser(".");
             while (true)
             {
-               if (chooser.showSaveDialog(this) ==
-                   JFileChooser.APPROVE_OPTION)
+               if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
                {
                   File file = chooser.getSelectedFile();
                   try
@@ -200,9 +203,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      if (paths.contains(file.getCanonicalPath().toLowerCase()))
                      {
                         JOptionPane.showMessageDialog(this,
-                             "That file is being used by another maze",
-                             "Error",
-                             JOptionPane.ERROR_MESSAGE);
+                                                      "That file is being used by another maze",
+                                                      "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
                      }
                      else
                      {
@@ -213,11 +216,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                   catch (IOException ex)
                   {
                      JOptionPane.showMessageDialog(this,
-                             "Invalid Save File", "Error",
-                             JOptionPane.ERROR_MESSAGE);
+                                                   "Invalid Save File",
+                                                   "Error",
+                                                   JOptionPane.ERROR_MESSAGE);
                   }
                } // if (chooser.showSaveDialog(this) ==
-                 //  JFileChooser.APPROVE_OPTION)
+               //  JFileChooser.APPROVE_OPTION)
                else
                   break;
             } // while (true)
@@ -227,7 +231,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    }
 
    @Override
-   public void windowOpened(WindowEvent e){}
+   public void windowOpened(WindowEvent e)
+   {
+   }
 
    @Override
    public void windowClosing(WindowEvent e)
@@ -235,12 +241,16 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
       for (int i = 0; i < cbm.getSize(); i++)
       {
-         MazeInfo mi = (MazeInfo)cbm.getElementAt(i);
+         MazeInfo mi = (MazeInfo) cbm.getElementAt(i);
          if (mi.isDirty())
          {
             int result = JOptionPane.showConfirmDialog(this,
-                "Would you like to save \"" + mi.getName() + "\"", "Save Maze?",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                                                       "Would you like to save \"" +
+                                                             mi.getName() +
+                                                             "\"",
+                                                       "Save Maze?",
+                                                       JOptionPane.YES_NO_OPTION,
+                                                       JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_NO_OPTION)
                saveMaze(mi);
          }
@@ -248,17 +258,32 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    }
 
    @Override
-   public void windowClosed(WindowEvent e){}
+   public void windowClosed(WindowEvent e)
+   {
+   }
 
    @Override
-   public void windowIconified(WindowEvent e){}
+   public void windowIconified(WindowEvent e)
+   {
+   }
 
    @Override
-   public void windowDeiconified(WindowEvent e){}
+   public void windowDeiconified(WindowEvent e)
+   {
+   }
 
    @Override
-   public void windowActivated(WindowEvent e){}
+   public void windowActivated(WindowEvent e)
+   {
+   }
 
    @Override
-   public void windowDeactivated(WindowEvent e){}
+   public void windowDeactivated(WindowEvent e)
+   {
+   }
+   
+   public CodeEditorPanel getCodeEditorPanel()
+   {
+      return this.codeEditorPanel;
+   }
 }

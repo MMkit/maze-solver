@@ -15,6 +15,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
+import maze.ai.RobotStep;
 import maze.model.Maze;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -208,6 +209,11 @@ public class CodeEditorPanel extends JSplitPane
                                        JOptionPane.ERROR_MESSAGE,
                                        null);
       }
+   }
+   
+   public RobotStep getNextStep()
+   {
+      return RobotStep.MoveForward;
    }
 
    private final class CodeInformationPanel extends JPanel

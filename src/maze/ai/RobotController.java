@@ -41,7 +41,7 @@ public class RobotController
    public RobotStep nextStep()
    {
       final RobotStep nextStep = this.ai.nextStep();
-      System.out.println(nextStep);
+      //System.out.println(nextStep);
 
       this.robotModelMaster.takeNextStep(nextStep);
 
