@@ -43,7 +43,7 @@ public class StatViewPanel extends JPanel{
 	public StatViewPanel()
 	{
 		this.maze = new Maze();
-		this.algorithm = new Floodfill();
+		this.algorithm = new LeftWallFollower();
 		RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
 				new MazeCell(1,16),Direction.North));
 		this.tracker = new StatTracker(algorithm,robotModel);

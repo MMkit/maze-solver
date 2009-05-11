@@ -161,6 +161,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       jtp.add("Micro Mouse Simulator", this.mazeViewer);
       jtp.add("Maze Editor", new MazeEditor());
       jtp.add("AI Script Editor", new CodeEditorPanel());
+      jtp.add("Statistics Display", new StatViewPanel());
    }
 
    /**
