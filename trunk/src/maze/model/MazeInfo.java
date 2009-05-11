@@ -125,4 +125,10 @@ public class MazeInfo implements Observer
    {
       isDirty = true;
    }
+   
+   @Override
+   public String toString()
+   {
+      return this.mName;
+   }
 }

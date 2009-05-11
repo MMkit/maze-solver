@@ -7,14 +7,18 @@ import maze.model.RobotModel;
  */
 public abstract class RobotBase
 {
-
    protected RobotModel robotLocation;
    protected boolean speedRun = false;
+   public static final RobotBase[] MASTER_AI_LIST = new RobotBase[]
+   {
+      new LeftWallFollower(), new RightWallFollower(), new Tremaux(), new Floodfill(),
+      new PythonScriptRobot(),
+   };
 
    /**
     * Sets the instance of the robot model to use.
     */
-   public void setRobotLocation( RobotModel model )
+   public void setRobotLocation(RobotModel model)
    {
       this.robotLocation = model;
    }
@@ -25,9 +29,9 @@ public abstract class RobotBase
     */
    public void initialize()
    {
-      if ( this.robotLocation == null )
+      if (this.robotLocation == null)
       {
-         throw new RuntimeException( "The robot location model was not set" );
+         throw new RuntimeException("The robot location model was not set");
       }
    }
 
@@ -45,9 +49,9 @@ public abstract class RobotBase
    {
       return false;
    }
-   
+
    public void setSpeedRun(boolean choice)
    {
-	   speedRun = choice;
+      speedRun = choice;
    }
 }
