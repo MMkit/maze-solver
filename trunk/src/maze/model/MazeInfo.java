@@ -1,21 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.model;
 
 import java.awt.Dimension;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * Stores information about a Maze including its file name and model.
  * @author desolc
  */
 public class MazeInfo implements Observer
@@ -36,17 +30,20 @@ public class MazeInfo implements Observer
          MazeInfo mi = new MazeInfo();
          dis = new DataInputStream(new FileInputStream(file));
          mi.mName = dis.readUTF();
-         Dimension d = new Dimension(dis.readInt(),dis.readInt());
-         int[] walls = new int[d.height+d.width];
+         Dimension d = new Dimension(dis.readInt(), dis.readInt());
+         int[] walls = new int[d.height + d.width];
          for (int i = 0; i < walls.length; i++)
-            walls[i] = (dis.available() >= Integer.SIZE/8) ? dis.readInt() : 0;
+            walls[i] = (dis.available() >= Integer.SIZE / 8) ? dis.readInt() : 0;
          mi.mModel = new Maze(walls);
          mi.mPath = file.getCanonicalPath();
          mi.mModel.addObserver(mi);
          returned = mi;
          dis.close();
       }
-      catch (Exception ex){}
+      catch (IOException ex)
+      {
+         ex.printStackTrace();
+      }
 
       return returned;
    }
@@ -116,8 +113,12 @@ public class MazeInfo implements Observer
       }
    }
 
-   private MazeInfo(){}
-
+   /**
+    * Private constructor. Instances must be gotten from factory methods.
+    */
+   private MazeInfo()
+   {
+   }
 
    @Override
    public void update(Observable o, Object arg)

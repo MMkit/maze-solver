@@ -254,11 +254,8 @@ public class MazeView extends JPanel implements ComponentListener
                     this.csm.getCellHeight() - this.csm.getWallHeight());
       }
 
-      if (editable)
-         return;
-
       // Draw the robot onto the maze.
-      if (this.robotLocation != null)
+      if (this.editable == false && this.robotLocation != null)
       {
          //We have to translate our coordinate system to make the image rotation easier.
          g.translate(this.robotLocation.x, this.robotLocation.y);
