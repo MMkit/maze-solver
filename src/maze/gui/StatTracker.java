@@ -88,6 +88,9 @@ public class StatTracker {
 		bestRunTotalTurnsTaken = USELESS;
 		previousRunTotalSquaresTraversed = 0;
 		previousRunTotalTurnsTaken = 0;
+		
+		algorithm.setRobotLocation(mouse);
+		algorithm.initialize();
 	}
 	
 	private void recompute()

@@ -33,6 +33,7 @@ public class Tremaux extends RobotBase {
 				ballOfString[i][j] = Direction.Directionless;
 			}
 		}
+		ballOfString[0][size.height-1] = Direction.North;
 	}
 	
     public boolean isInTurboMode()
