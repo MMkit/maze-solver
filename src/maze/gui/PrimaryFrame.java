@@ -28,8 +28,9 @@ import maze.model.MazeInfoModel;
  */
 public final class PrimaryFrame extends JFrame implements WindowListener
 {
+   private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();   
    private final MazeViewerPanel mazeViewer = new MazeViewerPanel();
-   private MazeInfoModel mMazeInfoModel = new MazeInfoModel();
+
 
    /**
     * Constructor.
@@ -38,7 +39,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
 
    /**
-    * Initlaizes the contents of this frame.
+    * Initializes the contents of this frame.
     */
    public void init()
    {
@@ -62,11 +63,10 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       fileMenu.add(fileExit);
       fileExit.addActionListener(new ActionListener()
       {
-
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            System.exit(0);
+            PrimaryFrame.this.dispose();
          }
       });
 
@@ -158,7 +158,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       JTabbedPane jtp = new JTabbedPane();
       this.add(jtp);
 
-      jtp.add("Maze Viewer", this.mazeViewer);
+      jtp.add("Micro Mouse Simulator", this.mazeViewer);
       jtp.add("Maze Editor", new MazeEditor());
       jtp.add("AI Script Editor", new CodeEditorPanel());
    }

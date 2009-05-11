@@ -28,7 +28,9 @@ public class RobotController
       this.mazeModel = model;
       this.ai = robotAI;
 
-      this.robotModelMaster = new RobotModelMaster(this.mazeModel, new MazeCell(1, 1), Direction.South);
+      final MazeCell start = new MazeCell(1, this.mazeModel.getSize().height);
+
+      this.robotModelMaster = new RobotModelMaster(this.mazeModel, start, Direction.North);
 
       this.robotModelClient = new RobotModel(this.robotModelMaster);
 
@@ -39,7 +41,7 @@ public class RobotController
    public RobotStep nextStep()
    {
       final RobotStep nextStep = this.ai.nextStep();
-      //System.out.println(nextStep);
+      System.out.println(nextStep);
 
       this.robotModelMaster.takeNextStep(nextStep);
 
