@@ -369,6 +369,20 @@ public class Floodfill extends RobotBase {
 			}
 
 		}
+		
+		if(getDistance(robotLocation.getCurrentLocation()) == USELESS)
+		{
+			maze.clearMaze();
+			speedRunCapable = false;
+			for( int i = 0; i < size.width; i++)
+			{
+				for( int j = 0; j < size.height; j++)
+				{
+					explored[i][j]=false;
+				}
+			}
+			floodfill();
+		}
 	}
 
 
