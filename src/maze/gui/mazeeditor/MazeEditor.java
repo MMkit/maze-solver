@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package maze.gui.mazeeditor;
 
 import java.awt.BorderLayout;
@@ -11,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -19,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
 
+import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -26,6 +22,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -34,6 +31,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
@@ -47,11 +45,12 @@ import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 
 /**
- *
- * @author desolc
+ * This panel creates a GUI to edit mazes.
+ * @author John Smith
  */
 public class MazeEditor extends JPanel
 {
+   private static final String NEXT_ORIENTATION_ACTION_KEY = "nextOrientation";
    private static final String TOP_HELP =
            "Left-Click: Add walls, Right-Click: " +
            "Remove walls, Middle-Click: Change template Orientation, "+
@@ -167,6 +166,20 @@ public class MazeEditor extends JPanel
       }
 
       add(tBar, BorderLayout.WEST);
+      
+      //Add an action for the 'r' key to change the template to the next orientation.
+      this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke('r'),
+                                                                          NEXT_ORIENTATION_ACTION_KEY);
+      this.getActionMap().put(NEXT_ORIENTATION_ACTION_KEY, new AbstractAction()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            mCurrentTemplate.nextOrientation();
+            mMazeView.repaint();
+         }
+      });
+      
 
       mMouseAdapter = new TemplateMouseAdapter();
       
@@ -325,18 +338,6 @@ public class MazeEditor extends JPanel
          }
       } // public void mousePressed(MouseEvent e)
       
-      @Override
-      public void mouseClicked(MouseEvent e)
-      {
-         //If a mouse button is clicked while both left and right mouse buttons are down then rotate.
-         if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0 ||
-             (e.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0)
-         {
-            mCurrentTemplate.nextOrientation();
-            mMazeView.repaint();
-         }
-      }
-
       @Override
       public void mouseWheelMoved(MouseWheelEvent e)
       {
