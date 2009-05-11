@@ -63,26 +63,6 @@ public class RobotModelMaster
       return this.mazeModel.getWall( this.currentLocation, this.direction.getRight() ).isSet();
    }
 
-   public boolean isWallNorth(MazeCell location)
-   {
-      return this.mazeModel.getWall( location, Direction.North ).isSet();
-   }
-
-   public boolean isWallSouth(MazeCell location)
-   {
-      return this.mazeModel.getWall( location, Direction.South ).isSet();
-   }
-
-   public boolean isWallEast(MazeCell location)
-   {
-      return this.mazeModel.getWall( location, Direction.East ).isSet();
-   }
-
-   public boolean isWallWest(MazeCell location)
-   {
-      return this.mazeModel.getWall( location, Direction.West ).isSet();
-   }
-   
    public Dimension getMazeSize()
    {
 	   return this.mazeModel.getSize();
