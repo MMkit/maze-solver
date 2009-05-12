@@ -23,7 +23,7 @@ public class GappedTemplate extends MazeTemplate
    private TemplatePeg[] mCenters;
    private Point[] mCenterPoints;
    private boolean mVert = true;
-   private CellSize mLastSize = new CellSize(4,4,2,2);
+   private CellSize mLastSize = new CellSize(4,4,2,2,0,0);
 
 
    public GappedTemplate()
@@ -95,17 +95,7 @@ public class GappedTemplate extends MazeTemplate
           mLastSize.compareTo(size) != 0)
          generatePoints(size);
 
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      for (int i = 0; i < mCenterPoints.length; i+=2)
-      {
-         g.translate(mCenterPoints[i].x-size.getWallWidth(),
-                     mCenterPoints[i].y-size.getWallHeightHalf());
-
-
-         drawPeg(mCenters[i],visited, g, size);
-         g.translate(-(mCenterPoints[i].x-size.getWallWidth()),
-                     -(mCenterPoints[i].y-size.getWallHeightHalf()));
-      }
+      super.draw(g, size);
    }
 
    @Override

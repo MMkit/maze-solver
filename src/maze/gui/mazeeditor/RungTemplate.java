@@ -8,7 +8,6 @@ package maze.gui.mazeeditor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.net.URL;
-import java.util.TreeSet;
 import javax.swing.ImageIcon;
 import maze.gui.CellSize;
 
@@ -23,7 +22,7 @@ public class RungTemplate extends MazeTemplate
    private TemplatePeg[] mCenters;
    private Point[] mCenterPoints;
    private boolean mVert = true;
-   private CellSize mLastSize = new CellSize(4,4,2,2);
+   private CellSize mLastSize = new CellSize(4,4,2,2,0,0);
 
 
    RungTemplate()
@@ -94,18 +93,7 @@ public class RungTemplate extends MazeTemplate
       if (mCenterPoints.length != mCenters.length ||
           mLastSize.compareTo(size) != 0)
          generatePoints(size);
-
-      TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      for (int i = 0; i < mCenterPoints.length; i+=2)
-      {
-         g.translate(mCenterPoints[i].x-size.getWallWidth(),
-                     mCenterPoints[i].y-size.getWallHeightHalf());
-
-
-         drawPeg(mCenters[i],visited, g, size);
-         g.translate(-(mCenterPoints[i].x-size.getWallWidth()),
-                     -(mCenterPoints[i].y-size.getWallHeightHalf()));
-      }
+      super.draw(g, size);
    }
 
    @Override

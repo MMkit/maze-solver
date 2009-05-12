@@ -30,7 +30,9 @@ public class EditableMazeView extends maze.gui.MazeView
    {
       return new CellSize(csm.getCellWidth()-csm.getWallWidth(),
                           csm.getCellHeight()-csm.getWallHeight(),
-                          csm.getWallWidth(), csm.getWallHeight());
+                          csm.getWallWidth(), csm.getWallHeight(),
+                          csm.getCellWidth()*model.getSize().width,
+                          csm.getCellHeight()*model.getSize().height);
    }
 
    @Override
@@ -75,10 +77,10 @@ public class EditableMazeView extends maze.gui.MazeView
 
          if (cp[i].x > leftX + csm.getCellWidthHalf()/2 &&
              cp[i].x <= leftX + csm.getCellWidthHalf())
-            return;
+            continue;
          if (cp[i].y > leftY + csm.getCellHeightHalf()/2 &&
              cp[i].y <= leftY + csm.getCellHeightHalf())
-            return;
+            continue;
 
          int halfX = leftX + csm.getCellWidthHalf();
          if (cp[i].x < halfX)
