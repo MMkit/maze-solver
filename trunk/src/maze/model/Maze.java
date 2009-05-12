@@ -456,6 +456,7 @@ public class Maze extends MazeModel
       throw new RuntimeException( "Not implemented" );
    }
    
+   @Override
    public Dimension getSize()
    {
 	   return new Dimension(width,height);
@@ -477,11 +478,11 @@ public class Maze extends MazeModel
          {
             if ( value )
             {
-               setWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+               setWall( cell.getX(), cell.getY(), direction.getIndex() );
             }
             else
             {
-               clearWall( cell.getXZeroBased(), SIZE - cell.getY(), direction.getIndex() );
+               clearWall( cell.getX(), cell.getY(), direction.getIndex() );
             }
          }
 

@@ -276,7 +276,6 @@ public class MazeEditor extends JPanel
                return;
             Object o = newList.getModel().getElementAt(index);
             MazeInfo mi = (MazeInfo)o;
-            System.out.println("Changing model to" + mi.getName());
             mMazeView.setModel(mi.getModel());
          }
       });
@@ -369,9 +368,13 @@ public class MazeEditor extends JPanel
          String postfix = "";
          if (mi.isDirty())
             postfix = "*";
-         return super.getListCellRendererComponent(list, mi.getName() + postfix,
+         Component c = super.getListCellRendererComponent(
+                                                   list, mi.getName() + postfix,
                                                    index, isSelected,
                                                    cellHasFocus);
+         JComponent jc = (JComponent)c;
+         jc.setToolTipText(mi.getPath());
+         return jc;
       }
 
    }
