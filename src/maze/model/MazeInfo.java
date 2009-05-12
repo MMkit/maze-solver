@@ -65,7 +65,15 @@ public class MazeInfo implements Observer
 
    public boolean store()
    {
-      return true;
+	   Maze maze = new Maze(mModel);
+	   try {
+		maze.saveMaze(mPath);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("Saving Maze Error");
+	}
+      
+	   return true;
       /*boolean success = false;
       DataOutputStream dos;
       try

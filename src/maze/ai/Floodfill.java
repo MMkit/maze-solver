@@ -81,20 +81,24 @@ public class Floodfill extends RobotBase {
 			if(nextDirection == currentDirection)
 			{
 				next = RobotStep.MoveForward;
+//				System.out.println("Head in");
 			}
 			else if(nextDirection == currentDirection.getLeft())
 			{
 				next = RobotStep.RotateLeft;
 				moveQueue.add(RobotStep.MoveForward);
+//				System.out.println("Left it out");
 			}
 			else if(nextDirection == currentDirection.getRight())
 			{
 				next = RobotStep.RotateRight;
 				moveQueue.add(RobotStep.MoveForward);
+//				System.out.println("Right it out");
 			}
-			else //if(nextDirection == currentDirection.getOpposite())
+			else// if(nextDirection == currentDirection.getOpposite())
 			{
 				next = RobotStep.MoveBackward;
+//				System.out.println("Back it out");
 			}
 		}
 		else
@@ -380,6 +384,7 @@ public class Floodfill extends RobotBase {
 		
 		if(getDistance(robotLocation.getCurrentLocation()) == USELESS)
 		{
+			System.out.println("Purging Knowledge");
 			maze.clearMaze();
 			speedRunCapable = false;
 			for( int i = 0; i < size.width; i++)
@@ -389,6 +394,7 @@ public class Floodfill extends RobotBase {
 					explored[i][j]=false;
 				}
 			}
+			checkWalls();
 			floodfill();
 		}
 	}
