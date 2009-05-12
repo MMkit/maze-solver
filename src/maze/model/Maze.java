@@ -2,6 +2,11 @@ package maze.model;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Vector;
 //import java.awt.EventQueue;	//used only in the main function
 
@@ -482,4 +487,118 @@ public class Maze extends MazeModel
 
       };
    }
+   
+   public void saveMaze(String filename) throws IOException
+   {
+	   //This is the formatting of the .MAZ files found online
+	   //This format is 4 times more inefficient than needs be
+	   //but it is a format that is already present
+	   byte[] fileContents = new byte[256];
+	   for(int i=1; i<=16; i++){
+		   for(int j=16; j>0; j--){
+			   MazeCell cell = new MazeCell(i,j);
+			   byte cellWalls = 0;
+			   if(this.getWall(cell, Direction.North).isSet()){
+				   cellWalls =1;
+			   }
+			   if(this.getWall(cell, Direction.East).isSet()){
+				   cellWalls +=2;
+			   }
+			   if(this.getWall(cell, Direction.South).isSet()){
+				   cellWalls +=4;
+			   }
+			   if(this.getWall(cell, Direction.West).isSet()){
+				   cellWalls +=8;
+			   }
+
+			   fileContents[16*(i-1) + (16-j)] = cellWalls;
+		   }
+	   }
+	   
+	   //Now for the actual file i/o
+	   filename.toLowerCase();
+	   if(filename.endsWith(".maz") == false)
+	   {
+		   filename = filename + ".maz";
+	   }
+	   
+	   File file = new File(filename);
+	   if(file.exists() == false){
+		   file.createNewFile();
+	   }
+	   
+      FileOutputStream out = null;
+      out = new FileOutputStream(file);
+      out.write(fileContents);
+      out.close();
+
+   }
+   
+   public void loadMaze(String filename)
+   {
+	   //This is the formatting of the .MAZ files found online
+	   //This format is 4 times more inefficient than needs be
+	   //but it is a format that is already present
+	   byte[] fileContents = new byte[256];
+	   
+	   //Now for the actual file i/o
+	   filename.toLowerCase();
+	   if(filename.endsWith(".maz") == false)
+	   {
+		   filename = filename + ".maz";
+	   }
+	   
+	   File file = new File(filename);
+	   
+      FileInputStream in = null;
+      try {
+		in = new FileInputStream(file);
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		System.out.println("first place");
+	}
+      try {
+		in.read(fileContents);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("2nd place");
+	}
+      try {
+		in.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("3rd place");
+	}
+      
+	   for(int i=1; i<=16; i++){
+		   for(int j=16; j>0; j--){
+			   byte cellWalls = fileContents[16*(i-1) + (16-j)];
+			   if((cellWalls & 1) == 1){
+				   this.setWall(i,j, NORTH);
+			   }
+			   else{
+				   this.clearWall(i,j,NORTH);
+			   }
+			   if((cellWalls & 2) == 2){
+				   this.setWall(i,j, EAST);
+			   }
+			   else{
+				   this.clearWall(i,j,EAST);
+			   }
+			   if((cellWalls & 4) == 4){
+				   this.setWall(i,j, SOUTH);
+			   }
+			   else{
+				   this.clearWall(i,j,SOUTH);
+			   }
+			   if((cellWalls & 8) == 8){
+				   this.setWall(i,j, WEST);
+			   }
+			   else{
+				   this.clearWall(i,j,WEST);
+			   }
+		   }
+	   }
+   }
+
 }

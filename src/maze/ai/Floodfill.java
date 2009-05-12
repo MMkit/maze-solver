@@ -2,6 +2,8 @@ package maze.ai;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -190,28 +192,34 @@ public class Floodfill extends RobotBase {
 		Direction bestDirection = Direction.Directionless;
 		
 //		System.out.println("Best Distance: " + String.valueOf(bestDistance));
-		if(bestDistance > getNeighborDistance(here,robotLocation.getDirection()))
+		if((bestDistance > getNeighborDistance(
+				here,robotLocation.getDirection()))
+				&& (robotLocation.isWallFront() == false))
 		{
 			bestDirection = robotLocation.getDirection();
 			bestDistance = getNeighborDistance(here,bestDirection);
 		}
 
-		if(bestDistance > getNeighborDistance(here,Direction.North))
+		if((bestDistance > getNeighborDistance(here,Direction.North))
+				&& (maze.getWall(here,Direction.North).isSet() == false))
 		{
 			bestDirection = Direction.North;
 			bestDistance = getNeighborDistance(here,bestDirection);
 		}
-		if(bestDistance > getNeighborDistance(here,Direction.East))
+		if((bestDistance > getNeighborDistance(here,Direction.East))
+			&& (maze.getWall(here,Direction.East).isSet() == false))
 		{
 			bestDirection = Direction.East;
 			bestDistance = getNeighborDistance(here,bestDirection);
 		}
-		if(bestDistance > getNeighborDistance(here,Direction.West))
+		if((bestDistance > getNeighborDistance(here,Direction.West))
+			&& (maze.getWall(here,Direction.West).isSet() == false))
 		{
 			bestDirection = Direction.West;
 			bestDistance = getNeighborDistance(here,bestDirection);
 		}
-		if(bestDistance > getNeighborDistance(here,Direction.South))
+		if((bestDistance > getNeighborDistance(here,Direction.South))
+			&& (maze.getWall(here,Direction.South).isSet() == false))
 		{
 			bestDirection = Direction.South;
 			bestDistance = getNeighborDistance(here,bestDirection);
@@ -394,28 +402,28 @@ public class Floodfill extends RobotBase {
 		MazeCell cell4 = new MazeCell(size.width/2+1,size.height/2+1);
 		MazeCell current = robotLocation.getCurrentLocation();
 		
-		if(cell1.equals(current))
+		if(cell1.equals(current) == false)
 		{
 			maze.setWall(cell1.getX(),cell1.getY(),
 					Direction.North.getIndex());
 			maze.setWall(cell1.getX(),cell1.getY(),
 					Direction.West.getIndex());
 		}
-		if(cell2.equals(current))
+		if(cell2.equals(current) == false)
 		{
 			maze.setWall(cell2.getX(),cell2.getY(),
 					Direction.North.getIndex());
 			maze.setWall(cell2.getX(),cell2.getY(),
 					Direction.East.getIndex());
 		}
-		if(cell3.equals(current))
+		if(cell3.equals(current) == false)
 		{
 			maze.setWall(cell3.getX(),cell3.getY(),
 					Direction.South.getIndex());
 			maze.setWall(cell3.getX(),cell3.getY(),
 					Direction.West.getIndex());
 		}
-		if(cell4.equals(current))
+		if(cell4.equals(current) == false)
 		{
 			maze.setWall(cell4.getX(),cell4.getY(),
 					Direction.South.getIndex());
@@ -461,7 +469,11 @@ public class Floodfill extends RobotBase {
 			maze.setWall(cell.getX(),cell.getY(),
 					direction.getRight().getIndex());
 		}
-		//Shouldn't need to set the wall behind because you had to go thru it
+		if(robotLocation.isWallBack())
+		{
+			maze.setWall(cell.getX(),cell.getY(),
+					direction.getOpposite().getIndex());
+		}
 	}
 
 
@@ -477,7 +489,22 @@ public class Floodfill extends RobotBase {
 		      public void run() {
 
 		        Floodfill flood = new Floodfill();
-		        RobotModelMaster master = new RobotModelMaster(new Maze(),new MazeCell(1,16), Direction.North);
+		        
+//		        int[] mazeContents = new int[32];
+	//	        mazeContents[0] = 0xa;
+		//        Maze maze = new Maze(mazeContents);
+		        Maze maze = new Maze();
+		        //I haven't quite figured how to find a file other than the entire path
+//				maze.loadMaze("E:/eclipse workspace/MazeSolver/src/maze/model/mazeExamples/hitel05.maz");
+				maze.loadMaze(".." + File.separator + "MazeSolver" + File.separator + "src" + File.separator + "maze" + File.separator + "model" + File.separator + "mazeExamples" + File.separator + "longpath.maz");
+				try {
+					maze.saveMaze(".." + File.separator + "MazeSolver" + File.separator + "src" + File.separator + "maze" + File.separator + "model" + File.separator + "mazeExamples" + File.separator + "longpath.maz");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("saving problem");
+				}
+		        
+		        RobotModelMaster master = new RobotModelMaster(maze,new MazeCell(1,16), Direction.North);
 		        RobotModel mouse = new RobotModel(master);
 		        flood.setRobotLocation(mouse);
 		        flood.initialize();

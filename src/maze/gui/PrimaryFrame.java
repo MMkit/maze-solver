@@ -77,17 +77,30 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       //Maze Option item
       JMenu mazeMenu = new JMenu("Maze Options");
       menuBar.add(mazeMenu);
+      
+      ActionListener mazeActionListener = new ActionListener(){
+    	  public void actionPerformed(ActionEvent e){
+    		  String command = e.getActionCommand();
+    		  System.out.println(command);
+ //   		  if(command.equals("Save Maze")) {
+  //  			  saveMaze();
+ //   		  }
+    	  }
+      };
 
       // Load Maze
       JMenuItem mazeLoad = new JMenuItem("Load Maze");
+      mazeLoad.addActionListener(mazeActionListener);
       mazeMenu.add(mazeLoad);
 
       // Save Maze
       JMenuItem mazeSave = new JMenuItem("Save Maze");
+      mazeSave.addActionListener(mazeActionListener);
       mazeMenu.add(mazeSave);
 
       // maze templetes
       JMenuItem mazeTemp = new JMenuItem("Maze Templates");
+      mazeTemp.addActionListener(mazeActionListener);
       mazeMenu.add(mazeTemp);
 
       // Mouse options
