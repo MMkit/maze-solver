@@ -31,8 +31,10 @@ public class MazeInfoModel
 
    public void scanDirectory(File dir)
    {
-      if (dir == null || !dir.isDirectory())
-         return;
+      if (dir == null || !dir.isDirectory()){
+          System.out.println("null directory");
+    	  return;
+      }
 
       for (File entry : dir.listFiles())
       {

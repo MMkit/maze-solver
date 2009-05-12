@@ -543,10 +543,10 @@ public class Maze extends MazeModel
 	   
 	   //Now for the actual file i/o
 	   filename.toLowerCase();
-	   if(filename.endsWith(".maz") == false)
-	   {
-		   filename = filename + ".maz";
-	   }
+//	   if(filename.endsWith(".maz") == false)
+//	   {
+//		   filename = filename + ".maz";
+//	   }
 	   
 	   File file = new File(filename);
 	   
@@ -556,6 +556,7 @@ public class Maze extends MazeModel
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		System.out.println("first place");
+		System.out.println(filename);
 	}
       try {
 		in.read(fileContents);

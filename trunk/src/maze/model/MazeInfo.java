@@ -1,9 +1,9 @@
 package maze.model;
 
-import java.awt.Dimension;
-import java.io.DataInputStream;
+//import java.awt.Dimension;
+//import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
@@ -23,22 +23,27 @@ public class MazeInfo implements Observer
    {
       if (file == null || !file.isFile())
          return null;
-      DataInputStream dis;
+      //DataInputStream dis;
       MazeInfo returned = null;
       try
       {
          MazeInfo mi = new MazeInfo();
-         dis = new DataInputStream(new FileInputStream(file));
-         mi.mName = dis.readUTF();
-         Dimension d = new Dimension(dis.readInt(), dis.readInt());
+         
+         //dis = new DataInputStream(new FileInputStream(file));
+         //mi.mName = dis.readUTF();
+         /*Dimension d = new Dimension(dis.readInt(), dis.readInt());
          int[] walls = new int[d.height + d.width];
          for (int i = 0; i < walls.length; i++)
             walls[i] = (dis.available() >= Integer.SIZE / 8) ? dis.readInt() : 0;
-         mi.mModel = new Maze(walls);
+         */
+         Maze maze = new Maze();
          mi.mPath = file.getCanonicalPath();
+         maze.loadMaze(mi.mPath);
+         mi.mModel = new Maze(maze.getMaze());
+         mi.mName = file.getName();
          mi.mModel.addObserver(mi);
          returned = mi;
-         dis.close();
+         //dis.close();
       }
       catch (IOException ex)
       {
