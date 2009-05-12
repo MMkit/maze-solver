@@ -80,19 +80,13 @@ public class EditableMazeView extends maze.gui.MazeView
              cp[i].y <= leftY + csm.getCellHeightHalf())
             return;
 
-         if (coords[0] != 0)
-         {
-            int halfX = leftX + csm.getCellWidthHalf();
-            if (cp[i].x < halfX)
-               coords[0]--;
-         }
+         int halfX = leftX + csm.getCellWidthHalf();
+         if (cp[i].x < halfX)
+            coords[0]--;
 
-         if (coords[1] != 0)
-         {
-            int halfY = leftY + csm.getCellHeightHalf();
-            if (cp[i].y < halfY)
-               coords[1]--;
-         }
+         int halfY = leftY + csm.getCellHeightHalf();
+         if (cp[i].y < halfY)
+            coords[1]--;
 
          TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
 
