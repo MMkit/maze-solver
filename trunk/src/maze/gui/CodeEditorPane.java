@@ -4,19 +4,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.CharBuffer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JEditorPane;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
+import maze.ai.PythonScriptRobot;
+import maze.ai.RobotBase;
 import maze.ai.RobotStep;
+import maze.model.Direction;
 import maze.model.Maze;
+import maze.model.MazeCell;
+import maze.model.RobotModel;
+import maze.model.RobotModelMaster;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -24,51 +35,51 @@ import org.python.core.PyList;
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 
-/**
- * Creates a robot AI script editor that allows the creation of Python scripts
- * to control the AI robot.
- * @author Luke Last
- */
-public class CodeEditorPanel extends JSplitPane
+public final class CodeEditorPane extends RTextScrollPane
 {
-
+   private static final String ROBO_MODEL_VAR_NAME = "maze";
    private final RSyntaxTextArea textArea = new RSyntaxTextArea();
+   private RobotBase connectedRobot;
+   private PythonInterpreter currentInterpreter;
+   /**
+    * The File (if any) that is attached to this editor.
+    */
+   private File scriptFile;
+
    private final String[] excludedStrings = new String[]
    {
       "clone", "finalize", "getClass", "hashCode", "notify", "notifyAll", "wait",
    };
 
-   /**
-    * Constructor.
-    */
-   public CodeEditorPanel()
+   public CodeEditorPane(File fileToOpen)
+   {
+      this();
+      this.scriptFile = fileToOpen;
+      try
+      {
+         CharBuffer cb = CharBuffer.allocate(1024 * 16);
+         Reader r = new InputStreamReader(new FileInputStream(fileToOpen), "UTF-8");
+         while (0 < r.read(cb))
+            ;
+         cb.flip();
+         this.textArea.setText(cb.toString());
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public CodeEditorPane()
    {
       //Set up the scroll pane that holds the code editor.
-      final RTextScrollPane scrollPane = new RTextScrollPane();
-      scrollPane.setViewportView(this.textArea);
-      scrollPane.setLineNumbersEnabled(true);
-
-      //Set up the documentation browser.
-      final JEditorPane docPane = new JEditorPane();
-      docPane.setEditable(false);
-      docPane.setContentType("text/html");
-      docPane.setText("<html><h2>This page will contain documentation</h2><p>blah blah</p></html>");
-
-      //Set up the documentation tabs.
-      final JTabbedPane docTabs = new JTabbedPane();
-
-      docTabs.add("Code Information", new CodeInformationPanel());
-      docTabs.add("API Documentation", docPane);
+      super.setViewportView(this.textArea);
+      super.setLineNumbersEnabled(true);
 
       //Set up the code editor.
       this.textArea.setMarkOccurrences(true);
       this.textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
       this.textArea.setSyntaxEditingStyle(RSyntaxTextArea.SYNTAX_STYLE_PYTHON);
-
-      //Set up split pane.
-      this.setLeftComponent(scrollPane);
-      this.setRightComponent(docTabs);
-      this.setResizeWeight(.8);
 
       JMenuItem menuItem = new JMenuItem("Analyze Object");
       this.textArea.getPopupMenu().addSeparator();
@@ -93,6 +104,7 @@ public class CodeEditorPanel extends JSplitPane
          {
             evaluateSelection();
          }
+
       });
 
       Action action = new AbstractAction()
@@ -108,6 +120,62 @@ public class CodeEditorPanel extends JSplitPane
       this.textArea.getKeymap().addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
                                                                              InputEvent.SHIFT_DOWN_MASK),
                                                       action);
+      this.addToRobotModel();
+   }
+
+   @Override
+   public String toString()
+   {
+      if (this.scriptFile != null)
+      {
+         return this.scriptFile.getName();
+      }
+      else
+      {
+         return "New Python Script";
+      }
+   }
+
+   /**
+    * Adds a RobotBase instance to the global Robot list. This new AI instance
+    * is connected to this code editor.
+    */
+   private void addToRobotModel()
+   {
+      this.connectedRobot = new PythonScriptRobot(this);
+      RobotBase.getRobotListModel().addElement(this.connectedRobot);
+   }
+
+   void removeFromRobotModel()
+   {
+      RobotBase.getRobotListModel().removeElement(this.connectedRobot);
+   }
+
+   public void saveScriptFile()
+   {
+      if (this.scriptFile != null)
+      {
+         Writer w = null;
+         try
+         {
+            w = new OutputStreamWriter(new FileOutputStream(this.scriptFile), "UTF-8");
+            w.write(this.textArea.getText());
+            w.close();
+         }
+         catch (Exception e)
+         {
+            e.printStackTrace();
+         }
+         finally
+         {
+            try
+            {
+               w.close();
+            }
+            catch (IOException e)
+            {}
+         }
+      }
    }
 
    private void evaluateSelection()
@@ -161,11 +229,7 @@ public class CodeEditorPanel extends JSplitPane
             title = selectedObj.getType().toString();
          }
 
-         JOptionPane.showMessageDialog(this,
-                                       sb.toString(),
-                                       title,
-                                       JOptionPane.INFORMATION_MESSAGE,
-                                       null);
+         JOptionPane.showMessageDialog(this, sb.toString(), title, JOptionPane.INFORMATION_MESSAGE, null);
       }
       catch (Exception e2)
       {
@@ -177,15 +241,53 @@ public class CodeEditorPanel extends JSplitPane
       }
    }
 
-   private PythonInterpreter getInitializedInterpreter()
+   /**
+    * @return
+    */
+   public PythonInterpreter getInitializedInterpreter()
    {
       final PythonInterpreter interp = new PythonInterpreter();
       interp.exec("from maze.ai import RobotStep");
-      interp.exec("from maze.model import WallDirection, MazeCell");
-      interp.set("maze", new Maze());
-
+      interp.exec("from maze.model import Direction, MazeCell");
+      interp.set("Forward", RobotStep.MoveForward);
+      interp.set("Back", RobotStep.MoveBackward);
+      interp.set("Left", RobotStep.RotateLeft);
+      interp.set("Right", RobotStep.RotateRight);
+      //We create and set a dummy maze variable so the user can analyze its methods.
+      interp.set(ROBO_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new Maze(),
+                                                                          new MazeCell(1, 16),
+                                                                          Direction.North)));
       interp.exec(this.textArea.getText());
+      this.currentInterpreter = interp;
       return interp;
+   }
+
+   public void setRobotModel(RobotModel model)
+   {
+      try
+      {
+         this.currentInterpreter.set(ROBO_MODEL_VAR_NAME, model);
+      }
+      catch (Exception ex)
+      {
+         ex.printStackTrace();
+      }
+   }
+
+   public RobotStep getNextStep()
+   {
+      try
+      {
+         final PyObject function = this.currentInterpreter.get("nextStep");
+         Object result = function.__call__();
+         return RobotStep.valueOf(result.toString());
+      }
+      catch (Exception ex)
+      {
+         ex.printStackTrace();
+         //throw new RuntimeException(ex);
+         return RobotStep.MoveForward;
+      }
    }
 
    private void executeScript()
@@ -209,14 +311,5 @@ public class CodeEditorPanel extends JSplitPane
                                        JOptionPane.ERROR_MESSAGE,
                                        null);
       }
-   }
-   
-   public RobotStep getNextStep()
-   {
-      return RobotStep.MoveForward;
-   }
-
-   private final class CodeInformationPanel extends JPanel
-   {
    }
 }

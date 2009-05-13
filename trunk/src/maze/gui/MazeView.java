@@ -35,7 +35,7 @@ import maze.model.MazeModel.MazeWall;
 public class MazeView extends JPanel implements ComponentListener
 {
    //Temporary model.
-   protected MazeModel model = new maze.model.MazeModelStub();
+   protected MazeModel model;
    /**
     * The maze model that stores the configuration of the maze.
     */
