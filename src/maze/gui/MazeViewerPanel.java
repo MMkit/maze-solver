@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -11,6 +13,7 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -87,17 +90,24 @@ public class MazeViewerPanel extends JPanel
       this.aiList.setSelectedIndex(0);
 
       //Create animation speed slider.
-      final JSlider speedSlider = new JSlider();
-      sidePanel.add(speedSlider);
-      speedSlider.setBorder(new TitledBorder("Simulation Speed"));
+      final JSlider speedSlider = new JSlider(0, SPEED_STEPS, (int) (SPEED_STEPS / 1.4));
+      final JPanel sliderPanel = new JPanel();
+      sliderPanel.add(speedSlider);
+      sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.X_AXIS));
+      sliderPanel.setBorder(new TitledBorder("Simulation Speed"));
+      sidePanel.add(sliderPanel);
+      Dictionary<Object, Object> sliderLabels = new Hashtable<Object, Object>();
+      sliderLabels.put(0, new JLabel("Slow"));
+      sliderLabels.put(SPEED_STEPS, new JLabel("Fast"));
+      speedSlider.setLabelTable(sliderLabels);
+      speedSlider.setPaintLabels(true);
 
       this.speedSliderModel = speedSlider.getModel();
-      this.speedSliderModel.setMinimum(0);
-      this.speedSliderModel.setValue((int)(SPEED_STEPS / 1.4));
-      this.speedSliderModel.setMaximum(SPEED_STEPS);
+      //this.speedSliderModel.setMinimum(0);
+      //this.speedSliderModel.setValue((int)(SPEED_STEPS / 1.4));
+      //this.speedSliderModel.setMaximum(SPEED_STEPS);
       this.speedSliderModel.addChangeListener(new ChangeListener()
       {
-
          @Override
          public void stateChanged(ChangeEvent e)
          {

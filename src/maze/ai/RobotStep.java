@@ -21,5 +21,20 @@ public enum RobotStep
    /**
     * Rotates the robot to the right.
     */
-   RotateRight,
+   RotateRight, ;
+
+   /**
+    * Tells us if this robot step represents a left or right turn/rotation.
+    */
+   public boolean isTurn()
+   {
+      switch (this)
+      {
+         case RotateLeft :
+         case RotateRight :
+            return true;
+         default :
+            return false;
+      }
+   }
 }

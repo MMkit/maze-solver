@@ -72,10 +72,20 @@ public class RobotModelMaster
    {
       return currentLocation;
    }
+   
+   public void setCurrentLocation(MazeCell location)
+   {
+      this.currentLocation = location;
+   }
 
    public Direction getDirection()
    {
       return direction;
+   }
+   
+   public void setDirection(Direction direction)
+   {
+      this.direction = direction;
    }
 
    public Collection<MazeCell> getHistory()
