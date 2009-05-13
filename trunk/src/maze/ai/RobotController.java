@@ -33,7 +33,17 @@ public class RobotController
       this.robotModelMaster = new RobotModelMaster(this.mazeModel, start, Direction.North);
 
       this.robotModelClient = new RobotModel(this.robotModelMaster);
+      this.initialize();
+   }
 
+   /**
+    * Initializes/resets all values of this controller allowing a new simulation
+    * to be run from the beginning.
+    */
+   public void initialize()
+   {
+      this.robotModelMaster.setCurrentLocation(new MazeCell(1, this.mazeModel.getSize().height));
+      this.robotModelMaster.setDirection(Direction.North);
       this.ai.setRobotLocation(this.robotModelClient);
       this.ai.initialize();
    }
