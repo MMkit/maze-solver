@@ -1,7 +1,10 @@
 package maze;
 
+import java.util.Arrays;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import maze.gui.PrimaryFrame;
 
@@ -34,6 +37,20 @@ public final class Main
          @Override
          public void run()
          {
+            try
+            {
+               System.out.println(Arrays.toString(UIManager.getInstalledLookAndFeels()));
+               //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+               //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+               //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+               UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+               
+            }
+            catch (Exception e)
+            {
+               e.printStackTrace();
+            }
             primaryFrame = new PrimaryFrame();
             primaryFrame.init();
             primaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

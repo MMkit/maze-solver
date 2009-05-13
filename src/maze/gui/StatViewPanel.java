@@ -14,21 +14,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerListModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import maze.Main;
 import maze.ai.Floodfill;
 import maze.ai.LeftWallFollower;
-import maze.ai.PythonScriptRobot;
 import maze.ai.RightWallFollower;
 import maze.ai.RobotBase;
 import maze.ai.Tremaux;
@@ -84,14 +77,12 @@ public class StatViewPanel extends JPanel{
 		algorithms.add(new RightWallFollower());
 		algorithms.add(new Tremaux());
 		algorithms.add(new Floodfill());
-		algorithms.add(new PythonScriptRobot());
 		
 		algorithmNames = new ArrayList<String>();
 		algorithmNames.add("Left Wall Follower");
 		algorithmNames.add("Right Wall Follower");
 		algorithmNames.add("Tremaux");
 		algorithmNames.add("Floodfill");
-		algorithmNames.add("Python Script Robot");
 		
 		SpinnerListModel spinnerListModel = new SpinnerListModel(algorithmNames);
 		ChangeListener algorithmChange = new ChangeListener(){

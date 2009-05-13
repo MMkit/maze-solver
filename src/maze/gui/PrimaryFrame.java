@@ -30,14 +30,16 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 {
    private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
    private MazeViewerPanel mazeViewer;
-   private CodeEditorPanel codeEditorPanel;
+   private CodeEditingPanel codeEditorPanel;
+   private final JTabbedPane mainTabs = new JTabbedPane();
+   private final JMenu mazeMenu = new JMenu("Maze Options");
+   private final JMenu mouseMenu = new JMenu("Mouse Options");
 
    /**
     * Constructor.
     */
    public PrimaryFrame()
-   {
-   }
+   {}
 
    /**
     * Initializes the contents of this frame.
@@ -45,7 +47,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    public void init()
    {
       this.mazeViewer = new MazeViewerPanel();
-      this.codeEditorPanel = new CodeEditorPanel();
+      this.codeEditorPanel = new CodeEditingPanel();
 
       // menu bar
       JMenuBar menuBar = new JMenuBar();
@@ -75,17 +77,19 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       });
 
       //Maze Option item
-      JMenu mazeMenu = new JMenu("Maze Options");
+
       menuBar.add(mazeMenu);
-      
-      ActionListener mazeActionListener = new ActionListener(){
-    	  public void actionPerformed(ActionEvent e){
-    		  String command = e.getActionCommand();
-    		  System.out.println(command);
- //   		  if(command.equals("Save Maze")) {
-  //  			  saveMaze();
- //   		  }
-    	  }
+
+      ActionListener mazeActionListener = new ActionListener()
+      {
+         public void actionPerformed(ActionEvent e)
+         {
+            String command = e.getActionCommand();
+            System.out.println(command);
+            //   		  if(command.equals("Save Maze")) {
+            //  			  saveMaze();
+            //   		  }
+         }
       };
 
       // Load Maze
@@ -104,16 +108,49 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       mazeMenu.add(mazeTemp);
 
       // Mouse options
-      JMenu mouseMenu = new JMenu("Mouse Options");
+
       menuBar.add(mouseMenu);
 
-      // Load AI
-      JMenuItem mouseLoad = new JMenuItem("Load AI");
-      mouseMenu.add(mouseLoad);
+      // Create new Python AI script.
+      final JMenuItem newScript = new JMenuItem("New AI Script");
+      this.mouseMenu.add(newScript);
+      newScript.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            codeEditorPanel.createNewEditor();
+            mainTabs.setSelectedComponent(codeEditorPanel);
+         }
+      });
 
-      // Save AI
-      JMenuItem mouseSave = new JMenuItem("Save AI");
+      // Load AI
+      JMenuItem mouseLoad = new JMenuItem("Load AI Script");
+      mouseMenu.add(mouseLoad);
+      mouseLoad.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            codeEditorPanel.openScript();
+            mainTabs.setSelectedComponent(codeEditorPanel);
+         }
+      });
+
+      // Save Python AI script.
+      JMenuItem mouseSave = new JMenuItem("Save AI Script");
       mouseMenu.add(mouseSave);
+      mouseSave.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            codeEditorPanel.saveScript();
+         }
+      });
+
+      // Close AI script.
+      this.mouseMenu.add(new JMenuItem(this.codeEditorPanel.closeScriptAction));
 
       // Algorithms
       JMenu mouseAlgorithms = new JMenu("AI Algrithms");
@@ -172,13 +209,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
       this.setSize(1000, 750);
 
-      JTabbedPane jtp = new JTabbedPane();
-      this.add(jtp);
+      this.add(mainTabs);
 
-      jtp.add("Micro Mouse Simulator", this.mazeViewer);
-      jtp.add("Maze Editor", new MazeEditor());
-      jtp.add("AI Script Editor", this.codeEditorPanel);
-      jtp.add("Statistics Display", new StatViewPanel());
+      mainTabs.add("Micro Mouse Simulator", this.mazeViewer);
+      mainTabs.add("Maze Editor", new MazeEditor());
+      mainTabs.add("AI Script Editor", this.codeEditorPanel);
+      mainTabs.add("Statistics Display", new StatViewPanel());
    }
 
    /**
@@ -245,8 +281,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
    @Override
    public void windowOpened(WindowEvent e)
-   {
-   }
+   {}
 
    @Override
    public void windowClosing(WindowEvent e)
@@ -258,9 +293,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          if (mi.isDirty())
          {
             int result = JOptionPane.showConfirmDialog(this,
-                                                       "Would you like to save \"" +
-                                                             mi.getName() +
-                                                             "\"",
+                                                       "Would you like to save \"" + mi.getName() + "\"",
                                                        "Save Maze?",
                                                        JOptionPane.YES_NO_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);
@@ -272,31 +305,38 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
    @Override
    public void windowClosed(WindowEvent e)
-   {
-   }
+   {}
 
    @Override
    public void windowIconified(WindowEvent e)
-   {
-   }
+   {}
 
    @Override
    public void windowDeiconified(WindowEvent e)
-   {
-   }
+   {}
 
    @Override
    public void windowActivated(WindowEvent e)
-   {
-   }
+   {}
 
    @Override
    public void windowDeactivated(WindowEvent e)
-   {
-   }
-   
-   public CodeEditorPanel getCodeEditorPanel()
+   {}
+
+   public CodeEditingPanel getCodeEditorPanel()
    {
       return this.codeEditorPanel;
+   }
+
+   /**
+    * Tells the primary frame if a simulation is currently running or not. We
+    * can then disable GUI elements while animating.
+    * @param simOn Set to true means the robot simulation is currently running.
+    */
+   public void setSimulation(boolean simOn)
+   {
+      this.mainTabs.setEnabled(!simOn);
+      this.mazeMenu.setEnabled(!simOn);
+      this.mouseMenu.setEnabled(!simOn);
    }
 }

@@ -142,7 +142,10 @@ public final class RobotAnimator extends Thread
 
    public void setMovesPerStep(int movesPerStep)
    {
-      this.movesPerStep = movesPerStep;
+      if (movesPerStep < 1)
+         this.movesPerStep = 1;
+      else
+         this.movesPerStep = movesPerStep;
    }
 
 }

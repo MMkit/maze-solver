@@ -1,5 +1,8 @@
 package maze.ai;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.MutableComboBoxModel;
+
 import maze.model.RobotModel;
 
 /**
@@ -9,11 +12,25 @@ public abstract class RobotBase
 {
    protected RobotModel robotLocation;
    protected boolean speedRun = false;
-   public static final RobotBase[] MASTER_AI_LIST = new RobotBase[]
+
+   private static MutableComboBoxModel robotListModel;
+
+   /**
+    * Gets a singleton instance of a robot list model. This contains a global
+    * list of all the AI algorithms available to the system.
+    */
+   public static MutableComboBoxModel getRobotListModel()
    {
-      new LeftWallFollower(), new RightWallFollower(), new Tremaux(), new Floodfill(),
-      new PythonScriptRobot(),
-   };
+      // Initialize if necessary.
+      if (robotListModel == null)
+      {
+         robotListModel = new DefaultComboBoxModel(new RobotBase[]
+         {
+            new LeftWallFollower(), new RightWallFollower(), new Tremaux(), new Floodfill(),
+         });
+      }
+      return robotListModel;
+   }
 
    /**
     * Sets the instance of the robot model to use.

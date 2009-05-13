@@ -1,6 +1,7 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
@@ -11,10 +12,13 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -38,7 +42,7 @@ public class MazeViewerPanel extends JPanel
    private final JList aiList = new JList();
    private volatile RobotAnimator currentAnimator = null;
    private final BoundedRangeModel speedSliderModel;
-   private static final int SPEED_STEPS = 20;
+   private static final int SPEED_STEPS = 25;
 
    public MazeViewerPanel()
    {
@@ -55,12 +59,9 @@ public class MazeViewerPanel extends JPanel
       sidePanel.setMinimumSize(new Dimension(300, 300));
 
       //Create a panel to hold the list so it will maximize it.
-      final JPanel listPanel = new JPanel(new BorderLayout());
-      sidePanel.add(listPanel);
-
-      //Create a JList to hold the current mazes.
-      listPanel.add(mazeList);
-      mazeList.setBorder(new TitledBorder("Mazes"));
+      final JScrollPane mazeListPane = new JScrollPane(this.mazeList);
+      sidePanel.add(mazeListPane);
+      mazeListPane.setBorder(new TitledBorder("Mazes"));
       ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel();
       mazeList.setModel(cbm);
       mazeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -79,27 +80,21 @@ public class MazeViewerPanel extends JPanel
       });
 
       //Create a JList to display the AI Algorithms.
-      final JPanel aiPanel = new JPanel(new BorderLayout());
-      sidePanel.add(aiPanel);
-      aiPanel.add(this.aiList);
-      aiPanel.setBorder(new TitledBorder("Available Algorithms"));
-      this.aiList.setListData(RobotBase.MASTER_AI_LIST);
+      final JScrollPane aiScrollPane = new JScrollPane(this.aiList);
+      sidePanel.add(aiScrollPane);
+      aiScrollPane.setBorder(new TitledBorder("Available Algorithms"));
+      this.aiList.setModel(RobotBase.getRobotListModel());
       this.aiList.setSelectedIndex(0);
 
-      //Add the start animation button.
-      final JPanel startButtonPanel = new JPanel(new BorderLayout());
-      startButtonPanel.add(new JToggleButton(this.startAnimationAction), BorderLayout.NORTH);
-      sidePanel.add(startButtonPanel);
-
+      //Create animation speed slider.
       final JSlider speedSlider = new JSlider();
       sidePanel.add(speedSlider);
       speedSlider.setBorder(new TitledBorder("Simulation Speed"));
 
       this.speedSliderModel = speedSlider.getModel();
       this.speedSliderModel.setMinimum(0);
-      this.speedSliderModel.setValue(SPEED_STEPS / 2);
-      this.speedSliderModel.setMaximum(SPEED_STEPS - 2);
-
+      this.speedSliderModel.setValue((int)(SPEED_STEPS / 1.4));
+      this.speedSliderModel.setMaximum(SPEED_STEPS);
       this.speedSliderModel.addChangeListener(new ChangeListener()
       {
 
@@ -112,6 +107,14 @@ public class MazeViewerPanel extends JPanel
             }
          }
       });
+
+      //Add the start animation button.
+      final JToggleButton startButton = new JToggleButton(this.startAnimationAction);
+      sidePanel.add(startButton);
+      startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+      startButton.setBorder(new EmptyBorder(8, 5, 8, 5));
+      startButton.setMaximumSize(new Dimension(400, 200));
+
    }
 
    /**
@@ -132,6 +135,7 @@ public class MazeViewerPanel extends JPanel
          this.putValue(Action.SELECTED_KEY, true);
          mazeList.setEnabled(false);
          aiList.setEnabled(false);
+         Main.getPrimaryFrameInstance().setSimulation(true);
       }
 
       private void stopAnimation()
@@ -141,26 +145,51 @@ public class MazeViewerPanel extends JPanel
          mazeList.setEnabled(true);
          aiList.setEnabled(true);
          currentAnimator = null;
+         Main.getPrimaryFrameInstance().setSimulation(false);
       }
 
       @Override
       public void actionPerformed(ActionEvent e)
       {
+         //If the animator is null that start a new one.
          if (currentAnimator == null)
          {
-            //Create a callback to enable the action after the animator is done running.
-            final Runnable callback = new Runnable()
+            if (myMazeView.getModel() == null)
             {
-               @Override
-               public void run()
+               JOptionPane.showMessageDialog(MazeViewerPanel.this,
+                                             "You must select a maze before running a simulation.",
+                                             "Simulation Error",
+                                             JOptionPane.ERROR_MESSAGE,
+                                             null);
+               this.putValue(Action.SELECTED_KEY, false);
+            }
+            else
+            {
+               //Create a callback to enable the action after the animator is done running.
+               final Runnable callback = new Runnable()
                {
-                  stopAnimation();
+                  @Override
+                  public void run()
+                  {
+                     stopAnimation();
+                  }
+               };
+               this.startAnimation();
+               try
+               {
+                  currentAnimator = new RobotAnimator(myMazeView,
+                                                      (RobotBase) aiList.getSelectedValue(),
+                                                      callback);
+                  currentAnimator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
+                  currentAnimator.start();
                }
-            };
-            this.startAnimation();
-            currentAnimator = new RobotAnimator(myMazeView, (RobotBase)aiList.getSelectedValue(), callback);
-            currentAnimator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
-            currentAnimator.start();
+               catch (Exception ex)
+               {
+
+                  this.stopAnimation();
+                  ex.printStackTrace();
+               }
+            }
          }
          else
          { // Animation is already running so stop it.

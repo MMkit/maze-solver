@@ -1,29 +1,34 @@
 package maze.ai;
 
-import maze.Main;
-import maze.gui.CodeEditorPanel;
+import maze.gui.CodeEditorPane;
 
 public final class PythonScriptRobot extends RobotBase
 {
-   private CodeEditorPanel codeEditorPanel;
+   private final CodeEditorPane codeEditor;
+
+   public PythonScriptRobot(CodeEditorPane codeEditor)
+   {
+      this.codeEditor = codeEditor;
+   }
 
    @Override
    public String toString()
    {
-      return "Custom Python Script";
+      return this.codeEditor.toString();
    }
 
    @Override
    public void initialize()
    {
       super.initialize();
-      this.codeEditorPanel = Main.getPrimaryFrameInstance().getCodeEditorPanel();
+      this.codeEditor.getInitializedInterpreter();
+      this.codeEditor.setRobotModel(super.robotLocation);
    }
 
    @Override
    public RobotStep nextStep()
    {
-      return this.codeEditorPanel.getNextStep();
+      return this.codeEditor.getNextStep();
    }
 
 }
