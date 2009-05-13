@@ -75,6 +75,23 @@ public class Maze extends MazeModel
 	    }
    }
 
+   //Another constructor should be made to pass in a predetermined maze
+   public Maze( MazeModel wholeMaze )
+   {
+		rwalls = new int[SIZE];
+		cwalls = new int[SIZE];
+		for(int i=1;i<=SIZE;i++) {
+			for(int j=1;j<=SIZE;j++) {
+				if(wholeMaze.getWall(i,j, Direction.East).isSet() == true){
+					this.setWall(i,j,EAST);
+				}
+				if(wholeMaze.getWall(i,j,Direction.South).isSet() == true){
+					this.setWall(i,j,SOUTH);
+				}
+			}
+	    }
+   }
+
    public void setWall( int x, int y, int dir )
    {
 		//Check for the boundary conditions

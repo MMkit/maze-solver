@@ -496,17 +496,11 @@ public class Floodfill extends RobotBase {
 
 		        Floodfill flood = new Floodfill();
 		        
-//		        int[] mazeContents = new int[32];
-	//	        mazeContents[0] = 0xa;
-		//        Maze maze = new Maze(mazeContents);
 		        Maze maze = new Maze();
-		        //I haven't quite figured how to find a file other than the entire path
-//				maze.loadMaze("E:/eclipse workspace/MazeSolver/src/maze/model/mazeExamples/hitel05.maz");
 				maze.loadMaze(".." + File.separator + "MazeSolver" + File.separator + "src" + File.separator + "maze" + File.separator + "model" + File.separator + "mazeExamples" + File.separator + "longpath.maz");
 				try {
 					maze.saveMaze(".." + File.separator + "MazeSolver" + File.separator + "src" + File.separator + "maze" + File.separator + "model" + File.separator + "mazeExamples" + File.separator + "longpath.maz");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					System.out.println("saving problem");
 				}
 		        
