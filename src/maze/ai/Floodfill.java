@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import maze.model.Direction;
-import maze.model.Maze;
 import maze.model.MazeCell;
+import maze.model.MazeModel;
 import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
@@ -21,7 +21,7 @@ public class Floodfill extends RobotBase
    private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();
    private boolean turbo = false;
    private static final int USELESS = 1024;
-   private Maze maze = new Maze();
+   private MazeModel maze = new MazeModel();
    private boolean goal;
    private static final boolean TO_CENTER = true;
    private static final boolean TO_START = false;
@@ -476,8 +476,11 @@ public class Floodfill extends RobotBase
 
             Floodfill flood = new Floodfill();
 
-            Maze maze = new Maze();
-            maze.loadMaze(".." +
+            MazeModel maze = new MazeModel();
+            
+            try
+            {
+               maze.loadMaze(".." +
                           File.separator +
                           "MazeSolver" +
                           File.separator +
@@ -490,8 +493,6 @@ public class Floodfill extends RobotBase
                           "mazeExamples" +
                           File.separator +
                           "longpath.maz");
-            try
-            {
                maze.saveMaze(".." +
                              File.separator +
                              "MazeSolver" +

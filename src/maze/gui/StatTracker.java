@@ -12,8 +12,8 @@ import maze.ai.RobotBase;
 import maze.ai.RobotStep;
 import maze.ai.Tremaux;
 import maze.model.Direction;
-import maze.model.Maze;
 import maze.model.MazeCell;
+import maze.model.MazeModel;
 import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
@@ -253,7 +253,7 @@ public class StatTracker {
 		      
 			public void run() {
 				Floodfill flood = new Floodfill();
-		        RobotModelMaster master = new RobotModelMaster(new Maze(),new MazeCell(1,16), Direction.North);
+		        RobotModelMaster master = new RobotModelMaster(new MazeModel(),new MazeCell(1,16), Direction.North);
 		        RobotModel mouse = new RobotModel(master);
 		        flood.setRobotLocation(mouse);
 		        flood.initialize();

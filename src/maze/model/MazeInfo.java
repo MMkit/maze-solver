@@ -36,10 +36,10 @@ public class MazeInfo implements Observer
          for (int i = 0; i < walls.length; i++)
             walls[i] = (dis.available() >= Integer.SIZE / 8) ? dis.readInt() : 0;
          */
-         Maze maze = new Maze();
+         MazeModel maze = new MazeModel();
          mi.mPath = file.getCanonicalPath();
          maze.loadMaze(mi.mPath);
-         mi.mModel = new Maze(maze.getMaze());
+         mi.mModel = maze;
          mi.mName = file.getName();
          mi.mModel.addObserver(mi);
          returned = mi;
@@ -58,16 +58,15 @@ public class MazeInfo implements Observer
       MazeInfo mi = new MazeInfo();
       mi.mName = name;
       mi.mPath = "";
-      mi.mModel = new MazeModelStub();
+      mi.mModel = new MazeModel();
       mi.isDirty = true;
       return mi;
    }
 
    public boolean store()
    {
-	   Maze maze = new Maze(mModel);
 	   try {
-		maze.saveMaze(mPath);
+		mModel.saveMaze(mPath);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		System.out.println("Saving Maze Error");
