@@ -67,4 +67,11 @@ public class RobotModel
    public void takeNextStep(RobotStep nextStep) {
 	   this.parent.takeNextStep(nextStep);
    }
+
+   public boolean isExplored(MazeCell location){
+	   return this.parent.isExplored(location);
+   }
+
 }
+
+

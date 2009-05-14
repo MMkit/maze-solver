@@ -173,5 +173,10 @@ public class RobotModelMaster
       }
 
    }
+   
+   public boolean isExplored(MazeCell location){
+	   return history.contains(location);
+   }
 
 }
+
