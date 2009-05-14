@@ -30,6 +30,10 @@ public class RobotModelMaster
     * The list of cells that the
     */
    private final List<MazeCell> pathTaken = new ArrayList<MazeCell>();
+   
+   private List<MazeCell> firstRun = new ArrayList<MazeCell>();
+   
+   private List<MazeCell> bestRun = new ArrayList<MazeCell>();
    /**
     * All the maze cells that have already been visited.
     */
@@ -43,6 +47,11 @@ public class RobotModelMaster
       this.mazeModel = mazeModel;
       this.currentLocation = currentLocation;
       this.direction = direction;
+      
+      MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
+      
+      pathTaken.add(startCell);
+      history.add(startCell);
    }
 
    public boolean isWallFront()
@@ -171,7 +180,34 @@ public class RobotModelMaster
             history.add(currentLocation);
          }
       }
+      
+      MazeCell goal1 = new MazeCell(mazeModel.getSize().width/2,mazeModel.getSize().height/2);
+      MazeCell goal2 = goal1.plusX(1);
+      MazeCell goal3 = goal1.plusY(1);
+      MazeCell goal4 = goal2.plusY(1);
+      if(currentLocation.equals(goal1) || currentLocation.equals(goal2) 
+    		  ||currentLocation.equals(goal3) ||currentLocation.equals(goal4))
+      {
+    	  if(firstRun.isEmpty()){
+    		  for(int i = 0; i<pathTaken.size();i++){
+    			  firstRun.add(pathTaken.get(i));
+        		  bestRun.add(pathTaken.get(i));
+    		  }
+    		  
+    	  }
+    	  else{
 
+    		  MazeCell startCell = new MazeCell(1,mazeModel.getSize().height);
+    		  if((bestRun.size()) > (pathTaken.size() 
+    				  - (pathTaken.lastIndexOf(startCell) + 1))){
+    			  bestRun.clear();
+    			  for(int i = pathTaken.lastIndexOf(startCell);
+    			  		i<pathTaken.size();i++){
+    				  bestRun.add(pathTaken.get(i));
+    			  }
+    		  }
+    	  }
+      }
    }
    
    public boolean isExplored(MazeCell location){
@@ -196,22 +232,28 @@ public class RobotModelMaster
    }
    
    public List<MazeCell> getCurrentRun() {
-	   if(pathTaken == null){
-		   return null;
+	   if(pathTaken.isEmpty()){
+		   return new ArrayList<MazeCell>();
 	   }
-	   if(pathTaken.lastIndexOf(new MazeCell(1,mazeModel.getSize().height))
-			   == pathTaken.size()){
-		   return null;
+	   MazeCell startCell = new MazeCell(1,mazeModel.getSize().height);
+	   if(startCell.equals(pathTaken.get(pathTaken.size() - 1))){
+		   return new ArrayList<MazeCell>();
 	   }
-	   ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>(
-			   pathTaken.lastIndexOf(new MazeCell(1,mazeModel.getSize().height))
-			   -pathTaken.size());
+	   ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>();
 	   for(int i = pathTaken.lastIndexOf(
 			   new MazeCell(1,mazeModel.getSize().height));
 			   i< pathTaken.size(); i++){
 		   currentRun.add(pathTaken.get(i));
 	   }
 	   return currentRun;
+   }
+   
+   public List<MazeCell> getFirstRun() {
+	   return firstRun;
+   }
+   
+   public List<MazeCell> getBestRun() {
+	   return bestRun;
    }
 
 }

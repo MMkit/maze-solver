@@ -83,6 +83,16 @@ public final class RobotAnimator implements Runnable
             final double srcRotation = srcDirection.getRadians();
 
             controller.nextStep(); //Move robot.
+            
+            view.loadUnexplored(controller.getAllUnexplored());
+            view.loadFirstRun(controller.getFirstRun());
+            view.loadBestRun(controller.getBestRun());
+            view.loadCurrentRun(controller.getCurrentRun());
+            view.setDrawFog(true);
+            view.setDrawFirstRun(true);
+            view.setDrawBestRun(true);
+            view.setDrawCurrentRun(true);
+            
 
             //Get the robots new position.
             final Point destLocation = this.view.getCellCenter(model.getCurrentLocation());

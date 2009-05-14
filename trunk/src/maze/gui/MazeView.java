@@ -90,6 +90,10 @@ public class MazeView extends JPanel implements ComponentListener
    private List<MazeCell> bestRun;
    private Color bestRunColor = Color.RED;
 
+   private boolean drawCurrentRun = false;
+   private List<MazeCell> currentRun;
+   private Color currentRunColor = Color.GREEN;
+
    /**
     * Constructor.
     */
@@ -293,6 +297,10 @@ public class MazeView extends JPanel implements ComponentListener
 
       if(drawBestRun == true){
     	  drawBestRun(g);
+      }
+      
+      if(drawCurrentRun == true) {
+    	  drawCurrentRun(g);
       }
 
    } //End method.
@@ -681,15 +689,14 @@ public class MazeView extends JPanel implements ComponentListener
    
    private void drawFirstRun(Graphics2D g){
 	   g.setColor(firstRunColor);
-	   if(firstRun == null){
+	   if(firstRun.isEmpty()){
 		   return;
 	   }
-	   Point p = this.getCellCenter(new MazeCell(1,model.getSize().height));
-	   MazeCell here = new MazeCell(1,model.getSize().height);
+	   MazeCell here = firstRun.get(0);
 	   MazeCell there;
 	   int x, y;
 	   int width, height;
-	   for(int i=0;i<firstRun.size();i++){
+	   for(int i=1;i<firstRun.size();i++){
 		   there = firstRun.get(i);
 		   if(here.getX() < there.getX()){
 			   //here is west of there
@@ -724,8 +731,8 @@ public class MazeView extends JPanel implements ComponentListener
 	   }
    }
    
-   public void loadFirstRun(ArrayList<MazeCell> run){
-	   firstRun = run;
+   public void loadFirstRun(List<MazeCell> list){
+	   firstRun = list;
    }
    
    public void setFirstRunColor(Color newColor){
@@ -738,15 +745,14 @@ public class MazeView extends JPanel implements ComponentListener
 
    private void drawBestRun(Graphics2D g){
 	   g.setColor(bestRunColor);
-	   if(bestRun == null){
+	   if(bestRun.isEmpty()){
 		   return;
 	   }
-	   Point p = this.getCellCenter(new MazeCell(1,model.getSize().height));
-	   MazeCell here = new MazeCell(1,model.getSize().height);
+	   MazeCell here = bestRun.get(0);
 	   MazeCell there;
 	   int x, y;
 	   int width, height;
-	   for(int i=0;i<bestRun.size();i++){
+	   for(int i=1;i<bestRun.size();i++){
 		   there = bestRun.get(i);
 		   if(here.getX() < there.getX()){
 			   //here is west of there
@@ -781,8 +787,8 @@ public class MazeView extends JPanel implements ComponentListener
 	   }
    }
    
-   public void loadBestRun(ArrayList<MazeCell> run){
-	   bestRun = run;
+   public void loadBestRun(List<MazeCell> list){
+	   bestRun = list;
    }
    
    public void setBestRunColor(Color newColor){
@@ -791,6 +797,62 @@ public class MazeView extends JPanel implements ComponentListener
    
    public void setDrawBestRun(boolean setter){
 	   drawBestRun = setter;
+   }
+
+   private void drawCurrentRun(Graphics2D g){
+	   g.setColor(currentRunColor);
+	   if(currentRun.isEmpty()){
+		   return;
+	   }
+	   MazeCell here = currentRun.get(0);
+	   MazeCell there;
+	   int x, y;
+	   int width, height;
+	   for(int i=1;i<currentRun.size();i++){
+		   there = currentRun.get(i);
+		   if(here.getX() < there.getX()){
+			   //here is west of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;
+		   }
+		   else if(here.getX() > there.getX()){
+			   //here is east of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;			   
+		   }
+		   else if(here.getY() > there.getY()){
+			   //here is south of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   else{
+			   //here is north of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   g.fillRect(x,y,width,height);
+		   here = there;
+	   }
+   }
+   
+   public void loadCurrentRun(List<MazeCell> list){
+	   currentRun = list;
+   }
+   
+   public void setCurrentRunColor(Color newColor){
+	   currentRunColor = newColor;
+   }
+   
+   public void setDrawCurrentRun(boolean setter){
+	   drawCurrentRun = setter;
    }
 
 }

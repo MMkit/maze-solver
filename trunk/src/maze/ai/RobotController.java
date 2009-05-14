@@ -1,5 +1,8 @@
 package maze.ai;
 
+import java.util.List;
+import java.util.Set;
+
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
@@ -63,4 +66,21 @@ public class RobotController
    {
       return this.robotStepCount > 1000;
    }
+   
+	public Set<MazeCell> getAllUnexplored(){
+		return robotModelMaster.getNonHistory();
+	}
+
+	public List<MazeCell> getFirstRun() {
+		return robotModelMaster.getFirstRun();
+	}
+	
+	public List<MazeCell> getBestRun() {
+		return robotModelMaster.getBestRun();
+	}
+	
+	public List<MazeCell> getCurrentRun() {
+		return robotModelMaster.getCurrentRun();
+	}
+
 }

@@ -5,7 +5,7 @@ package maze.gui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.List;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -262,34 +262,13 @@ public class StatTracker {
 	public Set<MazeCell> getAllUnexplored(){
 		return mouse.getNonHistory();
 	}
-	
-	public ArrayList<MazeCell> getFirstRun(){
-		if(firstRunSquaresTraversed == USELESS){
-			return null;
-		}
-		else{
-			ArrayList<MazeCell> totalRun = (ArrayList<MazeCell>) mouse.getPathTaken();
-			ArrayList<MazeCell> firstRun = new ArrayList<MazeCell>();
-			for(int i = 0; i<firstRunSquaresTraversed;i++){
-				firstRun.add(totalRun.get(i));
-			}
-			return firstRun;
-		}
-	}
 
-	public ArrayList<MazeCell> getBestRun(){
-		if(bestRunSquaresTraversed == USELESS){
-			return null;
-		}
-		else{
-			ArrayList<MazeCell> totalRun = (ArrayList<MazeCell>) mouse.getPathTaken();
-			ArrayList<MazeCell> bestRun = new ArrayList<MazeCell>();
-			for(int i = bestRunTotalSquaresTraversed-bestRunSquaresTraversed;
-					i<bestRunTotalSquaresTraversed ;i++){
-				bestRun.add(totalRun.get(i));
-			}
-			return bestRun;
-		}
+	public List<MazeCell> getFirstRun() {
+		return mouse.getFirstRun();
+	}
+	
+	public List<MazeCell> getBestRun() {
+		return mouse.getBestRun();
 	}
 
 	public static void main(String[] args) {
