@@ -13,8 +13,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -74,6 +77,18 @@ public class MazeView extends JPanel implements ComponentListener
     * The image for the micro mouse aviator that moves around the maze.
     */
    private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
+   
+   private boolean drawFog = false;
+   private Set<MazeCell> unexplored;
+   private Color fogColor = Color.BLACK;
+   
+   private boolean drawFirstRun = false;
+   private List<MazeCell> firstRun;
+   private Color firstRunColor = Color.BLUE;
+
+   private boolean drawBestRun = false;
+   private List<MazeCell> bestRun;
+   private Color bestRunColor = Color.RED;
 
    /**
     * Constructor.
@@ -266,6 +281,18 @@ public class MazeView extends JPanel implements ComponentListener
          //Restore the original graphics state.
          g.setTransform(oldTransform);
          g.translate(-this.robotLocation.x, -this.robotLocation.y);
+      }
+      
+      if(drawFog == true){
+    	  drawFog(g);
+      }
+      
+      if(drawFirstRun == true){
+    	  drawFirstRun(g);
+      }
+
+      if(drawBestRun == true){
+    	  drawBestRun(g);
       }
 
    } //End method.
@@ -621,4 +648,149 @@ public class MazeView extends JPanel implements ComponentListener
          return wallHeight / 2;
       }
    }
+   
+   private void drawFog(Graphics2D g){
+	   //Draw the box for fog
+	   g.setColor(fogColor);
+	   if(unexplored == null)
+	   {
+		   return;
+	   }
+	   else{
+		   Object[] foggy = unexplored.toArray();
+		   for(int i=0;i<foggy.length;i++){
+			   MazeCell here = (MazeCell) foggy[i];
+			   g.fillRect((here.getX()-1) * this.csm.getCellWidth(),
+					   (here.getY()-1) * this.csm.getCellHeight(),
+			           this.csm.getCellWidth(),this.csm.getCellHeight());
+		   }
+	   }
+   }
+   
+   public void loadUnexplored(Set<MazeCell> set){
+	   unexplored = set;
+   }
+   
+   public void setFogColor(Color newColor){
+	   fogColor = newColor;
+   }
+   
+   public void setDrawFog(boolean setter){
+	   drawFog = setter;
+   }
+   
+   private void drawFirstRun(Graphics2D g){
+	   g.setColor(firstRunColor);
+	   if(firstRun == null){
+		   return;
+	   }
+	   Point p = this.getCellCenter(new MazeCell(1,model.getSize().height));
+	   MazeCell here = new MazeCell(1,model.getSize().height);
+	   MazeCell there;
+	   int x, y;
+	   int width, height;
+	   for(int i=0;i<firstRun.size();i++){
+		   there = firstRun.get(i);
+		   if(here.getX() < there.getX()){
+			   //here is west of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;
+		   }
+		   else if(here.getX() > there.getX()){
+			   //here is east of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;			   
+		   }
+		   else if(here.getY() > there.getY()){
+			   //here is south of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   else{
+			   //here is north of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   g.fillRect(x,y,width,height);
+		   here = there;
+	   }
+   }
+   
+   public void loadFirstRun(ArrayList<MazeCell> run){
+	   firstRun = run;
+   }
+   
+   public void setFirstRunColor(Color newColor){
+	   firstRunColor = newColor;
+   }
+   
+   public void setDrawFirstRun(boolean setter){
+	   drawFirstRun = setter;
+   }
+
+   private void drawBestRun(Graphics2D g){
+	   g.setColor(bestRunColor);
+	   if(bestRun == null){
+		   return;
+	   }
+	   Point p = this.getCellCenter(new MazeCell(1,model.getSize().height));
+	   MazeCell here = new MazeCell(1,model.getSize().height);
+	   MazeCell there;
+	   int x, y;
+	   int width, height;
+	   for(int i=0;i<bestRun.size();i++){
+		   there = bestRun.get(i);
+		   if(here.getX() < there.getX()){
+			   //here is west of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;
+		   }
+		   else if(here.getX() > there.getX()){
+			   //here is east of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
+			   width = 5*this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight()/4;			   
+		   }
+		   else if(here.getY() > there.getY()){
+			   //here is south of there
+			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
+			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   else{
+			   //here is north of there
+			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
+			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
+			   width = this.csm.getCellWidth()/4;
+			   height = this.csm.getCellHeight();
+		   }
+		   g.fillRect(x,y,width,height);
+		   here = there;
+	   }
+   }
+   
+   public void loadBestRun(ArrayList<MazeCell> run){
+	   bestRun = run;
+   }
+   
+   public void setBestRunColor(Color newColor){
+	   bestRunColor = newColor;
+   }
+   
+   public void setDrawBestRun(boolean setter){
+	   drawBestRun = setter;
+   }
+
 }

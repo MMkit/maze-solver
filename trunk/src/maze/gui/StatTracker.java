@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 import maze.ai.Floodfill;
 import maze.ai.RightWallFollower;
@@ -256,6 +257,10 @@ public class StatTracker {
 
 	public ArrayList<MazeCell> getAllExplored(){
 		return (ArrayList<MazeCell>) mouse.getHistory();
+	}
+	
+	public Set<MazeCell> getAllUnexplored(){
+		return mouse.getNonHistory();
 	}
 	
 	public ArrayList<MazeCell> getFirstRun(){
