@@ -1,7 +1,6 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.Dictionary;
@@ -9,19 +8,20 @@ import java.util.Hashtable;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionListener;
 
 import maze.Main;
 import maze.ai.RobotBase;
+import maze.gui.RobotAnimator.AnimationStates;
 import maze.model.MazeInfo;
 
 /**
@@ -37,15 +38,23 @@ import maze.model.MazeInfo;
  * the micro mouse animation is run.
  * @author Luke Last
  */
-public class MazeViewerPanel extends JPanel
+public final class MazeViewerPanel extends JPanel
 {
    private static final int SIDEBAR_WIDTH = 150;
+   private static final int SPEED_STEPS = 25;
    private final MazeView myMazeView = new MazeView();
    private final JList mazeList = new JList();
    private final JList aiList = new JList();
-   private volatile RobotAnimator currentAnimator = null;
+   private final RobotAnimator animator = new RobotAnimator();
    private final BoundedRangeModel speedSliderModel;
-   private static final int SPEED_STEPS = 25;
+
+   private final ImageIcon iconPlay = Main.getImageResource("gui/images/play.png");
+   private final ImageIcon iconPlayOn = Main.getImageResource("gui/images/play-on.png");
+   private final ImageIcon iconStop = Main.getImageResource("gui/images/stop-disabled.png");
+   private final ImageIcon iconStopRed = Main.getImageResource("gui/images/stop-red.png");
+   private final ImageIcon iconPauseDisabled = Main.getImageResource("gui/images/pause-disabled.png");
+   private final ImageIcon iconPauseOn = Main.getImageResource("gui/images/pause-on.png");
+   private final ImageIcon iconPause = Main.getImageResource("gui/images/pause.png");
 
    public MazeViewerPanel()
    {
@@ -103,111 +112,159 @@ public class MazeViewerPanel extends JPanel
       speedSlider.setPaintLabels(true);
 
       this.speedSliderModel = speedSlider.getModel();
-      //this.speedSliderModel.setMinimum(0);
-      //this.speedSliderModel.setValue((int)(SPEED_STEPS / 1.4));
-      //this.speedSliderModel.setMaximum(SPEED_STEPS);
       this.speedSliderModel.addChangeListener(new ChangeListener()
       {
          @Override
          public void stateChanged(ChangeEvent e)
          {
-            if (currentAnimator != null)
+            if (animator != null)
             {
-               currentAnimator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
+               animator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
             }
          }
       });
 
-      //Add the start animation button.
-      final JToggleButton startButton = new JToggleButton(this.startAnimationAction);
-      sidePanel.add(startButton);
-      startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-      startButton.setBorder(new EmptyBorder(8, 5, 8, 5));
-      startButton.setMaximumSize(new Dimension(400, 200));
+      //Build the simulation/animation control buttons.
+      final JPanel controlPanel = new JPanel();
+      sidePanel.add(controlPanel);
+      controlPanel.setBorder(BorderFactory.createTitledBorder("Simulation Controls"));
+      controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
+      controlPanel.add(new JButton(this.stopAnimation));
+      controlPanel.add(Box.createHorizontalGlue());
+      controlPanel.add(new JButton(this.pauseAnimation));
+      controlPanel.add(Box.createHorizontalGlue());
+      controlPanel.add(new JButton(this.playAnimation));
 
+      this.setAnimationButtonStates();
    }
 
-   /**
-    * An action used to create menu items and buttons to start the robot
-    * animation sequence.
-    */
-   final Action startAnimationAction = new AbstractAction()
+   final Action playAnimation = new AbstractAction()
    {
-      private static final String START_NAME = "Start Mouse Simulation";
-      private static final String STOP_NAME = "Stop Mouse Simulation";
-      {
-         this.putValue(Action.NAME, START_NAME);
-      }
-
-      private void startAnimation()
-      {
-         this.putValue(Action.NAME, STOP_NAME);
-         this.putValue(Action.SELECTED_KEY, true);
-         mazeList.setEnabled(false);
-         aiList.setEnabled(false);
-         Main.getPrimaryFrameInstance().setSimulation(true);
-      }
-
-      private void stopAnimation()
-      {
-         putValue(Action.NAME, START_NAME);
-         putValue(Action.SELECTED_KEY, false);
-         mazeList.setEnabled(true);
-         aiList.setEnabled(true);
-         currentAnimator = null;
-         Main.getPrimaryFrameInstance().setSimulation(false);
-      }
-
       @Override
       public void actionPerformed(ActionEvent e)
       {
-         //If the animator is null that start a new one.
-         if (currentAnimator == null)
+         switch (animator.getState())
          {
-            if (myMazeView.getModel() == null)
-            {
-               JOptionPane.showMessageDialog(MazeViewerPanel.this,
-                                             "You must select a maze before running a simulation.",
-                                             "Simulation Error",
-                                             JOptionPane.ERROR_MESSAGE,
-                                             null);
-               this.putValue(Action.SELECTED_KEY, false);
-            }
-            else
-            {
-               //Create a callback to enable the action after the animator is done running.
-               final Runnable callback = new Runnable()
-               {
-                  @Override
-                  public void run()
-                  {
-                     stopAnimation();
-                  }
-               };
-               this.startAnimation();
-               try
-               {
-                  currentAnimator = new RobotAnimator(myMazeView,
-                                                      (RobotBase) aiList.getSelectedValue(),
-                                                      callback);
-                  currentAnimator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
-                  currentAnimator.start();
-               }
-               catch (Exception ex)
-               {
-
-                  this.stopAnimation();
-                  ex.printStackTrace();
-               }
-            }
+            case Stopped :
+               simulationStart();
+               break;
+            case Paused :
+               animator.setState(AnimationStates.Running);
+               break;
          }
-         else
-         { // Animation is already running so stop it.
-            currentAnimator.shutdown();
-            this.stopAnimation();
-         }
-
+         setAnimationButtonStates();
       }
    };
+
+   final Action stopAnimation = new AbstractAction()
+   {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         simulationStop();
+         setAnimationButtonStates();
+      }
+   };
+
+   final Action pauseAnimation = new AbstractAction()
+   {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         switch (animator.getState())
+         {
+            case Running :
+               animator.setState(AnimationStates.Paused);
+               break;
+            case Paused :
+               animator.setState(AnimationStates.Running);
+               break;
+            case Stopped :
+               break;
+         }
+         setAnimationButtonStates();
+      }
+   };
+
+   /**
+    * Sets the displayed images on all the simulation buttons from the current
+    * state of the animator.
+    */
+   private void setAnimationButtonStates()
+   {
+      switch (animator.getState())
+      {
+         case Stopped :
+            playAnimation.putValue(Action.LARGE_ICON_KEY, iconPlay);
+            pauseAnimation.putValue(Action.LARGE_ICON_KEY, iconPauseDisabled);
+            stopAnimation.putValue(Action.LARGE_ICON_KEY, iconStop);
+            break;
+         case Paused :
+            playAnimation.putValue(Action.LARGE_ICON_KEY, iconPlay);
+            pauseAnimation.putValue(Action.LARGE_ICON_KEY, iconPauseOn);
+            stopAnimation.putValue(Action.LARGE_ICON_KEY, iconStopRed);
+            break;
+         case Running :
+            playAnimation.putValue(Action.LARGE_ICON_KEY, iconPlayOn);
+            pauseAnimation.putValue(Action.LARGE_ICON_KEY, iconPause);
+            stopAnimation.putValue(Action.LARGE_ICON_KEY, iconStopRed);
+            break;
+      }
+   }
+
+   /**
+    * Start the animation.
+    */
+   private void simulationStart()
+   {
+      if (this.animator.getState() == AnimationStates.Stopped)
+      {
+         if (myMazeView.getModel() == null)
+         {
+            JOptionPane.showMessageDialog(MazeViewerPanel.this,
+                                          "You must select a maze before running a simulation.",
+                                          "Can Not Run Simulation",
+                                          JOptionPane.WARNING_MESSAGE);
+         }
+         else
+         {
+            //Create a callback to enable the action after the animator is done running.
+            final Runnable callback = new Runnable()
+            {
+               @Override
+               public void run()
+               {
+                  simulationStop();
+               }
+            };
+            try
+            {
+               this.animator.start(this.myMazeView, (RobotBase) aiList.getSelectedValue(), callback);
+               this.animator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
+            }
+            catch (Exception ex)
+            {
+               ex.printStackTrace();
+               this.simulationStop();
+            }
+            mazeList.setEnabled(false);
+            aiList.setEnabled(false);
+            Main.getPrimaryFrameInstance().setSimulation(true);
+         }
+      }
+   }
+
+   /**
+    * Stop the animation.
+    */
+   private void simulationStop()
+   {
+      this.animator.setState(AnimationStates.Stopped);
+      mazeList.setEnabled(true);
+      aiList.setEnabled(true);
+      Main.getPrimaryFrameInstance().setSimulation(false);
+      this.myMazeView.setRobotPosition(null, 0);
+      this.setAnimationButtonStates();
+   }
 
 }

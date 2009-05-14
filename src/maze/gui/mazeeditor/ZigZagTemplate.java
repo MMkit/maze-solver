@@ -5,8 +5,6 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,8 +18,7 @@ public class ZigZagTemplate extends ConjoinedMazeTemplate
 
    public ZigZagTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/ZigZag.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/ZigZag.png");
       this.mDesc = "Zig Zag";
       updateTemplate();
    }

@@ -14,15 +14,18 @@ import maze.model.RobotModelMaster;
  * Animates a MicroMouse robot against a maze view.
  * @author Luke Last
  */
-public final class RobotAnimator extends Thread
+public final class RobotAnimator implements Runnable
 {
-   private volatile boolean isRunning = true;
-   private final MazeView view;
-   private final RobotController controller;
+   private MazeView view;
+   private RobotController controller;
    /**
-    * The action connected to
+    * The state that this animator is currently in.
     */
-   private final Runnable finishedCallback;
+   private volatile AnimationStates currentState = AnimationStates.Stopped;
+   /**
+    * A call back method which is run after the animator is stopped.
+    */
+   private Runnable finishedCallback;
    /**
     * The time to sleep between rendering frames.
     */
@@ -34,16 +37,34 @@ public final class RobotAnimator extends Thread
    private int movesPerStep = 10;
 
    /**
-    * Constructor.
-    * @param mazeView
-    * @param finishedCallback
+    * The thread running our animation loop.
     */
-   public RobotAnimator(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
+   private volatile Thread processingThread;
+
+   /**
+    * Start and initialize this.
+    * @param mazeView The view to be controlled by this animator.
+    * @param robotAlgorithm The AI algorithm to use for the animation.
+    * @param finishedCallback This is called after the animation is stopped.
+    */
+   public void start(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
+      if (this.processingThread != null)
+      {
+         this.setState(AnimationStates.Stopped);
+         //Make sure the thread is finished before continuing.
+         while (this.processingThread != null)
+         {
+            Thread.yield();
+         }
+      }
       this.view = mazeView;
       this.finishedCallback = finishedCallback;
       this.controller = new RobotController(this.view.getModel(), robotAlgorithm);
-      super.setDaemon(true);
+      this.processingThread = new Thread(this, "Robot Animator");
+      this.processingThread.setDaemon(true);
+      this.currentState = AnimationStates.Running;
+      this.processingThread.start();
    }
 
    @Override
@@ -52,7 +73,7 @@ public final class RobotAnimator extends Thread
       final RobotModelMaster model = this.controller.getRobotModelMaster();
       this.view.setRobotPosition(this.view.getCellCenter(model.getCurrentLocation()),
                                  model.getDirection().getRadians());
-      while (this.isRunning && this.controller.isRobotDone() == false)
+      while (this.currentState != AnimationStates.Stopped && this.controller.isRobotDone() == false)
       {
          try
          {
@@ -85,6 +106,10 @@ public final class RobotAnimator extends Thread
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
+            while (this.currentState == AnimationStates.Paused)
+            {
+               Thread.sleep(100);
+            }
          }
          catch (InterruptedException e)
          {
@@ -98,27 +123,40 @@ public final class RobotAnimator extends Thread
                                           "Error",
                                           JOptionPane.ERROR_MESSAGE,
                                           null);
-            this.isRunning = false;
+            this.currentState = AnimationStates.Stopped;
          }
       }
       if (this.finishedCallback != null)
       {
          this.finishedCallback.run();
       }
-   }
-
-   public boolean isRunning()
-   {
-      return isRunning;
+      this.processingThread = null;
    }
 
    /**
-    * Shut this sucker down.
+    * Get the current state that this robot animator is in.
     */
-   public void shutdown()
+   public AnimationStates getState()
    {
-      this.isRunning = false;
-      this.interrupt();
+      return this.currentState;
+   }
+
+   /**
+    * Change the state of this robot animator. If the current state is
+    * <code>Stopped</code> you cannot change it here, you must use the
+    * <code>start(...)</code> method.
+    * @param state The new state you want to go to.
+    */
+   public void setState(final AnimationStates state)
+   {
+      if (this.currentState != AnimationStates.Stopped)
+      {
+         this.currentState = state;
+         if (state == AnimationStates.Stopped)
+         {
+            this.processingThread.interrupt();
+         }
+      }
    }
 
    public int getFPS()
@@ -126,6 +164,9 @@ public final class RobotAnimator extends Thread
       return 1000 / this.sleepTime;
    }
 
+   /**
+    * The animator will try and render at most this many frames per second.
+    */
    public void setFPS(int framesPerSecond)
    {
       this.sleepTime = 1000 / framesPerSecond;
@@ -146,6 +187,16 @@ public final class RobotAnimator extends Thread
          this.movesPerStep = 1;
       else
          this.movesPerStep = movesPerStep;
+   }
+
+   /**
+    * Represents the possible states that a robot animator can be in.
+    */
+   public static enum AnimationStates
+   {
+      Running,
+      Paused,
+      Stopped,
    }
 
 }

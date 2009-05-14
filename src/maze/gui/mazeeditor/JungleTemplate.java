@@ -5,8 +5,6 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,8 +15,7 @@ public class JungleTemplate extends StaggeredTemplate
 
    public JungleTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Jungle.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/Jungle.png");
       this.mDesc = "Jungle";
       updateTemplate();
    }

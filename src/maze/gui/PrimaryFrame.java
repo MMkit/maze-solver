@@ -59,6 +59,26 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       JMenu fileMenu = new JMenu("File");
       menuBar.add(fileMenu);
 
+      //New file menu.
+      JMenu newMenu = new JMenu("New");
+      fileMenu.add(newMenu);
+
+      //New maze.
+      JMenuItem newMaze = new JMenuItem("Maze");
+      newMenu.add(newMaze);
+
+      JMenuItem newScript = new JMenuItem("AI Script");
+      newMenu.add(newScript);
+      newScript.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            codeEditorPanel.createNewEditor();
+            mainTabs.setSelectedComponent(codeEditorPanel);
+         }
+      });
+
       // Save
       JMenuItem fileSave = new JMenuItem("Save");
       fileMenu.add(fileSave);
@@ -113,19 +133,6 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       // Mouse options
 
       menuBar.add(mouseMenu);
-
-      // Create new Python AI script.
-      final JMenuItem newScript = new JMenuItem("New AI Script");
-      this.mouseMenu.add(newScript);
-      newScript.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            codeEditorPanel.createNewEditor();
-            mainTabs.setSelectedComponent(codeEditorPanel);
-         }
-      });
 
       // Load AI
       JMenuItem mouseLoad = new JMenuItem("Load AI Script");
@@ -204,9 +211,6 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       // Display Settings
       JMenuItem mouseDisplay = new JMenuItem("Display Settings");
       mouseMenu.add(mouseDisplay);
-
-      //Add the start animation item.
-      mouseMenu.add(this.mazeViewer.startAnimationAction);
 
       this.setJMenuBar(menuBar);
 
@@ -366,11 +370,11 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       {
          try
          {
-            String laf = e.getActionCommand();
             UIManager.setLookAndFeel(e.getActionCommand());
             SwingUtilities.updateComponentTreeUI(PrimaryFrame.this);
          }
-         catch (Exception ex){}
+         catch (Exception ex)
+         {}
       }
    }
 }

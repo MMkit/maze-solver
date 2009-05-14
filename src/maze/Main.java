@@ -1,8 +1,11 @@
 package maze;
 
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -45,7 +48,6 @@ public final class Main
                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
                //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
                UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-               
             }
             catch (Exception e)
             {
@@ -57,5 +59,28 @@ public final class Main
             primaryFrame.setVisible(true);
          }
       });
+   }
+
+   /**
+    * Utility method used to get image resources for button images while
+    * handling failures gracefully.
+    * @param imagePath The path to the image relative to the location of this
+    *           class. So starting in the 'maze' package.
+    */
+   public static ImageIcon getImageResource(String imagePath)
+   {
+      try
+      {
+         return new ImageIcon(Main.class.getResource(imagePath));
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+         JOptionPane.showMessageDialog(null,
+                                       "Cannot Load Image: " + imagePath + "\nException: " + e,
+                                       "Error Loading Resource",
+                                       JOptionPane.ERROR_MESSAGE);
+         return new ImageIcon(new BufferedImage(10,10,BufferedImage.TYPE_INT_RGB));
+      }
    }
 }

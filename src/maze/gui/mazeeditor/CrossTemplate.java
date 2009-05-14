@@ -5,8 +5,7 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
+import maze.Main;
 
 /**
  *
@@ -18,8 +17,7 @@ public class CrossTemplate extends ConjoinedMazeTemplate
    private int mSize = MIN_SIZE;
    public CrossTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Cross.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = Main.getImageResource("gui/mazeeditor/images/Cross.png");
       this.mDesc = "Cross";
       updateTemplate();
    }

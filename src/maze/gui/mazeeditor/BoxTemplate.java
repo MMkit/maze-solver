@@ -5,8 +5,7 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
+import maze.Main;
 
 /**
  *
@@ -20,8 +19,7 @@ public class BoxTemplate extends ConjoinedMazeTemplate
 
    public BoxTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Box.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = Main.getImageResource("gui/mazeeditor/images/Box.png");
       this.mDesc = "Box";
       updateTemplate();
    }
