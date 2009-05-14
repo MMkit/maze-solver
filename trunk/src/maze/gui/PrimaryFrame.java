@@ -19,6 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import maze.gui.mazeeditor.MazeEditor;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
@@ -215,6 +218,22 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       mainTabs.add("Maze Editor", new MazeEditor());
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
+
+      JMenu lookAndFeel = new JMenu("Look And Feel");
+      ButtonGroup lafBG = new ButtonGroup();
+      LookAndFeelListener lafal = new LookAndFeelListener();
+
+      for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
+      {
+         JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(laf.getName());
+         lafBG.add(jrbmi);
+         jrbmi.addActionListener(lafal);
+         jrbmi.setActionCommand(laf.getClassName());
+         lookAndFeel.add(jrbmi);
+         if (laf.getName().equals("Nimbus"))
+            lafBG.setSelected(jrbmi.getModel(), true);
+      }
+      menuBar.add(lookAndFeel);
    }
 
    /**
@@ -338,5 +357,20 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       this.mainTabs.setEnabled(!simOn);
       this.mazeMenu.setEnabled(!simOn);
       this.mouseMenu.setEnabled(!simOn);
+   }
+
+   private class LookAndFeelListener implements ActionListener
+   {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         try
+         {
+            String laf = e.getActionCommand();
+            UIManager.setLookAndFeel(e.getActionCommand());
+            SwingUtilities.updateComponentTreeUI(PrimaryFrame.this);
+         }
+         catch (Exception ex){}
+      }
    }
 }
