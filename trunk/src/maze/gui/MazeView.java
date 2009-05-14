@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import maze.Main;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
@@ -72,7 +73,7 @@ public class MazeView extends JPanel implements ComponentListener
    /**
     * The image for the micro mouse aviator that moves around the maze.
     */
-   private ImageIcon robotImage;
+   private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
 
    /**
     * Constructor.
@@ -80,14 +81,6 @@ public class MazeView extends JPanel implements ComponentListener
    public MazeView()
    {
       this.addComponentListener(this);
-      try
-      {
-         this.robotImage = new ImageIcon(MazeView.class.getResource("mouse.png"));
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
    }
 
    /**

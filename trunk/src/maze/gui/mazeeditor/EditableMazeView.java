@@ -39,7 +39,7 @@ public class EditableMazeView extends maze.gui.MazeView
    protected void paintComponent(Graphics arg)
    {
       super.paintComponent(arg);
-      Graphics2D g2 = (Graphics2D)arg;
+      //Graphics2D g2 = (Graphics2D)arg;
       if (model != null && mCurrentTemplate != null)
          mCurrentTemplate.draw((Graphics2D)arg, getCellSize());
    }

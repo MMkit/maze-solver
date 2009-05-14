@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -60,7 +59,7 @@ public class MazeEditor extends JPanel
            "Remove walls<br /><b>Middle-Click</b>: Change template " +
            "Orientation<br /><b>Wheelup</b>: Grow template<br />" +
            "<b>Wheeldown</b>: Shrink template</btml>";
-   private ImageIcon mPointIcon;
+   private final ImageIcon mPointIcon = Main.getImageResource("gui/mazeeditor/images/Pointer.png");
    private MazeTemplate mCurrentTemplate = null;
    private EditableMazeView mMazeView;
    private JList mOpenMazes;
@@ -88,9 +87,6 @@ public class MazeEditor extends JPanel
 
    private void buildPanel()
    {
-      URL iconResource = BoxTemplate.class.getResource("images/Pointer.png");
-      mPointIcon = new ImageIcon(iconResource);
-
       setLayout(new BorderLayout());
       JLabel instr = new JLabel(TOP_HELP);
       instr.setToolTipText(POPUP_HELP);

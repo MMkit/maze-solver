@@ -5,8 +5,6 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,8 +18,7 @@ public class StaggeredTemplate extends ConjoinedMazeTemplate
 
    public StaggeredTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Staggered.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/Staggered.png");
       this.mDesc = "Staggered";
       updateTemplate();
    }

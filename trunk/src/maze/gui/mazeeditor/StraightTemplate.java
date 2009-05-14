@@ -5,7 +5,6 @@
 
 package maze.gui.mazeeditor;
 
-import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
@@ -20,8 +19,7 @@ public class StraightTemplate extends ConjoinedMazeTemplate
 
    public StraightTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Straight.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/Straight.png");
       this.mDesc = "Straight";
       updateTemplate();
    }

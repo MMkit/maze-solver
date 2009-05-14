@@ -7,8 +7,7 @@ package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.net.URL;
-import javax.swing.ImageIcon;
+
 import maze.gui.CellSize;
 
 /**
@@ -27,8 +26,7 @@ public class RungTemplate extends MazeTemplate
 
    RungTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Rung.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/Rung.png");
       this.mDesc = "Rungs/Posts";
       updateTemplate();
       mCenterPoints = new Point[]{new Point(0,0)};

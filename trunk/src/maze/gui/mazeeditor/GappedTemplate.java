@@ -7,9 +7,8 @@ package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.net.URL;
-import java.util.TreeSet;
-import javax.swing.ImageIcon;
+
+import maze.Main;
 import maze.gui.CellSize;
 
 /**
@@ -28,8 +27,7 @@ public class GappedTemplate extends MazeTemplate
 
    public GappedTemplate()
    {
-      URL iconResource = MazeTemplate.class.getResource("images/Gapped.png");
-      this.mIcon = new ImageIcon(iconResource);
+      this.mIcon = Main.getImageResource("gui/mazeeditor/images/Gapped.png");
       this.mDesc = "Gapped Line";
       updateTemplate();
       mCenterPoints = new Point[]{new Point(0,0)};
