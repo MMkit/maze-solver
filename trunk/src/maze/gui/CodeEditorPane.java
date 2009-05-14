@@ -24,8 +24,8 @@ import maze.ai.PythonScriptRobot;
 import maze.ai.RobotBase;
 import maze.ai.RobotStep;
 import maze.model.Direction;
-import maze.model.Maze;
 import maze.model.MazeCell;
+import maze.model.MazeModel;
 import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
@@ -254,7 +254,7 @@ public final class CodeEditorPane extends RTextScrollPane
       interp.set("Left", RobotStep.RotateLeft);
       interp.set("Right", RobotStep.RotateRight);
       //We create and set a dummy maze variable so the user can analyze its methods.
-      interp.set(ROBO_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new Maze(),
+      interp.set(ROBO_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new MazeModel(),
                                                                           new MazeCell(1, 16),
                                                                           Direction.North)));
       interp.exec(this.textArea.getText());

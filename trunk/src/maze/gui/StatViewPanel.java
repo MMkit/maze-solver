@@ -26,7 +26,6 @@ import maze.ai.RightWallFollower;
 import maze.ai.RobotBase;
 import maze.ai.Tremaux;
 import maze.model.Direction;
-import maze.model.Maze;
 import maze.model.MazeCell;
 import maze.model.MazeInfo;
 import maze.model.MazeModel;
@@ -61,7 +60,7 @@ public class StatViewPanel extends JPanel
          {
             Object o = mazes.getSelectedItem();
             MazeInfo mi = (MazeInfo) o;
-            maze = new Maze(mi.getModel());
+            maze = new MazeModel(mi.getModel());
 
             RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
                                                                         new MazeCell(1, 16),
@@ -159,7 +158,7 @@ public class StatViewPanel extends JPanel
 
       Object o = mazes.getSelectedItem();
       MazeInfo mi = (MazeInfo) o;
-      this.maze = new Maze(mi.getModel());
+      this.maze = new MazeModel(mi.getModel());
 
       this.algorithm = new LeftWallFollower();
       RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
