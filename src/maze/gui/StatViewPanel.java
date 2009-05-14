@@ -156,9 +156,16 @@ public class StatViewPanel extends JPanel
       //this.add(statBox);
       //statBox.doLayout();
 
-      Object o = mazes.getSelectedItem();
-      MazeInfo mi = (MazeInfo) o;
-      this.maze = new MazeModel(mi.getModel());
+      MazeInfo mi = (MazeInfo) mazes.getSelectedItem();
+      if (mi != null)
+      {
+         this.maze = new MazeModel(mi.getModel());
+      }
+      else
+      {
+         //Create a dummy maze so the app doesn't crash.
+         this.maze = new MazeModel(16, 16);
+      }
 
       this.algorithm = new LeftWallFollower();
       RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
