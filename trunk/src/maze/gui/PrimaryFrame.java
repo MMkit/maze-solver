@@ -18,10 +18,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
-
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+
+import maze.Main;
 import maze.gui.mazeeditor.MazeEditor;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
@@ -51,6 +52,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    {
       this.mazeViewer = new MazeViewerPanel();
       this.codeEditorPanel = new CodeEditingPanel();
+      
+      this.setTitle("Micro Mouse Maze Editor and Simulator");
+      this.setIconImage(Main.getImageResource("gui/images/logo.png").getImage());
 
       // menu bar
       JMenuBar menuBar = new JMenuBar();
