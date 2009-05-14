@@ -44,8 +44,6 @@ public class EditableMazeView extends maze.gui.MazeView
       Graphics2D g2 = (Graphics2D)arg;
       if (model != null)
       {
-         if (mCurrentTemplate != null)
-            mCurrentTemplate.draw((Graphics2D)arg, getCellSize());
          g2.setColor(Color.RED);
          int cx, cy;
          for (Point p : model.illegalPegs())
@@ -62,6 +60,9 @@ public class EditableMazeView extends maze.gui.MazeView
             cy = size.height/2*csm.getCellHeight()-csm.getWallHeightHalf();
             g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
          }
+
+         if (mCurrentTemplate != null)
+            mCurrentTemplate.draw((Graphics2D)arg, getCellSize());
       }
    }
 
