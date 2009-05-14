@@ -51,6 +51,8 @@ public class EditableMazeView extends maze.gui.MazeView
 
    public void applyTemplate(boolean setWall)
    {
+      if (model == null || mCurrentTemplate == null)
+         return;
       TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
       Point[] cp = mCurrentTemplate.getCenterPoints(getCellSize());
       Vector<MazeWall> walls = new Vector<MazeWall>();

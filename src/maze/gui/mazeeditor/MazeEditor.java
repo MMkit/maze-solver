@@ -175,8 +175,11 @@ public class MazeEditor extends JPanel
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            mCurrentTemplate.nextOrientation();
-            mMazeView.repaint();
+            if (mCurrentTemplate != null)
+            {
+               mCurrentTemplate.nextOrientation();
+               mMazeView.repaint();
+            }
          }
       });
       
@@ -303,7 +306,7 @@ public class MazeEditor extends JPanel
       @Override
       public void mouseMoved(MouseEvent e)
       {
-         if (mCurrentTemplate != null)
+         if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
             mCurrentTemplate.updatePosition(e.getPoint(),
                                             mMazeView.getCellSize());
@@ -314,7 +317,7 @@ public class MazeEditor extends JPanel
       @Override
       public void mouseDragged(MouseEvent e)
       {
-         if (mCurrentTemplate != null)
+         if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
             //boolean left = SwingUtilities.isLeftMouseButton(e);
             //boolean right = SwingUtilities.isRightMouseButton(e);
@@ -325,7 +328,7 @@ public class MazeEditor extends JPanel
       @Override
       public void mousePressed(MouseEvent e)
       {
-         if (mCurrentTemplate != null)
+         if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
             if (e.getButton() == MouseEvent.BUTTON2)
                mCurrentTemplate.nextOrientation();
@@ -340,7 +343,7 @@ public class MazeEditor extends JPanel
       @Override
       public void mouseWheelMoved(MouseWheelEvent e)
       {
-         if (mCurrentTemplate == null)
+         if (mMazeView.getModel() == null || mCurrentTemplate == null)
             return;
          int amount = e.getWheelRotation();
          boolean neg = amount < 0;
