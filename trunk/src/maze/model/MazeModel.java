@@ -8,8 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.BitSet;
+import java.util.Comparator;
 import java.util.Observable;
-import java.util.Vector;
+import java.util.TreeSet;
 
 /**
 * This is a potential new design for the model API.
@@ -48,6 +49,7 @@ public class MazeModel extends Observable
       this.height = height + height%2;
       rwalls = new BitSet(width*(height-1));
       cwalls = new BitSet((width-1)*height);
+      setWall(1, height, EAST);
    }
 
    public void setWall( int x, int y, int dir )
@@ -190,12 +192,12 @@ public class MazeModel extends Observable
          
          //Second is that it is not the center peg
          else if(x == (width/2) && y == (height/2))
-            return false;
+            return isCenterLegal();
          
          //Third is the pegs surrounding the center square
          else if((x <= width/2 && y <= height/2) &&
-                 (x >= width/2 - 2 && y >= height/2 - 2))
-            return isCenterLegal();
+                 (x >= width/2 - 1 && y >= height/2 - 1))
+            return isCenterOpen();
          //There are no more reasons to check the walls
          else
             return true;
@@ -210,17 +212,17 @@ public class MazeModel extends Observable
       }
    }
 
-   public boolean isCenterOpen()
+   public boolean isCenterLegal()
    {
       int row = height/2;
       int column = width/2;
       if (getWall(column,row,SOUTH) || getWall(column,row,EAST) ||
           getWall(column+1,row,SOUTH) || getWall(column,row+1,EAST))
          return false;
-      return false;
+      return true;
    }
 
-   public boolean isCenterLegal()
+   public boolean isCenterOpen()
    {
       int walls = 0;
       int row = height/2;
@@ -247,7 +249,7 @@ public class MazeModel extends Observable
       return true;
    }
 
-   public Vector<Point> whereIllegal()
+   public TreeSet<Point> illegalPegs()
    {
       //This function is basically isLegal with the added capability of
       //returning the peg locations that are bad
@@ -257,7 +259,7 @@ public class MazeModel extends Observable
       //Example: if somehow there were no walls off of peg(0,0) then the
       //Point would be included since
 
-      Vector<Point> badPoints = new Vector<Point>();
+      TreeSet<Point> badPoints = new TreeSet<Point>(new PointCompare());
       //There are rules that must be upheld to be a valid maze
       //Rule 1: There is a wall next to the starting square
       if(getWall(1,width,EAST) == false || getWall(1,height,NORTH))
@@ -269,13 +271,13 @@ public class MazeModel extends Observable
       int column = width/2;
       int row = height/2;
 
-      if(!isCenterLegal()) {
+      if(!isCenterOpen()) {
          badPoints.add(new Point(column-1, row-1));
          badPoints.add(new Point(column-1, row));
          badPoints.add(new Point(column-1, row+1));
          badPoints.add(new Point(column, row-1));
          //badPoints.add(new Point(column, row));
-         badPoints.add(new Point(column+1, row+1));
+         badPoints.add(new Point(column, row+1));
          badPoints.add(new Point(column+1, row-1));
          badPoints.add(new Point(column+1, row));
          badPoints.add(new Point(column+1, row+1));
@@ -459,5 +461,20 @@ public class MazeModel extends Observable
       public boolean isSet();
 
       public void set( boolean value );
+   }
+
+   private static class PointCompare implements Comparator<Point>
+   {
+      @Override
+      public int compare(Point o1, Point o2)
+      {
+         if (o1.x == o2.x)
+            if (o1.y == o2.y)
+               return 0;
+            else
+               return o1.y-o2.y;
+         else
+            return o1.x-o2.x;
+      }
    }
 }

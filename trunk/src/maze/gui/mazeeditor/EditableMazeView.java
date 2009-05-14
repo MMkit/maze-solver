@@ -5,6 +5,8 @@
 
 package maze.gui.mazeeditor;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -39,9 +41,28 @@ public class EditableMazeView extends maze.gui.MazeView
    protected void paintComponent(Graphics arg)
    {
       super.paintComponent(arg);
-      //Graphics2D g2 = (Graphics2D)arg;
-      if (model != null && mCurrentTemplate != null)
-         mCurrentTemplate.draw((Graphics2D)arg, getCellSize());
+      Graphics2D g2 = (Graphics2D)arg;
+      if (model != null)
+      {
+         if (mCurrentTemplate != null)
+            mCurrentTemplate.draw((Graphics2D)arg, getCellSize());
+         g2.setColor(Color.RED);
+         int cx, cy;
+         for (Point p : model.illegalPegs())
+         {
+            cx = p.x*csm.getCellWidth()-csm.getWallWidthHalf();
+            cy = p.y*csm.getCellHeight()-csm.getWallHeightHalf();
+            g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
+         }
+         if (model.isCenterLegal())
+         {
+            g2.setColor(Color.GREEN);
+            Dimension size = model.getSize();
+            cx = size.width/2*csm.getCellWidth()-csm.getWallWidthHalf();
+            cy = size.height/2*csm.getCellHeight()-csm.getWallHeightHalf();
+            g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
+         }
+      }
    }
 
    public void setTemplate(MazeTemplate mt)
