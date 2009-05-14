@@ -1,6 +1,7 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -46,6 +47,10 @@ public class StatViewPanel extends JPanel
    private JComboBox mazes;
    
    private MazeView mazeView;
+   
+   private Color fogColor = Color.BLACK;
+   private Color firstRunColor = Color.BLUE;
+   private Color bestRunColor = Color.RED;
 
 
    public StatViewPanel()
@@ -108,6 +113,9 @@ public class StatViewPanel extends JPanel
       selectionBox.add(algorithmSpinner);
       
       mazeView = new MazeView();
+      mazeView.setDrawFog(true);
+      mazeView.setDrawFirstRun(true);
+      mazeView.setDrawBestRun(true);
 
       JPanel rightPanel = new JPanel();
       JScrollPane leftSide = new JScrollPane(mazeView);
@@ -202,7 +210,15 @@ public class StatViewPanel extends JPanel
       
       //Now lets display the mazeView
       mazeView.setModel(maze);
-
+      
+      mazeView.loadUnexplored(tracker.getAllUnexplored());
+      mazeView.setFogColor(fogColor);
+      
+      mazeView.loadFirstRun(tracker.getFirstRun());
+      mazeView.setFirstRunColor(firstRunColor);
+      
+      mazeView.loadBestRun(tracker.getBestRun());
+      mazeView.setBestRunColor(bestRunColor);
    }
 
 

@@ -90,7 +90,7 @@ public class RobotModelMaster
       this.direction = direction;
    }
 
-   public Collection<MazeCell> getHistory()
+   public Set<MazeCell> getHistory()
    {
       return history;
    }
@@ -176,6 +176,42 @@ public class RobotModelMaster
    
    public boolean isExplored(MazeCell location){
 	   return history.contains(location);
+   }
+
+   public Set<MazeCell> getNonHistory() {
+	   Set<MazeCell> history = this.getHistory();
+	   if(history == null){
+		   return null;
+	   }
+	   Set<MazeCell> nonHistory = new TreeSet<MazeCell>();
+	   for(int i = 1; i <= mazeModel.getSize().width; i++){
+		   for(int j = 1; j<= mazeModel.getSize().height; j++){
+			   MazeCell here = new MazeCell(i,j);
+			   if(history.contains(here) == false){
+				   nonHistory.add(here);
+			   }
+		   }
+	   }
+	   return nonHistory;
+   }
+   
+   public List<MazeCell> getCurrentRun() {
+	   if(pathTaken == null){
+		   return null;
+	   }
+	   if(pathTaken.lastIndexOf(new MazeCell(1,mazeModel.getSize().height))
+			   == pathTaken.size()){
+		   return null;
+	   }
+	   ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>(
+			   pathTaken.lastIndexOf(new MazeCell(1,mazeModel.getSize().height))
+			   -pathTaken.size());
+	   for(int i = pathTaken.lastIndexOf(
+			   new MazeCell(1,mazeModel.getSize().height));
+			   i< pathTaken.size(); i++){
+		   currentRun.add(pathTaken.get(i));
+	   }
+	   return currentRun;
    }
 
 }

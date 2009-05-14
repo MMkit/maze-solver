@@ -3,6 +3,7 @@ package maze.model;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import maze.ai.RobotStep;
 
@@ -70,6 +71,14 @@ public class RobotModel
 
    public boolean isExplored(MazeCell location){
 	   return this.parent.isExplored(location);
+   }
+   
+   public Set<MazeCell> getNonHistory() {
+	   return this.parent.getNonHistory();
+   }
+   
+   public List<MazeCell> getCurrentRun() {
+	   return this.parent.getCurrentRun();
    }
 
 }
