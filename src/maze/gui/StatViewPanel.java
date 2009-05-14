@@ -113,9 +113,6 @@ public class StatViewPanel extends JPanel
       selectionBox.add(algorithmSpinner);
       
       mazeView = new MazeView();
-      mazeView.setDrawFog(true);
-      mazeView.setDrawFirstRun(true);
-      mazeView.setDrawBestRun(true);
 
       JPanel rightPanel = new JPanel();
       JScrollPane leftSide = new JScrollPane(mazeView);
@@ -214,11 +211,16 @@ public class StatViewPanel extends JPanel
       mazeView.loadUnexplored(tracker.getAllUnexplored());
       mazeView.setFogColor(fogColor);
       
-      mazeView.loadFirstRun(tracker.getFirstRun());
+      mazeView.loadFirstRun((ArrayList<MazeCell>)tracker.getFirstRun());
       mazeView.setFirstRunColor(firstRunColor);
       
-      mazeView.loadBestRun(tracker.getBestRun());
+      mazeView.loadBestRun((ArrayList<MazeCell>)tracker.getBestRun());
       mazeView.setBestRunColor(bestRunColor);
+      
+      mazeView.setDrawFog(true);
+      mazeView.setDrawFirstRun(true);
+      mazeView.setDrawBestRun(true);
+
    }
 
 

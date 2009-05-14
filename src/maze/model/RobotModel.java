@@ -80,6 +80,15 @@ public class RobotModel
    public List<MazeCell> getCurrentRun() {
 	   return this.parent.getCurrentRun();
    }
+   
+   public List<MazeCell> getFirstRun() {
+	   return this.parent.getFirstRun();
+   }
+   
+   public List<MazeCell> getBestRun() {
+	   return this.parent.getBestRun();
+   }
+   
 
 }
 
