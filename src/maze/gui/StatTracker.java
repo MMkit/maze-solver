@@ -5,6 +5,8 @@ package maze.gui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.List;
+import java.util.ArrayList;
 
 import maze.ai.Floodfill;
 import maze.ai.RightWallFollower;
@@ -247,6 +249,43 @@ public class StatTracker {
 	{
 		return bestRunTotalTurnsTaken;
 	}
+	
+	public boolean getExplored(MazeCell here){
+		return mouse.getHistory().contains(here);
+	}
+
+	public ArrayList<MazeCell> getAllExplored(){
+		return (ArrayList<MazeCell>) mouse.getHistory();
+	}
+	
+	public ArrayList<MazeCell> getFirstRun(){
+		if(firstRunSquaresTraversed == USELESS){
+			return null;
+		}
+		else{
+			ArrayList<MazeCell> totalRun = (ArrayList<MazeCell>) mouse.getPathTaken();
+			ArrayList<MazeCell> firstRun = new ArrayList<MazeCell>();
+			for(int i = 0; i<firstRunSquaresTraversed;i++){
+				firstRun.add(totalRun.get(i));
+			}
+			return firstRun;
+		}
+	}
+
+	public ArrayList<MazeCell> getBestRun(){
+		if(bestRunSquaresTraversed == USELESS){
+			return null;
+		}
+		else{
+			ArrayList<MazeCell> totalRun = (ArrayList<MazeCell>) mouse.getPathTaken();
+			ArrayList<MazeCell> bestRun = new ArrayList<MazeCell>();
+			for(int i = bestRunTotalSquaresTraversed-bestRunSquaresTraversed;
+					i<bestRunTotalSquaresTraversed ;i++){
+				bestRun.add(totalRun.get(i));
+			}
+			return bestRun;
+		}
+	}
 
 	public static void main(String[] args) {
 		Runnable runner = new Runnable() {
@@ -301,3 +340,5 @@ public class StatTracker {
 	}
 
 }
+
+
