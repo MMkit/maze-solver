@@ -82,5 +82,14 @@ public class RobotController
 	public List<MazeCell> getCurrentRun() {
 		return robotModelMaster.getCurrentRun();
 	}
+	
+	public Direction[][] getUnderstandingDir(){
+		return ai.getUnderstandingDir();
+	}
+	
+	public int[][] getUnderstandingInt(){
+		return ai.getUnderstandingInt();
+	}
+	
 
 }

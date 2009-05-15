@@ -88,10 +88,25 @@ public final class RobotAnimator implements Runnable
             view.loadFirstRun(controller.getFirstRun());
             view.loadBestRun(controller.getBestRun());
             view.loadCurrentRun(controller.getCurrentRun());
+            
             view.setDrawFog(true);
             view.setDrawFirstRun(true);
             view.setDrawBestRun(true);
-            view.setDrawCurrentRun(true);
+            view.setDrawCurrentRun(true);            
+            
+            int[][] understandingInt = controller.getUnderstandingInt();
+            Direction[][] understandingDir = controller.getUnderstandingDir();
+            if(understandingInt != null){
+            	view.loadUnderstanding(understandingInt);
+                view.setDrawUnderstanding(true);
+            }
+            else if(understandingDir != null){
+            	view.loadUnderstanding(understandingDir);
+            	view.setDrawUnderstanding(true);
+            }
+            else {
+            	view.setDrawUnderstanding(false);
+            }
             
 
             //Get the robots new position.
