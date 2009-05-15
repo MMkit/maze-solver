@@ -168,4 +168,8 @@ public class Tremaux extends RobotBase
    {
       return ballOfString[currentLocation.getX() - 1][currentLocation.getY() - 1];
    }
+   
+   public Direction[][] getUnderstandingDir(){
+	   return ballOfString;
+   }
 }

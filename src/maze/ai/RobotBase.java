@@ -4,6 +4,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.MutableComboBoxModel;
 
 import maze.model.RobotModel;
+import maze.model.Direction;
 
 /**
  * This is the interface for the robot AI that is used by the GUI.
@@ -26,7 +27,8 @@ public abstract class RobotBase
       {
          robotListModel = new DefaultComboBoxModel(new RobotBase[]
          {
-            new LeftWallFollower(), new RightWallFollower(), new Tremaux(), new Floodfill(),
+            new LeftWallFollower(), new RightWallFollower(), new Tremaux(),
+            new Floodfill()//, new ModifiedFloodfill()
          });
       }
       return robotListModel;
@@ -70,5 +72,15 @@ public abstract class RobotBase
    public void setSpeedRun(boolean choice)
    {
       speedRun = choice;
+   }
+   
+   public Direction[][] getUnderstandingDir(){
+	   //This returns the cell view taken by the algorithm if it is Direction-based
+	   return null;
+   }
+   
+   public int[][] getUnderstandingInt(){
+	   //This returns the cell view taken by the algorithm if it is int-based
+	   return null;
    }
 }

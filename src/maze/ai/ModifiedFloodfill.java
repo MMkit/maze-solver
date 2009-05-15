@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package maze.ai;
 
 import java.awt.Dimension;
@@ -13,7 +16,7 @@ import maze.model.MazeModel;
 import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
-public class Floodfill extends RobotBase
+public class ModifiedFloodfill extends RobotBase
 {
 
    private int[][] distance;
@@ -30,7 +33,7 @@ public class Floodfill extends RobotBase
    @Override
    public String toString()
    {
-      return "Flood Fill";
+      return "Modified Flood Fill";
    }
 
    public void initialize()
@@ -56,6 +59,8 @@ public class Floodfill extends RobotBase
       }
       goal = TO_CENTER;
       speedRunCapable = false;
+      
+      floodfill();
    }
 
    public RobotStep nextStep()
@@ -227,7 +232,7 @@ public class Floodfill extends RobotBase
 
       if (bestDirection == Direction.Directionless)
       {
-         floodfill();
+         modifiedFloodfill();
          return getBestDirection();
       }
       else
@@ -394,7 +399,219 @@ public class Floodfill extends RobotBase
       }
    }
 
-   private void blockOutCenter()
+   private void modifiedFloodfill()
+   {
+      Dimension size = maze.getSize();
+      Vector<MazeCell> queue = new Vector<MazeCell>();
+      Vector<MazeCell> badQueue = new Vector<MazeCell>();
+      MazeCell cell;
+      MazeCell here = robotLocation.getCurrentLocation();
+      int currentDistance;
+      boolean speedy;
+
+      if ((goal==TO_CENTER) && (speedRun==true) && (speedRunCapable==true))
+      {
+         speedy = true;
+      }
+      else
+      {
+         speedy = false;
+      }
+      
+      //Load up a queue until you find good info
+      badQueue.add(here);
+      while((badQueue.isEmpty() == false)/* && (queue.isEmpty() == true)*/){
+    	  cell = badQueue.get(0);
+          badQueue.remove(0);
+          this.setDistance(cell,USELESS);
+          currentDistance = USELESS;
+
+          //Check to see if accessible
+          if (maze.getWall(cell, Direction.North).isSet() == false)
+          { //Check to see if it should be added to queue
+             if ( neighborIsPoisioned(cell, Direction.North))
+             {
+            	 //if( queue.isEmpty()){
+            		 badQueue.add(cell.plusY(-1));
+            	 //}
+             }
+             else{
+            	 queue.add(cell.plusY(-1));
+             }
+          }
+
+          //Check to see if accessible
+          if (maze.getWall(cell, Direction.South).isSet() == false)
+          { //Check to see if it should be added to queue
+             if ( neighborIsPoisioned(cell, Direction.South))
+             {
+            	 //if( queue.isEmpty()){
+            		 badQueue.add(cell.plusY(1));
+            	 //}
+             }
+             else{
+            	 queue.add(cell.plusY(1));
+             }
+          }
+
+          //Check to see if accessible
+          if (maze.getWall(cell, Direction.West).isSet() == false)
+          { //Check to see if it should be added to queue
+             if ( neighborIsPoisioned(cell, Direction.West))
+             {
+            	 //if( queue.isEmpty()){
+            		 badQueue.add(cell.plusX(-1));
+            	 //}
+             }
+             else{
+            	 queue.add(cell.plusX(-1));
+             }
+          }
+
+          //Check to see if accessible
+          if (maze.getWall(cell, Direction.East).isSet() == false)
+          { //Check to see if it should be added to queue
+             if ( neighborIsPoisioned(cell, Direction.East))
+             {
+            	 //if( queue.isEmpty()){
+            		 badQueue.add(cell.plusX(1));
+            	 //}
+             }
+             else{
+            	 queue.add(cell.plusX(1));
+             }
+          }
+          this.setDistance(cell,USELESS);
+      }
+      
+/*      while (badQueue.isEmpty() == false) {
+    	  cell = badQueue.get(0);
+          badQueue.remove(0);
+          this.setDistance(cell,USELESS);
+      }
+*/      
+      //Work back from the good knowledge to the current location
+      while (queue.isEmpty() == false)
+      {
+         if(queue.contains(here)){
+         	return;
+         }
+         cell = queue.get(0);
+         queue.remove(0);
+         currentDistance = getDistance(cell);
+
+         //Check to see if accessible
+         if (maze.getWall(cell, Direction.North).isSet() == false)
+         { //Check to see if it should be added to queue
+            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.North)) &&
+                ( (speedy == false) || (getNeighborExplored(cell, Direction.North) == true)))
+            {
+               queue.add(cell.plusY(-1));
+               setDistance(cell.plusY(-1), currentDistance + 1);
+            }
+         }
+
+         //Check to see if accessible
+         if (maze.getWall(cell, Direction.South).isSet() == false)
+         { //Check to see if it should be added to queue
+            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.South)) &&
+                ( (speedy == false) || (getNeighborExplored(cell, Direction.South))))
+            {
+               queue.add(cell.plusY(1));
+               setDistance(cell.plusY(1), currentDistance + 1);
+            }
+         }
+
+         //Check to see if accessible
+         if (maze.getWall(cell, Direction.West).isSet() == false)
+         { //Check to see if it should be added to queue
+            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.West)) &&
+                ( (speedy == false) || (getNeighborExplored(cell, Direction.West))))
+            {
+               queue.add(cell.plusX(-1));
+               setDistance(cell.plusX(-1), currentDistance + 1);
+            }
+         }
+
+         //Check to see if accessible
+         if (maze.getWall(cell, Direction.East).isSet() == false)
+         { //Check to see if it should be added to queue
+            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.East)) &&
+                ( (speedy == false) || (getNeighborExplored(cell, Direction.East))))
+            {
+               queue.add(cell.plusX(1));
+               setDistance(cell.plusX(1), currentDistance + 1);
+            }
+         }
+
+      }
+
+      System.out.println("Failed Modified");
+      floodfill();
+   }
+
+   private boolean neighborIsPoisioned(MazeCell cell, Direction dir) {
+	   //This function determines if a cell is tainted by bad information
+	   //This can be tested by finding if the cell has a neighbor that is
+	   //better other than the one querying it
+	   if(getNeighborDistance(cell,dir) == 0){
+		   //Goals are not poisioned
+		   return false;
+	   }
+	   
+	   MazeCell here;
+	   Direction whereFrom = dir.getOpposite();
+	   
+	   if(dir.equals(Direction.North))
+	   {
+		   here = cell.plusY(-1);
+	   }
+	   else if(dir.equals(Direction.South))
+	   {
+		   here = cell.plusY(1);
+	   }
+	   else if(dir.equals(Direction.East))
+	   {
+		   here = cell.plusX(1);
+	   }
+	   else if(dir.equals(Direction.West))
+	   {
+		   here = cell.plusX(-1);
+	   }
+	   else {
+		   //If directionless was passed then we just act like it's not poisioned
+		   return false;
+	   }
+	   
+	   if(!whereFrom.equals(Direction.North))
+	   {
+		   if(getDistance(here)> getNeighborDistance(here,Direction.North)){
+			   return false;
+		   }
+	   }
+	   if(!whereFrom.equals(Direction.South))
+	   {
+		   if(getDistance(here)> getNeighborDistance(here,Direction.South)){
+			   return false;
+		   }
+	   }
+	   if(!whereFrom.equals(Direction.West))
+	   {
+		   if(getDistance(here)> getNeighborDistance(here,Direction.West)){
+			   return false;
+		   }
+	   }
+	   if(!whereFrom.equals(Direction.East))
+	   {
+		   if(getDistance(here)> getNeighborDistance(here,Direction.East)){
+			   return false;
+		   }
+	   }
+	   
+	   return true;
+   }
+
+private void blockOutCenter()
    {
       Dimension size = maze.getSize();
       MazeCell cell1 = new MazeCell(size.width / 2, size.height / 2);

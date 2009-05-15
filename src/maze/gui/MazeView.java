@@ -93,6 +93,11 @@ public class MazeView extends JPanel implements ComponentListener
    private boolean drawCurrentRun = false;
    private List<MazeCell> currentRun;
    private Color currentRunColor = Color.GREEN;
+   
+   private boolean drawUnderstanding = false;
+   private int[][] understandingInt = null;
+   private Direction[][] understandingDir = null;
+
 
    /**
     * Constructor.
@@ -301,6 +306,10 @@ public class MazeView extends JPanel implements ComponentListener
       
       if(drawCurrentRun == true) {
     	  drawCurrentRun(g);
+      }
+      
+      if(drawUnderstanding == true){
+    	  drawUnderstanding(g);
       }
 
    } //End method.
@@ -855,4 +864,88 @@ public class MazeView extends JPanel implements ComponentListener
 	   drawCurrentRun = setter;
    }
 
+   private void drawUnderstanding(Graphics2D g){
+	   MazeCell here;
+	   int x,y;
+	   if(understandingInt != null){
+		   int local;
+		   for(int i = 1; i<=model.getSize().width; i++){
+			   for(int j = 1; j<=model.getSize().height; j++){
+				   here = new MazeCell(i,j);
+				   if(unexplored.contains(here)){
+					   g.setColor(Color.WHITE);
+				   }
+				   else{
+					   g.setColor(Color.BLACK);
+				   }
+				   x = (i-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
+				   y = (j-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+				   local = understandingInt[i-1][j-1];
+				   g.drawString(String.valueOf(local), x, y);
+			   }
+		   }
+	   }
+	   else if(understandingDir != null){
+		   Direction local;
+		   for(int i = 1; i<=model.getSize().width; i++){
+			   for(int j = 1; j<=model.getSize().height; j++){
+				   here = new MazeCell(i,j);
+				   if(unexplored.contains(here)){
+					   g.setColor(Color.WHITE);
+				   }
+				   else{
+					   g.setColor(Color.BLACK);
+				   }
+				   x = (i-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
+				   y = (j-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
+				   local = understandingDir[i-1][j-1];
+				   drawArrow(g,local, x, y);
+			   }
+		   }
+	   }
+	}
+
+   private void drawArrow(Graphics2D g, Direction local, int x, int y) {
+	   //Draws an arrow in the direction of "local" centered on the point (x,y)
+	   if(local.equals(Direction.North)){
+		   int[] ys = {y+this.csm.getCellHeight()*3/8,y,y,
+				   y-this.csm.getCellHeight()*3/8,y,y};
+		   int[] xs = {x,x-this.csm.getCellWidth()/8,x-this.csm.getCellWidth()/4,
+				   x,x+this.csm.getCellWidth()/4,x+this.csm.getCellWidth()/8};
+		   g.drawPolygon(xs,ys,6);
+	   }
+	   if(local.equals(Direction.South)){
+		   int[] ys = {y-this.csm.getCellHeight()*3/8,y,y,
+				   y+this.csm.getCellHeight()*3/8,y,y};
+		   int[] xs = {x,x-this.csm.getCellWidth()/8,x-this.csm.getCellWidth()/4,
+				   x,x+this.csm.getCellWidth()/4,x+this.csm.getCellWidth()/8};
+		   g.drawPolygon(xs,ys,6);
+	   }
+	   if(local.equals(Direction.West)){
+		   int[] xs = {x+this.csm.getCellWidth()*3/8,x,x,
+				   x-this.csm.getCellWidth()*3/8,x,x};
+		   int[] ys = {y,y-this.csm.getCellHeight()/8,y-this.csm.getCellHeight()/4,
+				   y,y+this.csm.getCellHeight()/4,y+this.csm.getCellHeight()/8};
+		   g.drawPolygon(xs,ys,6);
+	   }
+	   if(local.equals(Direction.East)){
+		   int[] xs = {x-this.csm.getCellWidth()*3/8,x,x,
+				   x+this.csm.getCellWidth()*3/8,x,x};
+		   int[] ys = {y,y-this.csm.getCellHeight()/8,y-this.csm.getCellHeight()/4,
+				   y,y+this.csm.getCellHeight()/4,y+this.csm.getCellHeight()/8};
+		   g.drawPolygon(xs,ys,6);
+	   }
+   }
+
+   public void setDrawUnderstanding(boolean setter) {
+	   drawUnderstanding = setter;
+   }
+
+   public void loadUnderstanding(int[][] understandingInt) {
+	   this.understandingInt = understandingInt;
+   }
+
+   public void loadUnderstanding(Direction[][] understandingDir) {
+	   this.understandingDir = understandingDir;
+   }
 }
