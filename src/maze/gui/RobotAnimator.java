@@ -73,6 +73,10 @@ public final class RobotAnimator implements Runnable
       final RobotModelMaster model = this.controller.getRobotModelMaster();
       this.view.setRobotPosition(this.view.getCellCenter(model.getCurrentLocation()),
                                  model.getDirection().getRadians());
+      view.setDrawFog(true);
+      view.setDrawFirstRun(true);
+      view.setDrawBestRun(true);
+      view.setDrawCurrentRun(true);
       while (this.currentState != AnimationStates.Stopped && this.controller.isRobotDone() == false)
       {
          try
@@ -83,31 +87,6 @@ public final class RobotAnimator implements Runnable
             final double srcRotation = srcDirection.getRadians();
 
             controller.nextStep(); //Move robot.
-            
-            view.loadUnexplored(controller.getAllUnexplored());
-            view.loadFirstRun(controller.getFirstRun());
-            view.loadBestRun(controller.getBestRun());
-            view.loadCurrentRun(controller.getCurrentRun());
-            
-            view.setDrawFog(true);
-            view.setDrawFirstRun(true);
-            view.setDrawBestRun(true);
-            view.setDrawCurrentRun(true);            
-            
-            int[][] understandingInt = controller.getUnderstandingInt();
-            Direction[][] understandingDir = controller.getUnderstandingDir();
-            if(understandingInt != null){
-            	view.loadUnderstanding(understandingInt);
-                view.setDrawUnderstanding(true);
-            }
-            else if(understandingDir != null){
-            	view.loadUnderstanding(understandingDir);
-            	view.setDrawUnderstanding(true);
-            }
-            else {
-            	view.setDrawUnderstanding(false);
-            }
-            
 
             //Get the robots new position.
             final Point destLocation = this.view.getCellCenter(model.getCurrentLocation());
@@ -131,6 +110,29 @@ public final class RobotAnimator implements Runnable
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
+
+            view.loadUnexplored(controller.getAllUnexplored());
+            view.loadFirstRun(controller.getFirstRun());
+            view.loadBestRun(controller.getBestRun());
+            view.loadCurrentRun(controller.getCurrentRun());
+
+            int[][] understandingInt = controller.getUnderstandingInt();
+            Direction[][] understandingDir = controller.getUnderstandingDir();
+            if (understandingInt != null)
+            {
+               view.loadUnderstanding(understandingInt);
+               view.setDrawUnderstanding(true);
+            }
+            else if (understandingDir != null)
+            {
+               view.loadUnderstanding(understandingDir);
+               view.setDrawUnderstanding(true);
+            }
+            else
+            {
+               view.setDrawUnderstanding(false);
+            }
+
             while (this.currentState == AnimationStates.Paused)
             {
                Thread.sleep(100);
