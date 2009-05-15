@@ -52,7 +52,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    {
       this.mazeViewer = new MazeViewerPanel();
       this.codeEditorPanel = new CodeEditingPanel();
-      
+
       this.setTitle("Micro Mouse Maze Editor and Simulator");
       this.setIconImage(Main.getImageResource("gui/images/logo.png").getImage());
 
@@ -216,6 +216,41 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       JMenuItem mouseDisplay = new JMenuItem("Display Settings");
       mouseMenu.add(mouseDisplay);
 
+      // Help menu.
+      JMenu helpMenu = new JMenu("Help");
+      menuBar.add(helpMenu);
+
+      // Look and feel menu.
+      JMenu lookAndFeel = new JMenu("Look And Feel");
+      helpMenu.add(lookAndFeel);
+      ButtonGroup lafBG = new ButtonGroup();
+      LookAndFeelListener lafal = new LookAndFeelListener();
+      for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
+      {
+         JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(laf.getName());
+         lafBG.add(jrbmi);
+         jrbmi.addActionListener(lafal);
+         jrbmi.setActionCommand(laf.getClassName());
+         lookAndFeel.add(jrbmi);
+         if (laf.getName().equals("Nimbus"))
+            lafBG.setSelected(jrbmi.getModel(), true);
+      }
+
+      // Separate the about dialog.
+      helpMenu.addSeparator();
+
+      // Help->About menu item.
+      JMenuItem aboutMenuItem = new JMenuItem("About...");
+      helpMenu.add(aboutMenuItem);
+      aboutMenuItem.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            JOptionPane.showMessageDialog(PrimaryFrame.this, "We need and about dialog.");
+         }
+      });
+
       this.setJMenuBar(menuBar);
 
       this.setSize(1000, 750);
@@ -227,21 +262,6 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
 
-      JMenu lookAndFeel = new JMenu("Look And Feel");
-      ButtonGroup lafBG = new ButtonGroup();
-      LookAndFeelListener lafal = new LookAndFeelListener();
-
-      for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
-      {
-         JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(laf.getName());
-         lafBG.add(jrbmi);
-         jrbmi.addActionListener(lafal);
-         jrbmi.setActionCommand(laf.getClassName());
-         lookAndFeel.add(jrbmi);
-         if (laf.getName().equals("Nimbus"))
-            lafBG.setSelected(jrbmi.getModel(), true);
-      }
-      menuBar.add(lookAndFeel);
    }
 
    /**

@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Observable;
@@ -38,12 +37,10 @@ import maze.model.MazeModel.MazeWall;
  */
 public class MazeView extends JPanel implements ComponentListener
 {
-   //Temporary model.
-   protected MazeModel model;
    /**
     * The maze model that stores the configuration of the maze.
     */
-   //private MazeModel model = new maze.model.Maze();
+   protected MazeModel model;
    /**
     * This holds the sizes of the cells and walls.
     */

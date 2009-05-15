@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.model;
 
 import java.io.File;
@@ -10,7 +5,6 @@ import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- *
  * @author desolc
  */
 public class MazeInfoModel
@@ -20,8 +14,16 @@ public class MazeInfoModel
 
    public MazeInfoModel()
    {
-      File currentDir = new File(".");
-      scanDirectory(currentDir);
+      try
+      {
+         File currentDir = new File(".");
+         scanDirectory(currentDir);
+      }
+      catch (Exception e)
+      {
+         System.out.println("Error scanning directory for maze files.");
+         e.printStackTrace();
+      }
    }
 
    public DefaultComboBoxModel getMazeInfoComboBoxModel()
@@ -31,20 +33,21 @@ public class MazeInfoModel
 
    public void scanDirectory(File dir)
    {
-      if (dir == null || !dir.isDirectory()){
-          System.out.println("null directory");
-    	  return;
+      if (dir == null || !dir.isDirectory())
+      {
+         System.out.println("null directory");
+         return;
       }
 
       for (File entry : dir.listFiles())
       {
          if (entry.isFile())
          {
-            
+
             if (entry.getName().toLowerCase().endsWith(NAME_EXT))
             {
                MazeInfo mi;
-               if ((mi = MazeInfo.load(entry)) != null)
+               if ( (mi = MazeInfo.load(entry)) != null)
                   mMazeInfoModel.addElement(mi);
             }
          }
@@ -76,7 +79,7 @@ public class MazeInfoModel
             return false;
          }
       }
-      if ((mi = MazeInfo.load(file)) == null)
+      if ( (mi = MazeInfo.load(file)) == null)
          return false;
 
       mMazeInfoModel.addElement(mi);

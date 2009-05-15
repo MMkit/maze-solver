@@ -42,7 +42,7 @@ public final class Main
          {
             try
             {
-               System.out.println(Arrays.toString(UIManager.getInstalledLookAndFeels()));
+               //System.out.println(Arrays.toString(UIManager.getInstalledLookAndFeels()));
                //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
