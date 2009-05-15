@@ -1,5 +1,6 @@
 package maze.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
@@ -15,7 +16,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Observable;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import maze.Main;
+import maze.model.CellSizeModel;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
@@ -74,11 +75,11 @@ public class MazeView extends JPanel implements ComponentListener
     * The image for the micro mouse aviator that moves around the maze.
     */
    private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
-   
+
    private boolean drawFog = false;
    private Set<MazeCell> unexplored;
    private Color fogColor = Color.BLACK;
-   
+
    private boolean drawFirstRun = false;
    private List<MazeCell> firstRun;
    private Color firstRunColor = Color.BLUE;
@@ -90,11 +91,10 @@ public class MazeView extends JPanel implements ComponentListener
    private boolean drawCurrentRun = false;
    private List<MazeCell> currentRun;
    private Color currentRunColor = Color.GREEN;
-   
+
    private boolean drawUnderstanding = false;
    private int[][] understandingInt = null;
    private Direction[][] understandingDir = null;
-
 
    /**
     * Constructor.
@@ -268,6 +268,31 @@ public class MazeView extends JPanel implements ComponentListener
                     this.csm.getCellHeight() - this.csm.getWallHeight());
       }
 
+      if (drawFog == true)
+      {
+         drawFog(g);
+      }
+
+      if (drawFirstRun == true)
+      {
+         drawFirstRun(g);
+      }
+
+      if (drawBestRun == true)
+      {
+         drawBestRun(g);
+      }
+
+      if (drawCurrentRun == true)
+      {
+         drawCurrentRun(g);
+      }
+
+      if (drawUnderstanding == true)
+      {
+         drawUnderstanding(g);
+      }
+
       // Draw the robot onto the maze.
       if (this.editable == false && this.robotLocation != null)
       {
@@ -277,7 +302,9 @@ public class MazeView extends JPanel implements ComponentListener
          //Back up the current graphics state.
          final AffineTransform oldTransform = g.getTransform();
          //We add half a PI to the rotation because the top of the image is forward.
-         final AffineTransform transform = AffineTransform.getRotateInstance(this.robotRotation + Math.PI / 2);
+         final AffineTransform transform = AffineTransform.getRotateInstance(this.robotRotation +
+                                                                             Math.PI /
+                                                                             2);
          //Set the image rotation transformation.
          g.transform(transform);
          g.drawImage(this.robotImage.getImage(),
@@ -287,26 +314,6 @@ public class MazeView extends JPanel implements ComponentListener
          //Restore the original graphics state.
          g.setTransform(oldTransform);
          g.translate(-this.robotLocation.x, -this.robotLocation.y);
-      }
-      
-      if(drawFog == true){
-    	  drawFog(g);
-      }
-      
-      if(drawFirstRun == true){
-    	  drawFirstRun(g);
-      }
-
-      if(drawBestRun == true){
-    	  drawBestRun(g);
-      }
-      
-      if(drawCurrentRun == true) {
-    	  drawCurrentRun(g);
-      }
-      
-      if(drawUnderstanding == true){
-    	  drawUnderstanding(g);
       }
 
    } //End method.
@@ -392,7 +399,9 @@ public class MazeView extends JPanel implements ComponentListener
       }
       else if (peg == PegLocation.BottomLeft)
       {
-         return new Rectangle(cell.getXZeroBased() * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),
+         return new Rectangle(cell.getXZeroBased() *
+                                    this.csm.getCellWidth() -
+                                    this.csm.getWallWidthHalf(),
                               cell.getY() * this.csm.getCellHeight() - this.csm.getWallHeightHalf(),
                               this.csm.getWallWidth(),
                               this.csm.getWallHeight());
@@ -466,18 +475,15 @@ public class MazeView extends JPanel implements ComponentListener
 
    @Override
    public void componentMoved(ComponentEvent e)
-   {
-   }
+   {}
 
    @Override
    public void componentShown(ComponentEvent e)
-   {
-   }
+   {}
 
    @Override
    public void componentHidden(ComponentEvent e)
-   {
-   }
+   {}
 
    /**
     * Sets whether this MazeView can modify its underlying MazeModel.
@@ -497,52 +503,52 @@ public class MazeView extends JPanel implements ComponentListener
             @Override
             public void mouseMoved(MouseEvent e)
             {
-               if (model == null)
-                  return;
-               try
+               if (model != null)
                {
-                  active = getHostMazeCell(e.getPoint());
-                  repaint();
-               }
-               catch (Exception ex)
-               {
+                  try
+                  {
+                     active = getHostMazeCell(e.getPoint());
+                     repaint();
+                  }
+                  catch (Exception ex)
+                  {}
                }
             } // public void mouseMoved(MouseEvent e)
 
             @Override
             public void mouseDragged(MouseEvent e)
             {
-               if (model == null)
-                  return;
-               try
+               if (model != null)
                {
-                  active = getHostMazeCell(e.getPoint());
-                  MazeWall wall = getWall(e.getPoint());
-                  if (SwingUtilities.isLeftMouseButton(e))
-                     wall.set(true);
-                  else if (SwingUtilities.isRightMouseButton(e))
-                     wall.set(false);
-                  repaint();
-               }
-               catch (Exception ex)
-               {
+                  try
+                  {
+                     active = getHostMazeCell(e.getPoint());
+                     MazeWall wall = getWall(e.getPoint());
+                     if (SwingUtilities.isLeftMouseButton(e))
+                        wall.set(true);
+                     else if (SwingUtilities.isRightMouseButton(e))
+                        wall.set(false);
+                     repaint();
+                  }
+                  catch (Exception ex)
+                  {}
                }
             } // public void mouseDragged(MouseEvent e)
 
             @Override
             public void mousePressed(MouseEvent e)
             {
-               if (model == null)
-                  return;
-               try
+               if (model != null)
                {
-                  final MazeWall wall = getWall(e.getPoint());
-                  //Flip the status of the wall.
-                  wall.set(!wall.isSet());
-                  repaint();
-               }
-               catch (Exception ex)
-               {
+                  try
+                  {
+                     final MazeWall wall = getWall(e.getPoint());
+                     //Flip the status of the wall.
+                     wall.set(!wall.isSet());
+                     repaint();
+                  }
+                  catch (Exception ex)
+                  {}
                }
             } // public void mousePressed(MouseEvent e)
          };
@@ -558,391 +564,362 @@ public class MazeView extends JPanel implements ComponentListener
       } // else
    }
 
-   /**
-    * This model stores the sizes of the cells and wall segments that are drawn
-    * to the screen.
-    */
-   public static class CellSizeModel extends Observable
+   private void drawFog(Graphics2D g)
    {
-
-      private int cellWidth = 40;
-      private int cellHeight = 40;
-      private int wallWidth = 10;
-      private int wallHeight = 10;
-
-      public void setCellWidth(int cellWidth)
+      //Draw the box for fog
+      g.setColor(fogColor);
+      g.setComposite(AlphaComposite.SrcOver);
+      g.setColor(new Color(0, 0, 0, 75));
+      if (unexplored == null)
       {
-         if ( (cellWidth & 1) == 1)
-         {
-            cellWidth--;
-         }
-         if (this.cellWidth != cellWidth)
-         {
-            this.cellWidth = cellWidth;
-            super.setChanged();
-         }
+         return;
       }
-
-      public void setCellHeight(int cellHeight)
+      else
       {
-         if ( (cellHeight & 1) == 1)
+         Object[] foggy = unexplored.toArray();
+         for (int i = 0; i < foggy.length; i++)
          {
-            cellHeight--;
-         }
-         if (this.cellHeight != cellHeight)
-         {
-            this.cellHeight = cellHeight;
-            super.setChanged();
+            MazeCell here = (MazeCell) foggy[i];
+            g.fillRect( (here.getX() - 1) * this.csm.getCellWidth(),
+                       (here.getY() - 1) * this.csm.getCellHeight(),
+                       this.csm.getCellWidth(),
+                       this.csm.getCellHeight());
          }
       }
+   }
 
-      public void setWallWidth(int wallWidth)
+   public void loadUnexplored(Set<MazeCell> set)
+   {
+      unexplored = set;
+   }
+
+   public void setFogColor(Color newColor)
+   {
+      fogColor = newColor;
+   }
+
+   public void setDrawFog(boolean setter)
+   {
+      drawFog = setter;
+   }
+
+   private void drawFirstRun(Graphics2D g)
+   {
+      if (this.firstRun != null && this.firstRun.isEmpty() == false)
       {
-         if ( (wallWidth & 1) == 1)
+         g.setColor(firstRunColor);
+
+         MazeCell here = firstRun.get(0);
+         MazeCell there;
+         Point center;
+         int width, height;
+         for (int i = 1; i < firstRun.size(); i++)
          {
-            wallWidth++;
+            there = firstRun.get(i);
+            if (here.getX() < there.getX())
+            {
+               //here is west of there
+               center = this.getCellCenter(here);
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getX() > there.getX())
+            {
+               //here is east of there
+               center = this.getCellCenter(there);
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getY() > there.getY())
+            {
+               //here is south of there
+               center = this.getCellCenter(there);
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            else
+            {
+               //here is north of there
+               center = this.getCellCenter(here);
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            g.fillRect(center.x, center.y, width, height);
+            here = there;
          }
-         if (this.wallWidth != wallWidth)
+      }
+   }
+
+   public void loadFirstRun(List<MazeCell> list)
+   {
+      firstRun = list;
+   }
+
+   public void setFirstRunColor(Color newColor)
+   {
+      firstRunColor = newColor;
+   }
+
+   public void setDrawFirstRun(boolean setter)
+   {
+      drawFirstRun = setter;
+   }
+
+   private void drawBestRun(Graphics2D g)
+   {
+      if (this.bestRun != null && this.bestRun.isEmpty() == false)
+      {
+
+         g.setColor(bestRunColor);
+
+         MazeCell here = bestRun.get(0);
+         MazeCell there;
+         int x, y;
+         int width, height;
+         for (int i = 1; i < bestRun.size(); i++)
          {
-            this.wallWidth = wallWidth;
-            super.setChanged();
+            there = bestRun.get(i);
+            if (here.getX() < there.getX())
+            {
+               //here is west of there
+               x = (here.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;
+               y = (here.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getX() > there.getX())
+            {
+               //here is east of there
+               x = (there.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;
+               y = (there.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getY() > there.getY())
+            {
+               //here is south of there
+               x = (there.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;
+               y = (there.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            else
+            {
+               //here is north of there
+               x = (here.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;
+               y = (here.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            g.fillRect(x, y, width, height);
+            here = there;
          }
       }
+   }
 
-      public void setWallHeight(int wallHeight)
+   public void loadBestRun(List<MazeCell> list)
+   {
+      bestRun = list;
+   }
+
+   public void setBestRunColor(Color newColor)
+   {
+      bestRunColor = newColor;
+   }
+
+   public void setDrawBestRun(boolean setter)
+   {
+      drawBestRun = setter;
+   }
+
+   private void drawCurrentRun(Graphics2D g)
+   {
+      if (this.currentRun != null && this.currentRun.isEmpty() == false)
       {
-         if ( (wallHeight & 1) == 1)
+
+         g.setColor(currentRunColor);
+
+         MazeCell here = currentRun.get(0);
+         MazeCell there;
+         int x, y;
+         int width, height;
+         for (int i = 1; i < currentRun.size(); i++)
          {
-            wallHeight++;
+            there = currentRun.get(i);
+            if (here.getX() < there.getX())
+            {
+               //here is west of there
+               x = (here.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = (here.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getX() > there.getX())
+            {
+               //here is east of there
+               x = (there.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = (there.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               width = 5 * this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight() / 4;
+            }
+            else if (here.getY() > there.getY())
+            {
+               //here is south of there
+               x = (there.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = (there.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            else
+            {
+               //here is north of there
+               x = (here.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = (here.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               width = this.csm.getCellWidth() / 4;
+               height = this.csm.getCellHeight();
+            }
+            g.fillRect(x, y, width, height);
+            here = there;
          }
-         if (this.wallHeight != wallHeight)
+      }
+   }
+
+   public void loadCurrentRun(List<MazeCell> list)
+   {
+      currentRun = list;
+   }
+
+   public void setCurrentRunColor(Color newColor)
+   {
+      currentRunColor = newColor;
+   }
+
+   public void setDrawCurrentRun(boolean setter)
+   {
+      drawCurrentRun = setter;
+   }
+
+   private void drawUnderstanding(Graphics2D g)
+   {
+      MazeCell here;
+      int x, y;
+      if (understandingInt != null)
+      {
+         int local;
+         for (int i = 1; i <= model.getSize().width; i++)
          {
-            this.wallHeight = wallHeight;
-            super.setChanged();
+            for (int j = 1; j <= model.getSize().height; j++)
+            {
+               here = new MazeCell(i, j);
+               if (unexplored.contains(here))
+               {
+                  g.setColor(Color.WHITE);
+               }
+               else
+               {
+                  g.setColor(Color.BLACK);
+               }
+               x = (i - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = (j - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 2;
+               local = understandingInt[i - 1][j - 1];
+               g.drawString(String.valueOf(local), x, y);
+            }
          }
       }
-
-      public int getCellWidth()
+      else if (understandingDir != null)
       {
-         return cellWidth;
-      }
-
-      public int getCellHeight()
-      {
-         return cellHeight;
-      }
-
-      public int getWallWidth()
-      {
-         return wallWidth;
-      }
-
-      public int getWallHeight()
-      {
-         return wallHeight;
-      }
-
-      public int getCellWidthHalf()
-      {
-         return cellWidth / 2;
-      }
-
-      public int getCellHeightHalf()
-      {
-         return cellHeight / 2;
-      }
-
-      public int getWallWidthHalf()
-      {
-         return wallWidth / 2;
-      }
-
-      public int getWallHeightHalf()
-      {
-         return wallHeight / 2;
+         Direction local;
+         for (int i = 1; i <= model.getSize().width; i++)
+         {
+            for (int j = 1; j <= model.getSize().height; j++)
+            {
+               here = new MazeCell(i, j);
+               if (unexplored.contains(here))
+               {
+                  g.setColor(Color.WHITE);
+               }
+               else
+               {
+                  g.setColor(Color.BLACK);
+               }
+               x = (i - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 2;
+               y = (j - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 2;
+               local = understandingDir[i - 1][j - 1];
+               drawArrow(g, local, x, y);
+            }
+         }
       }
    }
-   
-   private void drawFog(Graphics2D g){
-	   //Draw the box for fog
-	   g.setColor(fogColor);
-	   if(unexplored == null)
-	   {
-		   return;
-	   }
-	   else{
-		   Object[] foggy = unexplored.toArray();
-		   for(int i=0;i<foggy.length;i++){
-			   MazeCell here = (MazeCell) foggy[i];
-			   g.fillRect((here.getX()-1) * this.csm.getCellWidth(),
-					   (here.getY()-1) * this.csm.getCellHeight(),
-			           this.csm.getCellWidth(),this.csm.getCellHeight());
-		   }
-	   }
-   }
-   
-   public void loadUnexplored(Set<MazeCell> set){
-	   unexplored = set;
-   }
-   
-   public void setFogColor(Color newColor){
-	   fogColor = newColor;
-   }
-   
-   public void setDrawFog(boolean setter){
-	   drawFog = setter;
-   }
-   
-   private void drawFirstRun(Graphics2D g){
-	   g.setColor(firstRunColor);
-	   if(firstRun.isEmpty()){
-		   return;
-	   }
-	   MazeCell here = firstRun.get(0);
-	   MazeCell there;
-	   int x, y;
-	   int width, height;
-	   for(int i=1;i<firstRun.size();i++){
-		   there = firstRun.get(i);
-		   if(here.getX() < there.getX()){
-			   //here is west of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;
-		   }
-		   else if(here.getX() > there.getX()){
-			   //here is east of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;			   
-		   }
-		   else if(here.getY() > there.getY()){
-			   //here is south of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   else{
-			   //here is north of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   g.fillRect(x,y,width,height);
-		   here = there;
-	   }
-   }
-   
-   public void loadFirstRun(List<MazeCell> list){
-	   firstRun = list;
-   }
-   
-   public void setFirstRunColor(Color newColor){
-	   firstRunColor = newColor;
-   }
-   
-   public void setDrawFirstRun(boolean setter){
-	   drawFirstRun = setter;
+
+   private void drawArrow(Graphics2D g, Direction local, int x, int y)
+   {
+      //Draws an arrow in the direction of "local" centered on the point (x,y)
+      if (local.equals(Direction.North))
+      {
+         int[] ys =
+         {
+            y + this.csm.getCellHeight() * 3 / 8, y, y, y - this.csm.getCellHeight() * 3 / 8, y, y
+         };
+         int[] xs =
+         {
+            x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,
+            x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8
+         };
+         g.drawPolygon(xs, ys, 6);
+      }
+      if (local.equals(Direction.South))
+      {
+         int[] ys =
+         {
+            y - this.csm.getCellHeight() * 3 / 8, y, y, y + this.csm.getCellHeight() * 3 / 8, y, y
+         };
+         int[] xs =
+         {
+            x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,
+            x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8
+         };
+         g.drawPolygon(xs, ys, 6);
+      }
+      if (local.equals(Direction.West))
+      {
+         int[] xs =
+         {
+            x + this.csm.getCellWidth() * 3 / 8, x, x, x - this.csm.getCellWidth() * 3 / 8, x, x
+         };
+         int[] ys =
+         {
+            y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,
+            y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8
+         };
+         g.drawPolygon(xs, ys, 6);
+      }
+      if (local.equals(Direction.East))
+      {
+         int[] xs =
+         {
+            x - this.csm.getCellWidth() * 3 / 8, x, x, x + this.csm.getCellWidth() * 3 / 8, x, x
+         };
+         int[] ys =
+         {
+            y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,
+            y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8
+         };
+         g.drawPolygon(xs, ys, 6);
+      }
    }
 
-   private void drawBestRun(Graphics2D g){
-	   g.setColor(bestRunColor);
-	   if(bestRun.isEmpty()){
-		   return;
-	   }
-	   MazeCell here = bestRun.get(0);
-	   MazeCell there;
-	   int x, y;
-	   int width, height;
-	   for(int i=1;i<bestRun.size();i++){
-		   there = bestRun.get(i);
-		   if(here.getX() < there.getX()){
-			   //here is west of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;
-		   }
-		   else if(here.getX() > there.getX()){
-			   //here is east of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;			   
-		   }
-		   else if(here.getY() > there.getY()){
-			   //here is south of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   else{
-			   //here is north of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/4;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/4;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   g.fillRect(x,y,width,height);
-		   here = there;
-	   }
-   }
-   
-   public void loadBestRun(List<MazeCell> list){
-	   bestRun = list;
-   }
-   
-   public void setBestRunColor(Color newColor){
-	   bestRunColor = newColor;
-   }
-   
-   public void setDrawBestRun(boolean setter){
-	   drawBestRun = setter;
+   public void setDrawUnderstanding(boolean setter)
+   {
+      drawUnderstanding = setter;
    }
 
-   private void drawCurrentRun(Graphics2D g){
-	   g.setColor(currentRunColor);
-	   if(currentRun.isEmpty()){
-		   return;
-	   }
-	   MazeCell here = currentRun.get(0);
-	   MazeCell there;
-	   int x, y;
-	   int width, height;
-	   for(int i=1;i<currentRun.size();i++){
-		   there = currentRun.get(i);
-		   if(here.getX() < there.getX()){
-			   //here is west of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;
-		   }
-		   else if(here.getX() > there.getX()){
-			   //here is east of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
-			   width = 5*this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight()/4;			   
-		   }
-		   else if(here.getY() > there.getY()){
-			   //here is south of there
-			   x = (there.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
-			   y = (there.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   else{
-			   //here is north of there
-			   x = (here.getX()-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
-			   y = (here.getY()-1) * this.csm.getCellHeight() + 3*this.csm.getCellHeight()/8;
-			   width = this.csm.getCellWidth()/4;
-			   height = this.csm.getCellHeight();
-		   }
-		   g.fillRect(x,y,width,height);
-		   here = there;
-	   }
-   }
-   
-   public void loadCurrentRun(List<MazeCell> list){
-	   currentRun = list;
-   }
-   
-   public void setCurrentRunColor(Color newColor){
-	   currentRunColor = newColor;
-   }
-   
-   public void setDrawCurrentRun(boolean setter){
-	   drawCurrentRun = setter;
+   public void loadUnderstanding(int[][] understandingInt)
+   {
+      this.understandingInt = understandingInt;
    }
 
-   private void drawUnderstanding(Graphics2D g){
-	   MazeCell here;
-	   int x,y;
-	   if(understandingInt != null){
-		   int local;
-		   for(int i = 1; i<=model.getSize().width; i++){
-			   for(int j = 1; j<=model.getSize().height; j++){
-				   here = new MazeCell(i,j);
-				   if(unexplored.contains(here)){
-					   g.setColor(Color.WHITE);
-				   }
-				   else{
-					   g.setColor(Color.BLACK);
-				   }
-				   x = (i-1) * this.csm.getCellWidth() + 3*this.csm.getCellWidth()/8;
-				   y = (j-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-				   local = understandingInt[i-1][j-1];
-				   g.drawString(String.valueOf(local), x, y);
-			   }
-		   }
-	   }
-	   else if(understandingDir != null){
-		   Direction local;
-		   for(int i = 1; i<=model.getSize().width; i++){
-			   for(int j = 1; j<=model.getSize().height; j++){
-				   here = new MazeCell(i,j);
-				   if(unexplored.contains(here)){
-					   g.setColor(Color.WHITE);
-				   }
-				   else{
-					   g.setColor(Color.BLACK);
-				   }
-				   x = (i-1) * this.csm.getCellWidth() + this.csm.getCellWidth()/2;
-				   y = (j-1) * this.csm.getCellHeight() + this.csm.getCellHeight()/2;
-				   local = understandingDir[i-1][j-1];
-				   drawArrow(g,local, x, y);
-			   }
-		   }
-	   }
-	}
-
-   private void drawArrow(Graphics2D g, Direction local, int x, int y) {
-	   //Draws an arrow in the direction of "local" centered on the point (x,y)
-	   if(local.equals(Direction.North)){
-		   int[] ys = {y+this.csm.getCellHeight()*3/8,y,y,
-				   y-this.csm.getCellHeight()*3/8,y,y};
-		   int[] xs = {x,x-this.csm.getCellWidth()/8,x-this.csm.getCellWidth()/4,
-				   x,x+this.csm.getCellWidth()/4,x+this.csm.getCellWidth()/8};
-		   g.drawPolygon(xs,ys,6);
-	   }
-	   if(local.equals(Direction.South)){
-		   int[] ys = {y-this.csm.getCellHeight()*3/8,y,y,
-				   y+this.csm.getCellHeight()*3/8,y,y};
-		   int[] xs = {x,x-this.csm.getCellWidth()/8,x-this.csm.getCellWidth()/4,
-				   x,x+this.csm.getCellWidth()/4,x+this.csm.getCellWidth()/8};
-		   g.drawPolygon(xs,ys,6);
-	   }
-	   if(local.equals(Direction.West)){
-		   int[] xs = {x+this.csm.getCellWidth()*3/8,x,x,
-				   x-this.csm.getCellWidth()*3/8,x,x};
-		   int[] ys = {y,y-this.csm.getCellHeight()/8,y-this.csm.getCellHeight()/4,
-				   y,y+this.csm.getCellHeight()/4,y+this.csm.getCellHeight()/8};
-		   g.drawPolygon(xs,ys,6);
-	   }
-	   if(local.equals(Direction.East)){
-		   int[] xs = {x-this.csm.getCellWidth()*3/8,x,x,
-				   x+this.csm.getCellWidth()*3/8,x,x};
-		   int[] ys = {y,y-this.csm.getCellHeight()/8,y-this.csm.getCellHeight()/4,
-				   y,y+this.csm.getCellHeight()/4,y+this.csm.getCellHeight()/8};
-		   g.drawPolygon(xs,ys,6);
-	   }
-   }
-
-   public void setDrawUnderstanding(boolean setter) {
-	   drawUnderstanding = setter;
-   }
-
-   public void loadUnderstanding(int[][] understandingInt) {
-	   this.understandingInt = understandingInt;
-   }
-
-   public void loadUnderstanding(Direction[][] understandingDir) {
-	   this.understandingDir = understandingDir;
+   public void loadUnderstanding(Direction[][] understandingDir)
+   {
+      this.understandingDir = understandingDir;
    }
 }

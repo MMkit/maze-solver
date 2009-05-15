@@ -1,7 +1,6 @@
 package maze;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
