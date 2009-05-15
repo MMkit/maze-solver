@@ -56,6 +56,9 @@ public final class MazeViewerPanel extends JPanel
    private final ImageIcon iconPauseOn = Main.getImageResource("gui/images/pause-on.png");
    private final ImageIcon iconPause = Main.getImageResource("gui/images/pause.png");
 
+   /**
+    * Constructor. Builds the Swing components for this panel.
+    */
    public MazeViewerPanel()
    {
       this.setLayout(new BorderLayout());
@@ -64,16 +67,15 @@ public final class MazeViewerPanel extends JPanel
       final JPanel sidePanel = new JPanel();
       this.add(sidePanel, BorderLayout.EAST);
       sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
-      sidePanel.setBorder(new TitledBorder("Configuration Options"));
       //Set the side panels fixed width.
       sidePanel.add(Box.createRigidArea(new Dimension(SIDEBAR_WIDTH, 6)));
-      sidePanel.setSize(300, 100);
-      sidePanel.setMinimumSize(new Dimension(300, 300));
 
       //Create a panel to hold the list so it will maximize it.
       final JScrollPane mazeListPane = new JScrollPane(this.mazeList);
       sidePanel.add(mazeListPane);
-      mazeListPane.setBorder(new TitledBorder("Mazes"));
+      mazeListPane.setBorder(new TitledBorder("Available Mazes"));
+      mazeListPane.setToolTipText("<html>A list of available mazes that you can run simulations on."
+                                  + "<br>You can load more or create new ones in the maze editor.</html>");
       ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel();
       mazeList.setModel(cbm);
       mazeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -83,11 +85,12 @@ public final class MazeViewerPanel extends JPanel
          public void valueChanged(ListSelectionEvent e)
          {
             int index = ((ListSelectionModel) e.getSource()).getMaxSelectionIndex();
-            if (index == -1)
-               return;
-            Object o = mazeList.getModel().getElementAt(index);
-            MazeInfo mi = (MazeInfo) o;
-            myMazeView.setModel(mi.getModel());
+            if (index >= 0)
+            {
+               Object o = mazeList.getModel().getElementAt(index);
+               MazeInfo mi = (MazeInfo) o;
+               myMazeView.setModel(mi.getModel());
+            }
          }
       });
 
@@ -95,16 +98,19 @@ public final class MazeViewerPanel extends JPanel
       final JScrollPane aiScrollPane = new JScrollPane(this.aiList);
       sidePanel.add(aiScrollPane);
       aiScrollPane.setBorder(new TitledBorder("Available Algorithms"));
+      aiScrollPane.setToolTipText("<html>Available AI algorithms.<br>"
+                                  + "You can create more in the script editor.</html>");
       this.aiList.setModel(RobotBase.getRobotListModel());
       this.aiList.setSelectedIndex(0);
 
       //Create animation speed slider.
-      final JSlider speedSlider = new JSlider(0, SPEED_STEPS, (int) (SPEED_STEPS / 1.4));
       final JPanel sliderPanel = new JPanel();
+      sidePanel.add(sliderPanel);
+      final JSlider speedSlider = new JSlider(0, SPEED_STEPS, (int) (SPEED_STEPS * .7));
       sliderPanel.add(speedSlider);
       sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.X_AXIS));
       sliderPanel.setBorder(new TitledBorder("Simulation Speed"));
-      sidePanel.add(sliderPanel);
+      sliderPanel.setToolTipText("<html>Controls the animation speed of the Micro Mouse<br> as it travels through the maze.</html>");
       Dictionary<Object, Object> sliderLabels = new Hashtable<Object, Object>();
       sliderLabels.put(0, new JLabel("Slow"));
       sliderLabels.put(SPEED_STEPS, new JLabel("Fast"));
@@ -138,8 +144,15 @@ public final class MazeViewerPanel extends JPanel
       this.setAnimationButtonStates();
    }
 
-   final Action playAnimation = new AbstractAction()
+   /**
+    * This action controls the play animation/simulation button.
+    */
+   private final Action playAnimation = new AbstractAction()
    {
+      {
+         this.putValue(Action.SHORT_DESCRIPTION, "Start a simulation.");
+      }
+
       @Override
       public void actionPerformed(ActionEvent e)
       {
@@ -156,8 +169,15 @@ public final class MazeViewerPanel extends JPanel
       }
    };
 
-   final Action stopAnimation = new AbstractAction()
+   /**
+    * This action controls the stop animation/simulation button.
+    */
+   private final Action stopAnimation = new AbstractAction()
    {
+      {
+         this.putValue(Action.SHORT_DESCRIPTION, "Stop the simulation and reset the maze.");
+      }
+
       @Override
       public void actionPerformed(ActionEvent e)
       {
@@ -166,8 +186,15 @@ public final class MazeViewerPanel extends JPanel
       }
    };
 
-   final Action pauseAnimation = new AbstractAction()
+   /**
+    * This action controls the pause animation/simulation button.
+    */
+   private final Action pauseAnimation = new AbstractAction()
    {
+      {
+         this.putValue(Action.SHORT_DESCRIPTION, "Pause/Resume a simulation.");
+      }
+
       @Override
       public void actionPerformed(ActionEvent e)
       {

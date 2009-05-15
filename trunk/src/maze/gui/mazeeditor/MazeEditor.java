@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -26,13 +27,13 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
@@ -56,7 +57,7 @@ public class MazeEditor extends JPanel
            "Wheelup: Grow template, Wheeldown: Shrink template";
    private static final String POPUP_HELP =
            "<html><b>Left-Click</b>: Add walls<br /><b>Right-Click</b>: " +
-           "Remove walls<br /><b>Middle-Click</b>: Change template " +
+           "Remove walls<br /><b>Middle-Click</b> or <b>R Key</b>: Change template " +
            "Orientation<br /><b>Wheelup</b>: Grow template<br />" +
            "<b>Wheeldown</b>: Shrink template</btml>";
    private final ImageIcon mPointIcon = Main.getImageResource("gui/mazeeditor/images/Pointer.png");
@@ -104,7 +105,10 @@ public class MazeEditor extends JPanel
       mOpenMazes = createOpenMazeList();
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
-      rightPanel.add(mOpenMazes, BorderLayout.CENTER);
+      JScrollPane mazesScrollPane = new JScrollPane(this.mOpenMazes);
+      rightPanel.add(mazesScrollPane, BorderLayout.CENTER);
+      mazesScrollPane.setBorder(BorderFactory.createTitledBorder("Mazes"));
+      
       
 
       rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
@@ -278,7 +282,6 @@ public class MazeEditor extends JPanel
             mMazeView.setModel(mi.getModel());
          }
       });
-      newList.setBorder(new TitledBorder("Mazes"));
       return newList;
    }
 
