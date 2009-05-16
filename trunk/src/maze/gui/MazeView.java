@@ -620,7 +620,6 @@ public class MazeView extends JComponent implements ComponentListener
             {
                //here is east of there
                center = this.getCellCenter(there);
-               center.x -= this.csm.getCellWidth() / 4;
                width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
             }
