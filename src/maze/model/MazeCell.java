@@ -20,25 +20,33 @@ public final class MazeCell implements Comparable<MazeCell>
     * @param yCoordinate The Y/vertical cell coordinate starting with 1 from the
     *           top.
     */
-   public MazeCell( int xCoordinate, int yCoordinate )
+   public MazeCell(int xCoordinate, int yCoordinate)
    {
-      if ( xCoordinate <= 0 )
-         throw new IllegalArgumentException( "X coordinate must be greater than 0." );
-      if ( yCoordinate <= 0 )
-         throw new IllegalArgumentException( "Y coordinate must be greater than 0." );
+      if (xCoordinate <= 0)
+         throw new IllegalArgumentException("X coordinate must be greater than 0.");
+      if (yCoordinate <= 0)
+         throw new IllegalArgumentException("Y coordinate must be greater than 0.");
 
       this.x = xCoordinate;
       this.y = yCoordinate;
    }
 
-   public MazeCell plusX( int x )
+   /**
+    * Creates a new <code>MazeCell</code> with its x value changed by the given
+    * amount.
+    */
+   public MazeCell plusX(int x)
    {
-      return new MazeCell( this.x + x, this.y );
+      return new MazeCell(this.x + x, this.y);
    }
 
-   public MazeCell plusY( int y )
+   /**
+    * Creates a new <code>MazeCell</code> with its y value changed by the given
+    * amount.
+    */
+   public MazeCell plusY(int y)
    {
-      return new MazeCell( this.x, this.y + y );
+      return new MazeCell(this.x, this.y + y);
    }
 
    /**
@@ -46,9 +54,9 @@ public final class MazeCell implements Comparable<MazeCell>
     * words from left to right, top to bottom.
     */
    @Override
-   public int compareTo( MazeCell other )
+   public int compareTo(MazeCell other)
    {
-      if ( this.y != other.y )
+      if (this.y != other.y)
       {
          return other.y - this.y;
       }
@@ -60,12 +68,12 @@ public final class MazeCell implements Comparable<MazeCell>
    }
 
    @Override
-   public boolean equals( Object obj )
+   public boolean equals(Object obj)
    {
-      if ( obj instanceof MazeCell )
+      if (obj instanceof MazeCell)
       {
          MazeCell other = (MazeCell) obj;
-         if ( this.x == other.x && this.y == other.y )
+         if (this.x == other.x && this.y == other.y)
          {
             return true;
          }
@@ -76,7 +84,7 @@ public final class MazeCell implements Comparable<MazeCell>
    @Override
    public int hashCode()
    {
-      return this.x | ( this.y << 16 ); //Merge the 2 coordinates.
+      return this.x | (this.y << 16); //Merge the 2 coordinates.
    }
 
    public int getX()
@@ -101,16 +109,16 @@ public final class MazeCell implements Comparable<MazeCell>
 
    public Point getPoint()
    {
-      return new Point( this.x, this.y );
+      return new Point(this.x, this.y);
    }
 
    /**
     * Test to see if this maze cell is within the coordinate range of the given
     * maze dimension.
     */
-   public boolean isInRange( Dimension mazeSize )
+   public boolean isInRange(Dimension mazeSize)
    {
-      return ( this.x <= mazeSize.width && this.y <= mazeSize.height );
+      return (this.x <= mazeSize.width && this.y <= mazeSize.height);
    }
 
 }

@@ -3,7 +3,6 @@ package maze.gui;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
 import maze.Main;
@@ -36,7 +35,7 @@ import maze.model.MazeModel.MazeWall;
  * robot in the maze.
  * @author Luke Last
  */
-public class MazeView extends JPanel implements ComponentListener
+public class MazeView extends JComponent implements ComponentListener
 {
    /**
     * The maze model that stores the configuration of the maze.
@@ -76,21 +75,20 @@ public class MazeView extends JPanel implements ComponentListener
     */
    private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
 
+   protected final MazePaints paints = new MazePaints();
+   //protected final MazePaints paints = new MazePaints.MazePaintsClassic();
+
    private boolean drawFog = false;
    private Set<MazeCell> unexplored;
-   private Color fogColor = Color.BLACK;
 
    private boolean drawFirstRun = false;
    private List<MazeCell> firstRun;
-   private Color firstRunColor = Color.BLUE;
 
    private boolean drawBestRun = false;
    private List<MazeCell> bestRun;
-   private Color bestRunColor = Color.RED;
 
    private boolean drawCurrentRun = false;
    private List<MazeCell> currentRun;
-   private Color currentRunColor = Color.GREEN;
 
    private boolean drawUnderstanding = false;
    private int[][] understandingInt = null;
@@ -168,6 +166,15 @@ public class MazeView extends JPanel implements ComponentListener
    }
 
    /**
+    * Get the size of the maze in pixels.
+    */
+   protected Dimension getMazeSize()
+   {
+      return new Dimension(this.model.getSize().width * this.csm.getCellWidth(),
+                           this.model.getSize().height * this.csm.getCellHeight());
+   }
+
+   /**
     * Draws the entire maze onto the given graphics device.
     */
    private void redrawAll(final Graphics2D g)
@@ -175,21 +182,12 @@ public class MazeView extends JPanel implements ComponentListener
       final int mazeWidth = this.model.getSize().width * this.csm.getCellWidth();
       final int mazeHeight = this.model.getSize().height * this.csm.getCellHeight();
       final Dimension modelSize = this.model.getSize();
-      final GradientPaint bgPaint = new GradientPaint(new Point(0, 0),
-                                                      Color.WHITE,
-                                                      new Point(mazeWidth / 2, mazeHeight / 2),
-                                                      new Color(229, 236, 255),
-                                                      true);
-      final GradientPaint wallPaintEmpty = new GradientPaint(new Point(0, 0), //Gradient start corner.
-                                                             new Color(229, 236, 255), //Really light blue.
-                                                             new Point(mazeWidth / 2, mazeHeight / 2),
-                                                             new Color(204, 218, 255), //Light blue.
-                                                             true);
-      final GradientPaint wallPaintSet = new GradientPaint(new Point(0, 0),
-                                                           new Color(0, 94, 189),
-                                                           new Point(mazeWidth / 2, mazeHeight / 2),
-                                                           new Color(0, 56, 112),
-                                                           true);
+
+      //Hopefully it won't hurt to always have this on.
+      g.setComposite(AlphaComposite.SrcOver);
+
+      this.paints.setGradients(this.getMazeSize());
+
       if (this.background == null)
       {
          this.background = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -198,11 +196,11 @@ public class MazeView extends JPanel implements ComponentListener
          bgg.setColor(Color.white);
          bgg.fillRect(0, 0, super.getWidth(), super.getHeight());
          //Paint the gradient maze background.
-         bgg.setPaint(bgPaint);
+         bgg.setPaint(this.paints.getCellBackground());
          bgg.fillRect(0, 0, mazeWidth, mazeHeight);
 
          // Draw inactive walls
-         bgg.setPaint(wallPaintEmpty);
+         bgg.setPaint(this.paints.getWallEmpty());
          for (int i = 0; i < modelSize.width + 1; i++)
          {
             //Draw vertical walls.
@@ -221,14 +219,14 @@ public class MazeView extends JPanel implements ComponentListener
          }
 
          // Draw outer walls
-         bgg.setPaint(wallPaintSet);
+         bgg.setPaint(this.paints.getWallSet());
          bgg.fillRect(-csm.getWallWidthHalf(), -csm.getWallHeightHalf(), mazeWidth, csm.getWallHeight());
          bgg.fillRect(-csm.getWallWidthHalf(), -csm.getWallHeightHalf(), csm.getWallWidth(), mazeHeight);
          bgg.fillRect(0, mazeHeight - csm.getWallHeightHalf(), mazeWidth, csm.getWallHeight());
          bgg.fillRect(mazeWidth - csm.getWallWidthHalf(), 0, csm.getWallWidth(), mazeHeight);
 
          // Draw pegs
-         bgg.setColor(Color.BLACK);
+         bgg.setPaint(this.paints.getPeg());
          for (int i = 1; i <= modelSize.width + 1; i++)
             for (int j = 1; j <= modelSize.height + 1; j++)
                bgg.fill(this.getPegRegion(new MazeCell(i, j), PegLocation.TopLeft));
@@ -250,7 +248,7 @@ public class MazeView extends JPanel implements ComponentListener
             if (cell.getY() == 1)
                wallsToPaint.add(Direction.North);
 
-            g.setPaint(wallPaintSet);
+            g.setPaint(this.paints.getWallSet());
             for (Direction wall : wallsToPaint)
                if (this.model.getWall(cell, wall).isSet())
                   g.fill(this.getWallLocation(cell, wall));
@@ -261,7 +259,7 @@ public class MazeView extends JPanel implements ComponentListener
       //Draw the yellow hover box. This could get axed.
       if (this.active != null)
       {
-         g.setColor(Color.YELLOW);
+         g.setPaint(this.paints.getHover());
          g.fillRect(active.getXZeroBased() * this.csm.getCellWidth() + this.csm.getWallWidthHalf(),
                     active.getYZeroBased() * this.csm.getCellHeight() + this.csm.getWallHeightHalf(),
                     this.csm.getCellWidth() - this.csm.getWallWidth(),
@@ -567,9 +565,8 @@ public class MazeView extends JPanel implements ComponentListener
    private void drawFog(Graphics2D g)
    {
       //Draw the box for fog
-      g.setColor(fogColor);
       g.setComposite(AlphaComposite.SrcOver);
-      g.setColor(new Color(0, 0, 0, 75));
+      g.setPaint(this.paints.getFog());
       if (unexplored == null)
       {
          return;
@@ -593,11 +590,6 @@ public class MazeView extends JPanel implements ComponentListener
       unexplored = set;
    }
 
-   public void setFogColor(Color newColor)
-   {
-      fogColor = newColor;
-   }
-
    public void setDrawFog(boolean setter)
    {
       drawFog = setter;
@@ -607,7 +599,7 @@ public class MazeView extends JPanel implements ComponentListener
    {
       if (this.firstRun != null && this.firstRun.isEmpty() == false)
       {
-         g.setColor(firstRunColor);
+         g.setPaint(this.paints.getRunFirst());
 
          MazeCell here = firstRun.get(0);
          MazeCell there;
@@ -620,14 +612,16 @@ public class MazeView extends JPanel implements ComponentListener
             {
                //here is west of there
                center = this.getCellCenter(here);
-               width = 5 * this.csm.getCellWidth() / 4;
+               center.x += this.csm.getCellWidth() / 4;
+               width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
             }
             else if (here.getX() > there.getX())
             {
                //here is east of there
                center = this.getCellCenter(there);
-               width = 5 * this.csm.getCellWidth() / 4;
+               center.x -= this.csm.getCellWidth() / 4;
+               width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
             }
             else if (here.getY() > there.getY())
@@ -655,11 +649,6 @@ public class MazeView extends JPanel implements ComponentListener
       firstRun = list;
    }
 
-   public void setFirstRunColor(Color newColor)
-   {
-      firstRunColor = newColor;
-   }
-
    public void setDrawFirstRun(boolean setter)
    {
       drawFirstRun = setter;
@@ -670,7 +659,7 @@ public class MazeView extends JPanel implements ComponentListener
       if (this.bestRun != null && this.bestRun.isEmpty() == false)
       {
 
-         g.setColor(bestRunColor);
+         g.setPaint(this.paints.getRunBest());
 
          MazeCell here = bestRun.get(0);
          MazeCell there;
@@ -722,11 +711,6 @@ public class MazeView extends JPanel implements ComponentListener
       bestRun = list;
    }
 
-   public void setBestRunColor(Color newColor)
-   {
-      bestRunColor = newColor;
-   }
-
    public void setDrawBestRun(boolean setter)
    {
       drawBestRun = setter;
@@ -736,8 +720,8 @@ public class MazeView extends JPanel implements ComponentListener
    {
       if (this.currentRun != null && this.currentRun.isEmpty() == false)
       {
-
-         g.setColor(currentRunColor);
+         g.setComposite(AlphaComposite.SrcOver);
+         g.setPaint(this.paints.getRunCurrent());
 
          MazeCell here = currentRun.get(0);
          MazeCell there;
@@ -749,9 +733,10 @@ public class MazeView extends JPanel implements ComponentListener
             if (here.getX() < there.getX())
             {
                //here is west of there
-               x = (here.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
-               y = (here.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
-               width = 5 * this.csm.getCellWidth() / 4;
+               x = here.getXZeroBased() * this.csm.getCellWidth() + 5 * this.csm.getCellWidth() / 8;
+               y = here.getYZeroBased() * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               //width = 5 * this.csm.getCellWidth() / 4;
+               width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
             }
             else if (here.getX() > there.getX())
@@ -759,7 +744,8 @@ public class MazeView extends JPanel implements ComponentListener
                //here is east of there
                x = (there.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
                y = (there.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
-               width = 5 * this.csm.getCellWidth() / 4;
+               //width = 5 * this.csm.getCellWidth() / 4;
+               width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
             }
             else if (here.getY() > there.getY())
@@ -773,8 +759,8 @@ public class MazeView extends JPanel implements ComponentListener
             else
             {
                //here is north of there
-               x = (here.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
-               y = (here.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               x = here.getXZeroBased() * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
+               y = here.getYZeroBased() * this.csm.getCellHeight() + 5 * this.csm.getCellHeight() / 8;
                width = this.csm.getCellWidth() / 4;
                height = this.csm.getCellHeight();
             }
@@ -787,11 +773,6 @@ public class MazeView extends JPanel implements ComponentListener
    public void loadCurrentRun(List<MazeCell> list)
    {
       currentRun = list;
-   }
-
-   public void setCurrentRunColor(Color newColor)
-   {
-      currentRunColor = newColor;
    }
 
    public void setDrawCurrentRun(boolean setter)
@@ -918,7 +899,7 @@ public class MazeView extends JPanel implements ComponentListener
       this.understandingInt = understandingInt;
    }
 
-   public void loadUnderstanding(Direction[][] understandingDir)
+   public void loadUnderstandingDir(Direction[][] understandingDir)
    {
       this.understandingDir = understandingDir;
    }

@@ -2,6 +2,7 @@ package maze.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -12,7 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,13 +25,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import maze.Main;
 import maze.ai.RobotBase;
 import maze.gui.RobotAnimator.AnimationStates;
-import maze.model.MazeInfo;
 
 /**
  * This is the main panel that displays the read only maze that is viewed when
@@ -43,7 +40,7 @@ public final class MazeViewerPanel extends JPanel
    private static final int SIDEBAR_WIDTH = 150;
    private static final int SPEED_STEPS = 25;
    private final MazeView myMazeView = new MazeView();
-   private final JList mazeList = new JList();
+   private final MazeList mazeList = new MazeList(this.myMazeView);
    private final JList aiList = new JList();
    private final RobotAnimator animator = new RobotAnimator();
    private final BoundedRangeModel speedSliderModel;
@@ -70,29 +67,9 @@ public final class MazeViewerPanel extends JPanel
       //Set the side panels fixed width.
       sidePanel.add(Box.createRigidArea(new Dimension(SIDEBAR_WIDTH, 6)));
 
-      //Create a panel to hold the list so it will maximize it.
-      final JScrollPane mazeListPane = new JScrollPane(this.mazeList);
-      sidePanel.add(mazeListPane);
-      mazeListPane.setBorder(new TitledBorder("Available Mazes"));
-      mazeListPane.setToolTipText("<html>A list of available mazes that you can run simulations on."
-                                  + "<br>You can load more or create new ones in the maze editor.</html>");
-      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel();
-      mazeList.setModel(cbm);
-      mazeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      mazeList.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-      {
-         @Override
-         public void valueChanged(ListSelectionEvent e)
-         {
-            int index = ((ListSelectionModel) e.getSource()).getMaxSelectionIndex();
-            if (index >= 0)
-            {
-               Object o = mazeList.getModel().getElementAt(index);
-               MazeInfo mi = (MazeInfo) o;
-               myMazeView.setModel(mi.getModel());
-            }
-         }
-      });
+      this.mazeList.setToolTipText("<html>A list of available mazes that you can run simulations on."
+                                   + "<br>You can load more or create new ones in the maze editor.</html>");
+      sidePanel.add(this.mazeList);
 
       //Create a JList to display the AI Algorithms.
       final JScrollPane aiScrollPane = new JScrollPane(this.aiList);
@@ -101,6 +78,7 @@ public final class MazeViewerPanel extends JPanel
       aiScrollPane.setToolTipText("<html>Available AI algorithms.<br>"
                                   + "You can create more in the script editor.</html>");
       this.aiList.setModel(RobotBase.getRobotListModel());
+      this.aiList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       this.aiList.setSelectedIndex(0);
 
       //Create animation speed slider.
@@ -248,7 +226,7 @@ public final class MazeViewerPanel extends JPanel
       {
          if (myMazeView.getModel() == null)
          {
-            JOptionPane.showMessageDialog(MazeViewerPanel.this,
+            JOptionPane.showMessageDialog(this,
                                           "You must select a maze before running a simulation.",
                                           "Can Not Run Simulation",
                                           JOptionPane.WARNING_MESSAGE);
@@ -261,20 +239,41 @@ public final class MazeViewerPanel extends JPanel
                @Override
                public void run()
                {
-                  simulationStop();
+                  //We need to make sure that this runs on the swing thread.
+                  EventQueue.invokeLater(new Runnable()
+                  {
+                     @Override
+                     public void run()
+                     {
+                        simulationStop();
+                     }
+                  });
                }
             };
             try
             {
-               this.animator.start(this.myMazeView, (RobotBase) aiList.getSelectedValue(), callback);
-               this.animator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
+               Object o = this.aiList.getSelectedValue();
+               if (o != null)
+               {
+                  this.animator.start(this.myMazeView, (RobotBase) aiList.getSelectedValue(), callback);
+                  this.animator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
+               }
+               else
+               {
+                  JOptionPane.showMessageDialog(this,
+                                                "You must select an algorithm before running a simulation.",
+                                                "Can Not Run Simulation",
+                                                JOptionPane.WARNING_MESSAGE);
+                  throw new Exception("No algorithm selected");
+               }
             }
             catch (Exception ex)
             {
                ex.printStackTrace();
                this.simulationStop();
+               return;
             }
-            mazeList.setEnabled(false);
+            this.mazeList.getList().setEnabled(false);
             aiList.setEnabled(false);
             Main.getPrimaryFrameInstance().setSimulation(true);
          }
@@ -287,10 +286,16 @@ public final class MazeViewerPanel extends JPanel
    private void simulationStop()
    {
       this.animator.setState(AnimationStates.Stopped);
-      mazeList.setEnabled(true);
+      this.mazeList.getList().setEnabled(true);
       aiList.setEnabled(true);
       Main.getPrimaryFrameInstance().setSimulation(false);
       this.myMazeView.setRobotPosition(null, 0);
+      this.myMazeView.loadUnexplored(null);
+      this.myMazeView.loadFirstRun(null);
+      this.myMazeView.loadBestRun(null);
+      this.myMazeView.loadCurrentRun(null);
+      this.myMazeView.loadUnderstanding(null);
+      this.myMazeView.loadUnderstandingDir(null);
       this.setAnimationButtonStates();
    }
 

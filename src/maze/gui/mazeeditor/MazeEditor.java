@@ -1,7 +1,6 @@
 package maze.gui.mazeeditor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,34 +13,26 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import maze.Main;
+import maze.gui.MazeList;
 import maze.gui.PrimaryFrame;
-import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 
 /**
@@ -63,7 +54,7 @@ public class MazeEditor extends JPanel
    private final ImageIcon mPointIcon = Main.getImageResource("gui/mazeeditor/images/Pointer.png");
    private MazeTemplate mCurrentTemplate = null;
    private EditableMazeView mMazeView;
-   private JList mOpenMazes;
+   private MazeList mOpenMazes;
    private MouseAdapter mMouseAdapter = null;
 
    private static final MazeTemplate[] mTemplates =
@@ -83,7 +74,6 @@ public class MazeEditor extends JPanel
    public MazeEditor()
    {
       buildPanel();
-
    }
 
    private void buildPanel()
@@ -101,15 +91,11 @@ public class MazeEditor extends JPanel
       mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
-
-      mOpenMazes = createOpenMazeList();
+      
+      this.mOpenMazes = new MazeList(this.mMazeView);
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
-      JScrollPane mazesScrollPane = new JScrollPane(this.mOpenMazes);
-      rightPanel.add(mazesScrollPane, BorderLayout.CENTER);
-      mazesScrollPane.setBorder(BorderFactory.createTitledBorder("Mazes"));
-      
-      
+      rightPanel.add(this.mOpenMazes, BorderLayout.CENTER);
 
       rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
       splitPane.setRightComponent(rightPanel);
@@ -253,36 +239,10 @@ public class MazeEditor extends JPanel
                   return;
             }
             MazeInfoModel mim = instance.getMazeInfoModel();
-            mOpenMazes.setSelectedValue(mim.createNew(newName), true);
+            mOpenMazes.getList().setSelectedValue(mim.createNew(newName), true);
          }
       });
       return newMaze;
-   }
-
-   private JList createOpenMazeList()
-   {
-      final JList newList = new JList();
-      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
-                              .getMazeInfoComboBoxModel();
-      newList.setCellRenderer(new OpenMazeRender());
-      newList.setModel(cbm);
-      newList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-      newList.getSelectionModel().addListSelectionListener(
-      new ListSelectionListener()
-      {
-         @Override
-         public void valueChanged(ListSelectionEvent e)
-         {
-            int index = ((ListSelectionModel)e.getSource()).getMaxSelectionIndex();
-            if (index == -1)
-               return;
-            Object o = newList.getModel().getElementAt(index);
-            MazeInfo mi = (MazeInfo)o;
-            mMazeView.setModel(mi.getModel());
-         }
-      });
-      return newList;
    }
 
    class TemplateActionListener implements ActionListener
@@ -358,27 +318,6 @@ public class MazeEditor extends JPanel
       }
    }
 
-   private static class OpenMazeRender extends DefaultListCellRenderer
-   {
 
-      @Override
-      public Component getListCellRendererComponent(JList list, Object value,
-                                             int index, boolean isSelected,
-                                             boolean cellHasFocus)
-      {
-         MazeInfo mi = (MazeInfo)value;
-         String postfix = "";
-         if (mi.isDirty())
-            postfix = "*";
-         Component c = super.getListCellRendererComponent(
-                                                   list, mi.getName() + postfix,
-                                                   index, isSelected,
-                                                   cellHasFocus);
-         JComponent jc = (JComponent)c;
-         jc.setToolTipText(mi.getPath());
-         return jc;
-      }
-
-   }
 
 }

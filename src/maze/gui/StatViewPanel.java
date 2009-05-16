@@ -1,7 +1,6 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,12 +11,10 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.SpinnerListModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import maze.Main;
@@ -45,13 +42,8 @@ public class StatViewPanel extends JPanel
    private ArrayList<String> algorithmNames;
    private JComboBox algorithmSpinner;
    private JComboBox mazes;
-   
-   private MazeView mazeView;
-   
-   private Color fogColor = Color.BLACK;
-   private Color firstRunColor = Color.BLUE;
-   private Color bestRunColor = Color.RED;
 
+   private final MazeView mazeView = new MazeView();
 
    public StatViewPanel()
    {
@@ -62,6 +54,24 @@ public class StatViewPanel extends JPanel
       Box selectionBox = new Box(BoxLayout.X_AXIS);
       selectionBox.add(mazes);
 
+      final MazeList mazeList = new MazeList(this.mazeView);
+      selectionBox.add(mazeList);
+      mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
+      {
+         @Override
+         public void valueChanged(ListSelectionEvent e)
+         {
+            Object o = mazeList.getList().getSelectedValue();
+            MazeInfo mi = (MazeInfo) o;
+            maze = new MazeModel(mi.getModel());
+            RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
+                                                                        new MazeCell(1, 16),
+                                                                        Direction.North));
+            tracker.reload(algorithm, robotModel);
+            displayStats();
+         }
+      });
+
       mazes.addActionListener(new ActionListener()
       {
          public void actionPerformed(ActionEvent e)
@@ -70,10 +80,10 @@ public class StatViewPanel extends JPanel
             MazeInfo mi = (MazeInfo) o;
             maze = new MazeModel(mi.getModel());
             RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-            		new MazeCell(1, 16), Direction.North));
+                                                                        new MazeCell(1, 16),
+                                                                        Direction.North));
             tracker.reload(algorithm, robotModel);
             displayStats();
-
          }
       });
 
@@ -95,10 +105,11 @@ public class StatViewPanel extends JPanel
          public void actionPerformed(ActionEvent action)
          {
             //String value = (String) algorithmSpinner.getValue();
-        	algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
+            algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
             //int newAlgorithm = algorithmNames.indexOf(value);
             RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-            		new MazeCell(1, 16), Direction.North));
+                                                                        new MazeCell(1, 16),
+                                                                        Direction.North));
             //System.out.println(value);
             //System.out.println(String.valueOf(newAlgorithm));
             //algorithm = algorithms.get(newAlgorithm);
@@ -111,8 +122,6 @@ public class StatViewPanel extends JPanel
       algorithmSpinner.addActionListener(algorithmChange);
 
       selectionBox.add(algorithmSpinner);
-      
-      mazeView = new MazeView();
 
       JPanel rightPanel = new JPanel();
       JScrollPane leftSide = new JScrollPane(mazeView);
@@ -176,15 +185,16 @@ public class StatViewPanel extends JPanel
 
       this.algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
       RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-    		  new MazeCell(1, 16), Direction.North));
+                                                                  new MazeCell(1, 16),
+                                                                  Direction.North));
       this.tracker = new StatTracker(algorithm, robotModel);
 
       displayStats();
    }
-      
+
    private void displayStats()
    {
-	  //First lets display the table
+      //First lets display the table
       statTableModel.setValueAt(String.valueOf(tracker.getTotalTraversed()), 0, 1);
       if (tracker.getFirstRunCells() != StatTracker.USELESS)
       {
@@ -204,41 +214,37 @@ public class StatViewPanel extends JPanel
          statTableModel.setValueAt("N/A", 5, 1);
          statTableModel.setValueAt("N/A", 6, 1);
       }
-      
+
       //Now lets display the mazeView
       mazeView.setModel(maze);
-      
+
       mazeView.loadUnexplored(tracker.getAllUnexplored());
-      mazeView.setFogColor(fogColor);
-      
-      mazeView.loadFirstRun((ArrayList<MazeCell>)tracker.getFirstRun());
-      mazeView.setFirstRunColor(firstRunColor);
-      
-      mazeView.loadBestRun((ArrayList<MazeCell>)tracker.getBestRun());
-      mazeView.setBestRunColor(bestRunColor);
-      
+
+      mazeView.loadFirstRun((ArrayList<MazeCell>) tracker.getFirstRun());
+
+      mazeView.loadBestRun((ArrayList<MazeCell>) tracker.getBestRun());
+
       mazeView.setDrawFog(true);
       mazeView.setDrawFirstRun(true);
       mazeView.setDrawBestRun(true);
 
    }
 
+   public void updateModels()
+   {
+      //This function allow the StatViewPanel to reflect changes outside of itself
+      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel();
+      mazes.setModel(cbm);
+      Object o = mazes.getSelectedItem();
+      MazeInfo mi = (MazeInfo) o;
+      this.maze = new MazeModel(mi.getModel());
 
-   public void updateModels(){
-	   //This function allow the StatViewPanel to reflect changes outside of itself
-	   ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
-			.getMazeInfoComboBoxModel();
-	   mazes.setModel(cbm);
-	   Object o = mazes.getSelectedItem();
-	   MazeInfo mi = (MazeInfo) o;
-	   this.maze = new MazeModel(mi.getModel());
-	   
-	   RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-               new MazeCell(1, 16), Direction.North));
-	   algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
-	   tracker.reload(algorithm, robotModel);
-	   displayStats();
+      RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
+                                                                  new MazeCell(1, 16),
+                                                                  Direction.North));
+      algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
+      tracker.reload(algorithm, robotModel);
+      displayStats();
    }
 
 }
-

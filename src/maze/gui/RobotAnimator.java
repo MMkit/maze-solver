@@ -77,6 +77,7 @@ public final class RobotAnimator implements Runnable
       view.setDrawFirstRun(true);
       view.setDrawBestRun(true);
       view.setDrawCurrentRun(true);
+      this.setViewAttributes();
       while (this.currentState != AnimationStates.Stopped && this.controller.isRobotDone() == false)
       {
          try
@@ -110,28 +111,8 @@ public final class RobotAnimator implements Runnable
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
-
-            view.loadUnexplored(controller.getAllUnexplored());
-            view.loadFirstRun(controller.getFirstRun());
-            view.loadBestRun(controller.getBestRun());
-            view.loadCurrentRun(controller.getCurrentRun());
-
-            int[][] understandingInt = controller.getUnderstandingInt();
-            Direction[][] understandingDir = controller.getUnderstandingDir();
-            if (understandingInt != null)
-            {
-               view.loadUnderstanding(understandingInt);
-               view.setDrawUnderstanding(true);
-            }
-            else if (understandingDir != null)
-            {
-               view.loadUnderstanding(understandingDir);
-               view.setDrawUnderstanding(true);
-            }
-            else
-            {
-               view.setDrawUnderstanding(false);
-            }
+            
+            this.setViewAttributes();
 
             while (this.currentState == AnimationStates.Paused)
             {
@@ -158,6 +139,31 @@ public final class RobotAnimator implements Runnable
          this.finishedCallback.run();
       }
       this.processingThread = null;
+   }
+
+   private void setViewAttributes()
+   {
+      view.loadUnexplored(controller.getAllUnexplored());
+      view.loadFirstRun(controller.getFirstRun());
+      view.loadBestRun(controller.getBestRun());
+      view.loadCurrentRun(controller.getCurrentRun());
+
+      int[][] understandingInt = controller.getUnderstandingInt();
+      Direction[][] understandingDir = controller.getUnderstandingDir();
+      if (understandingInt != null)
+      {
+         view.loadUnderstanding(understandingInt);
+         view.setDrawUnderstanding(true);
+      }
+      else if (understandingDir != null)
+      {
+         view.loadUnderstandingDir(understandingDir);
+         view.setDrawUnderstanding(true);
+      }
+      else
+      {
+         view.setDrawUnderstanding(false);
+      }
    }
 
    /**

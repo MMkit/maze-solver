@@ -44,7 +44,7 @@ public class EditableMazeView extends maze.gui.MazeView
       Graphics2D g2 = (Graphics2D)arg;
       if (model != null)
       {
-         g2.setColor(Color.RED);
+         g2.setPaint(super.paints.getPegInvalid());
          int cx, cy;
          for (Point p : model.illegalPegs())
          {

@@ -15,17 +15,17 @@ import maze.model.RobotModel;
  */
 public class RobotController
 {
+   private static final int MAX_STEP_COUNT = 1500;
    private final MazeModel mazeModel;
    private final RobotModelMaster robotModelMaster;
    private final RobotModel robotModelClient;
    private final RobotBase ai;
    private int robotStepCount = 0;
 
-   public RobotModelMaster getRobotModelMaster()
-   {
-      return this.robotModelMaster;
-   }
-
+   /** Constructor.
+    * @param model The maze model to use.
+    * @param robotAI The robot AI algorithm to use.
+    */
    public RobotController(MazeModel model, RobotBase robotAI)
    {
       this.mazeModel = model;
@@ -51,6 +51,9 @@ public class RobotController
       this.ai.initialize();
    }
 
+   /**
+    * Get the next step the robot has taken.
+    */
    public RobotStep nextStep()
    {
       final RobotStep nextStep = this.ai.nextStep();
@@ -62,34 +65,59 @@ public class RobotController
       return nextStep;
    }
 
+   /**
+    * Is the robot done moving.
+    */
    public boolean isRobotDone()
    {
-      return this.robotStepCount > 1000;
+      return this.robotStepCount > MAX_STEP_COUNT;
    }
-   
-	public Set<MazeCell> getAllUnexplored(){
-		return robotModelMaster.getNonHistory();
-	}
 
-	public List<MazeCell> getFirstRun() {
-		return robotModelMaster.getFirstRun();
-	}
-	
-	public List<MazeCell> getBestRun() {
-		return robotModelMaster.getBestRun();
-	}
-	
-	public List<MazeCell> getCurrentRun() {
-		return robotModelMaster.getCurrentRun();
-	}
-	
-	public Direction[][] getUnderstandingDir(){
-		return ai.getUnderstandingDir();
-	}
-	
-	public int[][] getUnderstandingInt(){
-		return ai.getUnderstandingInt();
-	}
-	
+   /**
+    * Get the total number of steps the robot has taken so far. Turns count as a
+    * step.
+    */
+   public int getStepCount()
+   {
+      return this.robotStepCount;
+   }
+
+   /**
+    * Get the robot model being used by this controller.
+    */
+   public RobotModelMaster getRobotModelMaster()
+   {
+      return this.robotModelMaster;
+   }
+
+   public Set<MazeCell> getAllUnexplored()
+   {
+      return robotModelMaster.getNonHistory();
+   }
+
+   public List<MazeCell> getFirstRun()
+   {
+      return robotModelMaster.getFirstRun();
+   }
+
+   public List<MazeCell> getBestRun()
+   {
+      return robotModelMaster.getBestRun();
+   }
+
+   public List<MazeCell> getCurrentRun()
+   {
+      return robotModelMaster.getCurrentRun();
+   }
+
+   public Direction[][] getUnderstandingDir()
+   {
+      return ai.getUnderstandingDir();
+   }
+
+   public int[][] getUnderstandingInt()
+   {
+      return ai.getUnderstandingInt();
+   }
 
 }
