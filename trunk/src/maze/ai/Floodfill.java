@@ -1,17 +1,12 @@
 package maze.ai;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
-import maze.model.RobotModel;
-import maze.model.RobotModelMaster;
 
 public class Floodfill extends RobotBase
 {
@@ -58,6 +53,7 @@ public class Floodfill extends RobotBase
       speedRunCapable = false;
    }
 
+   @Override
    public RobotStep nextStep()
    {
       RobotStep next;
@@ -388,7 +384,7 @@ public class Floodfill extends RobotBase
                explored[i][j] = false;
             }
          }
-         explored[here.getX()-1][here.getY()-1]= true;
+         explored[here.getX() - 1][here.getY() - 1] = true;
          checkWalls();
          floodfill();
       }
@@ -468,98 +464,9 @@ public class Floodfill extends RobotBase
    {
       return turbo;
    }
-   
-   public int[][] getUnderstandingInt(){
-	   return distance;
-   }
 
-   public static void main(String args[])
+   public int[][] getUnderstandingInt()
    {
-      Runnable runner = new Runnable()
-      {
-         public void run()
-         {
-
-            Floodfill flood = new Floodfill();
-
-            MazeModel maze = new MazeModel();
-            
-            try
-            {
-               maze.loadMaze(".." +
-                          File.separator +
-                          "MazeSolver" +
-                          File.separator +
-                          "src" +
-                          File.separator +
-                          "maze" +
-                          File.separator +
-                          "model" +
-                          File.separator +
-                          "mazeExamples" +
-                          File.separator +
-                          "longpath.maz");
-               maze.saveMaze(".." +
-                             File.separator +
-                             "MazeSolver" +
-                             File.separator +
-                             "src" +
-                             File.separator +
-                             "maze" +
-                             File.separator +
-                             "model" +
-                             File.separator +
-                             "mazeExamples" +
-                             File.separator +
-                             "longpath.maz");
-            }
-            catch (IOException e)
-            {
-               System.out.println("saving problem");
-            }
-
-            RobotModelMaster master = new RobotModelMaster(maze, new MazeCell(1, 16), Direction.North);
-            RobotModel mouse = new RobotModel(master);
-            flood.setRobotLocation(mouse);
-            flood.initialize();
-
-            for (int i = 0; i < 100; i++)
-            {
-
-               RobotStep j = flood.nextStep();
-               mouse.takeNextStep(j);
-               String direction = "blank";
-
-               if (j == RobotStep.RotateLeft)
-               {
-                  direction = "Turn Left";
-               }
-               else if (j == RobotStep.RotateRight)
-               {
-                  direction = "Turn Right";
-               }
-               else if (j == RobotStep.MoveForward)
-               {
-                  direction = "Forward";
-               }
-               else if (j == RobotStep.MoveBackward)
-               {
-                  direction = "Reverse";
-               }
-
-               MazeCell locale = mouse.getCurrentLocation();
-               System.out.println("Step " +
-                                  String.valueOf(i) +
-                                  ": x= " +
-                                  String.valueOf(locale.getX()) +
-                                  ", y= " +
-                                  String.valueOf(locale.getY()) +
-                                  ", dir= " +
-                                  direction);
-            }
-         }
-      };
-      EventQueue.invokeLater(runner);
+      return distance;
    }
-
 }

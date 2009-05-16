@@ -401,7 +401,7 @@ public class ModifiedFloodfill extends RobotBase
 
    private void modifiedFloodfill()
    {
-      Dimension size = maze.getSize();
+      //Dimension size = maze.getSize();
       Vector<MazeCell> queue = new Vector<MazeCell>();
       Vector<MazeCell> badQueue = new Vector<MazeCell>();
       MazeCell cell;
