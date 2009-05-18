@@ -48,7 +48,7 @@ public class MazeView extends JComponent implements ComponentListener
    /**
     * Holds the active cell that the mouse is hovering over.
     */
-   protected MazeCell active;
+   private MazeCell active;
    /**
     * True if this MazeView object can edit it's model, false otherwise
     */
@@ -61,7 +61,7 @@ public class MazeView extends JComponent implements ComponentListener
     * Reference to the MouseAdapter object that handles mouse listener events.
     * Used to remove MouseListeners.
     */
-   MouseAdapter mouseAdapter = null;
+   private MouseAdapter mouseAdapter = null;
    /**
     * The location of the robot image in graphics coordinates.
     */
@@ -185,6 +185,9 @@ public class MazeView extends JComponent implements ComponentListener
 
       //Hopefully it won't hurt to always have this on.
       g.setComposite(AlphaComposite.SrcOver);
+
+      //Enabling this line will turn off transparency which will look ugly but allows a performance comparison.
+      //g.setComposite(AlphaComposite.Src);
 
       this.paints.setGradients(this.getMazeSize());
 
@@ -565,20 +568,13 @@ public class MazeView extends JComponent implements ComponentListener
    private void drawFog(Graphics2D g)
    {
       //Draw the box for fog
-      g.setComposite(AlphaComposite.SrcOver);
-      g.setPaint(this.paints.getFog());
-      if (unexplored == null)
+      if (unexplored != null)
       {
-         return;
-      }
-      else
-      {
-         Object[] foggy = unexplored.toArray();
-         for (int i = 0; i < foggy.length; i++)
+         g.setPaint(this.paints.getFog());
+         for (MazeCell here : unexplored)
          {
-            MazeCell here = (MazeCell) foggy[i];
-            g.fillRect( (here.getX() - 1) * this.csm.getCellWidth(),
-                       (here.getY() - 1) * this.csm.getCellHeight(),
+            g.fillRect(here.getXZeroBased() * this.csm.getCellWidth(),
+                       here.getYZeroBased() * this.csm.getCellHeight(),
                        this.csm.getCellWidth(),
                        this.csm.getCellHeight());
          }
@@ -657,7 +653,6 @@ public class MazeView extends JComponent implements ComponentListener
    {
       if (this.bestRun != null && this.bestRun.isEmpty() == false)
       {
-
          g.setPaint(this.paints.getRunBest());
 
          MazeCell here = bestRun.get(0);
@@ -719,7 +714,6 @@ public class MazeView extends JComponent implements ComponentListener
    {
       if (this.currentRun != null && this.currentRun.isEmpty() == false)
       {
-         g.setComposite(AlphaComposite.SrcOver);
          g.setPaint(this.paints.getRunCurrent());
 
          MazeCell here = currentRun.get(0);

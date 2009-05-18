@@ -185,7 +185,7 @@ public final class RobotAnimator implements Runnable
       if (this.currentState != AnimationStates.Stopped)
       {
          this.currentState = state;
-         if (state == AnimationStates.Stopped)
+         if (state == AnimationStates.Stopped && this.processingThread != null)
          {
             this.processingThread.interrupt();
          }

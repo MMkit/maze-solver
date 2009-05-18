@@ -374,7 +374,7 @@ public class MazeModel extends Observable
          file.createNewFile();
       }
 
-      FileOutputStream out = null;
+      FileOutputStream out;
       out = new FileOutputStream(file);
       out.write(fileContents);
       out.close();

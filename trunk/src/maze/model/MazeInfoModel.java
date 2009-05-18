@@ -10,7 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 public class MazeInfoModel
 {
    private static final String NAME_EXT = ".maz";
-   DefaultComboBoxModel mMazeInfoModel = new DefaultComboBoxModel();
+   final DefaultComboBoxModel mMazeInfoModel = new DefaultComboBoxModel();
 
    public MazeInfoModel()
    {
