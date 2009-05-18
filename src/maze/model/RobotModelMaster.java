@@ -33,9 +33,9 @@ public class RobotModelMaster
     */
    private final List<MazeCell> pathTaken = new ArrayList<MazeCell>();
 
-   private List<MazeCell> firstRun = new ArrayList<MazeCell>();
+   private final List<MazeCell> firstRun = new ArrayList<MazeCell>();
 
-   private List<MazeCell> bestRun = new ArrayList<MazeCell>();
+   private final List<MazeCell> bestRun = new ArrayList<MazeCell>();
    /**
     * All the maze cells that have already been visited.
     */

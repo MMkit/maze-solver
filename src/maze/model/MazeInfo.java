@@ -116,9 +116,7 @@ public class MazeInfo implements Observer
 
    public void setPath(String path)
    {
-      if (mPath.equalsIgnoreCase(path))
-         return;
-      else
+      if (!mPath.equalsIgnoreCase(path))
       {
          mPath = path;
          isDirty = true;
