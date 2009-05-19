@@ -37,6 +37,7 @@ import maze.model.MazeModel.MazeWall;
  */
 public class MazeView extends JComponent implements ComponentListener
 {
+   private static final int WALL_SIZE_DIVIDER = 6;
    /**
     * The maze model that stores the configuration of the maze.
     */
@@ -465,13 +466,16 @@ public class MazeView extends JComponent implements ComponentListener
    @Override
    public void componentResized(ComponentEvent e)
    {
-      if (model == null)
-         return;
-      background = null;
-      this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);
-      this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);
-      this.csm.setWallWidth(this.csm.getCellWidth() / 4);
-      this.csm.setWallHeight(this.csm.getCellHeight() / 4);
+      if (model != null)
+      {
+         background = null;
+         this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);
+         this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);
+
+         final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
+         this.csm.setWallWidth(wallSize);
+         this.csm.setWallHeight(wallSize);
+      }
    }
 
    @Override
