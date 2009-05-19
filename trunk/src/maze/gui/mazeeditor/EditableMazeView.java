@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
 import java.util.TreeSet;
 import java.util.Vector;
 import maze.gui.CellSize;
@@ -22,11 +23,8 @@ import maze.model.MazeModel.MazeWall;
  */
 public class EditableMazeView extends maze.gui.MazeView
 {
+   private static final int WALL_SIZE_DIVIDER = 3;
    private MazeTemplate mCurrentTemplate = null;
-   public EditableMazeView()
-   {
-      super();
-   }
 
    public CellSize getCellSize()
    {
@@ -35,6 +33,16 @@ public class EditableMazeView extends maze.gui.MazeView
                           csm.getWallWidth(), csm.getWallHeight(),
                           csm.getCellWidth()*model.getSize().width,
                           csm.getCellHeight()*model.getSize().height);
+   }
+   
+   @Override
+   public void componentResized(ComponentEvent e)
+   {
+      super.componentResized(e);
+      //We override the standard wall size here so it is easier to click on.
+      final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
+      this.csm.setWallWidth(wallSize);
+      this.csm.setWallHeight(wallSize);
    }
 
    @Override
