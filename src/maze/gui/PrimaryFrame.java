@@ -8,16 +8,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -228,6 +232,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       mainTabs.add("Maze Editor", new MazeEditor());
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
+      this.addWindowListener(this);
 
    }
 
@@ -253,7 +258,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       }
       if (mi.isDirty())
       {
-         if (mi.getPath().equals(""))
+         if (mi.getPath() == null || mi.getPath().equals(""))
          {
             JFileChooser chooser = new JFileChooser(".");
             while (true)
@@ -266,9 +271,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      if (paths.contains(file.getCanonicalPath().toLowerCase()))
                      {
                         JOptionPane.showMessageDialog(this,
-                                                      "That file is being used by another maze",
-                                                      "Error",
-                                                      JOptionPane.ERROR_MESSAGE);
+                                    "That file is being used by another maze",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
                      }
                      else
                      {
@@ -306,13 +311,48 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          MazeInfo mi = (MazeInfo) cbm.getElementAt(i);
          if (mi.isDirty())
          {
-            int result = JOptionPane.showConfirmDialog(this,
-                                                       "Would you like to save \"" + mi.getName() + "\"",
-                                                       "Save Maze?",
-                                                       JOptionPane.YES_NO_OPTION,
-                                                       JOptionPane.QUESTION_MESSAGE);
+            int result;
+            result = JOptionPane.showConfirmDialog(this,
+                            "Would you like to save \"" + mi.getName() + "\"",
+                            "Save Maze?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_NO_OPTION)
-               saveMaze(mi);
+            {
+               MazeInfo toSave = mi;
+               if (!mi.isMutable())
+               {
+                  toSave = mi.getMutableClone();
+                  Box box = new Box(BoxLayout.Y_AXIS);
+                  JLabel label = new JLabel("What would you like ot call the"+
+                                            " maze?");
+                  JTextField field = new JTextField();
+                  box.add(label);
+                  box.add(field);
+                  String newName = null;
+                  while (true)
+                  {
+                     result = JOptionPane.showConfirmDialog(PrimaryFrame.this,
+                             box, "Maze Name", JOptionPane.OK_CANCEL_OPTION,
+                             JOptionPane.QUESTION_MESSAGE);
+                     if (result == JOptionPane.OK_OPTION)
+                     {
+                        if (field.getText().length() > 0)
+                        {
+                           newName = field.getText();
+                           break;
+                        }
+                     }
+                     else
+                        break;
+                  }
+                  if(newName == null)
+                     continue;
+                  toSave.setName(newName);
+                  toSave.setPath("");
+               }
+               saveMaze(toSave);
+            }
          }
       } // for (int i = 0; i < cbm.getSize(); i++)
    }

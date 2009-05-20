@@ -36,6 +36,7 @@ public class ModifiedFloodfill extends RobotBase
       return "Modified Flood Fill";
    }
 
+   @Override
    public void initialize()
    {
       super.initialize();
@@ -63,6 +64,7 @@ public class ModifiedFloodfill extends RobotBase
       floodfill();
    }
 
+   @Override
    public RobotStep nextStep()
    {
       RobotStep next;
@@ -728,7 +730,7 @@ private void blockOutCenter()
                              File.separator +
                              "mazeExamples" +
                              File.separator +
-                             "longpath.maz");
+                             "longpath.maz", null);
             }
             catch (IOException e)
             {
