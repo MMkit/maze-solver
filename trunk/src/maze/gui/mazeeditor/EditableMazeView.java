@@ -158,19 +158,16 @@ public class EditableMazeView extends maze.gui.MazeView
                                     Direction.South));
 
          int[] newCoords = {coords[0]-1, coords[1]};
-         //MazeCell newHost = new MazeCell(coords[0], coords[1]+1);
          applyPeg(peg.left.mLeftBottom, visited, walls, newCoords);
       }
       if (peg.right != null)
       {
          int[] newCoords = {coords[0]+1, coords[1]};
-         //MazeCell newHost = new MazeCell(coords[0]+2, coords[1]+1);
          applyPeg(peg.right.mRightTop, visited, walls, newCoords);
       }
       if (peg.bottom != null)
       {
          int[] newCoords = {coords[0], coords[1]+1};
-         //MazeCell newHost = new MazeCell(coords[0]+1, coords[1]+2);
          applyPeg(peg.bottom.mLeftBottom, visited, walls, newCoords);
       }
 

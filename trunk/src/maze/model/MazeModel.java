@@ -2,11 +2,14 @@ package maze.model;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.BitSet;
 import java.util.Comparator;
 import java.util.Observable;
@@ -74,9 +77,24 @@ public class MazeModel extends Observable
          x++;
 
       if( dir == NORTH || dir == SOUTH )
-         rwalls.set(y*height+x);
+      {
+         if (!rwalls.get(y*height+x))
+         {
+            rwalls.set(y*height+x);
+            this.setChanged();
+            this.notifyObservers();
+         }
+      }
       else
-         cwalls.set(x*width+y);
+      {
+         if (!cwalls.get(x*width+y))
+         {
+            cwalls.set(x*width+y);
+            this.setChanged();
+            this.notifyObservers();
+         }
+      }
+
    }
 
    public boolean getWall( int x, int y, int dir )
@@ -124,9 +142,23 @@ public class MazeModel extends Observable
          x++;
 
       if( dir == NORTH || dir == SOUTH )
-         rwalls.clear(y*height+x);
+      {
+         if (rwalls.get(y*height+x))
+         {
+            rwalls.clear(y*height+x);
+            this.setChanged();
+            this.notifyObservers();
+         }
+      }
       else
-         cwalls.clear(x*width+y);
+      {
+         if (cwalls.get(x*width+y))
+         {
+            cwalls.clear(x*width+y);
+            this.setChanged();
+            this.notifyObservers();
+         }
+      }
    }
 
    public boolean isLegal()
@@ -335,120 +367,201 @@ public class MazeModel extends Observable
       };
    }
 
-   public void saveMaze(String filename) throws IOException
+   public void saveMaze(String filename, String name) throws IOException
    {
       //This is the formatting of the .MAZ files found online
       //This format is 4 times more inefficient than needs be
       //but it is a format that is already present
-      byte[] fileContents = new byte[256];
-      for(int i=1; i<=16; i++){
-         for(int j=16; j>0; j--){
-            MazeCell cell = new MazeCell(i,j);
-            byte cellWalls = 0;
-            if(this.getWall(cell, Direction.North).isSet()){
-               cellWalls =1;
-            }
-            if(this.getWall(cell, Direction.East).isSet()){
-               cellWalls +=2;
-            }
-            if(this.getWall(cell, Direction.South).isSet()){
-               cellWalls +=4;
-            }
-            if(this.getWall(cell, Direction.West).isSet()){
-               cellWalls +=8;
-            }
-
-            fileContents[16*(i-1) + (16-j)] = cellWalls;
-         }
-      }
-
-      //Now for the actual file i/o
-      filename.toLowerCase();
-      if(filename.endsWith(".maz") == false)
+      if (name == null)
       {
-         filename = filename + ".maz";
-      }
+         byte[] fileContents = new byte[256];
+         for(int i=1; i<=16; i++){
+            for(int j=16; j>0; j--){
+               MazeCell cell = new MazeCell(i,j);
+               byte cellWalls = 0;
+               if(this.getWall(cell, Direction.North).isSet()){
+                  cellWalls =1;
+               }
+               if(this.getWall(cell, Direction.East).isSet()){
+                  cellWalls +=2;
+               }
+               if(this.getWall(cell, Direction.South).isSet()){
+                  cellWalls +=4;
+               }
+               if(this.getWall(cell, Direction.West).isSet()){
+                  cellWalls +=8;
+               }
 
-      File file = new File(filename);
-      if(file.exists() == false){
-         file.createNewFile();
-      }
+               fileContents[16*(i-1) + (16-j)] = cellWalls;
+            }
+         }
 
-      FileOutputStream out;
-      out = new FileOutputStream(file);
-      out.write(fileContents);
-      out.close();
+         //Now for the actual file i/o
+         if(filename.toLowerCase().endsWith(".maz") == false)
+            filename = filename + ".maz";
+
+         FileOutputStream out = new FileOutputStream(filename);
+         out.write(fileContents);
+         out.close();
+      } // if (name == null)
+      else
+      {
+         if(filename.toLowerCase().endsWith(".mz2") == false)
+            filename = filename + ".mz2";
+
+         FileOutputStream out = new FileOutputStream(filename);
+         DataOutputStream dis = new DataOutputStream(out);
+         dis.writeUTF(name);
+         dis.writeInt(width);
+         dis.writeInt(height);
+
+
+         int rwallSize = rwalls.size(), cwallSize = cwalls.size();
+         int rwallArraySize = rwalls.size()/8;
+         if (rwalls.size()%8 > 0)
+            rwallArraySize++;
+         int cwallArraySize = cwalls.size()/8;
+         if (cwalls.size()%8 > 0)
+            cwallArraySize++;
+         byte[] rwallArray = new byte[rwallArraySize];
+         byte[] cwallArray = new byte[cwallArraySize];
+         for (int i = 0; i < rwallArray.length; i++)
+            rwallArray[i] = 0;
+         for (int i = 0; i < cwallArray.length; i++)
+            cwallArray[i] = 0;
+
+         int index = 0;
+
+         for (int i = 0; i < rwallSize; i++)
+         {
+            rwallArray[index] |= ((rwalls.get(i) ? 1 : 0) << (i%8));
+            if ((i+1)%8 == 0)
+               index++;
+         }
+
+         index = 0;
+
+         for (int i = 0; i < cwallSize; i++)
+         {
+            cwallArray[index] |= ((cwalls.get(i) ? 1 : 0) << (i%8));
+            if ((i+1)%8 == 0)
+               index++;
+         }
+         
+         dis.write(rwallArray);
+         dis.write(cwallArray);
+         dis.close();
+      }
 
    }
 
-   public void loadMaze(String filename) throws FileNotFoundException
+   public String loadMaze(InputStream in, boolean extended) throws IOException
    {
-      //This is the formatting of the .MAZ files found online
-      //This format is 4 times more inefficient than needs be
-      //but it is a format that is already present
-      byte[] fileContents = new byte[256];
+      if (extended)
+      {
+         DataInputStream dis = new DataInputStream(in);
+         String name = dis.readUTF();
+         setSize(new Dimension(dis.readInt(), dis.readInt()));
 
+         int rwallSize = rwalls.size(), cwallSize = cwalls.size();
+         for (int i = 0; i < rwallSize;)
+         {
+            byte bits = dis.readByte();
+            for (int j = 0; j < 8 && i < rwallSize; j++, i++)
+            {
+                    rwalls.set(i, (bits&1)==1);
+                    bits >>= 1;
+            }
+         }
+         for (int i = 0; i < cwallSize;)
+         {
+            byte bits = dis.readByte();
+            for (int j = 0; j < 8 && i < cwallSize; j++, i++)
+            {
+                    cwalls.set(i, (bits&1)==1);
+                    bits >>= 1;
+            }
+         }
+         return name;
+      }
+      else
+      {
+         //This is the formatting of the .MAZ files found online
+         //This format is 4 times more inefficient than needs be
+         //but it is a format that is already present
+         byte[] fileContents = new byte[256];
+         setSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
+
+         in.read(fileContents);
+
+         for(int i=1; i<=16; i++)
+         {
+            for(int j=16; j>0; j--)
+            {
+               byte cellWalls = fileContents[16*(i-1) + (16-j)];
+               if((cellWalls & 1) == 1)
+                  this.setWall(i,j, NORTH);
+               else
+                  this.clearWall(i,j,NORTH);
+
+               if((cellWalls & 2) == 2)
+                  this.setWall(i,j, EAST);
+               else
+                  this.clearWall(i,j,EAST);
+
+               if((cellWalls & 4) == 4)
+                  this.setWall(i,j, SOUTH);
+               else
+                  this.clearWall(i,j,SOUTH);
+               
+               if((cellWalls & 8) == 8)
+                  this.setWall(i,j, WEST);
+               else
+                  this.clearWall(i,j,WEST);
+            } // for(int j=16; j>0; j--)
+         } // for(int i=1; i<=16; i++)
+         return null;
+      }
+   }
+
+   public String loadMaze(String filename) throws FileNotFoundException
+   {
+      
       //Now for the actual file i/o
-      filename.toLowerCase();
-      //	   if(filename.endsWith(".maz") == false)
-      //	   {
-      //		   filename = filename + ".maz";
-      //	   }
+      File file = new File(filename.toLowerCase());
 
-      File file = new File(filename);
+      String name = filename;
 
       FileInputStream in = null;
-      try {
+      try
+      {
          in = new FileInputStream(file);
-      } catch (FileNotFoundException e) {
-         // TODO Auto-generated catch block
+      }
+      catch (FileNotFoundException e)
+      {
          System.out.println("first place");
          System.out.println(filename);
       }
-      try {
-         in.read(fileContents);
-      } catch (IOException e) {
-         // TODO Auto-generated catch block
+      try
+      {
+         if (filename.endsWith(".mz2"))
+            name = loadMaze(in, true);
+         else
+            loadMaze(in, false);
+      }
+      catch (IOException e)
+      {
          System.out.println("2nd place");
       }
-      try {
+      try
+      {
          in.close();
-      } catch (IOException e) {
-         // TODO Auto-generated catch block
+      }
+      catch (IOException e)
+      {
          System.out.println("3rd place");
       }
-
-      setSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
-
-      for(int i=1; i<=16; i++){
-         for(int j=16; j>0; j--){
-            byte cellWalls = fileContents[16*(i-1) + (16-j)];
-            if((cellWalls & 1) == 1){
-               this.setWall(i,j, NORTH);
-            }
-            else{
-               this.clearWall(i,j,NORTH);
-            }
-            if((cellWalls & 2) == 2){
-               this.setWall(i,j, EAST);
-            }
-            else{
-               this.clearWall(i,j,EAST);
-            }
-            if((cellWalls & 4) == 4){
-               this.setWall(i,j, SOUTH);
-            }
-            else{
-               this.clearWall(i,j,SOUTH);
-            }
-            if((cellWalls & 8) == 8){
-               this.setWall(i,j, WEST);
-            }
-            else{
-               this.clearWall(i,j,WEST);
-            }
-         }
-      }
+      return name;
    }
 
    public MazeWall getWall( int x, int y, Direction direction )
@@ -461,6 +574,17 @@ public class MazeModel extends Observable
       public boolean isSet();
 
       public void set( boolean value );
+   }
+
+   @Override
+   public Object clone()
+   {
+      MazeModel mm = new MazeModel();
+      mm.width = width;
+      mm.height = height;
+      mm.rwalls = (BitSet)rwalls.clone();
+      mm.cwalls = (BitSet)cwalls.clone();
+      return mm;
    }
 
    private static class PointCompare implements Comparator<Point>

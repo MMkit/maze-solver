@@ -33,7 +33,9 @@ import javax.swing.event.AncestorListener;
 import maze.Main;
 import maze.gui.MazeList;
 import maze.gui.PrimaryFrame;
+import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
+import maze.model.MazeModel;
 
 /**
  * This panel creates a GUI to edit mazes.
@@ -56,6 +58,7 @@ public class MazeEditor extends JPanel
    private EditableMazeView mMazeView;
    private MazeList mOpenMazes;
    private MouseAdapter mMouseAdapter = null;
+   private int mLastNew = 1;
 
    private static final MazeTemplate[] mTemplates =
    {
@@ -74,6 +77,11 @@ public class MazeEditor extends JPanel
    public MazeEditor()
    {
       buildPanel();
+   }
+
+   public boolean saveCurrent()
+   {
+      return true;
    }
 
    private void buildPanel()
@@ -225,7 +233,45 @@ public class MazeEditor extends JPanel
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            input.setText("");
+            NewMazeDialog dialog;
+            String result;
+            dialog = new NewMazeDialog(Main.getPrimaryFrameInstance());
+            if ((result = dialog.showDialog()) == null)
+               return;
+
+            MazeInfoModel mim =
+                    Main.getPrimaryFrameInstance().getMazeInfoModel();
+
+            if (result.equals(NewMazeDialog.MAZ))
+            {
+               MazeInfo newMi = mim.createNew("New Maze " + mLastNew, false);
+               if (newMi == null)
+               {
+                  JOptionPane.showMessageDialog(MazeEditor.this,
+                          "Unable to create new maze", "Maze Creation Error",
+                          JOptionPane.OK_OPTION);
+                  return;
+               }
+               mLastNew++;
+               mMazeView.setModel(newMi.getModel());
+            }
+            else if (result.equals(NewMazeDialog.MZ2))
+            {
+               MazeInfo newMi = mim.createNew(dialog.getText(), true);
+               if (newMi == null)
+               {
+                  JOptionPane.showMessageDialog(MazeEditor.this,
+                          "Unable to create new maze", "Maze Creation Error",
+                          JOptionPane.OK_OPTION);
+                  return;
+               }
+               MazeModel mm = newMi.getModel();
+               mm.setSize(dialog.getMazeSize());
+               mMazeView.setModel(newMi.getModel());
+            }
+               
+
+            /*input.setText("");
             PrimaryFrame instance = Main.getPrimaryFrameInstance();
             String newName = "";
             while (newName.equals(""))
@@ -239,7 +285,7 @@ public class MazeEditor extends JPanel
                   return;
             }
             MazeInfoModel mim = instance.getMazeInfoModel();
-            mOpenMazes.getList().setSelectedValue(mim.createNew(newName), true);
+            mOpenMazes.getList().setSelectedValue(mim.createNew(newName), true);*/
          }
       });
       return newMaze;
@@ -282,6 +328,7 @@ public class MazeEditor extends JPanel
             //boolean right = SwingUtilities.isRightMouseButton(e);
             mMazeView.repaint();
          }
+         mOpenMazes.repaint();
       } // public void mouseDragged(MouseEvent e)
 
       @Override
@@ -297,6 +344,7 @@ public class MazeEditor extends JPanel
                mMazeView.applyTemplate(false);
             mMazeView.repaint();
          }
+         mOpenMazes.repaint();
       } // public void mousePressed(MouseEvent e)
       
       @Override
