@@ -1,5 +1,5 @@
+#summary Final project group report.
 #labels Featured
-#Final project group report.
 
 =Micro Mouse Simulator Group=
 == Luke Last, Vincent Frey, John Smith, Norbit Veun ==
