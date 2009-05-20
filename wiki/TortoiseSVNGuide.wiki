@@ -1,5 +1,4 @@
 #summary Some info on getting Tortoise SVN set up with the Subversion repository.
-#labels Featured
 
 Download link.
 
