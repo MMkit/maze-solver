@@ -109,8 +109,8 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
    private static class OpenMazeRenderer extends DefaultListCellRenderer
    {
       @Override
-      public Component getListCellRendererComponent(JList list, Object value, int index,
-            boolean isSelected, boolean cellHasFocus)
+      public Component getListCellRendererComponent(JList list,Object value,
+              int index, boolean isSelected, boolean cellHasFocus)
       {
          MazeInfo mi = (MazeInfo) value;
          final String postfix;
@@ -119,12 +119,14 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
          else
             postfix = "";
          Component c = super.getListCellRendererComponent(list,
-                                                          mi.getName() + postfix,
+                                                          mi.getName()+postfix,
                                                           index,
                                                           isSelected,
                                                           cellHasFocus);
          JComponent jc = (JComponent) c;
-         jc.setToolTipText(mi.getPath());
+         String path = mi.getPath();
+         if (path != null && !path.equals(""))
+            jc.setToolTipText(path);
          return jc;
       }
    }
