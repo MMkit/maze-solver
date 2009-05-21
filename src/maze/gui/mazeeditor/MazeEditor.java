@@ -45,7 +45,7 @@ public class MazeEditor extends JPanel
    private static final String NEXT_ORIENTATION_ACTION_KEY = "nextOrientation";
    private static final String TOP_HELP =
            "Left-Click: Add walls, Right-Click: " +
-           "Remove walls, Middle-Click: Change template Orientation, "+
+           "Remove walls, Middle-Click or R Key: Change template Orientation, "+
            "Wheelup: Grow template, Wheeldown: Shrink template";
    private static final String POPUP_HELP =
            "<html><b>Left-Click</b>: Add walls<br /><b>Right-Click</b>: " +
