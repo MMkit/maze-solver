@@ -32,7 +32,6 @@ import javax.swing.event.AncestorListener;
 
 import maze.Main;
 import maze.gui.MazeList;
-import maze.gui.PrimaryFrame;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 import maze.model.MazeModel;
@@ -253,7 +252,6 @@ public class MazeEditor extends JPanel
                   return;
                }
                mLastNew++;
-               mMazeView.setModel(newMi.getModel());
             }
             else if (result.equals(NewMazeDialog.MZ2))
             {
@@ -267,7 +265,6 @@ public class MazeEditor extends JPanel
                }
                MazeModel mm = newMi.getModel();
                mm.setSize(dialog.getMazeSize());
-               mMazeView.setModel(newMi.getModel());
             }
                
 

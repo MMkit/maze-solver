@@ -3,19 +3,23 @@ package maze.gui;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import maze.Main;
 import maze.model.MazeInfo;
 
-public class MazeList extends JScrollPane implements ListSelectionListener
+public class MazeList extends JScrollPane implements ListSelectionListener, ListDataListener
 {
    /**
     * Internal JList instance.
@@ -54,9 +58,13 @@ public class MazeList extends JScrollPane implements ListSelectionListener
       this.mazeView = mazeView;
       super.setBorder(BorderFactory.createTitledBorder("Available Mazes"));
       super.setViewportView(this.myList);
-      this.myList.setModel(Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel());
+      final DefaultComboBoxModel model = Main.getPrimaryFrameInstance().getMazeInfoModel().getMazeInfoComboBoxModel();
+      model.removeListDataListener(this);
+      model.addListDataListener(this);
+      this.myList.setModel(model);
       this.myList.setSelectionModel(getListSelectionModel());
       this.myList.getSelectionModel().addListSelectionListener(this);
+
       /**
        * This uses the save renderer for all lists. If it is later decided that
        * only the editor list should display dirty status this can be changed to
@@ -120,5 +128,31 @@ public class MazeList extends JScrollPane implements ListSelectionListener
          return jc;
       }
    }
+
+   @Override
+   public void contentsChanged(ListDataEvent e)
+   {}
+
+   /**
+    * This listener is triggered when an item is added to the maze list data
+    * model (ComboBoxModel).
+    */
+   @Override
+   public void intervalAdded(final ListDataEvent e)
+   {
+      //We have to set the selection to run later or else it won't see the newly added item.
+      SwingUtilities.invokeLater(new Runnable()
+      {
+         @Override
+         public void run()
+         {
+            getListSelectionModel().setSelectionInterval(e.getIndex0(), e.getIndex1());
+         }
+      });
+   }
+
+   @Override
+   public void intervalRemoved(ListDataEvent e)
+   {}
 
 }

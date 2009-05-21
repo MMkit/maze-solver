@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -245,12 +244,12 @@ public class MazeView extends JComponent implements ComponentListener
          for (int y = 1; y <= modelSize.height; y++)
          {
             final MazeCell cell = new MazeCell(x, y);
-            final EnumSet<Direction> wallsToPaint = EnumSet.of(Direction.South, Direction.East);
 
             g.setPaint(this.paints.getWallSet());
-            for (Direction wall : wallsToPaint)
-               if (this.model.getWall(cell, wall).isSet())
-                  g.fill(this.getWallLocation(cell, wall));
+            if (this.model.getWall(cell, Direction.South).isSet())
+               g.fill(this.getWallLocation(cell, Direction.South));
+            if (this.model.getWall(cell, Direction.East).isSet())
+               g.fill(this.getWallLocation(cell, Direction.East));
 
          } //End y loop.
       } //End x loop.
@@ -304,9 +303,19 @@ public class MazeView extends JComponent implements ComponentListener
                                                                              2);
          //Set the image rotation transformation.
          g.transform(transform);
+         //Get the size of half the final image. Based on smallest cell dimension.
+         final int size = Math.min(this.csm.getCellWidth() - this.csm.getWallWidth(),
+                                   this.csm.getCellHeight() - this.csm.getWallHeight()) / 2;
+         //Draw the image to scale. The point 0,0 is the center of the image.
          g.drawImage(this.robotImage.getImage(),
-                     -this.robotImage.getIconWidth() / 2,
-                     -this.robotImage.getIconHeight() / 2,
+                     -size,
+                     -size,
+                     size,
+                     size,
+                     0,
+                     0,
+                     this.robotImage.getIconWidth(),
+                     this.robotImage.getIconHeight(),
                      null);
          //Restore the original graphics state.
          g.setTransform(oldTransform);
