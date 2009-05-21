@@ -11,7 +11,9 @@ import maze.model.RobotModel;
 
 public class Floodfill extends RobotBase
 {
-   //These are the class variables
+   /**
+	* @param args
+	*/
    private int[][] distance;
    private boolean[][] explored;
    private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();

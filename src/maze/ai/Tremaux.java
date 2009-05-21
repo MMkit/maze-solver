@@ -8,11 +8,16 @@ import maze.model.MazeCell;
 
 public class Tremaux extends RobotBase
 {
-
+   /**
+	* @param args
+	*/
    private Direction[][] ballOfString;
    private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();
    private boolean turbo = false;
 
+   /**
+    * This returns the name of the mathematician who came up with this process
+    */
    @Override
    public String toString()
    {
@@ -20,7 +25,8 @@ public class Tremaux extends RobotBase
    }
 
    /**
-	 * 
+	 * This function should be called by the controller any time a new run is
+	 * to commence
 	 */
    @Override
    public void initialize()
@@ -30,7 +36,8 @@ public class Tremaux extends RobotBase
       Dimension size = robotLocation.getMazeSize();
       if (ballOfString == null)
       {
-         ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];
+         ballOfString = new Direction[(int) size.getWidth()]
+                                      [(int) size.getHeight()];
       }
       for (int i = 0; i < size.getWidth(); i++)
       {
@@ -42,15 +49,24 @@ public class Tremaux extends RobotBase
       ballOfString[0][size.height - 1] = Direction.North;
    }
 
+   /**
+    * This returns the state of the turbo flag.  Turbo should be true when
+    * traversing previously explored territories.
+    */
    public boolean isInTurboMode()
    {
       return turbo;
    }
 
+   /**
+    * This returns the next step for the robot to take.  It should be called
+    * by the controller.
+    */
    public RobotStep nextStep()
    {
       RobotStep next;
-      if (getDirection(robotLocation.getCurrentLocation()) == Direction.Directionless)
+      if (getDirection(robotLocation.getCurrentLocation())
+    		  == Direction.Directionless)
       {
          setDirection();
       }
@@ -80,16 +96,19 @@ public class Tremaux extends RobotBase
          //Retrace the steps
          {
             turbo = true;
-            if (robotLocation.getDirection() == getDirection(robotLocation.getCurrentLocation()))
+            if (robotLocation.getDirection()
+            		== getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.MoveForward;
             }
-            else if (robotLocation.getDirection().getLeft() == getDirection(robotLocation.getCurrentLocation()))
+            else if (robotLocation.getDirection().getLeft()
+            		== getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.RotateLeft;
                moveQueue.add(RobotStep.MoveForward);
             }
-            else if (robotLocation.getDirection().getRight() == getDirection(robotLocation.getCurrentLocation()))
+            else if (robotLocation.getDirection().getRight()
+            		== getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.RotateRight;
                moveQueue.add(RobotStep.MoveForward);
@@ -110,11 +129,19 @@ public class Tremaux extends RobotBase
       return next;
    }
 
+   /**
+    * This returns the direction for the understanding for the neighbor to the
+    * left.
+    */
    private Direction getLeftNeighborDirection()
    {
       return getNeighborDirection(robotLocation.getDirection().getLeft());
    }
 
+   /**
+    * This returns the direction for the understanding for the neighbor to the
+    * front.
+    */
    private Direction getFrontNeighborDirection()
    {
       if (robotLocation.getCurrentLocation().getY() == 1)
@@ -124,11 +151,19 @@ public class Tremaux extends RobotBase
       return getNeighborDirection(robotLocation.getDirection());
    }
 
+   /**
+    * This returns the direction for the understanding for the neighbor to the
+    * right.
+    */
    private Direction getRightNeighborDirection()
    {
       return getNeighborDirection(robotLocation.getDirection().getRight());
    }
 
+   /**
+    * This returns the direction for the understanding for the neighbor to the
+    * direction given from the current cell.
+    */
    private Direction getNeighborDirection(Direction direction)
    {
       MazeCell here = robotLocation.getCurrentLocation();
@@ -157,6 +192,9 @@ public class Tremaux extends RobotBase
       return getDirection(there);
    }
 
+   /**
+    * This sets the direction for the understanding for the current cell.
+    */
    private void setDirection()
    {
       Direction wayBack = robotLocation.getDirection().getOpposite();
@@ -164,11 +202,18 @@ public class Tremaux extends RobotBase
       ballOfString[here.getX() - 1][here.getY() - 1] = wayBack;
    }
 
+   /**
+    * This returns the direction for the understanding for the given cell
+    */
    private Direction getDirection(MazeCell currentLocation)
    {
       return ballOfString[currentLocation.getX() - 1][currentLocation.getY() - 1];
    }
    
+   /**
+    * This returns the understanding of the maze.  Tremaux's understanding is
+    * the directions needed to return to the start.
+    */
    public Direction[][] getUnderstandingDir(){
 	   return ballOfString;
    }
