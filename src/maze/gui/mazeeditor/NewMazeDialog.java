@@ -6,24 +6,26 @@
 package maze.gui.mazeeditor;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.AbstractSpinnerModel;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
-import javax.swing.event.ChangeListener;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -44,44 +46,73 @@ public class NewMazeDialog extends JDialog
    {
       super(owner, "New Maze", true);
 
-      mGroup = new ButtonGroup();
+      JPanel mainPanel = new JPanel(new GridBagLayout());
 
-      mOldSelect = new JRadioButton(".maz");
+      // Create Button Group and radio buttons
+      mGroup = new ButtonGroup();
+      mOldSelect = new JRadioButton(".maz (A standard 16x16 with no name)");
+      mOldSelect.setActionCommand(".maz");
       ActionListener l = new RadioButtonAction(mOldSelect);
       mOldSelect.addActionListener(l);
-      mNewSelect = new JRadioButton(".mz2");
+      mNewSelect = new JRadioButton(".mz2 (Custom Size and Name)");
+      mNewSelect.setActionCommand(".mz2");
       mNewSelect.addActionListener(l);
-      mWidth = new JSpinner(new MazeSizeSpinnerModel());
-      mHeight = new JSpinner(new MazeSizeSpinnerModel());
       mGroup.add(mOldSelect);
       mGroup.setSelected(mOldSelect.getModel(), true);
       mGroup.add(mNewSelect);
-      Box upDown = new Box(BoxLayout.Y_AXIS);
-      Box typeSelect = new Box(BoxLayout.Y_AXIS);
-      typeSelect.add(mOldSelect);
-      typeSelect.add(mNewSelect);
-      upDown.add(typeSelect);
-      Box sizeSelect = new Box(BoxLayout.X_AXIS);
-      Box labelComp = new Box(BoxLayout.Y_AXIS);
-      
-      labelComp.add(mWidthLabel = new JLabel("Width"));
-      labelComp.add(mWidth);
-      sizeSelect.add(labelComp);
-      labelComp = new Box(BoxLayout.Y_AXIS);
-      labelComp.add(mHeightLabel = new JLabel("Height"));
-      labelComp.add(mHeight);
-      sizeSelect.add(labelComp);
-      labelComp = new Box(BoxLayout.Y_AXIS);
-      labelComp.add(mNameLabel = new JLabel("Name"));
+
+      // Add radio buttons
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.ipadx = 0;
+      gbc.gridx = gbc.gridy = 0;
+      gbc.gridwidth = 2;
+      gbc.anchor = GridBagConstraints.WEST;
+      mainPanel.add(mOldSelect, gbc);
+      gbc.gridy++;
+      mainPanel.add(mNewSelect, gbc);
+
+      // Create and add the labels for the maze size spinners
+      mWidthLabel = new JLabel("Width");
+      mHeightLabel = new JLabel("Height");
+      gbc.gridy = 2;
+      gbc.gridwidth = 1;
+      mainPanel.add(mWidthLabel, gbc);
+      gbc.gridx = 1;
+      mainPanel.add(mHeightLabel, gbc);
+
+      // Create and add the maze size spinners
+      mWidth = new JSpinner(new MazeSizeSpinnerModel());
+      mHeight = new JSpinner(new MazeSizeSpinnerModel());
+      mWidth.setFocusable(false);
+      mWidth.setRequestFocusEnabled(false);
+      mHeight.setFocusable(false);
+      mHeight.setRequestFocusEnabled(false);
+      gbc.gridx--;
+      gbc.gridy++;
+      gbc.fill = GridBagConstraints.HORIZONTAL;
+      gbc.weightx = .5;
+      mainPanel.add(mWidth, gbc);
+      gbc.gridx++;
+      mainPanel.add(mHeight, gbc);
+      gbc.weightx = 0;
+      gbc.fill = GridBagConstraints.NONE;
+
+      // Create and add name label
+      mNameLabel = new JLabel("Name");
+      gbc.gridy++;
+      gbc.gridx--;
+      gbc.gridwidth = 2;
+      mainPanel.add(mNameLabel, gbc);
+
+      // Create and add name text field
       mName = new JTextField();
-      labelComp.add(mName);
-      upDown.add(sizeSelect);
-      upDown.add(labelComp);
-      
-      setResizable(false);
-      setOpsEnabled(false);
-      JButton ok = new JButton("Ok");
-      ok.addActionListener(new ActionListener()
+      gbc.fill = GridBagConstraints.HORIZONTAL;
+      gbc.gridy++;
+      mainPanel.add(mName, gbc);
+      gbc.fill = GridBagConstraints.NONE;
+
+      // Create listener for OK button and text field Enter action
+      l = new ActionListener()
       {
          @Override
          public void actionPerformed(ActionEvent e)
@@ -101,12 +132,26 @@ public class NewMazeDialog extends JDialog
                mSelection = MAZ;
                setVisible(false);
             }
-
          }
-      });
+      };
 
-      upDown.add(ok);
-      add(upDown);
+      // Add ActionListener to name field
+      mName.addActionListener(l);
+
+      // Create Ok button, add it and add the ActionListener to it
+      JButton ok = new JButton("Ok");
+      ok.addActionListener(l);
+      gbc.gridy++;
+      gbc.anchor = GridBagConstraints.CENTER;
+      mainPanel.add(ok, gbc);
+
+      // Set a border for the main panel and it to the dialog
+      mainPanel.setBorder(new EmptyBorder(5,5,5,5));
+      add(mainPanel);
+
+      setResizable(false);
+      setOpsEnabled(false);
+
       pack();
       Point loc = owner.getLocation();
       Dimension size = owner.getSize();
@@ -142,6 +187,7 @@ public class NewMazeDialog extends JDialog
       mHeightLabel.setEnabled(enabled);
       mName.setEnabled(enabled);
       mNameLabel.setEnabled(enabled);
+      mName.requestFocus();
    }
 
    class RadioButtonAction implements ActionListener
@@ -220,3 +266,5 @@ class MazeSizeSpinnerModel extends AbstractSpinnerModel
       return mCurrentValue;
    }
 }
+
+
