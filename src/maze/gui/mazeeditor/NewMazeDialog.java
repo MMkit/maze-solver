@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.AbstractSpinnerModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -106,6 +108,15 @@ public class NewMazeDialog extends JDialog
 
       // Create and add name text field
       mName = new JTextField();
+      mName.addFocusListener(new FocusAdapter()
+      {
+         @Override
+         public void focusGained(FocusEvent e)
+         {
+            super.focusGained(e);
+            mName.setBackground(UIManager.getColor("Panel.background"));
+         }
+      });
       gbc.fill = GridBagConstraints.HORIZONTAL;
       gbc.gridy++;
       mainPanel.add(mName, gbc);
