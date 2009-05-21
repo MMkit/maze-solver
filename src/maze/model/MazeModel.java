@@ -206,15 +206,15 @@ public class MazeModel extends Observable
 
       //The peg location is based off of the cell that it is in the NORTHWEST
       //corner of.  Peg (1,1) is the only peg touching cell (1,1)
-      if(x < 1 || y < 1 || x > width || y > height)
-         return false;
+      if(x < 1 || y < 1 || x >= width || y >= height)
+         return true;
       //Every peg should have at least one wall attached to it
       if(getWall(x,y,SOUTH) || getWall(x,y,EAST) ||
          getWall(x+1,y+1,NORTH) || getWall(x+1,y+1,WEST))
       {
          //There are only three cases with walls that must be checked
          //First is the starting square
-         if( (x == 1) && (y == height) )
+         if( (x == 1) && (y == height-1) )
          {
             if(getWall(1,height,EAST) && !getWall(1,height,NORTH))
                return true;
@@ -294,8 +294,8 @@ public class MazeModel extends Observable
       TreeSet<Point> badPoints = new TreeSet<Point>(new PointCompare());
       //There are rules that must be upheld to be a valid maze
       //Rule 1: There is a wall next to the starting square
-      if(getWall(1,width,EAST) == false || getWall(1,height,NORTH))
-         badPoints.add(new Point(1,height-1));
+      //if(getWall(1,width,EAST) == false || getWall(1,height,NORTH))
+      //   badPoints.add(new Point(1,height-1));
       //Rule 2: There is one and only one way into the center of the maze
       //Even though I've coded this to accept a variable size in the future
       //I shall still assume here that the total size will always be even
@@ -316,7 +316,7 @@ public class MazeModel extends Observable
       }	//All of the center pegs are connected
 
       //Offshoot of Rule 2 is that the center of the maze is an open peg
-      if (!isCenterOpen())
+      if (!isCenterLegal())
          badPoints.add(new Point(column, row));
 
       //Rule 3: There must be at least one wall coming from every peg
