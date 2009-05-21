@@ -71,25 +71,25 @@ public class MazeModel extends Observable
       x--;
       y--;
 
-      if (dir == SOUTH)
-         y++;
-      if (dir == EAST)
-         x++;
+      if (dir == NORTH)
+         y--;
+      if (dir == WEST)
+         x--;
 
       if( dir == NORTH || dir == SOUTH )
       {
-         if (!rwalls.get(y*height+x))
+         if (!rwalls.get(y*width+x))
          {
-            rwalls.set(y*height+x);
+            rwalls.set(y*width+x);
             this.setChanged();
             this.notifyObservers();
          }
       }
       else
       {
-         if (!cwalls.get(x*width+y))
+         if (!cwalls.get(x*height+y))
          {
-            cwalls.set(x*width+y);
+            cwalls.set(x*height+y);
             this.setChanged();
             this.notifyObservers();
          }
@@ -111,15 +111,15 @@ public class MazeModel extends Observable
       x--;
       y--;
 
-      if (dir == SOUTH)
-         y++;
-      if (dir == EAST)
-         x++;
+      if (dir == NORTH)
+         y--;
+      if (dir == WEST)
+         x--;
 
       if( dir == NORTH || dir == SOUTH )
-         return rwalls.get(y*height+x);
+         return rwalls.get(y*width+x);
       else
-         return cwalls.get(x*width+y);
+         return cwalls.get(x*height+y);
    }
 
    public void clearWall( int x, int y, int dir )
@@ -136,25 +136,25 @@ public class MazeModel extends Observable
       x--;
       y--;
 
-      if (dir == SOUTH)
-         y++;
-      if (dir == EAST)
-         x++;
+      if (dir == NORTH)
+         y--;
+      if (dir == WEST)
+         x--;
 
       if( dir == NORTH || dir == SOUTH )
       {
-         if (rwalls.get(y*height+x))
+         if (rwalls.get(y*width+x))
          {
-            rwalls.clear(y*height+x);
+            rwalls.clear(y*width+x);
             this.setChanged();
             this.notifyObservers();
          }
       }
       else
       {
-         if (cwalls.get(x*width+y))
+         if (cwalls.get(x*height+y))
          {
-            cwalls.clear(x*width+y);
+            cwalls.clear(x*height+y);
             this.setChanged();
             this.notifyObservers();
          }

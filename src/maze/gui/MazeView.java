@@ -117,6 +117,7 @@ public class MazeView extends JComponent implements ComponentListener
    public void setModel(MazeModel model)
    {
       this.model = model;
+
       componentResized(null);
       repaint();
    }
@@ -245,12 +246,6 @@ public class MazeView extends JComponent implements ComponentListener
          {
             final MazeCell cell = new MazeCell(x, y);
             final EnumSet<Direction> wallsToPaint = EnumSet.of(Direction.South, Direction.East);
-            //We are painting the first cell in the row.
-            if (cell.getX() == 1)
-               wallsToPaint.add(Direction.West);
-            //We are painting the top horizontal row.
-            if (cell.getY() == 1)
-               wallsToPaint.add(Direction.North);
 
             g.setPaint(this.paints.getWallSet());
             for (Direction wall : wallsToPaint)
