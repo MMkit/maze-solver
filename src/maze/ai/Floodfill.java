@@ -7,10 +7,11 @@ import java.util.Vector;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
+import maze.model.RobotModel;
 
 public class Floodfill extends RobotBase
 {
-
+   //These are the class variables
    private int[][] distance;
    private boolean[][] explored;
    private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();
@@ -23,17 +24,23 @@ public class Floodfill extends RobotBase
    private boolean speedRunCapable;
 
    @Override
+   /**
+    * Returns a string describing this class
+    */
    public String toString()
    {
       return "Flood Fill";
    }
 
+   /**
+    * Initializes the algorithm for use.  This should be called before any run
+    * is started.
+    */
    public void initialize()
    {
       super.initialize();
       moveQueue.clear();
-      // TODO if ever we make mazes vary in size then here must be updated
-      //maze.setSize(robotLocation.getMazeSize());
+      maze.setSize(robotLocation.getMazeSize());
       maze.clearMaze();
       Dimension size = maze.getSize();
       if (distance == null)
@@ -54,6 +61,10 @@ public class Floodfill extends RobotBase
    }
 
    @Override
+   /**
+    * Returns the next step that the robot should take.  This is called by the
+    * controller.
+    */
    public RobotStep nextStep()
    {
       RobotStep next;
@@ -81,25 +92,21 @@ public class Floodfill extends RobotBase
          if (nextDirection == currentDirection)
          {
             next = RobotStep.MoveForward;
-            //				System.out.println("Head in");
          }
          else if (nextDirection == currentDirection.getLeft())
          {
             next = RobotStep.RotateLeft;
             moveQueue.add(RobotStep.MoveForward);
-            //				System.out.println("Left it out");
          }
          else if (nextDirection == currentDirection.getRight())
          {
             next = RobotStep.RotateRight;
             moveQueue.add(RobotStep.MoveForward);
-            //				System.out.println("Right it out");
          }
          else
          // if(nextDirection == currentDirection.getOpposite())
          {
             next = RobotStep.MoveBackward;
-            //				System.out.println("Back it out");
          }
       }
       else
@@ -110,6 +117,10 @@ public class Floodfill extends RobotBase
       return next;
    }
 
+   /**
+    * Returns the explored flag of the current location's neighbor in the 
+    * given direction.
+    */
    private boolean getNeighborExplored(Direction direction)
    {
       MazeCell neighbor;
@@ -119,11 +130,13 @@ public class Floodfill extends RobotBase
       {
          neighbor = new MazeCell(here.getX(), here.getY() - 1);
       }
-      else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
+      else if ( (direction == Direction.South) 
+    		  && (here.getY() != size.getHeight()))
       {
          neighbor = new MazeCell(here.getX(), here.getY() + 1);
       }
-      else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
+      else if ( (direction == Direction.East) 
+    		  && (here.getX() != size.getWidth()))
       {
          neighbor = new MazeCell(here.getX() + 1, here.getY());
       }
@@ -139,6 +152,9 @@ public class Floodfill extends RobotBase
       return getExplored(neighbor);
    }
 
+   /**
+    * Returns the explored flag of the given location's neighbor.
+    */
    private boolean getNeighborExplored(MazeCell here, Direction direction)
    {
       MazeCell neighbor;
@@ -147,11 +163,13 @@ public class Floodfill extends RobotBase
       {
          neighbor = new MazeCell(here.getX(), here.getY() - 1);
       }
-      else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
+      else if ( (direction == Direction.South) 
+    		  && (here.getY() != size.getHeight()))
       {
          neighbor = new MazeCell(here.getX(), here.getY() + 1);
       }
-      else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
+      else if ( (direction == Direction.East) 
+    		  && (here.getX() != size.getWidth()))
       {
          neighbor = new MazeCell(here.getX() + 1, here.getY());
       }
@@ -167,29 +185,44 @@ public class Floodfill extends RobotBase
       return getExplored(neighbor);
    }
 
+   /**
+    * Returns the explored flag of the given location.
+    */
    private boolean getExplored(MazeCell cell)
    {
       return explored[cell.getX() - 1][cell.getY() - 1];
    }
 
+   /**
+    * Returns the explored flag of the current location.
+    */
    private boolean getExplored()
    {
       return getExplored(robotLocation.getCurrentLocation());
    }
 
+   /**
+    * Sets the explored flag of the current location to true.
+    */
    private void setExplored()
    {
-      explored[robotLocation.getCurrentLocation().getX() - 1][robotLocation.getCurrentLocation().getY() - 1] = true;
+      explored[robotLocation.getCurrentLocation().getX() - 1]
+               [robotLocation.getCurrentLocation().getY() - 1] = true;
    }
 
+   /**
+    * Returns the best direction to go, according to Floodfill, from the 
+    * current MazeCell.  This algorithm biases in the following order:
+    * Straight, North, East, West, South
+    */
    private Direction getBestDirection()
    {
       MazeCell here = robotLocation.getCurrentLocation();
       int bestDistance = getDistance(here);
       Direction bestDirection = Direction.Directionless;
 
-      //		System.out.println("Best Distance: " + String.valueOf(bestDistance));
-      if ( (bestDistance > getNeighborDistance(here, robotLocation.getDirection())) &&
+      if ( (bestDistance > 
+      getNeighborDistance(here, robotLocation.getDirection())) &&
           (robotLocation.isWallFront() == false))
       {
          bestDirection = robotLocation.getDirection();
@@ -232,6 +265,10 @@ public class Floodfill extends RobotBase
       }
    }
 
+   /**
+    * Returns the distance of the MazeCell adjacent to the passed MazeCell
+    * and is adjacent in the specified direction.
+    */
    private int getNeighborDistance(MazeCell here, Direction direction)
    {
       MazeCell neighbor;
@@ -240,11 +277,13 @@ public class Floodfill extends RobotBase
       {
          neighbor = new MazeCell(here.getX(), here.getY() - 1);
       }
-      else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
+      else if ( (direction == Direction.South) 
+    		  && (here.getY() != size.getHeight()))
       {
          neighbor = new MazeCell(here.getX(), here.getY() + 1);
       }
-      else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
+      else if ( (direction == Direction.East) 
+    		  && (here.getX() != size.getWidth()))
       {
          neighbor = new MazeCell(here.getX() + 1, here.getY());
       }
@@ -260,11 +299,17 @@ public class Floodfill extends RobotBase
       return getDistance(neighbor);
    }
 
+   /**
+    * Returns the distance of the desired MazeCell
+    */
    private int getDistance(MazeCell here)
    {
       return distance[here.getX() - 1][here.getY() - 1];
    }
 
+   /**
+    * Sets the distance of the desired MazeCell to the value provided
+    */
    private void setDistance(MazeCell here, int value)
    {
       distance[here.getX() - 1][here.getY() - 1] = value;
@@ -328,8 +373,10 @@ public class Floodfill extends RobotBase
          //Check to see if accessible
          if (maze.getWall(cell, Direction.North).isSet() == false)
          { //Check to see if it should be added to queue
-            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.North)) &&
-                ( (speedy == false) || (getNeighborExplored(cell, Direction.North) == true)))
+            if ( ( (currentDistance + 1) < 
+            		getNeighborDistance(cell, Direction.North)) &&
+                ( (speedy == false) || 
+                	(getNeighborExplored(cell, Direction.North) == true)))
             {
                queue.add(cell.plusY(-1));
                setDistance(cell.plusY(-1), currentDistance + 1);
@@ -339,8 +386,10 @@ public class Floodfill extends RobotBase
          //Check to see if accessible
          if (maze.getWall(cell, Direction.South).isSet() == false)
          { //Check to see if it should be added to queue
-            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.South)) &&
-                ( (speedy == false) || (getNeighborExplored(cell, Direction.South))))
+            if ( ( (currentDistance + 1) < 
+            		getNeighborDistance(cell, Direction.South)) &&
+                ( (speedy == false) || 
+                		(getNeighborExplored(cell, Direction.South))))
             {
                queue.add(cell.plusY(1));
                setDistance(cell.plusY(1), currentDistance + 1);
@@ -350,8 +399,10 @@ public class Floodfill extends RobotBase
          //Check to see if accessible
          if (maze.getWall(cell, Direction.West).isSet() == false)
          { //Check to see if it should be added to queue
-            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.West)) &&
-                ( (speedy == false) || (getNeighborExplored(cell, Direction.West))))
+            if ( ( (currentDistance + 1) < 
+            		getNeighborDistance(cell, Direction.West)) &&
+                ( (speedy == false) || 
+                		(getNeighborExplored(cell, Direction.West))))
             {
                queue.add(cell.plusX(-1));
                setDistance(cell.plusX(-1), currentDistance + 1);
@@ -361,8 +412,10 @@ public class Floodfill extends RobotBase
          //Check to see if accessible
          if (maze.getWall(cell, Direction.East).isSet() == false)
          { //Check to see if it should be added to queue
-            if ( ( (currentDistance + 1) < getNeighborDistance(cell, Direction.East)) &&
-                ( (speedy == false) || (getNeighborExplored(cell, Direction.East))))
+            if ( ( (currentDistance + 1) < 
+            		getNeighborDistance(cell, Direction.East)) &&
+                ( (speedy == false) || 
+                		(getNeighborExplored(cell, Direction.East))))
             {
                queue.add(cell.plusX(1));
                setDistance(cell.plusX(1), currentDistance + 1);
@@ -390,6 +443,12 @@ public class Floodfill extends RobotBase
       }
    }
 
+   /**
+    * This helper function should only be called when first entering the 
+    * center goal.  Sets the maze knowledge of the algorithm to think that
+    * there are no other ways out of the center because according the American
+    * rules there is only one entrance/exit associated with the goal. 
+    */
    private void blockOutCenter()
    {
       Dimension size = maze.getSize();
@@ -421,23 +480,33 @@ public class Floodfill extends RobotBase
       }
    }
 
+   /**
+    * Returns true if the current location of the robot is its current destination.
+    */
    private boolean atGoal()
    {
       MazeCell cell = robotLocation.getCurrentLocation();
       Dimension size = maze.getSize();
-      if ( (goal == TO_START) && (cell.getX() == 1) && (cell.getY() == size.height))
+      if ( (goal == TO_START) && (cell.getX() == 1) 
+    		  && (cell.getY() == size.height))
       {
          return true;
       }
       if ( (goal == TO_CENTER) &&
-          ( (cell.getY() == size.height / 2) || (cell.getY() == (size.height / 2 + 1))) &&
-          ( (cell.getX() == size.width / 2) || (cell.getX() == (size.width / 2 + 1))))
+          ( (cell.getY() == size.height / 2) 
+        		  || (cell.getY() == (size.height / 2 + 1))) &&
+          ( (cell.getX() == size.width / 2) 
+        		  || (cell.getX() == (size.width / 2 + 1))))
       {
          return true;
       }
       return false;
    }
 
+   /**
+    * Updates the algorithm's memory of the maze based upon the walls in the
+    * current cell.
+    */
    private void checkWalls()
    {
       MazeCell cell = robotLocation.getCurrentLocation();
@@ -448,25 +517,49 @@ public class Floodfill extends RobotBase
       }
       if (robotLocation.isWallLeft())
       {
-         maze.setWall(cell.getX(), cell.getY(), direction.getLeft().getIndex());
+         maze.setWall(cell.getX(), cell.getY(), 
+        		 direction.getLeft().getIndex());
       }
       if (robotLocation.isWallRight())
       {
-         maze.setWall(cell.getX(), cell.getY(), direction.getRight().getIndex());
+         maze.setWall(cell.getX(), cell.getY(),
+        		 direction.getRight().getIndex());
       }
       if (robotLocation.isWallBack())
       {
-         maze.setWall(cell.getX(), cell.getY(), direction.getOpposite().getIndex());
+         maze.setWall(cell.getX(), cell.getY(),
+        		 direction.getOpposite().getIndex());
       }
    }
 
+   /**
+    * Returns the "turbo" state of the algorithm.  Will be true when areas are
+    * being traversed after they have been explored before.
+    */
    public boolean isInTurboMode()
    {
       return turbo;
    }
 
+   /**
+    * Returns the instance of how the algorithm understands the maze.
+    * For Floodfill this is an integer for each cell representing the expected
+    * distance from the center.
+    */
    public int[][] getUnderstandingInt()
    {
       return distance;
+   }
+   
+   @Override
+  /**
+    * Sets the instance of the robot model to use.
+    */
+   public void setRobotLocation(RobotModel model)
+   {
+      this.robotLocation = model;
+      maze.setSize(robotLocation.getMazeSize());
+      maze.clearMaze();
+      distance = null;
    }
 }
