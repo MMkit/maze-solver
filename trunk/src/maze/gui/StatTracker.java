@@ -49,6 +49,10 @@ public class StatTracker
    private RobotModel mouse;
    private Dimension mazeSize;
 
+   /**
+	* This constructor requires an algorithm and a mouse.  It will then
+	* determine a handful of relevant statistics for the user to access
+	*/
    public StatTracker(RobotBase algorithm, RobotModel mouse)
    {
       this.algorithm = algorithm;
@@ -58,6 +62,10 @@ public class StatTracker
       this.recompute();
    }
 
+   /**
+	* This function requires an algorithm and a mouse.  It will then
+	* determine a handful of relevant statistics for the user to access
+	*/
    public void reload(RobotBase algorithm, RobotModel mouse)
    {
       this.algorithm = algorithm;
@@ -67,6 +75,10 @@ public class StatTracker
       this.recompute();
    }
 
+   /**
+	* This function prepares the mouse and algorithm to get ready to start a
+	* run.
+	*/
    private void initialize()
    {
       mazeSize = mouse.getMazeSize();
@@ -93,6 +105,10 @@ public class StatTracker
       algorithm.initialize();
    }
 
+   /**
+	* This function simulates a run through the maze for the mouse and 
+	* algorithm.
+	*/
    private void recompute()
    {
       setExplored();
@@ -118,8 +134,10 @@ public class StatTracker
       {
          bestRunSquaresTraversed = currentRunSquaresTraversed;
          bestRunTurnsTaken = currentRunTurnsTaken;
-         bestRunTotalSquaresTraversed = previousRunTotalSquaresTraversed + currentRunSquaresTraversed;
-         bestRunTotalTurnsTaken = previousRunTotalTurnsTaken + currentRunTurnsTaken;
+         bestRunTotalSquaresTraversed = previousRunTotalSquaresTraversed 
+         			+ currentRunSquaresTraversed;
+         bestRunTotalTurnsTaken = previousRunTotalTurnsTaken 
+         			+ currentRunTurnsTaken;
          previousRunTotalSquaresTraversed = totalSquaresTraversed;
          previousRunTotalTurnsTaken = totalTurnsTaken;
          trackARun();
@@ -185,7 +203,8 @@ public class StatTracker
       MazeCell goal2 = goal1.plusX(1);
       MazeCell goal3 = goal1.plusY(1);
       MazeCell goal4 = goal3.plusX(1);
-      if ( (here.equals(goal1)) || (here.equals(goal2)) || (here.equals(goal3)) || (here.equals(goal4)))
+      if ( (here.equals(goal1)) || (here.equals(goal2)) || (here.equals(goal3)) 
+    		  || (here.equals(goal4)))
       {
          return true;
       }
@@ -268,64 +287,4 @@ public class StatTracker
    {
       return mouse.getBestRun();
    }
-
-   public static void main(String[] args)
-   {
-      Runnable runner = new Runnable()
-      {
-
-         public void run()
-         {
-            Floodfill flood = new Floodfill();
-            RobotModelMaster master = new RobotModelMaster(new MazeModel(),
-                                                           new MazeCell(1, 16),
-                                                           Direction.North);
-            RobotModel mouse = new RobotModel(master);
-            flood.setRobotLocation(mouse);
-            flood.initialize();
-
-            StatTracker tracker = new StatTracker(flood, mouse);
-
-            System.out.println("Total Squares Traversed = " +
-                               String.valueOf(tracker.getTotalTraversed()));
-            System.out.println("First Run Squares = " + String.valueOf(tracker.getFirstRunCells()));
-            System.out.println("First Run Turns = " + String.valueOf(tracker.getFirstRunTurns()));
-            System.out.println("Best Run Squares = " + String.valueOf(tracker.getBestRunCells()));
-            System.out.println("Best Run Turns = " + String.valueOf(tracker.getBestRunTurns()));
-            System.out.println("Total Run Squares = " + String.valueOf(tracker.getThroughBestRunCells()));
-            System.out.println("Total Run Turns = " + String.valueOf(tracker.getThroughBestRunTurns()));
-
-            RightWallFollower righty = new RightWallFollower();
-            righty.setRobotLocation(mouse);
-            righty.initialize();
-            tracker.reload(righty, mouse);
-
-            System.out.println("Total Squares Traversed = " +
-                               String.valueOf(tracker.getTotalTraversed()));
-            System.out.println("First Run Squares = " + String.valueOf(tracker.getFirstRunCells()));
-            System.out.println("First Run Turns = " + String.valueOf(tracker.getFirstRunTurns()));
-            System.out.println("Best Run Squares = " + String.valueOf(tracker.getBestRunCells()));
-            System.out.println("Best Run Turns = " + String.valueOf(tracker.getBestRunTurns()));
-            System.out.println("Total Run Squares = " + String.valueOf(tracker.getThroughBestRunCells()));
-            System.out.println("Total Run Turns = " + String.valueOf(tracker.getThroughBestRunTurns()));
-
-            Tremaux frenchie = new Tremaux();
-            frenchie.setRobotLocation(mouse);
-            frenchie.initialize();
-            tracker.reload(frenchie, mouse);
-
-            System.out.println("Total Squares Traversed = " +
-                               String.valueOf(tracker.getTotalTraversed()));
-            System.out.println("First Run Squares = " + String.valueOf(tracker.getFirstRunCells()));
-            System.out.println("First Run Turns = " + String.valueOf(tracker.getFirstRunTurns()));
-            System.out.println("Best Run Squares = " + String.valueOf(tracker.getBestRunCells()));
-            System.out.println("Best Run Turns = " + String.valueOf(tracker.getBestRunTurns()));
-            System.out.println("Total Run Squares = " + String.valueOf(tracker.getThroughBestRunCells()));
-            System.out.println("Total Run Turns = " + String.valueOf(tracker.getThroughBestRunTurns()));
-
-         }
-      };
-      EventQueue.invokeLater(runner);
-   }
-
 }
