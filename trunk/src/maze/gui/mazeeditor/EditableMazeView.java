@@ -54,12 +54,12 @@ public class EditableMazeView extends maze.gui.MazeView
       {
          g2.setPaint(super.paints.getPegInvalid());
          int cx, cy;
-         for (Point p : model.illegalPegs())
+         /*for (Point p : model.illegalPegs())
          {
             cx = p.x*csm.getCellWidth()-csm.getWallWidthHalf();
             cy = p.y*csm.getCellHeight()-csm.getWallHeightHalf();
             g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
-         }
+         }*/
          if (model.isCenterLegal())
          {
             g2.setColor(Color.GREEN);

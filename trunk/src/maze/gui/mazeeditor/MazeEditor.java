@@ -266,23 +266,6 @@ public class MazeEditor extends JPanel
                MazeModel mm = newMi.getModel();
                mm.setSize(dialog.getMazeSize());
             }
-               
-
-            /*input.setText("");
-            PrimaryFrame instance = Main.getPrimaryFrameInstance();
-            String newName = "";
-            while (newName.equals(""))
-            {
-               int result = JOptionPane.showConfirmDialog(instance,
-                        messagePanel, "New Maze", JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-               if (result == JOptionPane.OK_OPTION)
-                  newName = input.getText();
-               else
-                  return;
-            }
-            MazeInfoModel mim = instance.getMazeInfoModel();
-            mOpenMazes.getList().setSelectedValue(mim.createNew(newName), true);*/
          }
       });
       return newMaze;
