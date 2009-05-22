@@ -34,7 +34,7 @@ import maze.model.MazeModel.MazeWall;
  * robot in the maze.
  * @author Luke Last
  */
-public class MazeView extends JComponent implements ComponentListener
+public class MazeView extends JComponent implements ComponentListener, MazeViewInterface
 {
    private static final int WALL_SIZE_DIVIDER = 6;
    /**
@@ -75,7 +75,7 @@ public class MazeView extends JComponent implements ComponentListener
     */
    private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
 
-   protected final MazePaints paints = new MazePaints();
+   protected final MazePainter paints = new MazePainterDefault(this.csm);
    //protected final MazePaints paints = new MazePaints.MazePaintsClassic();
 
    private boolean drawFog = false;
@@ -190,7 +190,7 @@ public class MazeView extends JComponent implements ComponentListener
       //Enabling this line will turn off transparency which will look ugly but allows a performance comparison.
       //g.setComposite(AlphaComposite.Src);
 
-      this.paints.setGradients(this.getMazeSize());
+      this.paints.setMazeSize(this.getMazeSize());
 
       if (this.background == null)
       {

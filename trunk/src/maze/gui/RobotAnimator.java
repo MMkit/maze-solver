@@ -16,7 +16,7 @@ import maze.model.RobotModelMaster;
  */
 public final class RobotAnimator implements Runnable
 {
-   private MazeView view;
+   private MazeView2 view;
    private RobotController controller;
    /**
     * The state that this animator is currently in.
@@ -47,7 +47,7 @@ public final class RobotAnimator implements Runnable
     * @param robotAlgorithm The AI algorithm to use for the animation.
     * @param finishedCallback This is called after the animation is stopped.
     */
-   public void start(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
+   public void start(MazeView2 mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
       if (this.processingThread != null)
       {
@@ -71,26 +71,24 @@ public final class RobotAnimator implements Runnable
    public void run()
    {
       final RobotModelMaster model = this.controller.getRobotModelMaster();
-      this.view.setRobotPosition(this.view.getCellCenter(model.getCurrentLocation()),
+      this.view.setRobotPosition(this.view.getCellCenterInner(model.getCurrentLocation()),
                                  model.getDirection().getRadians());
-      view.setDrawFog(true);
-      view.setDrawFirstRun(true);
-      view.setDrawBestRun(true);
-      view.setDrawCurrentRun(true);
+      this.view.invalidateAllCells();
+      this.view.setRobotPathModel(model.getRobotPathModel());
       this.setViewAttributes();
       while (this.currentState != AnimationStates.Stopped && this.controller.isRobotDone() == false)
       {
          try
          {
             //Get the robots current position.
-            final Point srcLocation = this.view.getCellCenter(model.getCurrentLocation());
+            final Point srcLocation = this.view.getCellCenterInner(model.getCurrentLocation());
             final Direction srcDirection = model.getDirection();
             final double srcRotation = srcDirection.getRadians();
 
             controller.nextStep(); //Move robot.
 
             //Get the robots new position.
-            final Point destLocation = this.view.getCellCenter(model.getCurrentLocation());
+            final Point destLocation = this.view.getCellCenterInner(model.getCurrentLocation());
             final Direction destDirection = model.getDirection();
             //Set our new rotation based on which way we turned.
             final double destRotation;
@@ -100,6 +98,11 @@ public final class RobotAnimator implements Runnable
                destRotation = srcRotation + Math.PI / 2;
             else
                destRotation = srcRotation; //Didn't rotate.
+            
+            final int acceleration = 4 / this.movesPerStep;
+            int velocity = acceleration;
+            
+            double rotationPercentage = 0;
 
             //Increment is fraction at a time to the destination position.
             for (int inc = 1; inc <= this.movesPerStep; inc++)
@@ -107,11 +110,23 @@ public final class RobotAnimator implements Runnable
                final double percentage = (double) inc / this.movesPerStep;
                int x = (int) (srcLocation.x + (destLocation.x - srcLocation.x) * percentage);
                int y = (int) (srcLocation.y + (destLocation.y - srcLocation.y) * percentage);
-               double rot = srcRotation + (destRotation - srcRotation) * percentage;
+               // Are in the first half acceleration phase.
+               if (inc < this.movesPerStep / 2)
+               {
+                  rotationPercentage += velocity;
+                  velocity += acceleration;
+                  rotationPercentage = inc * (4/inc) / 2;
+               }
+               else
+               {
+                  rotationPercentage -= velocity;
+                  velocity -= acceleration;
+               }
+               double rot = srcRotation + (destRotation - srcRotation) * this.accelerationTransform(percentage) ;
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
-            
+
             this.setViewAttributes();
 
             while (this.currentState == AnimationStates.Paused)
@@ -134,36 +149,37 @@ public final class RobotAnimator implements Runnable
             this.currentState = AnimationStates.Stopped;
          }
       }
+      this.view.setRobotPathModel(null);
+      this.view.loadUnderstanding(null);
+      this.view.loadUnderstandingDir(null);
       if (this.finishedCallback != null)
       {
          this.finishedCallback.run();
       }
       this.processingThread = null;
    }
-
-   private void setViewAttributes()
+   
+   private double accelerationTransform(double input)
    {
-      view.loadUnexplored(controller.getAllUnexplored());
-      view.loadFirstRun(controller.getFirstRun());
-      view.loadBestRun(controller.getBestRun());
-      view.loadCurrentRun(controller.getCurrentRun());
-
-      int[][] understandingInt = controller.getUnderstandingInt();
-      Direction[][] understandingDir = controller.getUnderstandingDir();
-      if (understandingInt != null)
+      double result = 0;
+      if (input < .5)
       {
-         view.loadUnderstanding(understandingInt);
-         view.setDrawUnderstanding(true);
-      }
-      else if (understandingDir != null)
-      {
-         view.loadUnderstandingDir(understandingDir);
-         view.setDrawUnderstanding(true);
+         result = input * input * 2;
       }
       else
       {
-         view.setDrawUnderstanding(false);
+         result = .5 + (input - .5) * (2.5 - input);
       }
+      // Make sure the result is between 0 and 1.
+      result = (result > 1.0) ? 1.0 : result;
+      result = (result < 0) ? 0 : result;
+      return result;
+   }
+
+   private void setViewAttributes()
+   {
+      this.view.loadUnderstanding(this.controller.getUnderstandingInt());
+      this.view.loadUnderstandingDir(this.controller.getUnderstandingDir());
    }
 
    /**

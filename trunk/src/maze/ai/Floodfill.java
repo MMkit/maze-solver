@@ -221,7 +221,7 @@ public class Floodfill extends RobotBase
    {
       MazeCell here = robotLocation.getCurrentLocation();
       int bestDistance = getDistance(here);
-      Direction bestDirection = Direction.Directionless;
+      Direction bestDirection = null;
 
       if ( (bestDistance > 
       getNeighborDistance(here, robotLocation.getDirection())) &&
@@ -256,7 +256,7 @@ public class Floodfill extends RobotBase
          bestDistance = getNeighborDistance(here, bestDirection);
       }
 
-      if (bestDirection == Direction.Directionless)
+      if (bestDirection == null)
       {
          floodfill();
          return getBestDirection();

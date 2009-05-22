@@ -225,7 +225,7 @@ public class ModifiedFloodfill extends RobotBase
       MazeCell here = robotLocation.getCurrentLocation();
       Direction current = robotLocation.getDirection();
       //int bestDistance = getDistance(here);
-      Direction bestDirection = Direction.Directionless;
+      Direction bestDirection = null;
       
       if(hasSameDirection(here,Direction2.getDirection(current)))
               //&& (robotLocation.isWallFront() == false))
@@ -287,7 +287,7 @@ public class ModifiedFloodfill extends RobotBase
       }
       */
 
-      if (bestDirection == Direction.Directionless)
+      if (bestDirection == null)
       {
          modifiedFloodfill();
          return getBestDirection();
@@ -996,7 +996,7 @@ public class ModifiedFloodfill extends RobotBase
     	  if(dir.equals(Direction.East)){
     		  return Direction.East;
     	  }
-    	  return Direction.Directionless;
+    	  return null;
       }
 
       public static boolean containsDirection(int data, Direction2 dir){

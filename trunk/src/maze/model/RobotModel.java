@@ -3,11 +3,11 @@ package maze.model;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import maze.ai.RobotStep;
 
 /**
+ * This is a wrapper class for {@link RobotModelMaster}.<br />
+ * This class exists to provide limited access to the data models for the AI
+ * algorithms.
  * @author Luke Last
  */
 public class RobotModel
@@ -26,22 +26,22 @@ public class RobotModel
 
    public boolean isWallFront()
    {
-      return this.parent.isWallFront();
+      return this.parent.isWall(this.getDirection());
    }
 
    public boolean isWallBack()
    {
-      return this.parent.isWallBack();
+      return this.parent.isWall(this.getDirection().getOpposite());
    }
 
    public boolean isWallLeft()
    {
-      return this.parent.isWallLeft();
+      return this.parent.isWall(this.getDirection().getLeft());
    }
 
    public boolean isWallRight()
    {
-      return this.parent.isWallRight();
+      return this.parent.isWall(this.getDirection().getRight());
    }
 
    public MazeCell getCurrentLocation()
@@ -62,35 +62,6 @@ public class RobotModel
    public List<MazeCell> getPathTaken()
    {
       return new ArrayList<MazeCell>(this.parent.getPathTaken());
-   }
-
-   @Deprecated
-   public void takeNextStep(RobotStep nextStep)
-   {
-      this.parent.takeNextStep(nextStep);
-   }
-
-   public boolean isExplored(MazeCell location)
-   {
-      return this.parent.isExplored(location);
-   }
-
-   @Deprecated
-   public Set<MazeCell> getNonHistory()
-   {
-      return this.parent.getNonHistory();
-   }
-
-   @Deprecated
-   public List<MazeCell> getFirstRun()
-   {
-      return this.parent.getFirstRun();
-   }
-
-   @Deprecated
-   public List<MazeCell> getBestRun()
-   {
-      return this.parent.getBestRun();
    }
 
 }

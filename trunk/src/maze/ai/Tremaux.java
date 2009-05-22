@@ -43,7 +43,7 @@ public class Tremaux extends RobotBase
       {
          for (int j = 0; j < size.getHeight(); j++)
          {
-            ballOfString[i][j] = Direction.Directionless;
+            ballOfString[i][j] = null;
          }
       }
       ballOfString[0][size.height - 1] = Direction.North;
@@ -66,27 +66,27 @@ public class Tremaux extends RobotBase
    {
       RobotStep next;
       if (getDirection(robotLocation.getCurrentLocation())
-    		  == Direction.Directionless)
+    		  == null)
       {
          setDirection();
       }
       if (moveQueue.isEmpty() == true)
       {
          if ( (robotLocation.isWallRight() == false) &&
-             (getRightNeighborDirection() == Direction.Directionless))
+             (getRightNeighborDirection() == null))
          {
             next = RobotStep.RotateRight;
             moveQueue.add(RobotStep.MoveForward);
             turbo = false;
          }
          else if ( (robotLocation.isWallFront() == false) &&
-                  (getFrontNeighborDirection() == Direction.Directionless))
+                  (getFrontNeighborDirection() == null))
          {
             next = RobotStep.MoveForward;
             turbo = false;
          }
          else if ( (robotLocation.isWallLeft() == false) &&
-                  (getLeftNeighborDirection() == Direction.Directionless))
+                  (getLeftNeighborDirection() == null))
          {
             next = RobotStep.RotateLeft;
             moveQueue.add(RobotStep.MoveForward);
@@ -146,7 +146,7 @@ public class Tremaux extends RobotBase
    {
       if (robotLocation.getCurrentLocation().getY() == 1)
       {
-         return Direction.Directionless;
+         return null;
       }
       return getNeighborDirection(robotLocation.getDirection());
    }
@@ -187,7 +187,7 @@ public class Tremaux extends RobotBase
       }
       else
       {
-         return Direction.Directionless;
+         return null;
       }
       return getDirection(there);
    }

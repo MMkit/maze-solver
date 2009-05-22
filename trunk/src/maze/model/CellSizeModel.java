@@ -3,16 +3,30 @@ package maze.model;
 import java.util.Observable;
 
 /**
- * This model stores the sizes of the cells and wall segments that are drawn
- * to the screen.
+ * This model stores the sizes of the cells and wall segments that are drawn to
+ * the screen.
  */
-public class CellSizeModel extends Observable
+public class CellSizeModel extends Observable implements CellSizeModelInterface
 {
 
    private int cellWidth = 40;
    private int cellHeight = 40;
    private int wallWidth = 10;
    private int wallHeight = 10;
+
+   @Override
+   public String toString()
+   {
+      return "Cell[w=" +
+             this.cellWidth +
+             ",h=" +
+             this.cellHeight +
+             "] Wall[w=" +
+             this.wallWidth +
+             ",h=" +
+             this.wallHeight +
+             "]";
+   }
 
    public void setCellWidth(int cellWidth)
    {
@@ -36,6 +50,7 @@ public class CellSizeModel extends Observable
       if (this.cellHeight != cellHeight)
       {
          this.cellHeight = cellHeight;
+         System.out.println("Cell Height Changed: " + this.cellHeight);
          super.setChanged();
       }
    }
@@ -104,5 +119,15 @@ public class CellSizeModel extends Observable
    public int getWallHeightHalf()
    {
       return wallHeight / 2;
+   }
+
+   public int getCellWidthInner()
+   {
+      return this.cellWidth - this.wallWidth;
+   }
+
+   public int getCellHeightInner()
+   {
+      return this.cellHeight = this.wallHeight;
    }
 }

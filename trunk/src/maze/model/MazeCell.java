@@ -59,6 +59,29 @@ public final class MazeCell implements Comparable<MazeCell>
    }
 
    /**
+    * Create a new <code>MazeCell</code> that has been moved one cell in the
+    * given direction.
+    * @param direction The direction of the neighbor you want.
+    * @return A new cell.
+    */
+   public MazeCell neighbor(Direction direction)
+   {
+      switch (direction)
+      {
+         case North :
+            return this.plusY(-1);
+         case South :
+            return this.plusY(1);
+         case East :
+            return this.plusX(1);
+         case West :
+            return this.plusX(-1);
+         default :
+            throw new IllegalArgumentException("Unkown direction: " + direction);
+      }
+   }
+
+   /**
     * Get the X coordinate.
     * @return The X coordinate, starting from 1.
     */
