@@ -61,14 +61,21 @@ public class StatViewPanel extends JPanel
          @Override
          public void valueChanged(ListSelectionEvent e)
          {
-            Object o = mazeList.getList().getSelectedValue();
-            MazeInfo mi = (MazeInfo) o;
-            maze = new MazeModel(mi.getModel());
-            RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                        new MazeCell(1, 16),
-                                                                        Direction.North));
-            tracker.reload(algorithm, robotModel);
-            displayStats();
+            try
+            {
+               Object o = mazeList.getList().getSelectedValue();
+               MazeInfo mi = (MazeInfo) o;
+               maze = new MazeModel(mi.getModel());
+               RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
+                                                                           new MazeCell(1, 16),
+                                                                           Direction.North));
+               tracker.reload(algorithm, robotModel);
+               displayStats();
+            }
+            catch (RuntimeException e1)
+            {
+               e1.printStackTrace();
+            }
          }
       });
 
