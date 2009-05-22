@@ -560,8 +560,6 @@ public class Floodfill extends RobotBase
    public void setRobotLocation(RobotModel model)
    {
       this.robotLocation = model;
-      maze.setSize(robotLocation.getMazeSize());
-      maze.clearMaze();
       distance = null;
    }
 }
