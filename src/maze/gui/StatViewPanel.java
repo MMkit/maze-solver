@@ -51,7 +51,7 @@ public class StatViewPanel extends JPanel
       mazes.setModel(cbm);
 
       Box selectionBox = new Box(BoxLayout.X_AXIS);
-      selectionBox.add(mazes);
+      //selectionBox.add(mazes);
 
       final MazeList mazeList = new MazeList(this.mazeView);
       selectionBox.add(mazeList);
