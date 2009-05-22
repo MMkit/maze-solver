@@ -42,7 +42,7 @@ public class StatViewPanel extends JPanel
    private JComboBox algorithmSpinner;
    private JComboBox mazes;
 
-   private final MazeViewOld mazeView = new MazeViewOld();
+   private final MazeView mazeView = new MazeView();
 
    public StatViewPanel()
    {
