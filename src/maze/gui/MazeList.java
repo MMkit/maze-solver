@@ -28,7 +28,7 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
    /**
     * The maze view we are attached to.
     */
-   private final MazeView mazeView;
+   private final MazeViewInterface mazeView;
    /**
     * Holds a global list selection model that is shared among all instances of
     * this class. This allows all the currently selected mazes to be changed at
@@ -53,7 +53,7 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
     * Sole Constructor.
     * @param mazeView The MazeView this MazeList is to be attached to.
     */
-   public MazeList(MazeView mazeView)
+   public MazeList(MazeViewInterface mazeView)
    {
       this.mazeView = mazeView;
       super.setBorder(BorderFactory.createTitledBorder("Available Mazes"));

@@ -2,6 +2,7 @@ package maze.model;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -29,17 +30,19 @@ public class RobotModelMaster
     */
    private Direction direction = Direction.North;
    /**
+    * 
+    */
+   private final RobotPathModel robotPathModel = new RobotPathModel();
+   /**
     * The list of cells that the
     */
    private final List<MazeCell> pathTaken = new ArrayList<MazeCell>();
 
-   private final List<MazeCell> firstRun = new ArrayList<MazeCell>();
 
-   private final List<MazeCell> bestRun = new ArrayList<MazeCell>();
    /**
     * All the maze cells that have already been visited.
     */
-   private final Set<MazeCell> history = new TreeSet<MazeCell>();
+   private final Set<MazeCell> history = new HashSet<MazeCell>(128);
 
    /**
     * Sole constructor.
@@ -61,26 +64,12 @@ public class RobotModelMaster
 
       pathTaken.add(startCell);
       history.add(startCell);
+      this.robotPathModel.addLocation(startCell);
    }
 
-   public boolean isWallFront()
+   public boolean isWall(Direction direction)
    {
-      return this.mazeModel.getWall(this.currentLocation, this.direction).isSet();
-   }
-
-   public boolean isWallBack()
-   {
-      return this.mazeModel.getWall(this.currentLocation, this.direction.getOpposite()).isSet();
-   }
-
-   public boolean isWallLeft()
-   {
-      return this.mazeModel.getWall(this.currentLocation, this.direction.getLeft()).isSet();
-   }
-
-   public boolean isWallRight()
-   {
-      return this.mazeModel.getWall(this.currentLocation, this.direction.getRight()).isSet();
+      return this.mazeModel.getWall(this.currentLocation, direction).isSet();
    }
 
    public Dimension getMazeSize()
@@ -124,111 +113,69 @@ public class RobotModelMaster
    }
 
    /**
-    * Attempts to move the robot with the given step. If the
+    * Attempts to move the robot with the given step.
     * @param nextStep
     */
-   public void takeNextStep(RobotStep nextStep)
+   public void takeNextStep(final RobotStep nextStep)
    {
-      if (nextStep == RobotStep.RotateLeft)
+      Direction moveDirection = null;
+      switch (nextStep)
       {
-         direction = direction.getLeft();
+         case RotateLeft :
+            this.direction = direction.getLeft();
+            break;
+         case RotateRight :
+            this.direction = direction.getRight();
+            break;
+         case MoveForward :
+            moveDirection = this.direction;
+            break;
+         case MoveBackward :
+            moveDirection = this.direction.getOpposite();
+            break;
+         default :
+            throw new IllegalArgumentException("Invalid step: " + nextStep);
       }
-      else if (nextStep == RobotStep.RotateRight)
+
+      if (moveDirection != null)
       {
-         direction = direction.getRight();
-      }
-      else if (nextStep == RobotStep.MoveForward)
-      {
-         if (this.isWallFront() == true)
+         if (this.isWall(moveDirection))
          {
             throw new RuntimeException("The mouse just crashed into a wall");
          }
          else
          {
-            if (direction == Direction.North)
-            {
-               currentLocation = new MazeCell(currentLocation.getX(), currentLocation.getY() - 1);
-            }
-            else if (direction == Direction.South)
-            {
-               currentLocation = new MazeCell(currentLocation.getX(), currentLocation.getY() + 1);
-            }
-            else if (direction == Direction.East)
-            {
-               currentLocation = new MazeCell(currentLocation.getX() + 1, currentLocation.getY());
-            }
-            else if (direction == Direction.West)
-            {
-               currentLocation = new MazeCell(currentLocation.getX() - 1, currentLocation.getY());
-            }
-            pathTaken.add(currentLocation);
-            history.add(currentLocation);
-         }
-      }
-      else if (nextStep == RobotStep.MoveBackward)
-      {
-         if (this.isWallBack() == true)
-         {
-            throw new RuntimeException("The mouse just crashed into a wall");
-         }
-         else
-         {
-            if (direction == Direction.North)
-            {
-               currentLocation = new MazeCell(currentLocation.getX(), currentLocation.getY() + 1);
-            }
-            else if (direction == Direction.South)
-            {
-               currentLocation = new MazeCell(currentLocation.getX(), currentLocation.getY() - 1);
-            }
-            else if (direction == Direction.East)
-            {
-               currentLocation = new MazeCell(currentLocation.getX() - 1, currentLocation.getY());
-            }
-            else if (direction == Direction.West)
-            {
-               currentLocation = new MazeCell(currentLocation.getX() + 1, currentLocation.getY());
-            }
+            this.currentLocation = this.currentLocation.neighbor(moveDirection);
+            this.robotPathModel.addLocation(this.currentLocation);
             pathTaken.add(currentLocation);
             history.add(currentLocation);
          }
       }
 
-      MazeCell goal1 = new MazeCell(mazeModel.getSize().width / 2, mazeModel.getSize().height / 2);
-      MazeCell goal2 = goal1.plusX(1);
-      MazeCell goal3 = goal1.plusY(1);
-      MazeCell goal4 = goal2.plusY(1);
-      if (currentLocation.equals(goal1) ||
-          currentLocation.equals(goal2) ||
-          currentLocation.equals(goal3) ||
-          currentLocation.equals(goal4))
+      // Are we in a winning cell?
+      if (this.isAtCenter())
       {
-         if (firstRun.isEmpty())
+         if (this.robotPathModel.firstPath.isEmpty())
          {
             for (int i = 0; i < pathTaken.size(); i++)
             {
-               firstRun.add(pathTaken.get(i));
-               bestRun.add(pathTaken.get(i));
+               this.robotPathModel.firstPath.add(pathTaken.get(i));
+               this.robotPathModel.bestPath.add(pathTaken.get(i));
             }
          }
          else
-         {
+         { // First run was not empty.
             MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
-            if ( (bestRun.size()) > (pathTaken.size() - (pathTaken.lastIndexOf(startCell) + 1)))
+            if ( (this.robotPathModel.bestPath.size()) > (pathTaken.size() - (pathTaken.lastIndexOf(startCell) + 1)))
             {
-               bestRun.clear();
+               this.robotPathModel.bestPath.clear();
                for (int i = pathTaken.lastIndexOf(startCell); i < pathTaken.size(); i++)
                {
-                  bestRun.add(pathTaken.get(i));
+                  this.robotPathModel.bestPath.add(pathTaken.get(i));
                }
             }
          }
       }
-   }
-
-   public boolean isExplored(MazeCell location)
-   {
-      return history.contains(location);
    }
 
    public Set<MazeCell> getNonHistory()
@@ -274,12 +221,52 @@ public class RobotModelMaster
 
    public List<MazeCell> getFirstRun()
    {
-      return firstRun;
+      return this.robotPathModel.firstPath;
    }
 
    public List<MazeCell> getBestRun()
    {
-      return bestRun;
+      return this.robotPathModel.bestPath;
+   }
+
+   public RobotPathModel getRobotPathModel()
+   {
+      return this.robotPathModel;
+   }
+
+   /**
+    * Tells you if the robot is currently at the starting position.
+    * @return
+    */
+   public boolean isAtStart()
+   {
+      MazeCell start = new MazeCell(1, this.mazeModel.getSize().height);
+      if (this.currentLocation.equals(start))
+      {
+         return true;
+      }
+      return false;
+   }
+
+   /**
+    * Tells you if the robot is in the center 2x2 box. The winning area.
+    * @return
+    */
+   public boolean isAtCenter()
+   {
+      MazeCell goal1 = new MazeCell(this.mazeModel.getSize().width / 2,
+                                    this.mazeModel.getSize().height / 2);
+      MazeCell goal2 = goal1.plusX(1);
+      MazeCell goal3 = goal1.plusY(1);
+      MazeCell goal4 = goal3.plusX(1);
+      if ( (this.currentLocation.equals(goal1)) ||
+          (this.currentLocation.equals(goal2)) ||
+          (this.currentLocation.equals(goal3)) ||
+          (this.currentLocation.equals(goal4)))
+      {
+         return true;
+      }
+      return false;
    }
 
 }

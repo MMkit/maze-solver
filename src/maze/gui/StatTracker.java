@@ -4,17 +4,12 @@
 package maze.gui;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 
-import maze.ai.Floodfill;
-import maze.ai.RightWallFollower;
 import maze.ai.RobotBase;
+import maze.ai.RobotController;
 import maze.ai.RobotStep;
-import maze.ai.Tremaux;
-import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
 import maze.model.RobotModel;
@@ -43,44 +38,47 @@ public class StatTracker
    private int currentRunTurnsTaken;
    private boolean[][] explored;
    public static int USELESS = -1;
-   public static int HOPELESS = 4000;
+   public static int HOPELESS = 2000;
 
    private RobotBase algorithm;
-   private RobotModel mouse;
+   private RobotModelMaster mouse;
    private Dimension mazeSize;
 
+   private RobotController controller;
+
    /**
-	* This constructor requires an algorithm and a mouse.  It will then
-	* determine a handful of relevant statistics for the user to access
-	*/
-   public StatTracker(RobotBase algorithm, RobotModel mouse)
+    * This constructor requires an algorithm and a mouse. It will then determine
+    * a handful of relevant statistics for the user to access
+    */
+   public StatTracker(RobotBase algorithm, RobotModelMaster mouse)
+   {
+      this.reload(algorithm, mouse);
+   }
+
+   /**
+    * This function requires an algorithm and a mouse. It will then determine a
+    * handful of relevant statistics for the user to access
+    */
+   public void reload(RobotBase algorithm, RobotModelMaster mouse)
    {
       this.algorithm = algorithm;
       this.mouse = mouse;
+
+      this.controller = new RobotController(new MazeModel(mouse.getMazeSize().width,
+                                                          mouse.getMazeSize().height), algorithm);
 
       this.initialize();
       this.recompute();
    }
 
    /**
-	* This function requires an algorithm and a mouse.  It will then
-	* determine a handful of relevant statistics for the user to access
-	*/
-   public void reload(RobotBase algorithm, RobotModel mouse)
-   {
-      this.algorithm = algorithm;
-      this.mouse = mouse;
-
-      this.initialize();
-      this.recompute();
-   }
-
-   /**
-	* This function prepares the mouse and algorithm to get ready to start a
-	* run.
-	*/
+    * This function prepares the mouse and algorithm to get ready to start a
+    * run.
+    */
    private void initialize()
    {
+      this.controller.initialize();
+
       mazeSize = mouse.getMazeSize();
       explored = new boolean[mazeSize.width][mazeSize.width];
       for (int i = 0; i < mazeSize.width; i++)
@@ -101,14 +99,14 @@ public class StatTracker
       previousRunTotalSquaresTraversed = 0;
       previousRunTotalTurnsTaken = 0;
 
-      algorithm.setRobotLocation(mouse);
+      algorithm.setRobotLocation(new RobotModel(mouse));
       algorithm.initialize();
    }
 
    /**
-	* This function simulates a run through the maze for the mouse and 
-	* algorithm.
-	*/
+    * This function simulates a run through the maze for the mouse and
+    * algorithm.
+    */
    private void recompute()
    {
       setExplored();
@@ -134,10 +132,9 @@ public class StatTracker
       {
          bestRunSquaresTraversed = currentRunSquaresTraversed;
          bestRunTurnsTaken = currentRunTurnsTaken;
-         bestRunTotalSquaresTraversed = previousRunTotalSquaresTraversed 
-         			+ currentRunSquaresTraversed;
-         bestRunTotalTurnsTaken = previousRunTotalTurnsTaken 
-         			+ currentRunTurnsTaken;
+         bestRunTotalSquaresTraversed = previousRunTotalSquaresTraversed +
+                                        currentRunSquaresTraversed;
+         bestRunTotalTurnsTaken = previousRunTotalTurnsTaken + currentRunTurnsTaken;
          previousRunTotalSquaresTraversed = totalSquaresTraversed;
          previousRunTotalTurnsTaken = totalTurnsTaken;
          trackARun();
@@ -147,11 +144,39 @@ public class StatTracker
 
    private void trackARun()
    {
-      RobotStep nextStep;
 
       currentRunSquaresTraversed = 0;
       currentRunTurnsTaken = 0;
 
+      //      while (!this.controller.isRobotDone() && !this.controller.getRobotModelMaster().isAtCenter())
+      //      {
+      //         if (this.controller.nextStep().isTurn())
+      //         {
+      //            totalTurnsTaken++;
+      //            currentRunTurnsTaken++;
+      //         }
+      //         else
+      //         {
+      //            totalSquaresTraversed++;
+      //            currentRunSquaresTraversed++;
+      //            setExplored();
+      //         }
+      //      }
+      //
+      //      while (!this.controller.isRobotDone() && !this.controller.getRobotModelMaster().isAtStart())
+      //      {
+      //         if (this.controller.nextStep().isTurn())
+      //         {
+      //            totalTurnsTaken++;
+      //         }
+      //         else
+      //         {
+      //            totalSquaresTraversed++;
+      //            setExplored();
+      //         }
+      //      }
+
+      RobotStep nextStep;
       while ( (totalSquaresTraversed < HOPELESS) && (isAtCenter() == false))
       {
          nextStep = algorithm.nextStep();
@@ -203,8 +228,10 @@ public class StatTracker
       MazeCell goal2 = goal1.plusX(1);
       MazeCell goal3 = goal1.plusY(1);
       MazeCell goal4 = goal3.plusX(1);
-      if ( (here.equals(goal1)) || (here.equals(goal2)) || (here.equals(goal3)) 
-    		  || (here.equals(goal4)))
+      if ( (here.equals(goal1)) ||
+          (here.equals(goal2)) ||
+          (here.equals(goal3)) ||
+          (here.equals(goal4)))
       {
          return true;
       }
@@ -261,16 +288,6 @@ public class StatTracker
    public int getThroughBestRunTurns()
    {
       return bestRunTotalTurnsTaken;
-   }
-
-   public boolean getExplored(MazeCell here)
-   {
-      return mouse.getHistory().contains(here);
-   }
-
-   public ArrayList<MazeCell> getAllExplored()
-   {
-      return (ArrayList<MazeCell>) mouse.getHistory();
    }
 
    public Set<MazeCell> getAllUnexplored()

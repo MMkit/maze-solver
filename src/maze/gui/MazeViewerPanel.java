@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -15,6 +16,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -39,7 +41,7 @@ public final class MazeViewerPanel extends JPanel
 {
    private static final int SIDEBAR_WIDTH = 150;
    private static final int SPEED_STEPS = 25;
-   private final MazeView myMazeView = new MazeView();
+   private final MazeView2 myMazeView = new MazeView2();
    private final MazeList mazeList = new MazeList(this.myMazeView);
    private final JList aiList = new JList();
    private final RobotAnimator animator = new RobotAnimator();
@@ -80,6 +82,39 @@ public final class MazeViewerPanel extends JPanel
       this.aiList.setModel(RobotBase.getRobotListModel());
       this.aiList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       this.aiList.setSelectedIndex(0);
+
+      // Create graphical options checkboxe's.
+      final Box optionsPanel = Box.createHorizontalBox();
+      sidePanel.add(optionsPanel);
+      optionsPanel.setBorder(BorderFactory.createTitledBorder("Simulation Graphics Options"));
+      optionsPanel.add(Box.createHorizontalGlue());
+      optionsPanel.add(new JCheckBox(this.fogAction));
+      optionsPanel.add(Box.createHorizontalGlue());
+      optionsPanel.add(new JCheckBox(this.pathCurrentAction));
+      optionsPanel.add(Box.createHorizontalGlue());
+      optionsPanel.add(new JCheckBox(this.drawUnderstandingAction));      optionsPanel.add(Box.createHorizontalGlue());
+      // This is more of a test of the theme switching.
+      final JCheckBox check = new JCheckBox("Classic");
+      optionsPanel.add(check);
+      optionsPanel.add(Box.createHorizontalGlue());
+
+      check.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            if (check.isSelected())
+            {
+               myMazeView.paints = new MazePainterClassic(myMazeView.csm);
+            }
+            else
+            {
+               myMazeView.paints = new MazePainterDefault(myMazeView.csm);
+            }
+            myMazeView.invalidateAllCells();
+            myMazeView.componentResized(null);
+         }
+      });
 
       //Create animation speed slider.
       final JPanel sliderPanel = new JPanel();
@@ -255,7 +290,9 @@ public final class MazeViewerPanel extends JPanel
                Object o = this.aiList.getSelectedValue();
                if (o != null)
                {
-                  this.animator.start(this.myMazeView, (RobotBase) aiList.getSelectedValue(), callback);
+                  this.animator.start(this.myMazeView,
+                                      (RobotBase) aiList.getSelectedValue(),
+                                      callback);
                   this.animator.setMovesPerStep(SPEED_STEPS - speedSliderModel.getValue());
                }
                else
@@ -290,13 +327,60 @@ public final class MazeViewerPanel extends JPanel
       aiList.setEnabled(true);
       Main.getPrimaryFrameInstance().setSimulation(false);
       this.myMazeView.setRobotPosition(null, 0);
-      this.myMazeView.loadUnexplored(null);
-      this.myMazeView.loadFirstRun(null);
-      this.myMazeView.loadBestRun(null);
-      this.myMazeView.loadCurrentRun(null);
-      this.myMazeView.loadUnderstanding(null);
-      this.myMazeView.loadUnderstandingDir(null);
+      this.myMazeView.invalidateAllCells();
       this.setAnimationButtonStates();
    }
+
+   /**
+    * Control whether fog of war is drawn.
+    */
+   private final Action fogAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Fog");
+         this.putValue(Action.SELECTED_KEY, true);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         myMazeView.setDrawFog(this.getValue(Action.SELECTED_KEY) == Boolean.TRUE);
+      }
+   };
+
+   /**
+    * Control whether the current path is drawn.
+    */
+   private final Action pathCurrentAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Path");
+         this.putValue(Action.SELECTED_KEY, true);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         myMazeView.setDrawPathCurrent(this.getValue(Action.SELECTED_KEY) == Boolean.TRUE);
+      }
+   };
+
+   /**
+    * Used to create a check box for toggling on/off whether or not to draw the
+    * understanding information.
+    */
+   private final Action drawUnderstandingAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Understanding");
+         this.putValue(Action.SELECTED_KEY, true);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         myMazeView.setDrawUnderstanding(this.getValue(Action.SELECTED_KEY) == Boolean.TRUE);
+      }
+   };
 
 }

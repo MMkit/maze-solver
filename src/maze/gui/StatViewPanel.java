@@ -27,7 +27,6 @@ import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeInfo;
 import maze.model.MazeModel;
-import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
 public class StatViewPanel extends JPanel
@@ -43,7 +42,7 @@ public class StatViewPanel extends JPanel
    private JComboBox algorithmSpinner;
    private JComboBox mazes;
 
-   private final MazeView mazeView = new MazeView();
+   private final MazeViewOld mazeView = new MazeViewOld();
 
    public StatViewPanel()
    {
@@ -66,10 +65,9 @@ public class StatViewPanel extends JPanel
                Object o = mazeList.getList().getSelectedValue();
                MazeInfo mi = (MazeInfo) o;
                maze = new MazeModel(mi.getModel());
-               RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                           new MazeCell(1, 16),
-                                                                           Direction.North));
-               tracker.reload(algorithm, robotModel);
+               tracker.reload(algorithm, new RobotModelMaster(maze,
+                                                              new MazeCell(1, 16),
+                                                              Direction.North));
                displayStats();
             }
             catch (RuntimeException e1)
@@ -86,10 +84,9 @@ public class StatViewPanel extends JPanel
             Object o = mazes.getSelectedItem();
             MazeInfo mi = (MazeInfo) o;
             maze = new MazeModel(mi.getModel());
-            RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                        new MazeCell(1, 16),
-                                                                        Direction.North));
-            tracker.reload(algorithm, robotModel);
+            tracker.reload(algorithm, new RobotModelMaster(maze,
+                                                           new MazeCell(1, 16),
+                                                           Direction.North));
             displayStats();
          }
       });
@@ -111,16 +108,10 @@ public class StatViewPanel extends JPanel
       {
          public void actionPerformed(ActionEvent action)
          {
-            //String value = (String) algorithmSpinner.getValue();
             algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
-            //int newAlgorithm = algorithmNames.indexOf(value);
-            RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                        new MazeCell(1, 16),
-                                                                        Direction.North));
-            //System.out.println(value);
-            //System.out.println(String.valueOf(newAlgorithm));
-            //algorithm = algorithms.get(newAlgorithm);
-            tracker.reload(algorithm, robotModel);
+            tracker.reload(algorithm, new RobotModelMaster(maze,
+                                                           new MazeCell(1, 16),
+                                                           Direction.North));
             displayStats();
          }
       };
@@ -191,11 +182,10 @@ public class StatViewPanel extends JPanel
       }
 
       this.algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
-      RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                  new MazeCell(1, 16),
-                                                                  Direction.North));
-      this.tracker = new StatTracker(algorithm, robotModel);
 
+      this.tracker = new StatTracker(algorithm, new RobotModelMaster(maze,
+                                                                     new MazeCell(1, 16),
+                                                                     Direction.North));
       displayStats();
    }
 
@@ -246,11 +236,8 @@ public class StatViewPanel extends JPanel
       MazeInfo mi = (MazeInfo) o;
       this.maze = new MazeModel(mi.getModel());
 
-      RobotModel robotModel = new RobotModel(new RobotModelMaster(maze,
-                                                                  new MazeCell(1, 16),
-                                                                  Direction.North));
       algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
-      tracker.reload(algorithm, robotModel);
+      tracker.reload(algorithm, new RobotModelMaster(maze, new MazeCell(1, 16), Direction.North));
       displayStats();
    }
 
