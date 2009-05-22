@@ -50,7 +50,6 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
       if (this.cellHeight != cellHeight)
       {
          this.cellHeight = cellHeight;
-         System.out.println("Cell Height Changed: " + this.cellHeight);
          super.setChanged();
       }
    }
