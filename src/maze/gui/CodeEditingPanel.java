@@ -81,7 +81,14 @@ public class CodeEditingPanel extends JSplitPane
          @Override
          public boolean accept(File f)
          {
-            return f.getName().toLowerCase().endsWith(".py");
+        	 if (f.isDirectory()) 
+        	 { 
+        	      return true;
+        	 }  
+        	 else 
+        	 { 
+        		 return f.getName().toLowerCase().endsWith(".py");
+        	 }
          }
 
          @Override
