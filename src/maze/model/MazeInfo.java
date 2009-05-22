@@ -1,19 +1,16 @@
 package maze.model;
 
-//import java.awt.Dimension;
-//import java.io.DataInputStream;
 import java.io.File;
-//import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Observable;
-import java.util.Observer;
+
+import maze.util.Listener;
 
 /**
  * Stores information about a Maze including its file name and model.
- * @author desolc
+ * @author John Smith
  */
-public class MazeInfo implements Observer
+public class MazeInfo implements Listener<MazeCell>
 {
    private MazeModel mModel;
    private String mPath;
@@ -37,10 +34,11 @@ public class MazeInfo implements Observer
          mi.isMutable = false;
          mi.mName = name;
          mi.mModel = maze;
-         mi.mModel.addObserver(mi);
+         mi.mModel.addDelayedListener(mi);
          returned = mi;
       }
-      catch (Exception e){}
+      catch (Exception e)
+      {}
       return returned;
    }
 
@@ -64,8 +62,8 @@ public class MazeInfo implements Observer
          else
             mi.mName = file.getName();
          mi.mModel = maze;
-         
-         mi.mModel.addObserver(mi);
+
+         mi.mModel.addDelayedListener(mi);
          returned = mi;
       }
       catch (IOException ex)
@@ -83,7 +81,7 @@ public class MazeInfo implements Observer
       mi.mPath = "";
       mi.mModel = new MazeModel();
       mi.isDirty = true;
-      mi.mModel.addObserver(mi);
+      mi.mModel.addDelayedListener(mi);
       mi.isExtended = extended;
       return mi;
    }
@@ -102,8 +100,8 @@ public class MazeInfo implements Observer
          System.out.println("Saving Maze Error");
          return false;
       }
-      
-	   return true;
+
+      return true;
    }
 
    public String getName()
@@ -155,15 +153,8 @@ public class MazeInfo implements Observer
     * Private constructor. Instances must be retrieved from factory methods.
     */
    private MazeInfo()
-   {
-   }
+   {}
 
-   @Override
-   public void update(Observable o, Object arg)
-   {
-      isDirty = true;
-   }
-   
    @Override
    public String toString()
    {
@@ -176,9 +167,15 @@ public class MazeInfo implements Observer
       theClone.isDirty = isDirty;
       theClone.isExtended = isExtended;
       theClone.isMutable = true;
-      theClone.mModel = (MazeModel)mModel.clone();
+      theClone.mModel = (MazeModel) mModel.clone();
       theClone.mName = mName;
       theClone.mPath = mPath;
       return theClone;
+   }
+
+   @Override
+   public void eventFired(MazeCell event)
+   {
+      this.isDirty = true;
    }
 }
