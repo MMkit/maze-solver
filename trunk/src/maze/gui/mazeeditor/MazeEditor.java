@@ -12,6 +12,7 @@ import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,6 +20,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +29,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
+import javax.swing.filechooser.FileFilter;
 import maze.Main;
 import maze.gui.MazeList;
 import maze.gui.MenuControlled;
@@ -261,7 +264,32 @@ public class MazeEditor extends JPanel implements MenuControlled
    @Override
    public void open()
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      JFileChooser chooser = new JFileChooser();
+      chooser.setFileFilter(new MazeFileFilter());
+      if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this))
+      {
+         MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
+         File selected = chooser.getSelectedFile();
+         String path = "";
+         try
+         {
+            path = selected.getAbsolutePath();
+         }
+         catch(SecurityException ex)
+         {
+            String msg = "You do not have permission to open this file";
+            JOptionPane.showMessageDialog(this, msg,
+                                          "Maze Open Error",
+                                          JOptionPane.ERROR_MESSAGE);
+            return;
+         }
+         if (!mim.addMaze(selected))
+            JOptionPane.showMessageDialog(this, "<html>Unable to load " +
+                                          "<br />" + path + "</html",
+                                          "Maze Open Error",
+                                          JOptionPane.ERROR_MESSAGE);
+
+      }
    }
 
    class TemplateActionListener implements ActionListener
@@ -338,7 +366,24 @@ public class MazeEditor extends JPanel implements MenuControlled
          mMazeView.repaint();
       }
    }
+}
 
+class MazeFileFilter extends FileFilter
+{
+   @Override
+   public boolean accept(File f)
+   {
+      if (f.isDirectory())
+         return true;
+      String lower = f.getName().toLowerCase();
+      if (lower.endsWith(".maz") || lower.endsWith(".mz2"))
+         return true;
+      return false;
+   }
 
-
+   @Override
+   public String getDescription()
+   {
+      return "Maze files (.maz, .mz2)";
+   }
 }
