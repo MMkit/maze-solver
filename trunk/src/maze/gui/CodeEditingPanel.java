@@ -221,6 +221,12 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       }
    }
 
+   @Override
+   public void close()
+   {
+      closeScriptAction.actionPerformed(null);
+   }
+
    private final class CodeInformationPanel extends JPanel
    {
    }

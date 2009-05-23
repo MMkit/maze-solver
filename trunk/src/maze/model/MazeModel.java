@@ -524,6 +524,9 @@ public class MazeModel extends ListenerSubject<MazeCell>
          byte[] fileContents = new byte[256];
          setSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
 
+         if (in.available() != 256)
+            throw new IOException("Invalid format");
+
          in.read(fileContents);
 
          for (int i = 1; i <= 16; i++)
@@ -556,7 +559,8 @@ public class MazeModel extends ListenerSubject<MazeCell>
       }
    }
 
-   public String loadMaze(String filename) throws FileNotFoundException
+   public String loadMaze(String filename) throws FileNotFoundException,
+                                                  IOException
    {
 
       //Now for the actual file i/o
@@ -574,25 +578,18 @@ public class MazeModel extends ListenerSubject<MazeCell>
          System.out.println("first place");
          System.out.println(filename);
       }
-      try
-      {
-         if (filename.endsWith(".mz2"))
-            name = loadMaze(in, true);
-         else
-            loadMaze(in, false);
-      }
-      catch (IOException e)
-      {
-         System.out.println("2nd place");
-      }
+      
+      if (filename.endsWith(".mz2"))
+         name = loadMaze(in, true);
+      else
+         loadMaze(in, false);
+
       try
       {
          in.close();
       }
-      catch (IOException e)
-      {
-         System.out.println("3rd place");
-      }
+      catch (IOException e){}
+      
       return name;
    }
 

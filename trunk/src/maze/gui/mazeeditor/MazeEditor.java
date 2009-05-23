@@ -14,14 +14,13 @@ import java.beans.PropertyChangeListener;
 
 import java.io.File;
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -36,6 +35,7 @@ import maze.gui.MenuControlled;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 import maze.model.MazeModel;
+
 
 /**
  * This panel creates a GUI to edit mazes.
@@ -292,6 +292,28 @@ public class MazeEditor extends JPanel implements MenuControlled
       }
    }
 
+   @Override
+   public void close()
+   {
+      MazeInfo mi = (MazeInfo)mOpenMazes.getList().getSelectedValue();
+      if (mi != null)
+      {
+         if (!mi.isMutable())
+         {
+            JOptionPane.showMessageDialog(this, "This maze cannot be closed",
+                                          "Maze Close",
+                                          JOptionPane.INFORMATION_MESSAGE);
+            return;
+         }
+         if (mi.isDirty())
+            saveCurrent();
+         MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
+         JList list = mOpenMazes.getList();
+         list.setSelectedIndex(list.getSelectedIndex()-1);
+         mim.close(mi);
+      }
+   }
+
    class TemplateActionListener implements ActionListener
    {
       private MazeTemplate mt;
@@ -367,7 +389,6 @@ public class MazeEditor extends JPanel implements MenuControlled
       }
    }
 }
-
 class MazeFileFilter extends FileFilter
 {
    @Override

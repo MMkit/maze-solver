@@ -95,7 +95,9 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
    {
       try
       {
-         this.mazeView.setModel( ((MazeInfo) this.myList.getSelectedValue()).getModel());
+         MazeInfo mi = (MazeInfo)this.myList.getSelectedValue();
+         if (mi != null)
+            this.mazeView.setModel(mi.getModel());
       }
       catch (RuntimeException ex)
       {

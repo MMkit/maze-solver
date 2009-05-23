@@ -13,4 +13,5 @@ public interface MenuControlled
 {
    public void saveCurrent();
    public void open();
+   public void close();
 }
