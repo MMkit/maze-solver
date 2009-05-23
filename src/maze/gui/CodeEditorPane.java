@@ -161,7 +161,6 @@ public final class CodeEditorPane extends RTextScrollPane
    public void saveScriptFileAs()
    {
       JFileChooser chooser = new JFileChooser();
-      //chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
       int result = chooser.showSaveDialog(this);
       if (result == JFileChooser.APPROVE_OPTION)
       {
@@ -176,7 +175,6 @@ public final class CodeEditorPane extends RTextScrollPane
                                        PYTHON_FILE_EXTENSION);
          }
       }
-      System.out.println("Save As: " + this.scriptFile);
       this.saveToFile();
    }
 
