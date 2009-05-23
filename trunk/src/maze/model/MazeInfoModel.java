@@ -109,4 +109,9 @@ public class MazeInfoModel
       mMazeInfoModel.addElement(mi);
       return true;
    }
+
+   public void addMaze(MazeInfo mi)
+   {
+      mMazeInfoModel.addElement(mi);
+   }
 }

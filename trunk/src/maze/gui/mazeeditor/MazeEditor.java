@@ -23,15 +23,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 import maze.Main;
 import maze.gui.MazeList;
+import maze.gui.MenuControlled;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 import maze.model.MazeModel;
@@ -40,7 +38,7 @@ import maze.model.MazeModel;
  * This panel creates a GUI to edit mazes.
  * @author John Smith
  */
-public class MazeEditor extends JPanel
+public class MazeEditor extends JPanel implements MenuControlled
 {
    private static final String NEXT_ORIENTATION_ACTION_KEY = "nextOrientation";
    private static final String TOP_HELP =
@@ -78,10 +76,44 @@ public class MazeEditor extends JPanel
       buildPanel();
    }
 
-   public boolean saveCurrent()
+   public void newMaze()
    {
-      return true;
+      NewMazeDialog dialog;
+      String result;
+      dialog = new NewMazeDialog(Main.getPrimaryFrameInstance());
+      if ((result = dialog.showDialog()) == null)
+         return;
+
+      MazeInfoModel mim =
+              Main.getPrimaryFrameInstance().getMazeInfoModel();
+
+      if (result.equals(NewMazeDialog.MAZ))
+      {
+         MazeInfo newMi = mim.createNew("New Maze " + mLastNew, false);
+         if (newMi == null)
+         {
+            JOptionPane.showMessageDialog(MazeEditor.this,
+                    "Unable to create new maze", "Maze Creation Error",
+                    JOptionPane.OK_OPTION);
+            return;
+         } // if (newMi == null)
+         mLastNew++;
+      } // if (result.equals(NewMazeDialog.MAZ))
+      else if (result.equals(NewMazeDialog.MZ2))
+      {
+         MazeInfo newMi = mim.createNew(dialog.getText(), true);
+         if (newMi == null)
+         {
+            JOptionPane.showMessageDialog(MazeEditor.this,
+                    "Unable to create new maze", "Maze Creation Error",
+                    JOptionPane.OK_OPTION);
+            return;
+         } // if (newMi == null)
+         MazeModel mm = newMi.getModel();
+         mm.setSize(dialog.getMazeSize());
+      } // else if (result.equals(NewMazeDialog.MZ2))
    }
+
 
    private void buildPanel()
    {
@@ -206,69 +238,30 @@ public class MazeEditor extends JPanel
       newMaze.setToolTipText("Create a new maze");
       newMaze.addActionListener(new ActionListener()
       {
-         private String query = "What would you like to call your new maze?";
-         private Box messagePanel;
-         private JTextField input = new JTextField();
-
-         {
-            JLabel message = new JLabel(query);
-            messagePanel = new Box(BoxLayout.Y_AXIS);
-            messagePanel.add(message);
-            messagePanel.add(input);
-            input.addAncestorListener(new AncestorListener()
-            {
-               @Override
-               public void ancestorAdded(AncestorEvent event)
-               {
-                  input.requestFocus();
-               }
-
-               @Override
-               public void ancestorRemoved(AncestorEvent event){}
-               @Override
-               public void ancestorMoved(AncestorEvent event){}
-            });
-         }
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            NewMazeDialog dialog;
-            String result;
-            dialog = new NewMazeDialog(Main.getPrimaryFrameInstance());
-            if ((result = dialog.showDialog()) == null)
-               return;
-
-            MazeInfoModel mim =
-                    Main.getPrimaryFrameInstance().getMazeInfoModel();
-
-            if (result.equals(NewMazeDialog.MAZ))
-            {
-               MazeInfo newMi = mim.createNew("New Maze " + mLastNew, false);
-               if (newMi == null)
-               {
-                  JOptionPane.showMessageDialog(MazeEditor.this,
-                          "Unable to create new maze", "Maze Creation Error",
-                          JOptionPane.OK_OPTION);
-                  return;
-               }
-               mLastNew++;
-            }
-            else if (result.equals(NewMazeDialog.MZ2))
-            {
-               MazeInfo newMi = mim.createNew(dialog.getText(), true);
-               if (newMi == null)
-               {
-                  JOptionPane.showMessageDialog(MazeEditor.this,
-                          "Unable to create new maze", "Maze Creation Error",
-                          JOptionPane.OK_OPTION);
-                  return;
-               }
-               MazeModel mm = newMi.getModel();
-               mm.setSize(dialog.getMazeSize());
-            }
+            newMaze();
          }
       });
       return newMaze;
+   }
+
+   @Override
+   public void saveCurrent()
+   {
+      MazeInfo mi = (MazeInfo)mOpenMazes.getList().getSelectedValue();
+      if (mi != null)
+      {
+         mi = Main.getPrimaryFrameInstance().saveMaze(mi);
+         mOpenMazes.getList().setSelectedValue(mi, true);
+      }
+   }
+
+   @Override
+   public void open()
+   {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 
    class TemplateActionListener implements ActionListener
