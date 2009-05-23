@@ -29,7 +29,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author desolc
+ * @author Johnathan Smith
  */
 public class NewMazeDialog extends JDialog
 {

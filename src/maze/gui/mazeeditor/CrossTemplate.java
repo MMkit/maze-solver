@@ -1,29 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import maze.Main;
 
 /**
- *
- * @author desolc
+ * This class provides a cross shaped MazeTemplate that can be grown or shrunk
+ * by increasing the length of its arms.
+ * @author Johnathan Smith
  */
 public class CrossTemplate extends ConjoinedMazeTemplate
 {
    private static final int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;
+
+   /**
+    * This constructor loads the Cross.png image and sets the template
+    * description to "Cross".  The template is then updated.
+    */
    public CrossTemplate()
    {
       this.mIcon = Main.getImageResource("gui/mazeeditor/images/Cross.png");
       this.mDesc = "Cross";
       updateTemplate();
    }
+
+   /**
+    * Does nothing
+    */
    @Override
    public void nextOrientation(){}
 
+   /**
+    * Increases the length of each arm of the cross by 1
+    */
    @Override
    public void grow()
    {
@@ -31,6 +39,9 @@ public class CrossTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Decreases the length of each arm of the cross by 1
+    */
    @Override
    public void shrink()
    {
@@ -41,6 +52,9 @@ public class CrossTemplate extends ConjoinedMazeTemplate
       }
    }
 
+   /**
+    * Resets the template to be a cross with each arm being length 1
+    */
    @Override
    public void reset()
    {
@@ -51,6 +65,9 @@ public class CrossTemplate extends ConjoinedMazeTemplate
       }
    }
 
+   /**
+    * Rebuilds the template based on its size
+    */
    public void updateTemplate()
    {
       mCenter = new TemplatePeg();

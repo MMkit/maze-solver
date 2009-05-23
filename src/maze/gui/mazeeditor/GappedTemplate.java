@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
@@ -12,8 +7,9 @@ import maze.Main;
 import maze.gui.CellSize;
 
 /**
- *
- * @author desolc
+ * This class provides a corner shaped MazeTemplate that can be grown or shrunk
+ * by increasing the length of its sides.
+ * @author Johnathan Smith
  */
 public class GappedTemplate extends MazeTemplate
 {

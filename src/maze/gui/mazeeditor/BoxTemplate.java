@@ -3,8 +3,9 @@ package maze.gui.mazeeditor;
 import maze.Main;
 
 /**
- *
- * @author desolc
+ * This class provides a square shaped MazeTemplate that can be grown or shrunk
+ * by increasing the length of its sides.
+ * @author Johnathan Smith
  */
 public class BoxTemplate extends ConjoinedMazeTemplate
 {
@@ -12,6 +13,10 @@ public class BoxTemplate extends ConjoinedMazeTemplate
    private static int MIN_SIZE = 1;
    private int mSize = MIN_SIZE;
 
+   /**
+    * This constructor loads the Box.png image and sets the template description
+    * to "Box".  The template is then updated.
+    */
    public BoxTemplate()
    {
       this.mIcon = Main.getImageResource("gui/mazeeditor/images/Box.png");
@@ -19,6 +24,9 @@ public class BoxTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Toggles between the box being above the mouse or below the mouse
+    */
    @Override
    public void nextOrientation()
    {
@@ -42,6 +50,9 @@ public class BoxTemplate extends ConjoinedMazeTemplate
       }
    }
 
+   /**
+    * Increases the length of each side of the box by 1
+    */
    @Override
    public void grow()
    {
@@ -49,6 +60,9 @@ public class BoxTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Decreases the length of each side by 1
+    */
    @Override
    public void shrink()
    {
@@ -59,6 +73,9 @@ public class BoxTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Resets the template to be a box with size equal to 1
+    */
    @Override
    public void reset()
    {
@@ -67,6 +84,10 @@ public class BoxTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Rebuilds the template based on the size of the box and whether it is
+    * above or below the mouse pointer.
+    */
    private void updateTemplate()
    {
       mCenter = new TemplatePeg();

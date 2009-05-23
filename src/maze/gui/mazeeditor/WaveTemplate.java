@@ -8,7 +8,7 @@ package maze.gui.mazeeditor;
 
 /**
  *
- * @author desolc
+ * @author Johnathan Smith
  */
 public class WaveTemplate extends ConjoinedMazeTemplate
 {

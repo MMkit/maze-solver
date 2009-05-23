@@ -1,15 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import maze.Main;
 
 /**
- *
- * @author desolc
+ * This class provides a corner shaped MazeTemplate that can be grown or shrunk
+ * by increasing the length of its sides.
+ * @author Johnathan Smith
  */
 public class CornerTemplate extends ConjoinedMazeTemplate
 {
@@ -17,6 +13,10 @@ public class CornerTemplate extends ConjoinedMazeTemplate
    private Corner currentCorner = Corner.BottomLeft;
    private int mSize = MIN_SIZE;
 
+   /**
+    * This constructor loads the Corner.png image and sets the template
+    * description to "Corner".  The template is then updated.
+    */
    public CornerTemplate()
    {
       this.mIcon = Main.getImageResource("gui/mazeeditor/images/Corner.png");
@@ -24,6 +24,9 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Rotates the corner template 90 degress clockwise.
+    */
    @Override
    public void nextOrientation()
    {
@@ -32,6 +35,9 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Increases the length of each side of the corner by 1
+    */
    @Override
    public void grow()
    {
@@ -39,6 +45,9 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Decreases the length of each side by 1
+    */
    @Override
    public void shrink()
    {
@@ -49,6 +58,9 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       }
    }
 
+   /**
+    * Resets the template to be a corner with size equal to 1
+    */
    @Override
    public void reset()
    {
@@ -57,6 +69,9 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       updateTemplate();
    }
 
+   /**
+    * Rebuilds the template based on its size and orientation.
+    */
    public void updateTemplate()
    {
       mCenter = new TemplatePeg();
@@ -122,6 +137,10 @@ public class CornerTemplate extends ConjoinedMazeTemplate
       }
    }
 
+   /**
+    * This enumation provides the four possible orientations that the corner
+    * template can be in.
+    */
    private static enum Corner
    {
       BottomLeft,
