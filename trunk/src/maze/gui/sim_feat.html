@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>API Documentation</title>
+<title>Simulation Interface</title>
 <style>
 	body {
 		
@@ -11,53 +11,41 @@
 	}
 </style>
 </head><body>
-<p>&nbsp;</p>
-<p>Your Python script must have a function called <code>nextStep()</code>. This function should return one of the following predefined values</p>
+<h1>Simulation Interface</h1>
+<p>The side panel provide the user interface for the mouse animation.</p>
+
+<p>The features are:</p>
 <ul>
-	<li><code>Forward</code>
+	<li><code>Avalible Mazes</code>
 		<ul>
-			<li>Moves you one cell forward.</li>
+			<li>Here the map is selected.</li>
 		</ul>
 	</li>
-	<li><code>Backward</code>
+	<li><code>Avalible Algorithms</code>
 		<ul>
-			<li>Moves you one cell backward.</li>
+			<li>Here the algorithm is selected.</li>
 		</ul>
 	</li>
-	<li><code>Left</code>
+	<li><code>Simulation Graphics Options</code>
 		<ul>
-			<li>Rotates you 90 degrees to the left.</li>
+			<li><b>Fog</b> - shows a fog on the path the mouse does not see.</li>
+			<li><b>Path</b> - shows a green path for current, blue for first path, and red for best path</li>
+	<li><b>Info</b> - shows information on how the algorithm works</li>
+			<li><b>Classic</b> - shows a classic map style.</li>
 		</ul>
 	</li>
-	<li><code>Right</code>
+	<li><code>Simulation Speed</code>
 		<ul>
-			<li>Rotates you 90 degrees to the right.</li>
+			<li>use to control how face the mouse travels.</li>
+		</ul>
+	</li>
+	<li><code>Simulation controls</code>
+		<ul>
+			<li><b>Stop</b> - halts the simulation and set mouse back to start.</li>
+			<li><b>Pause</b> - pauses the simulation.</li>
+			<li><b>Start</b> - starts the simulation where it left off.</li>
 		</ul>
 	</li>
 </ul>
-<p>You are given a predefined variable called <code>maze</code> which provides methods to observe the world around you.</p>
-
-<p>The methods are:</p>
-
-	<li><code>isWallFront()</code>
-		<ul>
-			<li>return true if there a wall in front</li>
-		</ul>
-	</li>
-	<li><code>isWallBack()</code>
-		<ul>
-			<li>return true if there a wall in front</li>
-		</ul>
-	</li>
-	<li><code>isWallLeft()</code>
-		<ul>
-			<li>return true if there a wall in left</li>
-		</ul>
-	</li>
-	<li><code>isWallRight()</code>
-		<ul>
-			<li>return true if there a wall in right</li>
-		</ul>
-	</li>
 
 </body></html>
