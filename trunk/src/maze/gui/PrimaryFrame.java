@@ -191,20 +191,20 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       // Help menu.
       JMenu helpMenu = new JMenu("Help");
       menuBar.add(helpMenu);
-      
+
       //Help
       JMenuItem helpItem = new JMenuItem("Help");
       helpMenu.add(helpItem);
-      
+
       helpItem.addActionListener(new ActionListener()
       {
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            helpInfo.createAndShowGUI();
+            HelpInfo.createAndShowGUI();
          }
       });
-     
+
       // Look and feel menu.
       JMenu lookAndFeel = new JMenu("Look And Feel");
       helpMenu.add(lookAndFeel);
@@ -232,7 +232,16 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            JOptionPane.showMessageDialog(PrimaryFrame.this, "We need and about dialog.");
+            String m = "<html><b>Version:</b> 0.9.0<br />"
+                       + "You can find more information about this application"
+                       + "at the following project page.<br />"
+                       + "<a href=\"http://code.google.com/p/maze-solver/\">"
+                       + "http://code.google.com/p/maze-solver/</a><br />"
+                       + "</html>";
+            JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                          m,
+                                          "About",
+                                          JOptionPane.INFORMATION_MESSAGE);
          }
       });
 
@@ -285,9 +294,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      if (paths.contains(file.getCanonicalPath().toLowerCase()))
                      {
                         JOptionPane.showMessageDialog(this,
-                                    "That file is being used by another maze",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
+                                                      "That file is being used by another maze",
+                                                      "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
                      }
                      else
                      {
@@ -327,10 +336,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          {
             int result;
             result = JOptionPane.showConfirmDialog(this,
-                            "Would you like to save \"" + mi.getName() + "\"",
-                            "Save Maze?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
+                                                   "Would you like to save \"" +
+                                                         mi.getName() +
+                                                         "\"",
+                                                   "Save Maze?",
+                                                   JOptionPane.YES_NO_OPTION,
+                                                   JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_NO_OPTION)
             {
                MazeInfo toSave = mi;
@@ -338,8 +349,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                {
                   toSave = mi.getMutableClone();
                   Box box = new Box(BoxLayout.Y_AXIS);
-                  JLabel label = new JLabel("What would you like ot call the"+
-                                            " maze?");
+                  JLabel label = new JLabel("What would you like ot call the" + " maze?");
                   JTextField field = new JTextField();
                   box.add(label);
                   box.add(field);
@@ -347,8 +357,10 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                   while (true)
                   {
                      result = JOptionPane.showConfirmDialog(PrimaryFrame.this,
-                             box, "Maze Name", JOptionPane.OK_CANCEL_OPTION,
-                             JOptionPane.QUESTION_MESSAGE);
+                                                            box,
+                                                            "Maze Name",
+                                                            JOptionPane.OK_CANCEL_OPTION,
+                                                            JOptionPane.QUESTION_MESSAGE);
                      if (result == JOptionPane.OK_OPTION)
                      {
                         if (field.getText().length() > 0)
@@ -360,7 +372,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      else
                         break;
                   }
-                  if(newName == null)
+                  if (newName == null)
                      continue;
                   toSave.setName(newName);
                   toSave.setPath("");
