@@ -25,7 +25,7 @@ import maze.Main;
  * to control the AI robot.
  * @author Luke Last
  */
-public class CodeEditingPanel extends JSplitPane
+public class CodeEditingPanel extends JSplitPane implements MenuControlled
 {
    private final JTabbedPane editorTabs = new JTabbedPane();
 
@@ -137,7 +137,51 @@ public class CodeEditingPanel extends JSplitPane
       return "";
    }
 
-   public void openScript()
+   /**
+    * Closes the currently visible editor tab.
+    */
+   final Action closeScriptAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Close AI Script");
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         CodeEditorPane editor = (CodeEditorPane) editorTabs.getSelectedComponent();
+         if (editor != null)
+         {
+            editor.removeFromRobotModel();
+            editorTabs.remove(editor);
+         }
+
+      }
+   };
+
+   /**
+    * Saves the contents of the currently selected editor tab.
+    */
+   @Override
+   public void saveCurrent()
+   {
+      try
+      {
+         CodeEditorPane editor = (CodeEditorPane)this.editorTabs.getSelectedComponent();
+         if (editor != null)
+         {
+            editor.saveScriptFile();
+            this.editorTabs.setTitleAt(this.editorTabs.indexOfComponent(editor), editor.toString());
+         }
+      }
+      catch (RuntimeException ex)
+      {
+         ex.printStackTrace();
+      }
+   }
+
+   @Override
+   public void open()
    {
       JFileChooser fc = new JFileChooser();
       //fc.setCurrentDirectory(new File(".." + File.separator + "Scripts"));
@@ -176,45 +220,6 @@ public class CodeEditingPanel extends JSplitPane
          }
       }
    }
-
-   /**
-    * Saves the contents of the currently selected editor tab.
-    */
-   public void saveScript()
-   {
-      try
-      {
-         CodeEditorPane editor = (CodeEditorPane) this.editorTabs.getSelectedComponent();
-         editor.saveScriptFile();
-         this.editorTabs.setTitleAt(this.editorTabs.indexOfComponent(editor), editor.toString());
-      }
-      catch (RuntimeException ex)
-      {
-         ex.printStackTrace();
-      }
-   }
-
-   /**
-    * Closes the currently visible editor tab.
-    */
-   final Action closeScriptAction = new AbstractAction()
-   {
-      {
-         this.putValue(Action.NAME, "Close AI Script");
-      }
-
-      @Override
-      public void actionPerformed(ActionEvent e)
-      {
-         CodeEditorPane editor = (CodeEditorPane) editorTabs.getSelectedComponent();
-         if (editor != null)
-         {
-            editor.removeFromRobotModel();
-            editorTabs.remove(editor);
-         }
-
-      }
-   };
 
    private final class CodeInformationPanel extends JPanel
    {

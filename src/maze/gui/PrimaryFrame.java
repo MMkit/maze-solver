@@ -1,5 +1,6 @@
 package maze.gui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -38,6 +39,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 {
    private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
    private MazeViewerPanel mazeViewer;
+   private MazeEditor mazeEditor;
    private CodeEditingPanel codeEditorPanel;
    private HelpInfo helpInfo;
    private final JTabbedPane mainTabs = new JTabbedPane();
@@ -67,6 +69,15 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
       //New maze.
       JMenuItem newMaze = new JMenuItem("Maze");
+      newMaze.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            mainTabs.setSelectedComponent(mazeEditor);
+            mazeEditor.newMaze();
+         }
+      });
       newMenu.add(newMaze);
 
       JMenuItem newScript = new JMenuItem("AI Script");
@@ -76,17 +87,44 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            codeEditorPanel.createNewEditor();
             mainTabs.setSelectedComponent(codeEditorPanel);
+            codeEditorPanel.createNewEditor();
          }
       });
 
       // Open file.
       JMenuItem fileLoad = new JMenuItem("Open...");
+      fileLoad.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            Component c = mainTabs.getSelectedComponent();
+            if (c instanceof MenuControlled)
+            {
+               MenuControlled mc = (MenuControlled)c;
+               mc.open();
+            }
+         }
+      });
+
       fileMenu.add(fileLoad);
 
       // Save
       JMenuItem fileSave = new JMenuItem("Save");
+      fileSave.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            Component c = mainTabs.getSelectedComponent();
+            if (c instanceof MenuControlled)
+            {
+               MenuControlled mc = (MenuControlled)c;
+               mc.saveCurrent();
+            }
+         }
+      });
       fileMenu.add(fileSave);
 
       // Close file.
@@ -118,7 +156,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            codeEditorPanel.openScript();
+            codeEditorPanel.open();
             mainTabs.setSelectedComponent(codeEditorPanel);
          }
       });
@@ -131,7 +169,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            codeEditorPanel.saveScript();
+            codeEditorPanel.saveCurrent();
          }
       });
 
@@ -252,7 +290,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       this.add(mainTabs);
 
       mainTabs.add("Micro Mouse Simulator", this.mazeViewer);
-      mainTabs.add("Maze Editor", new MazeEditor());
+      mainTabs.add("Maze Editor", mazeEditor = new MazeEditor());
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
       this.addWindowListener(this);
@@ -269,7 +307,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       return mMazeInfoModel;
    }
 
-   public void saveMaze(MazeInfo mi)
+   public MazeInfo saveMaze(MazeInfo mi)
    {
       DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
       TreeSet<String> paths = new TreeSet<String>();
@@ -281,7 +319,46 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       }
       if (mi.isDirty())
       {
-         if (mi.getPath() == null || mi.getPath().equals(""))
+         MazeInfo toSave = mi;
+         if (!mi.isMutable())
+         {
+            toSave = mi.getMutableClone();
+            Box box = new Box(BoxLayout.Y_AXIS);
+            JLabel label = new JLabel("What would you like ot call the" +
+                                      " maze?");
+            JTextField field = new JTextField();
+            box.add(label);
+            box.add(field);
+            String newName = null;
+            while (true)
+            {
+               int result = JOptionPane.showConfirmDialog(
+                                                PrimaryFrame.this,
+                                                box,
+                                                "Maze Name",
+                                                JOptionPane.OK_CANCEL_OPTION,
+                                                JOptionPane.QUESTION_MESSAGE);
+               if (result == JOptionPane.OK_OPTION)
+               {
+                  if (field.getText().length() > 0)
+                  {
+                     newName = field.getText();
+                     break;
+                  }
+               }
+               else
+                  break;
+            }
+            if (newName == null)
+               return null;
+            mi.clearDirty();
+            toSave.setName(newName);
+            toSave.setPath("");
+            mMazeInfoModel.addMaze(toSave);
+            saveMaze(toSave);
+            return toSave;
+         }
+         else if (mi.getPath() == null || mi.getPath().equals(""))
          {
             JFileChooser chooser = new JFileChooser(".");
             while (true)
@@ -294,9 +371,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      if (paths.contains(file.getCanonicalPath().toLowerCase()))
                      {
                         JOptionPane.showMessageDialog(this,
-                                                      "That file is being used by another maze",
-                                                      "Error",
-                                                      JOptionPane.ERROR_MESSAGE);
+                                    "That file is being used by another maze",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
                      }
                      else
                      {
@@ -319,6 +396,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          } // if (mi.getPath().equals(""))
          mi.store();
       } // if (mi.isDirty())
+      return mi;
    }
 
    @Override
@@ -343,42 +421,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                                                    JOptionPane.YES_NO_OPTION,
                                                    JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_NO_OPTION)
-            {
-               MazeInfo toSave = mi;
-               if (!mi.isMutable())
-               {
-                  toSave = mi.getMutableClone();
-                  Box box = new Box(BoxLayout.Y_AXIS);
-                  JLabel label = new JLabel("What would you like ot call the" + " maze?");
-                  JTextField field = new JTextField();
-                  box.add(label);
-                  box.add(field);
-                  String newName = null;
-                  while (true)
-                  {
-                     result = JOptionPane.showConfirmDialog(PrimaryFrame.this,
-                                                            box,
-                                                            "Maze Name",
-                                                            JOptionPane.OK_CANCEL_OPTION,
-                                                            JOptionPane.QUESTION_MESSAGE);
-                     if (result == JOptionPane.OK_OPTION)
-                     {
-                        if (field.getText().length() > 0)
-                        {
-                           newName = field.getText();
-                           break;
-                        }
-                     }
-                     else
-                        break;
-                  }
-                  if (newName == null)
-                     continue;
-                  toSave.setName(newName);
-                  toSave.setPath("");
-               }
-               saveMaze(toSave);
-            }
+               saveMaze(mi);
          }
       } // for (int i = 0; i < cbm.getSize(); i++)
    }

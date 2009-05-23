@@ -94,6 +94,7 @@ public class MazeInfo implements Listener<MazeCell>
             mModel.saveMaze(mPath, mName);
          else
             mModel.saveMaze(mPath, null);
+         isDirty = false;
       }
       catch (IOException e)
       {
@@ -122,6 +123,12 @@ public class MazeInfo implements Listener<MazeCell>
    public boolean isDirty()
    {
       return isDirty;
+   }
+
+   public void clearDirty()
+   {
+      if (!isMutable)
+         isDirty = false;
    }
 
    public boolean isMutable()
