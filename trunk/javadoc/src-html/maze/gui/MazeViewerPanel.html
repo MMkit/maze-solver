@@ -387,18 +387,16 @@
 <FONT color="green">384</FONT>          {<a name="line.384"></a>
 <FONT color="green">385</FONT>             if (this.getValue(Action.SELECTED_KEY) == Boolean.TRUE)<a name="line.385"></a>
 <FONT color="green">386</FONT>             {<a name="line.386"></a>
-<FONT color="green">387</FONT>                myMazeView.paints = new MazePainterClassic(myMazeView.csm);<a name="line.387"></a>
+<FONT color="green">387</FONT>                myMazeView.setPainterDelegate(new MazePainterClassic());<a name="line.387"></a>
 <FONT color="green">388</FONT>             }<a name="line.388"></a>
 <FONT color="green">389</FONT>             else<a name="line.389"></a>
 <FONT color="green">390</FONT>             {<a name="line.390"></a>
-<FONT color="green">391</FONT>                myMazeView.paints = new MazePainterDefault(myMazeView.csm);<a name="line.391"></a>
+<FONT color="green">391</FONT>                myMazeView.setPainterDelegate(new MazePainterDefault());<a name="line.391"></a>
 <FONT color="green">392</FONT>             }<a name="line.392"></a>
-<FONT color="green">393</FONT>             myMazeView.invalidateAllCells();<a name="line.393"></a>
-<FONT color="green">394</FONT>             myMazeView.componentResized(null);<a name="line.394"></a>
-<FONT color="green">395</FONT>          }<a name="line.395"></a>
-<FONT color="green">396</FONT>       };<a name="line.396"></a>
-<FONT color="green">397</FONT>    <a name="line.397"></a>
-<FONT color="green">398</FONT>    }<a name="line.398"></a>
+<FONT color="green">393</FONT>          }<a name="line.393"></a>
+<FONT color="green">394</FONT>       };<a name="line.394"></a>
+<FONT color="green">395</FONT>    <a name="line.395"></a>
+<FONT color="green">396</FONT>    }<a name="line.396"></a>
 
 
 

@@ -5,7 +5,7 @@
         	doctitle="Micro Mouse" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false"
         	packagenames="maze.model,maze.ai,maze.gui,maze.gui.mazeeditor" source="1.6"
         	sourcefiles="src/maze/Main.java" sourcepath="src" splitindex="true" use="true" version="true"
-        	linksource="true"
+        	linksource="true"  additionalparam="-notimestamp"
         />
     </target>
 </project>
