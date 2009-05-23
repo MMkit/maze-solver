@@ -39,6 +39,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
    private MazeViewerPanel mazeViewer;
    private CodeEditingPanel codeEditorPanel;
+   private HelpInfo helpInfo;
    private final JTabbedPane mainTabs = new JTabbedPane();
    private final JMenu mouseMenu = new JMenu("Mouse Options");
 
@@ -190,7 +191,20 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       // Help menu.
       JMenu helpMenu = new JMenu("Help");
       menuBar.add(helpMenu);
-
+      
+      //Help
+      JMenuItem helpItem = new JMenuItem("Help");
+      helpMenu.add(helpItem);
+      
+      helpItem.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            helpInfo.createAndShowGUI();
+         }
+      });
+     
       // Look and feel menu.
       JMenu lookAndFeel = new JMenu("Look And Feel");
       helpMenu.add(lookAndFeel);
