@@ -68,7 +68,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       fileMenu.add(newMenu);
 
       //New maze.
-      JMenuItem newMaze = new JMenuItem("Maze");
+      JMenuItem newMaze = new JMenuItem("Maze...");
       newMaze.addActionListener(new ActionListener()
       {
          @Override
@@ -80,7 +80,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       });
       newMenu.add(newMaze);
 
-      JMenuItem newScript = new JMenuItem("AI Script");
+      JMenuItem newScript = new JMenuItem("AI Script...");
       newMenu.add(newScript);
       newScript.addActionListener(new ActionListener()
       {
@@ -160,6 +160,8 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       // Mouse options
 
       menuBar.add(mouseMenu);
+      // This can be deleted.
+      mouseMenu.setVisible(false);
 
       // Load AI
       JMenuItem mouseLoad = new JMenuItem("Load AI Script");

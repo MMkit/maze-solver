@@ -20,6 +20,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import maze.ai.PythonScriptRobot;
 import maze.ai.RobotBase;
@@ -36,11 +38,15 @@ import org.python.core.PyList;
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 
+/**
+ * Creates an AI script text editor in Python.
+ * @author Luke Last
+ */
 public final class CodeEditorPane extends RTextScrollPane
 {
    public static final String NEW_SCRIPT_NAME = "New Python Script";
    private static final String PYTHON_FILE_EXTENSION = ".py";
-   private static final String ROBO_MODEL_VAR_NAME = "maze";
+   private static final String ROBOT_MODEL_VAR_NAME = "maze";
    private final RSyntaxTextArea textArea = new RSyntaxTextArea();
    private RobotBase connectedRobot;
    private PythonInterpreter currentInterpreter;
@@ -123,6 +129,7 @@ public final class CodeEditorPane extends RTextScrollPane
       this.textArea.getKeymap().addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
                                                                              InputEvent.SHIFT_DOWN_MASK),
                                                       action);
+
       this.addToRobotModel();
    }
 
@@ -149,6 +156,9 @@ public final class CodeEditorPane extends RTextScrollPane
       RobotBase.getRobotListModel().addElement(this.connectedRobot);
    }
 
+   /**
+    * Removes this script from the global List of algorithms.
+    */
    void removeFromRobotModel()
    {
       RobotBase.getRobotListModel().removeElement(this.connectedRobot);
@@ -305,9 +315,9 @@ public final class CodeEditorPane extends RTextScrollPane
       interp.set("Left", RobotStep.RotateLeft);
       interp.set("Right", RobotStep.RotateRight);
       //We create and set a dummy maze variable so the user can analyze its methods.
-      interp.set(ROBO_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new MazeModel(),
-                                                                          new MazeCell(1, 16),
-                                                                          Direction.North)));
+      interp.set(ROBOT_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new MazeModel(),
+                                                                           new MazeCell(1, 16),
+                                                                           Direction.North)));
       interp.exec(this.textArea.getText());
       this.currentInterpreter = interp;
       return interp;
@@ -317,7 +327,7 @@ public final class CodeEditorPane extends RTextScrollPane
    {
       try
       {
-         this.currentInterpreter.set(ROBO_MODEL_VAR_NAME, model);
+         this.currentInterpreter.set(ROBOT_MODEL_VAR_NAME, model);
       }
       catch (Exception ex)
       {

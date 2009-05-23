@@ -53,7 +53,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       //Set up the documentation tabs.
       final JTabbedPane docTabs = new JTabbedPane();
 
-      docTabs.add("Code Information", new CodeInformationPanel());
+      //docTabs.add("Code Information", new CodeInformationPanel());
       docTabs.add("API Documentation", new JScrollPane(docPane));
 
       //Set up split pane.
