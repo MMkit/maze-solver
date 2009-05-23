@@ -265,13 +265,13 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
             this.paints.drawFog(g, area);
          }
          // Draw a current path of dots.
-         if (this.drawPathCurrent && this.robotPathModel.getPathCurrent().contains(cell))
+         if (this.drawPathCurrent && this.robotPathModel.getPathRecent().contains(cell))
          {
             final EnumSet<Direction> directions = EnumSet.noneOf(Direction.class);
             for (final Direction dir : this.getAdjacentDirections(cell))
             {
                if (!this.model.getWall(cell, dir).isSet() &&
-                   this.robotPathModel.getPathCurrent().contains(cell.neighbor(dir)))
+                   this.robotPathModel.getPathRecent().contains(cell.neighbor(dir)))
                {
                   directions.add(dir);
                }
@@ -422,7 +422,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       }
       if (this.drawPathCurrent && this.robotPathModel != null)
       {
-         this.drawPath(g, this.paints.getRunCurrent(), this.robotPathModel.getPathCurrent(), 0);
+         this.drawPath(g, this.paints.getRunCurrent(), this.robotPathModel.getPathRecent(), 0);
       }
       if (this.drawUnderstanding)
       {

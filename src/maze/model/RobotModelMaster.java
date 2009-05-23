@@ -1,11 +1,9 @@
 package maze.model;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import maze.ai.RobotStep;
 
@@ -30,19 +28,9 @@ public class RobotModelMaster
     */
    private Direction direction = Direction.North;
    /**
-    * 
+    * Stores all the information about where the robot has been.
     */
-   private final RobotPathModel robotPathModel = new RobotPathModel();
-   /**
-    * The list of cells that the
-    */
-   private final List<MazeCell> pathTaken = new ArrayList<MazeCell>();
-
-
-   /**
-    * All the maze cells that have already been visited.
-    */
-   private final Set<MazeCell> history = new HashSet<MazeCell>(128);
+   private final RobotPathModel robotPathModel;
 
    /**
     * Sole constructor.
@@ -57,16 +45,25 @@ public class RobotModelMaster
          throw new IllegalArgumentException("MazeModel cannot be null");
 
       this.mazeModel = mazeModel;
+      if (currentLocation == null)
+         currentLocation = new MazeCell(1, this.mazeModel.getSize().height);
       this.currentLocation = currentLocation;
+      if (direction == null)
+         direction = Direction.North;
       this.direction = direction;
 
       MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
 
-      pathTaken.add(startCell);
-      history.add(startCell);
+      this.robotPathModel = new RobotPathModel(startCell);
       this.robotPathModel.addLocation(startCell);
    }
 
+   /**
+    * Tells if a wall exists in the given direction from the robots current
+    * location.
+    * @param direction The direction to look.
+    * @return True if a wall exists.
+    */
    public boolean isWall(Direction direction)
    {
       return this.mazeModel.getWall(this.currentLocation, direction).isSet();
@@ -97,19 +94,9 @@ public class RobotModelMaster
       this.direction = direction;
    }
 
-   public Set<MazeCell> getHistory()
-   {
-      return history;
-   }
-
    public MazeModel getMazeModel()
    {
       return mazeModel;
-   }
-
-   public List<MazeCell> getPathTaken()
-   {
-      return pathTaken;
    }
 
    /**
@@ -147,31 +134,28 @@ public class RobotModelMaster
          {
             this.currentLocation = this.currentLocation.neighbor(moveDirection);
             this.robotPathModel.addLocation(this.currentLocation);
-            pathTaken.add(currentLocation);
-            history.add(currentLocation);
          }
       }
 
       // Are we in a winning cell?
       if (this.isAtCenter())
       {
-         if (this.robotPathModel.firstPath.isEmpty())
+         if (this.robotPathModel.getPathFirst().isEmpty())
          {
-            for (int i = 0; i < pathTaken.size(); i++)
-            {
-               this.robotPathModel.firstPath.add(pathTaken.get(i));
-               this.robotPathModel.bestPath.add(pathTaken.get(i));
-            }
+            // This is the first time the robot has won so use the current path for first and best.
+            this.robotPathModel.getPathFirst().addAll(this.robotPathModel.getPathCurrent());
+            this.robotPathModel.getPathBest().addAll(this.robotPathModel.getPathCurrent());
          }
          else
          { // First run was not empty.
             MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
-            if ( (this.robotPathModel.bestPath.size()) > (pathTaken.size() - (pathTaken.lastIndexOf(startCell) + 1)))
+            final List<MazeCell> pathTaken = this.robotPathModel.getPathCurrent();
+            if ( (this.robotPathModel.pathBest.size()) > (pathTaken.size() - (pathTaken.lastIndexOf(startCell) + 1)))
             {
-               this.robotPathModel.bestPath.clear();
+               this.robotPathModel.pathBest.clear();
                for (int i = pathTaken.lastIndexOf(startCell); i < pathTaken.size(); i++)
                {
-                  this.robotPathModel.bestPath.add(pathTaken.get(i));
+                  this.robotPathModel.pathBest.add(pathTaken.get(i));
                }
             }
          }
@@ -180,18 +164,13 @@ public class RobotModelMaster
 
    public Set<MazeCell> getNonHistory()
    {
-      Set<MazeCell> history = this.getHistory();
-      if (history == null)
-      {
-         return null;
-      }
-      Set<MazeCell> nonHistory = new TreeSet<MazeCell>();
+      final Set<MazeCell> nonHistory = new HashSet<MazeCell>(256);
       for (int i = 1; i <= mazeModel.getSize().width; i++)
       {
          for (int j = 1; j <= mazeModel.getSize().height; j++)
          {
             MazeCell here = new MazeCell(i, j);
-            if (history.contains(here) == false)
+            if (!this.robotPathModel.hasCellBeenVisited(here))
             {
                nonHistory.add(here);
             }
@@ -200,33 +179,14 @@ public class RobotModelMaster
       return nonHistory;
    }
 
-   public List<MazeCell> getCurrentRun()
-   {
-      if (pathTaken.isEmpty())
-      {
-         return new ArrayList<MazeCell>();
-      }
-      MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
-      if (startCell.equals(pathTaken.get(pathTaken.size() - 1)))
-      {
-         return new ArrayList<MazeCell>();
-      }
-      ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>();
-      for (int i = pathTaken.lastIndexOf(new MazeCell(1, mazeModel.getSize().height)); i < pathTaken.size(); i++)
-      {
-         currentRun.add(pathTaken.get(i));
-      }
-      return currentRun;
-   }
-
    public List<MazeCell> getFirstRun()
    {
-      return this.robotPathModel.firstPath;
+      return this.robotPathModel.getPathFirst();
    }
 
    public List<MazeCell> getBestRun()
    {
-      return this.robotPathModel.bestPath;
+      return this.robotPathModel.pathBest;
    }
 
    public RobotPathModel getRobotPathModel()

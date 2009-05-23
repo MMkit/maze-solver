@@ -16,8 +16,15 @@ import maze.model.RobotModelMaster;
  */
 public final class RobotAnimator implements Runnable
 {
+   /**
+    * the maze view that this animator is attached to and updates with each
+    * animation frame.
+    */
    private MazeView2 view;
-   private RobotController controller;
+   /**
+    * The controller used to simulate the AI algorithm.
+    */
+   private RobotController robot;
    /**
     * The state that this animator is currently in.
     */
@@ -60,23 +67,26 @@ public final class RobotAnimator implements Runnable
       }
       this.view = mazeView;
       this.finishedCallback = finishedCallback;
-      this.controller = new RobotController(this.view.getModel(), robotAlgorithm);
+      this.robot = new RobotController(this.view.getModel(), robotAlgorithm);
       this.processingThread = new Thread(this, "Robot Animator");
       this.processingThread.setDaemon(true);
       this.currentState = AnimationStates.Running;
       this.processingThread.start();
    }
 
+   /**
+    * This runs in a background thread and handles the animation loop.
+    */
    @Override
    public void run()
    {
-      final RobotModelMaster model = this.controller.getRobotModelMaster();
+      final RobotModelMaster model = this.robot.getRobotModelMaster();
       this.view.setRobotPosition(this.view.getCellCenterInner(model.getCurrentLocation()),
                                  model.getDirection().getRadians());
       this.view.invalidateAllCells();
       this.view.setRobotPathModel(model.getRobotPathModel());
       this.setViewAttributes();
-      while (this.currentState != AnimationStates.Stopped && this.controller.isRobotDone() == false)
+      while (this.currentState != AnimationStates.Stopped && this.robot.isRobotDone() == false)
       {
          try
          {
@@ -85,7 +95,7 @@ public final class RobotAnimator implements Runnable
             final Direction srcDirection = model.getDirection();
             final double srcRotation = srcDirection.getRadians();
 
-            controller.nextStep(); //Move robot.
+            robot.nextStep(); //Move robot.
 
             //Get the robots new position.
             final Point destLocation = this.view.getCellCenterInner(model.getCurrentLocation());
@@ -98,10 +108,10 @@ public final class RobotAnimator implements Runnable
                destRotation = srcRotation + Math.PI / 2;
             else
                destRotation = srcRotation; //Didn't rotate.
-            
+
             final int acceleration = 4 / this.movesPerStep;
             int velocity = acceleration;
-            
+
             double rotationPercentage = 0;
 
             //Increment is fraction at a time to the destination position.
@@ -115,14 +125,16 @@ public final class RobotAnimator implements Runnable
                {
                   rotationPercentage += velocity;
                   velocity += acceleration;
-                  rotationPercentage = inc * (4/inc) / 2;
+                  rotationPercentage = inc * (4 / inc) / 2;
                }
                else
                {
                   rotationPercentage -= velocity;
                   velocity -= acceleration;
                }
-               double rot = srcRotation + (destRotation - srcRotation) * this.accelerationTransform(percentage) ;
+               double rot = srcRotation +
+                            (destRotation - srcRotation) *
+                            this.accelerationTransform(percentage);
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
@@ -158,7 +170,15 @@ public final class RobotAnimator implements Runnable
       }
       this.processingThread = null;
    }
-   
+
+   /**
+    * Transforms one fraction into another in a non-linear fashion to provide
+    * for acceleration and the deceleration. If the input is a linear sequence
+    * the output will be a sequence that accelerates from 0 to .5 and the
+    * decelerates from .5 to 1.
+    * @param input A value between 0 and 1.
+    * @return A transformed value between 0 and 1.
+    */
    private double accelerationTransform(double input)
    {
       double result = 0;
@@ -176,10 +196,14 @@ public final class RobotAnimator implements Runnable
       return result;
    }
 
+   /**
+    * Loads information from the AI algorithm in the controller to the view for
+    * drawing.
+    */
    private void setViewAttributes()
    {
-      this.view.loadUnderstanding(this.controller.getUnderstandingInt());
-      this.view.loadUnderstandingDir(this.controller.getUnderstandingDir());
+      this.view.loadUnderstanding(this.robot.getUnderstandingInt());
+      this.view.loadUnderstandingDir(this.robot.getUnderstandingDir());
    }
 
    /**
@@ -208,6 +232,10 @@ public final class RobotAnimator implements Runnable
       }
    }
 
+   /**
+    * The maximum frames per second this animator is trying to put out.
+    * @return FPS
+    */
    public int getFPS()
    {
       return 1000 / this.sleepTime;
