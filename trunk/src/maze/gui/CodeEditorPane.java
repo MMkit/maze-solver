@@ -16,6 +16,7 @@ import java.nio.CharBuffer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -37,6 +38,8 @@ import org.python.util.PythonInterpreter;
 
 public final class CodeEditorPane extends RTextScrollPane
 {
+   public static final String NEW_SCRIPT_NAME = "New Python Script";
+   private static final String PYTHON_FILE_EXTENSION = ".py";
    private static final String ROBO_MODEL_VAR_NAME = "maze";
    private final RSyntaxTextArea textArea = new RSyntaxTextArea();
    private RobotBase connectedRobot;
@@ -132,7 +135,7 @@ public final class CodeEditorPane extends RTextScrollPane
       }
       else
       {
-         return "New Python Script";
+         return NEW_SCRIPT_NAME;
       }
    }
 
@@ -151,7 +154,53 @@ public final class CodeEditorPane extends RTextScrollPane
       RobotBase.getRobotListModel().removeElement(this.connectedRobot);
    }
 
+   /**
+    * Requests the user to choose a new file name and then saves the script
+    * there.
+    */
+   public void saveScriptFileAs()
+   {
+      JFileChooser chooser = new JFileChooser();
+      //chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      int result = chooser.showSaveDialog(this);
+      if (result == JFileChooser.APPROVE_OPTION)
+      {
+         // Make sure the chosen file name has the correct extension.
+         if (chooser.getSelectedFile().getName().endsWith(PYTHON_FILE_EXTENSION))
+         {
+            this.scriptFile = chooser.getSelectedFile();
+         }
+         else
+         {
+            this.scriptFile = new File(chooser.getSelectedFile().getAbsolutePath() +
+                                       PYTHON_FILE_EXTENSION);
+         }
+      }
+      System.out.println("Save As: " + this.scriptFile);
+      this.saveToFile();
+   }
+
+   /**
+    * Saves the current script to the file it is connected to. If it is a new
+    * script and has no file that save as is called.
+    */
    public void saveScriptFile()
+   {
+      // If this script doesn't already have a file name do a save as prompt.
+      if (this.scriptFile == null)
+      {
+         this.saveScriptFileAs();
+      }
+      else
+      {
+         this.saveToFile();
+      }
+   }
+
+   /**
+    * Internal method to save the script to the current file.
+    */
+   private void saveToFile()
    {
       if (this.scriptFile != null)
       {
@@ -229,7 +278,11 @@ public final class CodeEditorPane extends RTextScrollPane
             title = selectedObj.getType().toString();
          }
 
-         JOptionPane.showMessageDialog(this, sb.toString(), title, JOptionPane.INFORMATION_MESSAGE, null);
+         JOptionPane.showMessageDialog(this,
+                                       sb.toString(),
+                                       title,
+                                       JOptionPane.INFORMATION_MESSAGE,
+                                       null);
       }
       catch (Exception e2)
       {
