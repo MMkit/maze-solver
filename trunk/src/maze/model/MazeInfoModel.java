@@ -6,7 +6,7 @@ import java.io.InputStream;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * @author desolc
+ * @author Johnathan Smith
  */
 public class MazeInfoModel
 {

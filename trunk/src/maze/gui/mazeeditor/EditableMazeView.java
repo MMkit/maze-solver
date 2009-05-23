@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import java.awt.Color;
@@ -17,15 +12,24 @@ import maze.gui.CellSize;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel.MazeWall;
+
 /**
- *
- * @author desolc
+ * This class provides a MazeView on which maze templates can be applied to the
+ * underlying model.  This view is repsonsible for drawing the current template
+ * that will be applied.
+ * @author Johnathan Smith
  */
 public class EditableMazeView extends maze.gui.MazeView
 {
    private static final int WALL_SIZE_DIVIDER = 3;
    private MazeTemplate mCurrentTemplate = null;
 
+   /**
+    * Returns a CellSize object that hass the current size and dimensions of
+    * the maze cells and walls the whole maze based on the size of this
+    * MazeView panel.
+    * @return a CellSize object with the cell, walls and maze sizes
+    */
    public CellSize getCellSize()
    {
       return new CellSize(csm.getCellWidth()-csm.getWallWidth(),
@@ -34,17 +38,28 @@ public class EditableMazeView extends maze.gui.MazeView
                           csm.getCellWidth()*model.getSize().width,
                           csm.getCellHeight()*model.getSize().height);
    }
-   
+
+   /**
+    * Resizes the wall width and height of the maze based on the size of this
+    * MazeView panel when the panel is resized.
+    * @param e the ComponentEvent passed when this component is resized
+    */
    @Override
    public void componentResized(ComponentEvent e)
    {
       super.componentResized(e);
       //We override the standard wall size here so it is easier to click on.
-      final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
+      final int wallSize = Math.min(csm.getCellWidth(),
+                              csm.getCellHeight()) / WALL_SIZE_DIVIDER;
       this.csm.setWallWidth(wallSize);
       this.csm.setWallHeight(wallSize);
    }
 
+   /**
+    * Paints the maze with a call to MazeView.paintComponent and paints the
+    * currently selected maze template if one is selected.
+    * @param arg the Graphics object that will be used for drawing operations
+    */
    @Override
    protected void paintComponent(Graphics arg)
    {
@@ -74,11 +89,22 @@ public class EditableMazeView extends maze.gui.MazeView
       }
    }
 
+   /**
+    * Sets the currently selected template to mt
+    * @param mt the new current template that will be used. May be null.
+    */
    public void setTemplate(MazeTemplate mt)
    {
       mCurrentTemplate = mt;
    }
 
+   /**
+    * Applied the currently selected template either setting walls or clearing
+    * walls based on the value of setWall.  If setWall is true, the walls under
+    * the template will be set, otherwise they will be cleared.
+    * @param setWall true if the walls under the template should be set, false
+    *                     if the walls under the template should be cleared
+    */
    public void applyTemplate(boolean setWall)
    {
       if (model == null || mCurrentTemplate == null)
@@ -131,6 +157,18 @@ public class EditableMazeView extends maze.gui.MazeView
             ms.set(setWall);
    }
 
+   /**
+    * Recursively fetches all walls from the model that will be affected by
+    * the template application.  Each peg is only visited once so that this
+    * method will not recurse infinitely.
+    * @param peg  the peg from which to start.
+    * @param visited a set of all pegs that have already be visited
+    * @param walls a Vector holding all walls that have already been found to be
+    *              affected by the template.  New walls will be added when
+    *              found.
+    * @param coords the maze coordinates for peg which may be outside of the
+    *               actual maze.
+    */
    private void applyPeg(TemplatePeg peg, TreeSet<TemplatePeg> visited,
                          Vector<MazeWall> walls, int[] coords)
    {

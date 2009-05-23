@@ -12,7 +12,7 @@ import maze.gui.CellSize;
 
 /**
  *
- * @author desolc
+ * @author Johnathan Smith
  */
 public class RungTemplate extends MazeTemplate
 {

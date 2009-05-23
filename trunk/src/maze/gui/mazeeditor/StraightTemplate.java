@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author desolc
+ * @author Johnathan Smith
  */
 public class StraightTemplate extends ConjoinedMazeTemplate
 {

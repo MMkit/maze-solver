@@ -7,7 +7,7 @@ package maze.gui;
 
 /**
  *
- * @author desolc
+ * @author Johnathan Smith
  */
 public interface MenuControlled
 {
