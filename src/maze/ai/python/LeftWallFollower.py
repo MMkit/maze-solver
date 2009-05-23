@@ -1,6 +1,10 @@
+# This algorithm will always follow the left wall.
 
+# Store a next step so we can take 2 in a row.
 next = None
 
+# This function is called by the simulator to get the
+# next step the mouse should take.
 def nextStep():
 	global next
 	if next != None:
