@@ -384,14 +384,12 @@ public final class MazeViewerPanel extends JPanel
       {
          if (this.getValue(Action.SELECTED_KEY) == Boolean.TRUE)
          {
-            myMazeView.paints = new MazePainterClassic(myMazeView.csm);
+            myMazeView.setPainterDelegate(new MazePainterClassic());
          }
          else
          {
-            myMazeView.paints = new MazePainterDefault(myMazeView.csm);
+            myMazeView.setPainterDelegate(new MazePainterDefault());
          }
-         myMazeView.invalidateAllCells();
-         myMazeView.componentResized(null);
       }
    };
 

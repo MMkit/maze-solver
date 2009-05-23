@@ -1,17 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui;
 
 /**
- *
+ *Provides a common set of methods for the maze editor and code editor panels
+ * that provide access to file operations from the main file menu.
  * @author Johnathan Smith
  */
 public interface MenuControlled
 {
    public void saveCurrent();
+
    public void open();
+
    public void close();
 }

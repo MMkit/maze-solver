@@ -3,23 +3,45 @@ package maze.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 
-import maze.Main;
-import maze.model.CellSizeModelInterface;
+import javax.swing.ImageIcon;
 
-public class MazePainterDefault extends MazePainter
+/**
+ * Provides a default theme for the maze.
+ * @author Luke Last
+ */
+public final class MazePainterDefault extends MazePainter
 {
+   private final ImageIcon pegImage = maze.Main.getImageResource("gui/images/peg.png");
 
-   public MazePainterDefault(CellSizeModelInterface cellSizeModel)
+   /**
+    * Draw a special image for the peg.
+    */
+   @Override
+   public void drawPeg(Graphics2D g, Rectangle area)
    {
-      super(cellSizeModel);
+      g.drawImage(this.pegImage.getImage(),
+                  area.x,
+                  area.y,
+                  area.x + area.width,
+                  area.y + area.height,
+                  0,
+                  0,
+                  this.pegImage.getIconWidth(),
+                  this.pegImage.getIconHeight(),
+                  null);
+      g.setColor(new Color(0,0,0,185));
+      g.fill(area);
    }
 
    /**
     * Set the default values for colors. You may also want to call
     * <code>setGradients(...)</code> to completely initialize all paints.
     */
+   @Override
    public void setDefaults()
    {
       this.cellBackground = Color.BLACK;
@@ -34,13 +56,14 @@ public class MazePainterDefault extends MazePainter
       this.runBest = new Color(255, 0, 0, 75);
       this.runCurrent = new Color(0, 255, 0, 50);
       this.hover = new Color(255, 255, 0, 100);
-      this.robotImage = Main.getImageResource("gui/images/mouse.png");
+      this.robotImage = maze.Main.getImageResource("gui/images/mouse.png");
    }
 
    /**
     * When the maze size changes we want to recalculate our gradients.
     * {@inheritDoc}
     */
+   @Override
    public void setMazeSize(Dimension size)
    {
       if (this.mazeWidth != size.width || this.mazeHeight != size.height)
@@ -68,5 +91,4 @@ public class MazePainterDefault extends MazePainter
                                           true);
       }
    }
-
 }
