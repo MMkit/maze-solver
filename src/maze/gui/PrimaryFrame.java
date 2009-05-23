@@ -129,6 +129,19 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
       // Close file.
       JMenuItem fileClose = new JMenuItem("Close");
+      fileClose.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            Component c = mainTabs.getSelectedComponent();
+            if (c instanceof MenuControlled)
+            {
+               MenuControlled mc = (MenuControlled)c;
+               mc.close();
+            }
+         }
+      });
       fileMenu.add(fileClose);
 
       // exit

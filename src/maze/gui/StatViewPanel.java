@@ -70,9 +70,12 @@ public class StatViewPanel extends JPanel
             {
                Object o = mazeList.getList().getSelectedValue();
                MazeInfo mi = (MazeInfo) o;
-               maze = new MazeModel(mi.getModel());
-               tracker.reload(algorithm, new RobotModelMaster(maze,
-                         new MazeCell(1, 16), Direction.North));
+               if (mi != null)
+               {
+                  maze = new MazeModel(mi.getModel());
+                  tracker.reload(algorithm, new RobotModelMaster(maze,
+                            new MazeCell(1, 16), Direction.North));
+               }
                displayStats();
             }
             catch (RuntimeException e1)

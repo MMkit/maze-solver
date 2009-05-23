@@ -114,4 +114,9 @@ public class MazeInfoModel
    {
       mMazeInfoModel.addElement(mi);
    }
+
+   public void close(MazeInfo mi)
+   {
+      mMazeInfoModel.removeElement(mi);
+   }
 }

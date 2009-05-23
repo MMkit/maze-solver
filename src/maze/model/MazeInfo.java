@@ -66,10 +66,7 @@ public class MazeInfo implements Listener<MazeCell>
          mi.mModel.addDelayedListener(mi);
          returned = mi;
       }
-      catch (IOException ex)
-      {
-         ex.printStackTrace();
-      }
+      catch (IOException ex){}
 
       return returned;
    }
