@@ -11,6 +11,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import java.awt.GridLayout;
 import java.net.URL;
 import java.io.IOException;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import java.awt.Dimension;
  * This show help information
  * @author Norwit Veun
  */
+
 public class HelpInfo extends JPanel 
                       implements TreeSelectionListener 
 {
@@ -28,10 +30,13 @@ public class HelpInfo extends JPanel
 
     public HelpInfo() 
     {
+        super(new GridLayout(1,0));
         //Create the nodes.
         DefaultMutableTreeNode top =
             new DefaultMutableTreeNode
-            ("Micro Mouse Maze Editor and Simulator");
+            (new pageInfo
+           ("Micro Mouse Maze Editor and Simulator",
+            "help.html"));
         createNodes(top);
 
         // create single select tree
@@ -48,7 +53,7 @@ public class HelpInfo extends JPanel
         //Create the HTML viewing pane.
         htmlPane = new JEditorPane();
         htmlPane.setEditable(false);
-        initHelp();
+        initHelpPage();
         JScrollPane htmlView = new JScrollPane(htmlPane);
 
         //Add the scroll panes to a split pane.
@@ -66,7 +71,6 @@ public class HelpInfo extends JPanel
         add(splitPane);
     }
 
-    /** Required by TreeSelectionListener interface. */
     public void valueChanged(TreeSelectionEvent e) 
     {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode)
@@ -75,15 +79,9 @@ public class HelpInfo extends JPanel
         if (node == null) return;
 
         Object nodeInfo = node.getUserObject();
-        if (node.isLeaf()) 
-	{
-            pageInfo page = (pageInfo)nodeInfo;
-            displayURL(page.pageURL);
-
-        } else 
-	{
-            displayURL(helpURL); 
-        }
+        
+        pageInfo page = (pageInfo)nodeInfo;
+        displayURL(page.pageURL);
     }
 
     private class pageInfo 
@@ -92,18 +90,18 @@ public class HelpInfo extends JPanel
         public URL pageURL;
 
         public pageInfo(String page, String filename) 
-	{
+        {
             pageName = page;
             pageURL = HelpInfo.class.getResource(filename);
             if (pageURL == null) 
-	    {
+            {
                 System.err.println("Couldn't find file: "
                                    + filename);
             }
         }
 
         public String toString() 
-	{
+        {
             return pageName;
         }
     }
@@ -111,20 +109,20 @@ public class HelpInfo extends JPanel
     private void displayURL(URL url) 
     {
         try 
-	{
-            if (url != null) 
-	    {
+        {
+            if (url != null)
+            {
                 htmlPane.setPage(url);
             } 
 	    
-	    else 
-	    { //null url
-		htmlPane.setText("File Not Found");
+            else 
+            {
+            	htmlPane.setText("File Not Found");
             }
         } 
 	
-	catch (IOException e) 
-	{
+        catch (IOException e) 
+        {
             System.err.println("Attempted to read a bad URL: " + url);
         }
     }
@@ -139,7 +137,6 @@ public class HelpInfo extends JPanel
                 "sim.html"));
         top.add(category);
         
-        //original Tutorial
         page = new DefaultMutableTreeNode(new pageInfo
             ("Simulation Interface",
             "sim_feat.html"));
@@ -155,13 +152,11 @@ public class HelpInfo extends JPanel
                 "script_editor.html"));
         top.add(category);
         
-        //original Tutorial
         page = new DefaultMutableTreeNode(new pageInfo
             ("Script API",
             "api1.html"));
         category.add(page);
         
-        //original Tutorial
         page = new DefaultMutableTreeNode(new pageInfo
             ("Maze Methods",
             "api2.html"));
@@ -173,12 +168,12 @@ public class HelpInfo extends JPanel
         top.add(category);
     }
     
-    private void initHelp() 
+    private void initHelpPage() 
     {
         String help = "help.html";
         helpURL = HelpInfo.class.getResource(help);
         if (helpURL == null) 
-	{
+        {
             System.err.println("Couldn't open help file: " + help);
         } 
 
