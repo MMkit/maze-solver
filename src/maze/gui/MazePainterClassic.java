@@ -5,16 +5,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import maze.model.CellSizeModelInterface;
-
+/**
+ * Provides a simple classic theme for the maze view.
+ * @author Luke Last
+ */
 public class MazePainterClassic extends MazePainter
 {
-
-   public MazePainterClassic(CellSizeModelInterface cellSizeModel)
-   {
-      super(cellSizeModel);
-   }
-
    @Override
    public void setDefaults()
    {

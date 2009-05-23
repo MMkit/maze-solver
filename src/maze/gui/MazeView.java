@@ -75,8 +75,7 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
     */
    private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");
 
-   protected final MazePainter paints = new MazePainterDefault(this.csm);
-   //protected final MazePaints paints = new MazePaints.MazePaintsClassic();
+   protected final MazePainter paints = new MazePainterDefault();
 
    private boolean drawFog = false;
    private Set<MazeCell> unexplored;

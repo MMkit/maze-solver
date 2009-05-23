@@ -12,7 +12,6 @@ import java.util.EnumSet;
 import javax.swing.ImageIcon;
 
 import maze.Main;
-import maze.model.CellSizeModelInterface;
 import maze.model.Direction;
 
 /**
@@ -24,22 +23,29 @@ import maze.model.Direction;
  */
 public abstract class MazePainter
 {
-   protected Paint cellBackground;
-   protected Paint wallSet;
-   protected Paint wallEmpty;
    protected Paint background;
-   protected Paint peg;
-   protected Paint pegValid;
-   protected Paint pegInvalid;
+   protected Paint cellBackground;
    protected Paint fog;
-   protected Paint runFirst;
+   protected Paint hover;
+   protected int mazeHeight;
+   protected int mazeWidth;
+   protected Paint peg;
+   protected Paint pegInvalid;
+   protected Paint pegValid;
+   protected ImageIcon robotImage;
    protected Paint runBest;
    protected Paint runCurrent;
-   protected Paint hover;
-   protected ImageIcon robotImage;
-   protected final CellSizeModelInterface csm;
-   protected int mazeWidth;
-   protected int mazeHeight;
+   protected Paint runFirst;
+   protected Paint wallEmpty;
+   protected Paint wallSet;
+
+   /**
+    * Constructor.
+    */
+   public MazePainter()
+   {
+      this.setDefaults();
+   }
 
    public void drawCellBackground(Graphics2D g, Rectangle area)
    {
@@ -53,15 +59,9 @@ public abstract class MazePainter
       g.fill(area);
    }
 
-   public void drawWallSet(Graphics2D g, Rectangle area)
+   public void drawFog(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.wallSet);
-      g.fill(area);
-   }
-
-   public void drawWallEmpty(Graphics2D g, Rectangle area)
-   {
-      g.setPaint(this.wallEmpty);
+      g.setPaint(this.fog);
       g.fill(area);
    }
 
@@ -71,10 +71,34 @@ public abstract class MazePainter
       g.fill(area);
    }
 
-   public void drawFog(Graphics2D g, Rectangle area)
+   public void drawRobot(Graphics2D g, Point location, double rotation, int cellWidth,
+         int cellHeight)
    {
-      g.setPaint(this.fog);
-      g.fill(area);
+      //We have to translate our coordinate system to make the image rotation easier.
+      g.translate(location.x, location.y);
+
+      //Back up the current graphics state.
+      final AffineTransform oldTransform = g.getTransform();
+      //We add half a PI to the rotation because the top of the image is forward.
+      final AffineTransform transform = AffineTransform.getRotateInstance(rotation + Math.PI / 2);
+      //Set the image rotation transformation.
+      g.transform(transform);
+      //Get the size of half the final image. Based on smallest cell dimension.
+      final int size = Math.min(cellWidth, cellHeight) / 2;
+      //Draw the image to scale. The point 0,0 is the center of the image.
+      g.drawImage(this.robotImage.getImage(),
+                  -size,
+                  -size,
+                  size,
+                  size,
+                  0,
+                  0,
+                  this.robotImage.getIconWidth(),
+                  this.robotImage.getIconHeight(),
+                  null);
+      //Restore the original graphics state.
+      g.setTransform(oldTransform);
+      g.translate(-location.x, -location.y);
    }
 
    public void drawRunCurrent(Graphics2D g, Rectangle cellArea, EnumSet<Direction> dirsTraveled)
@@ -84,7 +108,7 @@ public abstract class MazePainter
       final int x = cellArea.x + cellArea.width / 2 - size / 2;
       final int y = cellArea.y + cellArea.height / 2 - size / 2;
       g.fillOval(x, y, size, size);
-      for (Direction direction : dirsTraveled)
+      for (final Direction direction : dirsTraveled)
       {
          switch (direction)
          {
@@ -104,62 +128,136 @@ public abstract class MazePainter
       }
    }
 
-   public void drawRobot(Graphics2D g, Point location, double rotation)
+   public void drawWallEmpty(Graphics2D g, Rectangle area)
    {
-      //We have to translate our coordinate system to make the image rotation easier.
-      g.translate(location.x, location.y);
+      g.setPaint(this.wallEmpty);
+      g.fill(area);
+   }
 
-      //Back up the current graphics state.
-      final AffineTransform oldTransform = g.getTransform();
-      //We add half a PI to the rotation because the top of the image is forward.
-      final AffineTransform transform = AffineTransform.getRotateInstance(rotation + Math.PI / 2);
-      //Set the image rotation transformation.
-      g.transform(transform);
-      //Get the size of half the final image. Based on smallest cell dimension.
-      final int size = Math.min(this.csm.getCellWidth() - this.csm.getWallWidth(),
-                                this.csm.getCellHeight() - this.csm.getWallHeight()) / 2;
-      //Draw the image to scale. The point 0,0 is the center of the image.
-      g.drawImage(this.robotImage.getImage(),
-                  -size,
-                  -size,
-                  size,
-                  size,
-                  0,
-                  0,
-                  this.robotImage.getIconWidth(),
-                  this.robotImage.getIconHeight(),
-                  null);
-      //Restore the original graphics state.
-      g.setTransform(oldTransform);
-      g.translate(-location.x, -location.y);
+   public void drawWallSet(Graphics2D g, Rectangle area)
+   {
+      g.setPaint(this.wallSet);
+      g.fill(area);
    }
 
    /**
-    * Constructor.
-    * @param cellSizeModel The cell size model from the view this class is
-    *           rendering for.
+    * @return the background
     */
-   public MazePainter(CellSizeModelInterface cellSizeModel)
+   public Paint getBackground()
    {
-      if (cellSizeModel == null)
-         throw new IllegalArgumentException("The cell size model cannot be null");
-
-      this.csm = cellSizeModel;
-      this.setDefaults();
+      return background;
    }
 
    /**
-    * Set the maze model dimensions so that this renderer knows how big the maze
-    * is and can calculate locations.
-    * @param size The size of the maze in pixels.
+    * @return the cellBackground
     */
-   public void setMazeSize(Dimension size)
+   public Paint getCellBackground()
    {
-      if (size != null)
-      {
-         this.mazeWidth = size.width;
-         this.mazeHeight = size.height;
-      }
+      return cellBackground;
+   }
+
+   /**
+    * @return the fog
+    */
+   public Paint getFog()
+   {
+      return fog;
+   }
+
+   /**
+    * @return the hover
+    */
+   public Paint getHover()
+   {
+      return hover;
+   }
+
+   /**
+    * @return the peg
+    */
+   public Paint getPeg()
+   {
+      return peg;
+   }
+
+   /**
+    * @return the pegInvalid
+    */
+   public Paint getPegInvalid()
+   {
+      return pegInvalid;
+   }
+
+   /**
+    * @return the pegValid
+    */
+   public Paint getPegValid()
+   {
+      return pegValid;
+   }
+
+   /**
+    * @return the robotImage
+    */
+   public ImageIcon getRobotImage()
+   {
+      return robotImage;
+   }
+
+   /**
+    * @return the runBest
+    */
+   public Paint getRunBest()
+   {
+      return runBest;
+   }
+
+   /**
+    * @return the runCurrent
+    */
+   public Paint getRunCurrent()
+   {
+      return runCurrent;
+   }
+
+   /**
+    * @return the runFirst
+    */
+   public Paint getRunFirst()
+   {
+      return runFirst;
+   }
+
+   /**
+    * @return the wallEmpty
+    */
+   public Paint getWallEmpty()
+   {
+      return wallEmpty;
+   }
+
+   /**
+    * @return the wallSet
+    */
+   public Paint getWallSet()
+   {
+      return wallSet;
+   }
+
+   /**
+    * @param background the background to set
+    */
+   public void setBackground(Paint background)
+   {
+      this.background = background;
+   }
+
+   /**
+    * @param cellBackground the cellBackground to set
+    */
+   public void setCellBackground(Paint cellBackground)
+   {
+      this.cellBackground = cellBackground;
    }
 
    /**
@@ -183,75 +281,33 @@ public abstract class MazePainter
    }
 
    /**
-    * @return the cellBackground
+    * @param fog the fog to set
     */
-   public Paint getCellBackground()
+   public void setFog(Paint fog)
    {
-      return cellBackground;
+      this.fog = fog;
    }
 
    /**
-    * @param cellBackground the cellBackground to set
+    * @param hover the hover to set
     */
-   public void setCellBackground(Paint cellBackground)
+   public void setHover(Paint hover)
    {
-      this.cellBackground = cellBackground;
+      this.hover = hover;
    }
 
    /**
-    * @return the wallSet
+    * Set the maze model dimensions so that this renderer knows how big the maze
+    * is and can calculate locations.
+    * @param size The size of the maze in pixels.
     */
-   public Paint getWallSet()
+   public void setMazeSize(Dimension size)
    {
-      return wallSet;
-   }
-
-   /**
-    * @param wallSet the wallSet to set
-    */
-   public void setWallSet(Paint wallSet)
-   {
-      this.wallSet = wallSet;
-   }
-
-   /**
-    * @return the wallEmpty
-    */
-   public Paint getWallEmpty()
-   {
-      return wallEmpty;
-   }
-
-   /**
-    * @param wallEmpty the wallEmpty to set
-    */
-   public void setWallEmpty(Paint wallEmpty)
-   {
-      this.wallEmpty = wallEmpty;
-   }
-
-   /**
-    * @return the background
-    */
-   public Paint getBackground()
-   {
-      return background;
-   }
-
-   /**
-    * @param background the background to set
-    */
-   public void setBackground(Paint background)
-   {
-      this.background = background;
-   }
-
-   /**
-    * @return the peg
-    */
-   public Paint getPeg()
-   {
-      return peg;
+      if (size != null)
+      {
+         this.mazeWidth = size.width;
+         this.mazeHeight = size.height;
+      }
    }
 
    /**
@@ -263,11 +319,11 @@ public abstract class MazePainter
    }
 
    /**
-    * @return the pegValid
+    * @param pegInvalid the pegInvalid to set
     */
-   public Paint getPegValid()
+   public void setPegInvalid(Paint pegInvalid)
    {
-      return pegValid;
+      this.pegInvalid = pegInvalid;
    }
 
    /**
@@ -279,59 +335,11 @@ public abstract class MazePainter
    }
 
    /**
-    * @return the pegInvalid
+    * @param robotImage the robotImage to set
     */
-   public Paint getPegInvalid()
+   public void setRobotImage(ImageIcon robotImage)
    {
-      return pegInvalid;
-   }
-
-   /**
-    * @param pegInvalid the pegInvalid to set
-    */
-   public void setPegInvalid(Paint pegInvalid)
-   {
-      this.pegInvalid = pegInvalid;
-   }
-
-   /**
-    * @return the fog
-    */
-   public Paint getFog()
-   {
-      return fog;
-   }
-
-   /**
-    * @param fog the fog to set
-    */
-   public void setFog(Paint fog)
-   {
-      this.fog = fog;
-   }
-
-   /**
-    * @return the runFirst
-    */
-   public Paint getRunFirst()
-   {
-      return runFirst;
-   }
-
-   /**
-    * @param runFirst the runFirst to set
-    */
-   public void setRunFirst(Paint runFirst)
-   {
-      this.runFirst = runFirst;
-   }
-
-   /**
-    * @return the runBest
-    */
-   public Paint getRunBest()
-   {
-      return runBest;
+      this.robotImage = robotImage;
    }
 
    /**
@@ -343,14 +351,6 @@ public abstract class MazePainter
    }
 
    /**
-    * @return the runCurrent
-    */
-   public Paint getRunCurrent()
-   {
-      return runCurrent;
-   }
-
-   /**
     * @param runCurrent the runCurrent to set
     */
    public void setRunCurrent(Paint runCurrent)
@@ -359,34 +359,26 @@ public abstract class MazePainter
    }
 
    /**
-    * @return the robotImage
+    * @param runFirst the runFirst to set
     */
-   public ImageIcon getRobotImage()
+   public void setRunFirst(Paint runFirst)
    {
-      return robotImage;
+      this.runFirst = runFirst;
    }
 
    /**
-    * @param robotImage the robotImage to set
+    * @param wallEmpty the wallEmpty to set
     */
-   public void setRobotImage(ImageIcon robotImage)
+   public void setWallEmpty(Paint wallEmpty)
    {
-      this.robotImage = robotImage;
+      this.wallEmpty = wallEmpty;
    }
 
    /**
-    * @return the hover
+    * @param wallSet the wallSet to set
     */
-   public Paint getHover()
+   public void setWallSet(Paint wallSet)
    {
-      return hover;
-   }
-
-   /**
-    * @param hover the hover to set
-    */
-   public void setHover(Paint hover)
-   {
-      this.hover = hover;
+      this.wallSet = wallSet;
    }
 }
