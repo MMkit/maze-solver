@@ -1,13 +1,10 @@
 package maze.ai;
 
-import java.util.List;
-import java.util.Set;
-
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
-import maze.model.RobotModelMaster;
 import maze.model.RobotModel;
+import maze.model.RobotModelMaster;
 
 /**
  * Controls the AI and models to move the robot through the maze.
@@ -22,7 +19,8 @@ public class RobotController
    private final RobotBase ai;
    private int robotStepCount = 0;
 
-   /** Constructor.
+   /**
+    * Constructor.
     * @param model The maze model to use.
     * @param robotAI The robot AI algorithm to use.
     */
@@ -88,26 +86,6 @@ public class RobotController
    public RobotModelMaster getRobotModelMaster()
    {
       return this.robotModelMaster;
-   }
-
-   public Set<MazeCell> getAllUnexplored()
-   {
-      return robotModelMaster.getNonHistory();
-   }
-
-   public List<MazeCell> getFirstRun()
-   {
-      return robotModelMaster.getFirstRun();
-   }
-
-   public List<MazeCell> getBestRun()
-   {
-      return robotModelMaster.getBestRun();
-   }
-
-   public List<MazeCell> getCurrentRun()
-   {
-      return robotModelMaster.getCurrentRun();
    }
 
    public Direction[][] getUnderstandingDir()

@@ -1,9 +1,5 @@
 package maze.model;
 
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This is a wrapper class for {@link RobotModelMaster}.<br />
  * This class exists to provide limited access to the data models for the AI
@@ -19,7 +15,7 @@ public class RobotModel
       this.parent = parent;
    }
 
-   public Dimension getMazeSize()
+   public java.awt.Dimension getMazeSize()
    {
       return this.parent.getMazeSize();
    }
@@ -53,15 +49,4 @@ public class RobotModel
    {
       return this.parent.getDirection();
    }
-
-   public List<MazeCell> getHistory()
-   {
-      return new ArrayList<MazeCell>(this.parent.getHistory());
-   }
-
-   public List<MazeCell> getPathTaken()
-   {
-      return new ArrayList<MazeCell>(this.parent.getPathTaken());
-   }
-
 }

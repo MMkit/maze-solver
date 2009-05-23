@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -92,29 +91,10 @@ public final class MazeViewerPanel extends JPanel
       optionsPanel.add(Box.createHorizontalGlue());
       optionsPanel.add(new JCheckBox(this.pathCurrentAction));
       optionsPanel.add(Box.createHorizontalGlue());
-      optionsPanel.add(new JCheckBox(this.drawUnderstandingAction));      optionsPanel.add(Box.createHorizontalGlue());
-      // This is more of a test of the theme switching.
-      final JCheckBox check = new JCheckBox("Classic");
-      optionsPanel.add(check);
+      optionsPanel.add(new JCheckBox(this.drawUnderstandingAction));
       optionsPanel.add(Box.createHorizontalGlue());
-
-      check.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            if (check.isSelected())
-            {
-               myMazeView.paints = new MazePainterClassic(myMazeView.csm);
-            }
-            else
-            {
-               myMazeView.paints = new MazePainterDefault(myMazeView.csm);
-            }
-            myMazeView.invalidateAllCells();
-            myMazeView.componentResized(null);
-         }
-      });
+      optionsPanel.add(new JCheckBox(this.themeToggleAction));
+      optionsPanel.add(Box.createHorizontalGlue());
 
       //Create animation speed slider.
       final JPanel sliderPanel = new JPanel();
@@ -338,6 +318,7 @@ public final class MazeViewerPanel extends JPanel
    {
       {
          this.putValue(Action.NAME, "Fog");
+         this.putValue(Action.SHORT_DESCRIPTION, "Displays a fog of war over unexplored cells.");
          this.putValue(Action.SELECTED_KEY, true);
       }
 
@@ -355,13 +336,17 @@ public final class MazeViewerPanel extends JPanel
    {
       {
          this.putValue(Action.NAME, "Path");
+         this.putValue(Action.SHORT_DESCRIPTION, "Overlays the path the robot has taken.");
          this.putValue(Action.SELECTED_KEY, true);
       }
 
       @Override
       public void actionPerformed(ActionEvent e)
       {
-         myMazeView.setDrawPathCurrent(this.getValue(Action.SELECTED_KEY) == Boolean.TRUE);
+         boolean draw = this.getValue(Action.SELECTED_KEY) == Boolean.TRUE;
+         myMazeView.setDrawPathCurrent(draw);
+         myMazeView.setDrawPathBest(draw);
+         myMazeView.setDrawPathFirst(draw);
       }
    };
 
@@ -372,7 +357,10 @@ public final class MazeViewerPanel extends JPanel
    private final Action drawUnderstandingAction = new AbstractAction()
    {
       {
-         this.putValue(Action.NAME, "Understanding");
+         this.putValue(Action.NAME, "Info");
+         this.putValue(Action.SHORT_DESCRIPTION,
+                       "<html>Displays algorithm specific information on the maze.<br />"
+                             + "This only affects certain AI algorithms.</html>");
          this.putValue(Action.SELECTED_KEY, true);
       }
 
@@ -380,6 +368,30 @@ public final class MazeViewerPanel extends JPanel
       public void actionPerformed(ActionEvent e)
       {
          myMazeView.setDrawUnderstanding(this.getValue(Action.SELECTED_KEY) == Boolean.TRUE);
+      }
+   };
+
+   private final Action themeToggleAction = new AbstractAction()
+   {
+      {
+         this.putValue(Action.NAME, "Classic");
+         this.putValue(Action.SHORT_DESCRIPTION, "Use a simple theme.");
+         this.putValue(Action.SELECTED_KEY, false);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         if (this.getValue(Action.SELECTED_KEY) == Boolean.TRUE)
+         {
+            myMazeView.paints = new MazePainterClassic(myMazeView.csm);
+         }
+         else
+         {
+            myMazeView.paints = new MazePainterDefault(myMazeView.csm);
+         }
+         myMazeView.invalidateAllCells();
+         myMazeView.componentResized(null);
       }
    };
 
