@@ -552,7 +552,7 @@ A view of the maze model. This swing component will render a GUI of a maze
                                  java.awt.Point&nbsp;mouseLocation)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to translate a point into the wall it is located in.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1145,7 +1145,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.180"><B>redrawA
 <A NAME="getCellCenter(maze.model.MazeCell)"><!-- --></A><H3>
 getCellCenter</H3>
 <PRE>
-protected java.awt.Point <A HREF="../../src-html/maze/gui/MazeView.html#line.329"><B>getCellCenter</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
+protected java.awt.Point <A HREF="../../src-html/maze/gui/MazeView.html#line.337"><B>getCellCenter</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
 <DL>
 <DD>Turns a maze cell into global coordinates for the center of the cell.
 <P>
@@ -1161,7 +1161,7 @@ protected java.awt.Point <A HREF="../../src-html/maze/gui/MazeView.html#line.329
 <A NAME="getWallLocation(maze.model.MazeCell, maze.model.Direction)"><!-- --></A><H3>
 getWallLocation</H3>
 <PRE>
-private java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line.339"><B>getWallLocation</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
+private java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line.349"><B>getWallLocation</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
                                            <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;wall)</PRE>
 <DL>
 <DD>Get a rectangle covering the wall segment with component relative
@@ -1179,7 +1179,7 @@ private java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line.3
 <A NAME="getPegRegion(maze.model.MazeCell, maze.model.PegLocation)"><!-- --></A><H3>
 getPegRegion</H3>
 <PRE>
-protected java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line.376"><B>getPegRegion</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
+protected java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line.394"><B>getPegRegion</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
                                           <A HREF="../../maze/model/PegLocation.html" title="enum in maze.model">PegLocation</A>&nbsp;peg)</PRE>
 <DL>
 <DD>Get the absolute region of a peg with respect to the given maze cell.
@@ -1196,7 +1196,7 @@ protected java.awt.Rectangle <A HREF="../../src-html/maze/gui/MazeView.html#line
 <A NAME="getHostMazeCell(java.awt.Point)"><!-- --></A><H3>
 getHostMazeCell</H3>
 <PRE>
-protected <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.421"><B>getHostMazeCell</B></A>(java.awt.Point&nbsp;pointerLocation)
+protected <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.439"><B>getHostMazeCell</B></A>(java.awt.Point&nbsp;pointerLocation)
                             throws java.lang.Exception</PRE>
 <DL>
 <DD>Converts a mouse pointer position into the maze cell that it is in.
@@ -1215,16 +1215,18 @@ protected <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">M
 <A NAME="getWallDirection(maze.model.MazeCell, java.awt.Point)"><!-- --></A><H3>
 getWallDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.441"><B>getWallDirection</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.460"><B>getWallDirection</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
                                    java.awt.Point&nbsp;mouseLocation)
                             throws java.lang.Exception</PRE>
 <DL>
+<DD>Used to translate a point into the wall it is located in.
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>cell</CODE> - <DD><CODE>mouseLocation</CODE> - 
-<DT><B>Returns:</B><DD>
+<DT><B>Parameters:</B><DD><CODE>cell</CODE> - Cell to look int.<DD><CODE>mouseLocation</CODE> - The location of the mouse cursor or other point.
+<DT><B>Returns:</B><DD>The direction of the wall found.
 <DT><B>Throws:</B>
 <DD><CODE>java.lang.Exception</CODE> - If the mouse pointer isn't actually on a wall.</DL>
 </DD>
@@ -1234,7 +1236,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="getWall(java.awt.Point)"><!-- --></A><H3>
 getWall</H3>
 <PRE>
-protected <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.459"><B>getWall</B></A>(java.awt.Point&nbsp;mouseLocation)
+protected <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A> <A HREF="../../src-html/maze/gui/MazeView.html#line.478"><B>getWall</B></A>(java.awt.Point&nbsp;mouseLocation)
                               throws java.lang.Exception</PRE>
 <DL>
 <DD>Converts a mouse pointer location into an actual maze wall object.
@@ -1243,8 +1245,8 @@ protected <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>mouseLocation</CODE> - 
-<DT><B>Returns:</B><DD>
+<DT><B>Parameters:</B><DD><CODE>mouseLocation</CODE> - Cursor location or other point.
+<DT><B>Returns:</B><DD>The maze wall that can be checked or changed.
 <DT><B>Throws:</B>
 <DD><CODE>java.lang.Exception</CODE> - If the mouse pointer isn't actually on a wall.</DL>
 </DD>
@@ -1254,7 +1256,7 @@ protected <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in
 <A NAME="componentResized(java.awt.event.ComponentEvent)"><!-- --></A><H3>
 componentResized</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.470"><B>componentResized</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.489"><B>componentResized</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
 <DL>
 <DD>Notifies the MazeView that it has been resized.
 <P>
@@ -1262,7 +1264,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.470"><B>componen
 <DT><B>Specified by:</B><DD><CODE>componentResized</CODE> in interface <CODE>java.awt.event.ComponentListener</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>e</CODE> - </DL>
+<DT><B>Parameters:</B><DD><CODE>e</CODE> - Event object.</DL>
 </DD>
 </DL>
 <HR>
@@ -1270,7 +1272,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.470"><B>componen
 <A NAME="componentMoved(java.awt.event.ComponentEvent)"><!-- --></A><H3>
 componentMoved</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.485"><B>componentMoved</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.504"><B>componentMoved</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>componentMoved</CODE> in interface <CODE>java.awt.event.ComponentListener</CODE></DL>
@@ -1284,7 +1286,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.485"><B>componen
 <A NAME="componentShown(java.awt.event.ComponentEvent)"><!-- --></A><H3>
 componentShown</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.489"><B>componentShown</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.508"><B>componentShown</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>componentShown</CODE> in interface <CODE>java.awt.event.ComponentListener</CODE></DL>
@@ -1298,7 +1300,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.489"><B>componen
 <A NAME="componentHidden(java.awt.event.ComponentEvent)"><!-- --></A><H3>
 componentHidden</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.493"><B>componentHidden</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.512"><B>componentHidden</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>componentHidden</CODE> in interface <CODE>java.awt.event.ComponentListener</CODE></DL>
@@ -1312,7 +1314,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.493"><B>componen
 <A NAME="setEditable(boolean)"><!-- --></A><H3>
 setEditable</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.500"><B>setEditable</B></A>(boolean&nbsp;b)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.519"><B>setEditable</B></A>(boolean&nbsp;b)</PRE>
 <DL>
 <DD>Sets whether this MazeView can modify its underlying MazeModel.
 <P>
@@ -1328,7 +1330,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.500"><B>setEdita
 <A NAME="drawFog(java.awt.Graphics2D)"><!-- --></A><H3>
 drawFog</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.575"><B>drawFog</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.594"><B>drawFog</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1342,7 +1344,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.575"><B>drawFog
 <A NAME="loadUnexplored(java.util.Set)"><!-- --></A><H3>
 loadUnexplored</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.591"><B>loadUnexplored</B></A>(java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;set)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.610"><B>loadUnexplored</B></A>(java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;set)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1356,7 +1358,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.591"><B>loadUnex
 <A NAME="setDrawFog(boolean)"><!-- --></A><H3>
 setDrawFog</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.596"><B>setDrawFog</B></A>(boolean&nbsp;setter)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.615"><B>setDrawFog</B></A>(boolean&nbsp;setter)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1370,7 +1372,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.596"><B>setDrawF
 <A NAME="drawFirstRun(java.awt.Graphics2D)"><!-- --></A><H3>
 drawFirstRun</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.601"><B>drawFirstRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.620"><B>drawFirstRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1384,7 +1386,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.601"><B>drawFir
 <A NAME="loadFirstRun(java.util.List)"><!-- --></A><H3>
 loadFirstRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.649"><B>loadFirstRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.668"><B>loadFirstRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1398,7 +1400,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.649"><B>loadFirs
 <A NAME="setDrawFirstRun(boolean)"><!-- --></A><H3>
 setDrawFirstRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.654"><B>setDrawFirstRun</B></A>(boolean&nbsp;setter)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.673"><B>setDrawFirstRun</B></A>(boolean&nbsp;setter)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1412,7 +1414,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.654"><B>setDrawF
 <A NAME="drawBestRun(java.awt.Graphics2D)"><!-- --></A><H3>
 drawBestRun</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.659"><B>drawBestRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.678"><B>drawBestRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1426,7 +1428,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.659"><B>drawBes
 <A NAME="loadBestRun(java.util.List)"><!-- --></A><H3>
 loadBestRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.710"><B>loadBestRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.729"><B>loadBestRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1440,7 +1442,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.710"><B>loadBest
 <A NAME="setDrawBestRun(boolean)"><!-- --></A><H3>
 setDrawBestRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.715"><B>setDrawBestRun</B></A>(boolean&nbsp;setter)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.734"><B>setDrawBestRun</B></A>(boolean&nbsp;setter)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1454,7 +1456,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.715"><B>setDrawB
 <A NAME="drawCurrentRun(java.awt.Graphics2D)"><!-- --></A><H3>
 drawCurrentRun</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.720"><B>drawCurrentRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.739"><B>drawCurrentRun</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1468,7 +1470,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.720"><B>drawCur
 <A NAME="loadCurrentRun(java.util.List)"><!-- --></A><H3>
 loadCurrentRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.773"><B>loadCurrentRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.800"><B>loadCurrentRun</B></A>(java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;&nbsp;list)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1482,7 +1484,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.773"><B>loadCurr
 <A NAME="setDrawCurrentRun(boolean)"><!-- --></A><H3>
 setDrawCurrentRun</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.778"><B>setDrawCurrentRun</B></A>(boolean&nbsp;setter)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.805"><B>setDrawCurrentRun</B></A>(boolean&nbsp;setter)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1496,7 +1498,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.778"><B>setDrawC
 <A NAME="drawUnderstanding(java.awt.Graphics2D)"><!-- --></A><H3>
 drawUnderstanding</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.783"><B>drawUnderstanding</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.810"><B>drawUnderstanding</B></A>(java.awt.Graphics2D&nbsp;g)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1510,7 +1512,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.783"><B>drawUnd
 <A NAME="drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)"><!-- --></A><H3>
 drawArrow</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/MazeView.html#line.835"><B>drawArrow</B></A>(java.awt.Graphics2D&nbsp;g,
+private void <A HREF="../../src-html/maze/gui/MazeView.html#line.862"><B>drawArrow</B></A>(java.awt.Graphics2D&nbsp;g,
                        <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;local,
                        int&nbsp;x,
                        int&nbsp;y)</PRE>
@@ -1527,7 +1529,7 @@ private void <A HREF="../../src-html/maze/gui/MazeView.html#line.835"><B>drawArr
 <A NAME="setDrawUnderstanding(boolean)"><!-- --></A><H3>
 setDrawUnderstanding</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.892"><B>setDrawUnderstanding</B></A>(boolean&nbsp;setter)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.919"><B>setDrawUnderstanding</B></A>(boolean&nbsp;setter)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1541,7 +1543,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.892"><B>setDrawU
 <A NAME="loadUnderstanding(int[][])"><!-- --></A><H3>
 loadUnderstanding</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.897"><B>loadUnderstanding</B></A>(int[][]&nbsp;understandingInt)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.924"><B>loadUnderstanding</B></A>(int[][]&nbsp;understandingInt)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1555,7 +1557,7 @@ public void <A HREF="../../src-html/maze/gui/MazeView.html#line.897"><B>loadUnde
 <A NAME="loadUnderstandingDir(maze.model.Direction[][])"><!-- --></A><H3>
 loadUnderstandingDir</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeView.html#line.902"><B>loadUnderstandingDir</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]&nbsp;understandingDir)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeView.html#line.929"><B>loadUnderstandingDir</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]&nbsp;understandingDir)</PRE>
 <DL>
 <DD><DL>
 </DL>

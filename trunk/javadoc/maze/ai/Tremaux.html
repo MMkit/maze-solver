@@ -96,8 +96,13 @@ java.lang.Object
 </PRE>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/ai/Tremaux.html#line.9"><B>Tremaux</B></A><DT>extends <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></DL>
+<DT><PRE>public class <A HREF="../../src-html/maze/ai/Tremaux.html#line.13"><B>Tremaux</B></A><DT>extends <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></DL>
 </PRE>
+
+<P>
+Maze solving algorithm that provides a right wall follower with a memory so
+ it prefers unexplored cells.
+<P>
 
 <P>
 <HR>
@@ -228,8 +233,8 @@ java.lang.Object
 <TD><CODE><B><A HREF="../../maze/ai/Tremaux.html#initialize()">initialize</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This function should be called by the controller any time a new run is
- to commence</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This function should be called by the controller any time a new run is to
+ commence</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -298,7 +303,7 @@ java.lang.Object
 <A NAME="ballOfString"><!-- --></A><H3>
 ballOfString</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/Tremaux.html#line.14"><B>ballOfString</B></A></PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/Tremaux.html#line.15"><B>ballOfString</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -308,7 +313,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="moveQueue"><!-- --></A><H3>
 moveQueue</H3>
 <PRE>
-private java.util.ArrayList&lt;<A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A>&gt; <A HREF="../../src-html/maze/ai/Tremaux.html#line.15"><B>moveQueue</B></A></PRE>
+private java.util.ArrayList&lt;<A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A>&gt; <A HREF="../../src-html/maze/ai/Tremaux.html#line.16"><B>moveQueue</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -318,7 +323,7 @@ private java.util.ArrayList&lt;<A HREF="../../maze/ai/RobotStep.html" title="enu
 <A NAME="turbo"><!-- --></A><H3>
 turbo</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/ai/Tremaux.html#line.16"><B>turbo</B></A></PRE>
+private boolean <A HREF="../../src-html/maze/ai/Tremaux.html#line.17"><B>turbo</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -337,7 +342,7 @@ private boolean <A HREF="../../src-html/maze/ai/Tremaux.html#line.16"><B>turbo</
 <A NAME="Tremaux()"><!-- --></A><H3>
 Tremaux</H3>
 <PRE>
-public <A HREF="../../src-html/maze/ai/Tremaux.html#line.9"><B>Tremaux</B></A>()</PRE>
+public <A HREF="../../src-html/maze/ai/Tremaux.html#line.13"><B>Tremaux</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -354,7 +359,7 @@ public <A HREF="../../src-html/maze/ai/Tremaux.html#line.9"><B>Tremaux</B></A>()
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/ai/Tremaux.html#line.22"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/ai/Tremaux.html#line.23"><B>toString</B></A>()</PRE>
 <DL>
 <DD>This returns the name of the mathematician who came up with this process
 <P>
@@ -370,10 +375,10 @@ public java.lang.String <A HREF="../../src-html/maze/ai/Tremaux.html#line.22"><B
 <A NAME="initialize()"><!-- --></A><H3>
 initialize</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/ai/Tremaux.html#line.32"><B>initialize</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/ai/Tremaux.html#line.33"><B>initialize</B></A>()</PRE>
 <DL>
-<DD>This function should be called by the controller any time a new run is
- to commence
+<DD>This function should be called by the controller any time a new run is to
+ commence
 <P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="../../maze/ai/RobotBase.html#initialize()">initialize</A></CODE> in class <CODE><A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></CODE></DL>
@@ -389,7 +394,7 @@ isInTurboMode</H3>
 <PRE>
 public boolean <A HREF="../../src-html/maze/ai/Tremaux.html#line.56"><B>isInTurboMode</B></A>()</PRE>
 <DL>
-<DD>This returns the state of the turbo flag.  Turbo should be true when
+<DD>This returns the state of the turbo flag. Turbo should be true when
  traversing previously explored territories.
 <P>
 <DD><DL>
@@ -406,8 +411,8 @@ nextStep</H3>
 <PRE>
 public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.65"><B>nextStep</B></A>()</PRE>
 <DL>
-<DD>This returns the next step for the robot to take.  It should be called
- by the controller.
+<DD>This returns the next step for the robot to take. It should be called by
+ the controller.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../maze/ai/RobotBase.html#nextStep()">nextStep</A></CODE> in class <CODE><A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></CODE></DL>
@@ -421,7 +426,7 @@ public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep<
 <A NAME="getLeftNeighborDirection()"><!-- --></A><H3>
 getLeftNeighborDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.136"><B>getLeftNeighborDirection</B></A>()</PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.129"><B>getLeftNeighborDirection</B></A>()</PRE>
 <DL>
 <DD>This returns the direction for the understanding for the neighbor to the
  left.
@@ -435,7 +440,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="getFrontNeighborDirection()"><!-- --></A><H3>
 getFrontNeighborDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.145"><B>getFrontNeighborDirection</B></A>()</PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.138"><B>getFrontNeighborDirection</B></A>()</PRE>
 <DL>
 <DD>This returns the direction for the understanding for the neighbor to the
  front.
@@ -449,7 +454,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="getRightNeighborDirection()"><!-- --></A><H3>
 getRightNeighborDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.158"><B>getRightNeighborDirection</B></A>()</PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.151"><B>getRightNeighborDirection</B></A>()</PRE>
 <DL>
 <DD>This returns the direction for the understanding for the neighbor to the
  right.
@@ -463,7 +468,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="getNeighborDirection(maze.model.Direction)"><!-- --></A><H3>
 getNeighborDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.167"><B>getNeighborDirection</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.160"><B>getNeighborDirection</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
 <DL>
 <DD>This returns the direction for the understanding for the neighbor to the
  direction given from the current cell.
@@ -477,7 +482,7 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="setDirection()"><!-- --></A><H3>
 setDirection</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/ai/Tremaux.html#line.198"><B>setDirection</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/ai/Tremaux.html#line.191"><B>setDirection</B></A>()</PRE>
 <DL>
 <DD>This sets the direction for the understanding for the current cell.
 <P>
@@ -490,7 +495,7 @@ private void <A HREF="../../src-html/maze/ai/Tremaux.html#line.198"><B>setDirect
 <A NAME="getDirection(maze.model.MazeCell)"><!-- --></A><H3>
 getDirection</H3>
 <PRE>
-private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.208"><B>getDirection</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;currentLocation)</PRE>
+private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A> <A HREF="../../src-html/maze/ai/Tremaux.html#line.201"><B>getDirection</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;currentLocation)</PRE>
 <DL>
 <DD>This returns the direction for the understanding for the given cell
 <P>
@@ -503,10 +508,10 @@ private <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dir
 <A NAME="getUnderstandingDir()"><!-- --></A><H3>
 getUnderstandingDir</H3>
 <PRE>
-public <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/Tremaux.html#line.217"><B>getUnderstandingDir</B></A>()</PRE>
+public <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/Tremaux.html#line.210"><B>getUnderstandingDir</B></A>()</PRE>
 <DL>
-<DD>This returns the understanding of the maze.  Tremaux's understanding is
- the directions needed to return to the start.
+<DD>This returns the understanding of the maze. Tremaux's understanding is the
+ directions needed to return to the start.
 <P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="../../maze/ai/RobotBase.html#getUnderstandingDir()">getUnderstandingDir</A></CODE> in class <CODE><A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></CODE></DL>

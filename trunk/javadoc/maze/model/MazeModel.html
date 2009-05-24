@@ -91,17 +91,17 @@ maze.model</FONT>
 Class MazeModel</H2>
 <PRE>
 java.lang.Object
-  <IMG SRC="../../resources/inherit.gif" ALT="extended by ">maze.util.ListenerSubject&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;
+  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">maze.util.ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;
       <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.model.MazeModel</B>
 </PRE>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/model/MazeModel.html#line.26"><B>MazeModel</B></A><DT>extends maze.util.ListenerSubject&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
+<DT><PRE>public class <A HREF="../../src-html/maze/model/MazeModel.html#line.26"><B>MazeModel</B></A><DT>extends <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
 </PRE>
 
 <P>
 Represents all the walls of a This class extends
- <CODE>maze.util.ListenerSubject<MazeCell></CODE> which allows it to notify
+ <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><CODE>ListenerSubject</CODE></A> which allows it to notify
  listeners when a wall changes and provide the <A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><CODE>MazeCell</CODE></A>
  that contains the changed wall.
 <P>
@@ -403,10 +403,10 @@ Represents all the walls of a This class extends
 &nbsp;<A NAME="methods_inherited_from_class_maze.util.ListenerSubject"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class maze.util.ListenerSubject</B></TH>
+<TH ALIGN="left"><B>Methods inherited from class maze.util.<A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>addDelayedListener, addListener, notifyListeners, removeAllListeners, removeListener</CODE></TD>
+<TD><CODE><A HREF="../../maze/util/ListenerSubject.html#addDelayedListener(maze.util.Listener)">addDelayedListener</A>, <A HREF="../../maze/util/ListenerSubject.html#addListener(maze.util.Listener)">addListener</A>, <A HREF="../../maze/util/ListenerSubject.html#notifyListeners(T)">notifyListeners</A>, <A HREF="../../maze/util/ListenerSubject.html#removeAllListeners()">removeAllListeners</A>, <A HREF="../../maze/util/ListenerSubject.html#removeListener(maze.util.Listener)">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>

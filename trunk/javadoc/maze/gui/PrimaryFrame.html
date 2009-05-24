@@ -130,7 +130,7 @@ This is the primary frame for the application.
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.LookAndFeelListener.html" title="class in maze.gui">PrimaryFrame.LookAndFeelListener</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An ActionListener that changes the swing look and feel.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_javax.swing.JFrame"><!-- --></A>
@@ -201,14 +201,6 @@ This is the primary frame for the application.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/gui/HelpInfo.html" title="class in maze.gui">HelpInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#helpInfo">helpInfo</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;javax.swing.JTabbedPane</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#mainTabs">mainTabs</A></B></CODE>
 
@@ -235,14 +227,6 @@ This is the primary frame for the application.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;<A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#mMazeInfoModel">mMazeInfoModel</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;javax.swing.JMenu</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#mouseMenu">mouseMenu</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -317,14 +301,6 @@ This is the primary frame for the application.
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#getCodeEditorPanel()">getCodeEditorPanel</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -532,30 +508,10 @@ private <A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui"
 </DL>
 <HR>
 
-<A NAME="helpInfo"><!-- --></A><H3>
-helpInfo</H3>
-<PRE>
-private <A HREF="../../maze/gui/HelpInfo.html" title="class in maze.gui">HelpInfo</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.44"><B>helpInfo</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
 <A NAME="mainTabs"><!-- --></A><H3>
 mainTabs</H3>
 <PRE>
-private final javax.swing.JTabbedPane <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.45"><B>mainTabs</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="mouseMenu"><!-- --></A><H3>
-mouseMenu</H3>
-<PRE>
-private final javax.swing.JMenu <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.46"><B>mouseMenu</B></A></PRE>
+private final javax.swing.JTabbedPane <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.44"><B>mainTabs</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -591,7 +547,7 @@ public <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.38"><B>PrimaryFra
 <A NAME="init()"><!-- --></A><H3>
 init</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.51"><B>init</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.49"><B>init</B></A>()</PRE>
 <DL>
 <DD>Initializes the contents of this frame.
 <P>
@@ -607,7 +563,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.51"><B>init<
 <A NAME="getMazeInfoModel()"><!-- --></A><H3>
 getMazeInfoModel</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.320"><B>getMazeInfoModel</B></A>()</PRE>
+public <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.234"><B>getMazeInfoModel</B></A>()</PRE>
 <DL>
 <DD>Returns a MazeInfoModel object containing all of the currently loaded
  mazes.
@@ -625,7 +581,7 @@ public <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model"
 <A NAME="saveMaze(maze.model.MazeInfo)"><!-- --></A><H3>
 saveMaze</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.325"><B>saveMaze</B></A>(<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A>&nbsp;mi)</PRE>
+public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.239"><B>saveMaze</B></A>(<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A>&nbsp;mi)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -639,7 +595,7 @@ public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">Maze
 <A NAME="windowOpened(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowOpened</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.418"><B>windowOpened</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.330"><B>windowOpened</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowOpened</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -653,7 +609,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.418"><B>wind
 <A NAME="windowClosing(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowClosing</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.422"><B>windowClosing</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.334"><B>windowClosing</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowClosing</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -667,7 +623,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.422"><B>wind
 <A NAME="windowClosed(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowClosed</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.445"><B>windowClosed</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.357"><B>windowClosed</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowClosed</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -681,7 +637,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.445"><B>wind
 <A NAME="windowIconified(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowIconified</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.449"><B>windowIconified</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.361"><B>windowIconified</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowIconified</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -695,7 +651,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.449"><B>wind
 <A NAME="windowDeiconified(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowDeiconified</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.453"><B>windowDeiconified</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.365"><B>windowDeiconified</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowDeiconified</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -709,7 +665,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.453"><B>wind
 <A NAME="windowActivated(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowActivated</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.457"><B>windowActivated</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.369"><B>windowActivated</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowActivated</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -723,7 +679,7 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.457"><B>wind
 <A NAME="windowDeactivated(java.awt.event.WindowEvent)"><!-- --></A><H3>
 windowDeactivated</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.461"><B>windowDeactivated</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.373"><B>windowDeactivated</B></A>(java.awt.event.WindowEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>windowDeactivated</CODE> in interface <CODE>java.awt.event.WindowListener</CODE></DL>
@@ -734,24 +690,10 @@ public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.461"><B>wind
 </DL>
 <HR>
 
-<A NAME="getCodeEditorPanel()"><!-- --></A><H3>
-getCodeEditorPanel</H3>
-<PRE>
-public <A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.464"><B>getCodeEditorPanel</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="setSimulation(boolean)"><!-- --></A><H3>
 setSimulation</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.474"><B>setSimulation</B></A>(boolean&nbsp;simOn)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.381"><B>setSimulation</B></A>(boolean&nbsp;simOn)</PRE>
 <DL>
 <DD>Tells the primary frame if a simulation is currently running or not. We
  can then disable GUI elements while animating.

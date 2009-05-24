@@ -82,7 +82,7 @@ function windowTitle()
 Hierarchy For All Packages</H2>
 </CENTER>
 <DL>
-<DT><B>Package Hierarchies:</B><DD><A HREF="maze/package-tree.html">maze</A>, <A HREF="maze/ai/package-tree.html">maze.ai</A>, <A HREF="maze/gui/package-tree.html">maze.gui</A>, <A HREF="maze/gui/mazeeditor/package-tree.html">maze.gui.mazeeditor</A>, <A HREF="maze/model/package-tree.html">maze.model</A></DL>
+<DT><B>Package Hierarchies:</B><DD><A HREF="maze/package-tree.html">maze</A>, <A HREF="maze/ai/package-tree.html">maze.ai</A>, <A HREF="maze/gui/package-tree.html">maze.gui</A>, <A HREF="maze/gui/mazeeditor/package-tree.html">maze.gui.mazeeditor</A>, <A HREF="maze/model/package-tree.html">maze.model</A>, <A HREF="maze/util/package-tree.html">maze.util</A></DL>
 <HR>
 <H2>
 Class Hierarchy
@@ -123,7 +123,7 @@ Class Hierarchy
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView.html" title="class in maze.gui"><B>MazeView</B></A> (implements java.awt.event.ComponentListener, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
 <UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/EditableMazeView.html" title="class in maze.gui.mazeeditor"><B>EditableMazeView</B></A></UL>
-<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView2.html" title="class in maze.gui"><B>MazeView2</B></A> (implements java.awt.event.ComponentListener, maze.util.Listener&lt;T&gt;, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
+<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView2.html" title="class in maze.gui"><B>MazeView2</B></A> (implements java.awt.event.ComponentListener, maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
 </UL>
 <LI TYPE="circle">java.awt.Window (implements javax.accessibility.Accessible)
 <UL>
@@ -144,11 +144,12 @@ Class Hierarchy
 </UL>
 <LI TYPE="circle">javax.swing.filechooser.FileFilter<UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeFileFilter.html" title="class in maze.gui.mazeeditor"><B>MazeFileFilter</B></A></UL>
-<LI TYPE="circle">maze.gui.<A HREF="maze/gui/HelpInfo.pageInfo.html" title="class in maze.gui"><B>HelpInfo.pageInfo</B></A><LI TYPE="circle">maze.util.ListenerSubject&lt;T&gt;<UL>
+<LI TYPE="circle">maze.gui.<A HREF="maze/gui/HelpInfo.pageInfo.html" title="class in maze.gui"><B>HelpInfo.pageInfo</B></A><LI TYPE="circle">maze.util.<A HREF="maze/util/ListenerSubject.html" title="class in maze.util"><B>ListenerSubject</B></A>&lt;T&gt;<UL>
 <LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.html" title="class in maze.model"><B>MazeModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/RobotPathModel.html" title="class in maze.model"><B>RobotPathModel</B></A></UL>
+<LI TYPE="circle">maze.util.<A HREF="maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>ListenerSubject.ListenerMulticaster</B></A>&lt;T&gt; (implements maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;)
 <LI TYPE="circle">maze.<A HREF="maze/Main.html" title="class in maze"><B>Main</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeCell.html" title="class in maze.model"><B>MazeCell</B></A> (implements java.lang.Comparable&lt;T&gt;)
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeEditor.TemplateActionListener.html" title="class in maze.gui.mazeeditor"><B>MazeEditor.TemplateActionListener</B></A> (implements java.awt.event.ActionListener)
-<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfo.html" title="class in maze.model"><B>MazeInfo</B></A> (implements maze.util.Listener&lt;T&gt;)
+<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfo.html" title="class in maze.model"><B>MazeInfo</B></A> (implements maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;)
 <LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfoModel.html" title="class in maze.model"><B>MazeInfoModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.PointCompare.html" title="class in maze.model"><B>MazeModel.PointCompare</B></A> (implements java.util.Comparator&lt;T&gt;)
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainter.html" title="class in maze.gui"><B>MazePainter</B></A><UL>
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainterClassic.html" title="class in maze.gui"><B>MazePainterClassic</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainterDefault.html" title="class in maze.gui"><B>MazePainterDefault</B></A></UL>
@@ -176,7 +177,7 @@ Class Hierarchy
 Interface Hierarchy
 </H2>
 <UL>
-<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModelInterface.html" title="interface in maze.model"><B>CellSizeModelInterface</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.MazeWall.html" title="interface in maze.model"><B>MazeModel.MazeWall</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui"><B>MazeViewInterface</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MenuControlled.html" title="interface in maze.gui"><B>MenuControlled</B></A></UL>
+<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModelInterface.html" title="interface in maze.model"><B>CellSizeModelInterface</B></A><LI TYPE="circle">maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util"><B>Listener</B></A>&lt;T&gt;<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.MazeWall.html" title="interface in maze.model"><B>MazeModel.MazeWall</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui"><B>MazeViewInterface</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MenuControlled.html" title="interface in maze.gui"><B>MenuControlled</B></A></UL>
 <H2>
 Enum Hierarchy
 </H2>
