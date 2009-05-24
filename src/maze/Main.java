@@ -41,16 +41,20 @@ public final class Main
          {
             try
             {
-               //System.out.println(Arrays.toString(UIManager.getInstalledLookAndFeels()));
-               //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-               //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-               //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-               //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
                UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
             }
             catch (Exception e)
             {
                e.printStackTrace();
+               // If Nimbus isn't supported try the system default.
+               try
+               {
+                  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               }
+               catch (Exception e1)
+               {
+                  e1.printStackTrace();
+               }
             }
             primaryFrame = new PrimaryFrame();
             primaryFrame.init();
@@ -79,6 +83,7 @@ public final class Main
                                        "Cannot Load Image: " + imagePath + "\nException: " + e,
                                        "Error Loading Resource",
                                        JOptionPane.ERROR_MESSAGE);
+         //Return a blank image on load error.
          return new ImageIcon(new BufferedImage(10,10,BufferedImage.TYPE_INT_RGB));
       }
    }

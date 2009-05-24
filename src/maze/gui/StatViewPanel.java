@@ -7,17 +7,16 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import maze.Main;
 import maze.ai.Floodfill;
 import maze.ai.LeftWallFollower;
 import maze.ai.RightWallFollower;
@@ -42,26 +41,20 @@ public class StatViewPanel extends JPanel
 
    private ArrayList<RobotBase> algorithms;
    private ArrayList<String> algorithmNames;
-   private JComboBox algorithmSpinner;
-   private JComboBox mazes; //This isn't displayed but is a vital storage unit
+   private JComboBox algorithmCombo;
 
    private final MazeView mazeView = new MazeView();
 
+   /**
+    * This constructor creates the Panel.
+    */
    public StatViewPanel()
    {
-	  //This constructor creates the Panel 
-      mazes = new JComboBox();
-      ComboBoxModel cbm = Main.getPrimaryFrameInstance().getMazeInfoModel()
-      		.getMazeInfoComboBoxModel();
-      mazes.setModel(cbm);
-
-      Box selectionBox = new Box(BoxLayout.X_AXIS);
-      //selectionBox.add(mazes);
+      Box selectionBox = new Box(BoxLayout.Y_AXIS);
 
       final MazeList mazeList = new MazeList(this.mazeView);
       selectionBox.add(mazeList);
-      mazeList.getList().getSelectionModel()
-      		.addListSelectionListener(new ListSelectionListener()
+      mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
       {
          @Override
          public void valueChanged(ListSelectionEvent e)
@@ -74,7 +67,8 @@ public class StatViewPanel extends JPanel
                {
                   maze = new MazeModel(mi.getModel());
                   tracker.reload(algorithm, new RobotModelMaster(maze,
-                            new MazeCell(1, 16), Direction.North));
+                                                                 new MazeCell(1, 16),
+                                                                 Direction.North));
                }
                displayStats();
             }
@@ -85,15 +79,17 @@ public class StatViewPanel extends JPanel
          }
       });
 
-      mazes.addActionListener(new ActionListener()
+      mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
       {
-         public void actionPerformed(ActionEvent e)
+         @Override
+         public void valueChanged(ListSelectionEvent e)
          {
-            Object o = mazes.getSelectedItem();
+            Object o = mazeList.getList().getSelectedValue();
             MazeInfo mi = (MazeInfo) o;
             maze = new MazeModel(mi.getModel());
             tracker.reload(algorithm, new RobotModelMaster(maze,
-                         new MazeCell(1, 16), Direction.North));
+                                                           new MazeCell(1, 16),
+                                                           Direction.North));
             displayStats();
          }
       });
@@ -115,41 +111,40 @@ public class StatViewPanel extends JPanel
       {
          public void actionPerformed(ActionEvent action)
          {
-            algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
+            algorithm = (RobotBase) algorithmCombo.getSelectedItem();
             tracker.reload(algorithm, new RobotModelMaster(maze,
-                           new MazeCell(1, 16), Direction.North));
+                                                           new MazeCell(1, 16),
+                                                           Direction.North));
             displayStats();
          }
       };
 
-      algorithmSpinner = new JComboBox(RobotBase.getRobotListModel());
-      algorithmSpinner.addActionListener(algorithmChange);
+      algorithmCombo = new JComboBox(RobotBase.getRobotListModel());
+      algorithmCombo.addActionListener(algorithmChange);
 
-      selectionBox.add(algorithmSpinner);
+      selectionBox.add(algorithmCombo);
 
       JPanel rightPanel = new JPanel();
       JScrollPane leftSide = new JScrollPane(mazeView);
-      JScrollPane rightSide = new JScrollPane(rightPanel);
-      JSplitPane statSplitPane = 
-    	  new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftSide, rightSide);
+      final JSplitPane statSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                                      leftSide,
+                                                      rightPanel);
       this.setLayout(new BorderLayout());
       this.add(statSplitPane, BorderLayout.CENTER);
-      BoxLayout boxLayout = new BoxLayout(rightPanel, BoxLayout.Y_AXIS);
-      rightPanel.setLayout(boxLayout);
+      statSplitPane.setDividerLocation(.6);
+      statSplitPane.setResizeWeight(.5);
+
+      rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
       rightPanel.add(selectionBox);
-      //Box statBox = new Box(BoxLayout.Y_AXIS);
-      //statBox.add(selectionBox);
 
       statTableModel = new DefaultTableModel();
 
       String uniqueString = "Number of Unique Squares Traversed: ";
-      String firstSquares = 
-    	  "Number of Cells Traversed to Reach the Center Once: ";
+      String firstSquares = "Number of Cells Traversed to Reach the Center Once: ";
       String firstTurns = "Number of Turns Taken: ";
       String bestSquares = "Number of Cells Traversed on Best Run: ";
       String bestTurns = "Number of Turns Taken: ";
-      String bestTotal = 
-    	  "Total Number of Cells Traversed to Complete Best Run: ";
+      String bestTotal = "Total Number of Cells Traversed to Complete Best Run: ";
       String bestTotalTurns = "Number of Turns Taken: ";
       String[] rowHeadings = new String[7];
       rowHeadings[0] = uniqueString;
@@ -163,60 +158,55 @@ public class StatViewPanel extends JPanel
       statTableModel.addColumn("Statistics of Interest", rowHeadings);
       statTableModel.addColumn("Values");
 
-      JTable statTable = new JTable(statTableModel);
+      final JTable statTable = new JTable(statTableModel);
       statTable.setEnabled(false);
-      statTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-      statTable.revalidate();
-
-      //statBox.add(statTable);
+      //statTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
       JScrollPane statPane = new JScrollPane(statTable);
-      //statPane.add(statBox);
-
-      //this.add(statPane);
       rightPanel.add(statPane);
-      //statBox.add(statPane);
-      //this.add(statBox);
-      //statBox.doLayout();
 
-      MazeInfo mi = (MazeInfo) mazes.getSelectedItem();
+      MazeInfo mi = (MazeInfo) mazeList.getList().getSelectedValue();
       if (mi != null)
       {
          this.maze = new MazeModel(mi.getModel());
       }
       else
       {
-         //Create a dummy maze so the app doesn't crash.
+         //Create a dummy maze so the application doesn't crash.
          this.maze = new MazeModel(16, 16);
       }
 
-      this.algorithm = (RobotBase) algorithmSpinner.getSelectedItem();
+      this.algorithm = (RobotBase) algorithmCombo.getSelectedItem();
 
       this.tracker = new StatTracker(algorithm, new RobotModelMaster(maze,
-                       new MazeCell(1, 16), Direction.North));
+                                                                     new MazeCell(1, 16),
+                                                                     Direction.North));
       displayStats();
+      SwingUtilities.invokeLater(new Runnable()
+      {
+         @Override
+         public void run()
+         {
+            statSplitPane.setDividerLocation(.6);
+            statSplitPane.setResizeWeight(.6);
+            statTable.doLayout();
+         }
+      });
    }
 
    private void displayStats()
    {
-	  //This function displays all of the information for the panel
+      //This function displays all of the information for the panel
       //First lets display the table
-      statTableModel.setValueAt(String.valueOf(
-    		  tracker.getTotalTraversed()), 0, 1);
+      statTableModel.setValueAt(String.valueOf(tracker.getTotalTraversed()), 0, 1);
       if (tracker.getFirstRunCells() != StatTracker.USELESS)
       {
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getFirstRunCells()), 1, 1);
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getFirstRunTurns()), 2, 1);
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getBestRunCells()), 3, 1);
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getBestRunTurns()), 4, 1);
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getThroughBestRunCells()), 5, 1);
-         statTableModel.setValueAt(String.valueOf(
-        		 tracker.getThroughBestRunTurns()), 6, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getFirstRunCells()), 1, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getFirstRunTurns()), 2, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getBestRunCells()), 3, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getBestRunTurns()), 4, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunCells()), 5, 1);
+         statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunTurns()), 6, 1);
       }
       else
       {

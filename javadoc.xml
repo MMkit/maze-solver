@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="private" author="true" classpath="lib/jython.jar;lib/rsyntaxtextarea.jar" destdir="javadoc"
-        	doctitle="Micro Mouse" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false"
-        	packagenames="maze.model,maze.ai,maze.gui,maze.gui.mazeeditor" source="1.6"
-        	sourcefiles="src/maze/Main.java" sourcepath="src" splitindex="true" use="true" version="true"
-        	linksource="true"  additionalparam="-notimestamp"
+        <javadoc
+        	access="private"
+        	author="true"
+        	classpath="lib/jython.jar;lib/rsyntaxtextarea.jar"
+        	destdir="javadoc"
+        	doctitle="Micro Mouse"
+        	nodeprecated="false"
+        	nodeprecatedlist="false"
+        	noindex="false"
+    		nonavbar="false"
+        	notree="false"
+        	packagenames="maze.*"
+        	source="1.6"
+        	sourcepath="src"
+        	splitindex="true"
+        	use="true"
+        	version="true"
+        	linksource="true"
+        	additionalparam="-notimestamp"
         />
     </target>
 </project>
