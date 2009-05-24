@@ -354,7 +354,8 @@ Creates an AI script text editor in Python.
 <TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#getInitializedInterpreter()">getInitializedInterpreter</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new Python interpreter and sets some initial values like imports
+ and the maze model variable.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -704,11 +705,14 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.254"><B>a
 <A NAME="getInitializedInterpreter()"><!-- --></A><H3>
 getInitializedInterpreter</H3>
 <PRE>
-public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.306"><B>getInitializedInterpreter</B></A>()</PRE>
+public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.308"><B>getInitializedInterpreter</B></A>()</PRE>
 <DL>
+<DD>Creates a new Python interpreter and sets some initial values like imports
+ and the maze model variable.
+<P>
 <DD><DL>
 
-<DT><B>Returns:</B><DD></DL>
+<DT><B>Returns:</B><DD>A new interpreter.</DL>
 </DD>
 </DL>
 <HR>
@@ -716,7 +720,7 @@ public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEd
 <A NAME="setRobotModel(maze.model.RobotModel)"><!-- --></A><H3>
 setRobotModel</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.324"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
+public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.326"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -727,7 +731,7 @@ public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.324"><B>se
 <A NAME="getNextStep()"><!-- --></A><H3>
 getNextStep</H3>
 <PRE>
-public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.336"><B>getNextStep</B></A>()</PRE>
+public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.338"><B>getNextStep</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -738,7 +742,7 @@ public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep<
 <A NAME="executeScript()"><!-- --></A><H3>
 executeScript</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.352"><B>executeScript</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.354"><B>executeScript</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>

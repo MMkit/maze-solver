@@ -3,3 +3,4 @@ maze.ai
 maze.gui
 maze.gui.mazeeditor
 maze.model
+maze.util

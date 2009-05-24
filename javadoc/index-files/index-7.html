@@ -107,12 +107,12 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in ma
 <DD>Get the graphics object that draws onto the background image.
 <DT><A HREF="../maze/ai/Floodfill.html#getBestDirection()"><B>getBestDirection()</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze.ai">Floodfill</A>
-<DD>Returns the best direction to go, according to Floodfill, from the 
- current MazeCell.
+<DD>Returns the best direction to go, according to Floodfill, from the current
+ MazeCell.
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getBestDirection()"><B>getBestDirection()</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
-<DD>Returns the best direction to go, according to Floodfill, from the 
- current MazeCell.
+<DD>Returns the best direction to go, according to Floodfill, from the current
+ MazeCell.
 <DT><A HREF="../maze/gui/StatTracker.html#getBestRun()"><B>getBestRun()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in maze.gui">StatTracker</A>
 <DD>&nbsp;
@@ -127,10 +127,11 @@ Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in 
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView2.html#getCellArea(maze.model.MazeCell)"><B>getCellArea(MazeCell)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>&nbsp;
+<DD>Get the pixel space of a cell.
 <DT><A HREF="../maze/gui/MazeView2.html#getCellAreaInner(maze.model.MazeCell)"><B>getCellAreaInner(MazeCell)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>&nbsp;
+<DD>Similar to <code>getCellArea</code> but just the inside of the cell without the
+ walls.
 <DT><A HREF="../maze/gui/MazePainter.html#getCellBackground()"><B>getCellBackground()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
@@ -223,9 +224,6 @@ Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate
 <DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#getCenterPoints(maze.gui.CellSize)"><B>getCenterPoints(CellSize)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/PrimaryFrame.html#getCodeEditorPanel()"><B>getCodeEditorPanel()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/PrimaryFrame.html" title="class in maze.gui">PrimaryFrame</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/model/RobotModel.html#getCurrentLocation()"><B>getCurrentLocation()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>
 <DD>&nbsp;
@@ -243,8 +241,8 @@ Static method in enum maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.Direction2.h
 <DD>&nbsp;
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getDirection(maze.model.MazeCell)"><B>getDirection(MazeCell)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
-<DD>This function loads a value into the directions array based upon the
- cell passed and the value in i
+<DD>This function loads a value into the directions array based upon the cell
+ passed and the value in i
 <DT><A HREF="../maze/ai/Tremaux.html#getDirection(maze.model.MazeCell)"><B>getDirection(MazeCell)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/Tremaux.html" title="class in maze.ai">Tremaux</A>
 <DD>This returns the direction for the understanding for the given cell
@@ -315,7 +313,8 @@ Method in enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in 
 <DD>Get an index value for this direction.
 <DT><A HREF="../maze/gui/CodeEditorPane.html#getInitializedInterpreter()"><B>getInitializedInterpreter()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
-<DD>&nbsp;
+<DD>Creates a new Python interpreter and sets some initial values like imports
+ and the maze model variable.
 <DT><A HREF="../maze/model/Direction.html#getLeft()"><B>getLeft()</B></A> - 
 Method in enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in maze.model">Direction</A>
 <DD>Gets the direction directly to the left of this one.
@@ -382,23 +381,23 @@ Method in class maze.ai.<A HREF="../maze/ai/Tremaux.html" title="class in maze.a
  direction given from the current cell.
 <DT><A HREF="../maze/ai/Floodfill.html#getNeighborDistance(maze.model.MazeCell, maze.model.Direction)"><B>getNeighborDistance(MazeCell, Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze.ai">Floodfill</A>
-<DD>Returns the distance of the MazeCell adjacent to the passed MazeCell
- and is adjacent in the specified direction.
+<DD>Returns the distance of the MazeCell adjacent to the passed MazeCell and
+ is adjacent in the specified direction.
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getNeighborDistance(maze.model.MazeCell, maze.model.Direction)"><B>getNeighborDistance(MazeCell, Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
-<DD>Returns the distance of the MazeCell adjacent to the passed MazeCell
- and is adjacent in the specified direction.
+<DD>Returns the distance of the MazeCell adjacent to the passed MazeCell and
+ is adjacent in the specified direction.
 <DT><A HREF="../maze/ai/Floodfill.html#getNeighborExplored(maze.model.Direction)"><B>getNeighborExplored(Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze.ai">Floodfill</A>
-<DD>Returns the explored flag of the current location's neighbor in the 
- given direction.
+<DD>Returns the explored flag of the current location's neighbor in the given
+ direction.
 <DT><A HREF="../maze/ai/Floodfill.html#getNeighborExplored(maze.model.MazeCell, maze.model.Direction)"><B>getNeighborExplored(MazeCell, Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze.ai">Floodfill</A>
 <DD>Returns the explored flag of the given location's neighbor.
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getNeighborExplored(maze.model.Direction)"><B>getNeighborExplored(Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
-<DD>Returns the explored flag of the current location's neighbor in the 
- given direction.
+<DD>Returns the explored flag of the current location's neighbor in the given
+ direction.
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getNeighborExplored(maze.model.MazeCell, maze.model.Direction)"><B>getNeighborExplored(MazeCell, Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>Returns the explored flag of the given location's neighbor.
@@ -574,7 +573,7 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in ma
 <DD>Get the area of a cell wall.
 <DT><A HREF="../maze/gui/MazeView.html#getWallDirection(maze.model.MazeCell, java.awt.Point)"><B>getWallDirection(MazeCell, Point)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>&nbsp;
+<DD>Used to translate a point into the wall it is located in.
 <DT><A HREF="../maze/gui/MazePainter.html#getWallEmpty()"><B>getWallEmpty()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
