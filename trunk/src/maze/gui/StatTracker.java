@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 import maze.ai.RobotBase;
-import maze.ai.RobotController;
 import maze.ai.RobotStep;
 import maze.model.MazeCell;
-import maze.model.MazeModel;
 import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
@@ -44,7 +42,7 @@ public class StatTracker
    private RobotModelMaster mouse;
    private Dimension mazeSize;
 
-   private RobotController controller;
+   //private RobotController controller;
 
    /**
     * This constructor requires an algorithm and a mouse. It will then determine
@@ -64,8 +62,8 @@ public class StatTracker
       this.algorithm = algorithm;
       this.mouse = mouse;
 
-      this.controller = new RobotController(new MazeModel(mouse.getMazeSize().width,
-                                                          mouse.getMazeSize().height), algorithm);
+      //this.controller = new RobotController(new MazeModel(mouse.getMazeSize().width,
+      //                                                    mouse.getMazeSize().height), algorithm);
 
       this.initialize();
       this.recompute();
@@ -77,7 +75,7 @@ public class StatTracker
     */
    private void initialize()
    {
-      this.controller.initialize();
+      //this.controller.initialize();
 
       mazeSize = mouse.getMazeSize();
       explored = new boolean[mazeSize.width][mazeSize.width];

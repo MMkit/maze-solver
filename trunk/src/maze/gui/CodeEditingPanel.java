@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,21 +40,21 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       final JEditorPane docPane = new JEditorPane();
       docPane.setEditable(false);
       docPane.setContentType("text/html");
-      docPane.setText("<html><h2>There was an error loading the documentation</h2></html>");
 
       try
       {
-         docPane.setPage(CodeEditingPanel.class.getResource("api.html"));
+         docPane.setPage(CodeEditingPanel.class.getResource("html/api.html"));
       }
       catch (Exception e)
       {
          e.printStackTrace();
+         docPane.setText("<html><h2>There was an error loading the documentation</h2></html>");
       }
 
       //Set up the documentation tabs.
       final JTabbedPane docTabs = new JTabbedPane();
 
-      //docTabs.add("Code Information", new CodeInformationPanel());
+      docTabs.add("Code Information", new CodeInformationPanel());
       docTabs.add("API Documentation", new JScrollPane(docPane));
 
       //Set up split pane.
@@ -167,7 +168,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    {
       try
       {
-         CodeEditorPane editor = (CodeEditorPane)this.editorTabs.getSelectedComponent();
+         CodeEditorPane editor = (CodeEditorPane) this.editorTabs.getSelectedComponent();
          if (editor != null)
          {
             editor.saveScriptFile();
@@ -227,7 +228,15 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       closeScriptAction.actionPerformed(null);
    }
 
+   /**
+    * Creates a panel to display information about the current python script.
+    * @author Luke Last
+    */
    private final class CodeInformationPanel extends JPanel
    {
+      public CodeInformationPanel()
+      {
+         this.add(new JLabel("Coming soon."));
+      }
    }
 }

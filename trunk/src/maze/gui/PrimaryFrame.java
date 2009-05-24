@@ -41,9 +41,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    private MazeViewerPanel mazeViewer;
    private MazeEditor mazeEditor;
    private CodeEditingPanel codeEditorPanel;
-   private HelpInfo helpInfo;
    private final JTabbedPane mainTabs = new JTabbedPane();
-   private final JMenu mouseMenu = new JMenu("Mouse Options");
 
    /**
     * Initializes the contents of this frame.
@@ -102,7 +100,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             Component c = mainTabs.getSelectedComponent();
             if (c instanceof MenuControlled)
             {
-               MenuControlled mc = (MenuControlled)c;
+               MenuControlled mc = (MenuControlled) c;
                mc.open();
             }
          }
@@ -120,7 +118,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             Component c = mainTabs.getSelectedComponent();
             if (c instanceof MenuControlled)
             {
-               MenuControlled mc = (MenuControlled)c;
+               MenuControlled mc = (MenuControlled) c;
                mc.saveCurrent();
             }
          }
@@ -137,7 +135,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             Component c = mainTabs.getSelectedComponent();
             if (c instanceof MenuControlled)
             {
-               MenuControlled mc = (MenuControlled)c;
+               MenuControlled mc = (MenuControlled) c;
                mc.close();
             }
          }
@@ -156,90 +154,6 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             PrimaryFrame.this.dispose();
          }
       });
-
-      // Mouse options
-
-      menuBar.add(mouseMenu);
-      // This can be deleted.
-      mouseMenu.setVisible(false);
-
-      // Load AI
-      JMenuItem mouseLoad = new JMenuItem("Load AI Script");
-      mouseMenu.add(mouseLoad);
-      mouseLoad.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            codeEditorPanel.open();
-            mainTabs.setSelectedComponent(codeEditorPanel);
-         }
-      });
-
-      // Save Python AI script.
-      JMenuItem mouseSave = new JMenuItem("Save AI Script");
-      mouseMenu.add(mouseSave);
-      mouseSave.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            codeEditorPanel.saveCurrent();
-         }
-      });
-
-      // Close AI script.
-      this.mouseMenu.add(new JMenuItem(this.codeEditorPanel.closeScriptAction));
-
-      // Algorithms
-      JMenu mouseAlgorithms = new JMenu("AI Algrithms");
-      mouseMenu.add(mouseAlgorithms);
-
-      // Algorithm Radio buttons
-      ButtonGroup algorithmGroup = new ButtonGroup();
-
-      // Left-Wall Follower
-      JRadioButtonMenuItem leftWallFollowAI = new JRadioButtonMenuItem("Left-Wall Follower", true);
-      mouseAlgorithms.add(leftWallFollowAI);
-      algorithmGroup.add(leftWallFollowAI);
-
-      // Right-Wall Follower
-      JRadioButtonMenuItem rightWallFollowAI = new JRadioButtonMenuItem("Right-Wall Follower");
-      mouseAlgorithms.add(rightWallFollowAI);
-      algorithmGroup.add(rightWallFollowAI);
-
-      // Tremaux's Method
-      JRadioButtonMenuItem tremauxMethodAI = new JRadioButtonMenuItem("Tremaux's Method");
-      mouseAlgorithms.add(tremauxMethodAI);
-      algorithmGroup.add(tremauxMethodAI);
-
-      // Floodfill
-      JRadioButtonMenuItem floodFillAI = new JRadioButtonMenuItem("Floodfill");
-      mouseAlgorithms.add(floodFillAI);
-      algorithmGroup.add(floodFillAI);
-
-      // Modified Floodfill
-      JRadioButtonMenuItem mFloodFillAI = new JRadioButtonMenuItem("Modified Floodfill");
-      mouseAlgorithms.add(mFloodFillAI);
-      algorithmGroup.add(mFloodFillAI);
-
-      // Telly
-      JRadioButtonMenuItem tellyAI = new JRadioButtonMenuItem("Telly");
-      mouseAlgorithms.add(tellyAI);
-      algorithmGroup.add(tellyAI);
-
-      // Custom?
-      JRadioButtonMenuItem customAI = new JRadioButtonMenuItem("Custom");
-      mouseAlgorithms.add(customAI);
-      algorithmGroup.add(customAI);
-
-      // Mouse Speed
-      JMenuItem mouseSpeed = new JMenuItem("Mouse Speed");
-      mouseMenu.add(mouseSpeed);
-
-      // Display Settings
-      JMenuItem mouseDisplay = new JMenuItem("Display Settings");
-      mouseMenu.add(mouseDisplay);
 
       // Help menu.
       JMenu helpMenu = new JMenu("Help");
@@ -286,7 +200,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          public void actionPerformed(ActionEvent e)
          {
             String m = "<html><b>Version:</b> 0.9.0<br />"
-                       + "You can find more information about this application"
+                       + "You can find more information about this application "
                        + "at the following project page.<br />"
                        + "<a href=\"http://code.google.com/p/maze-solver/\">"
                        + "http://code.google.com/p/maze-solver/</a><br />"
@@ -339,20 +253,18 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          {
             toSave = mi.getMutableClone();
             Box box = new Box(BoxLayout.Y_AXIS);
-            JLabel label = new JLabel("What would you like ot call the" +
-                                      " maze?");
+            JLabel label = new JLabel("What would you like ot call the" + " maze?");
             JTextField field = new JTextField();
             box.add(label);
             box.add(field);
             String newName = null;
             while (true)
             {
-               int result = JOptionPane.showConfirmDialog(
-                                                PrimaryFrame.this,
-                                                box,
-                                                "Maze Name",
-                                                JOptionPane.OK_CANCEL_OPTION,
-                                                JOptionPane.QUESTION_MESSAGE);
+               int result = JOptionPane.showConfirmDialog(PrimaryFrame.this,
+                                                          box,
+                                                          "Maze Name",
+                                                          JOptionPane.OK_CANCEL_OPTION,
+                                                          JOptionPane.QUESTION_MESSAGE);
                if (result == JOptionPane.OK_OPTION)
                {
                   if (field.getText().length() > 0)
@@ -386,9 +298,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                      if (paths.contains(file.getCanonicalPath().toLowerCase()))
                      {
                         JOptionPane.showMessageDialog(this,
-                                    "That file is being used by another maze",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
+                                                      "That file is being used by another maze",
+                                                      "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
                      }
                      else
                      {
@@ -461,11 +373,6 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    public void windowDeactivated(WindowEvent e)
    {}
 
-   public CodeEditingPanel getCodeEditorPanel()
-   {
-      return this.codeEditorPanel;
-   }
-
    /**
     * Tells the primary frame if a simulation is currently running or not. We
     * can then disable GUI elements while animating.
@@ -474,9 +381,11 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    public void setSimulation(boolean simOn)
    {
       this.mainTabs.setEnabled(!simOn);
-      this.mouseMenu.setEnabled(!simOn);
    }
 
+   /**
+    * An ActionListener that changes the swing look and feel.
+    */
    private class LookAndFeelListener implements ActionListener
    {
       @Override
