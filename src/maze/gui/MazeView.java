@@ -223,8 +223,14 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
 
          // Draw outer walls
          bgg.setPaint(this.paints.getWallSet());
-         bgg.fillRect(-csm.getWallWidthHalf(), -csm.getWallHeightHalf(), mazeWidth, csm.getWallHeight());
-         bgg.fillRect(-csm.getWallWidthHalf(), -csm.getWallHeightHalf(), csm.getWallWidth(), mazeHeight);
+         bgg.fillRect(-csm.getWallWidthHalf(),
+                      -csm.getWallHeightHalf(),
+                      mazeWidth,
+                      csm.getWallHeight());
+         bgg.fillRect(-csm.getWallWidthHalf(),
+                      -csm.getWallHeightHalf(),
+                      csm.getWallWidth(),
+                      mazeHeight);
          bgg.fillRect(0, mazeHeight - csm.getWallHeightHalf(), mazeWidth, csm.getWallHeight());
          bgg.fillRect(mazeWidth - csm.getWallWidthHalf(), 0, csm.getWallWidth(), mazeHeight);
 
@@ -258,7 +264,9 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
       {
          g.setPaint(this.paints.getHover());
          g.fillRect(active.getXZeroBased() * this.csm.getCellWidth() + this.csm.getWallWidthHalf(),
-                    active.getYZeroBased() * this.csm.getCellHeight() + this.csm.getWallHeightHalf(),
+                    active.getYZeroBased() *
+                          this.csm.getCellHeight() +
+                          this.csm.getWallHeightHalf(),
                     this.csm.getCellWidth() - this.csm.getWallWidth(),
                     this.csm.getCellHeight() - this.csm.getWallHeight());
       }
@@ -328,8 +336,10 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
     */
    protected Point getCellCenter(MazeCell cell)
    {
-      return new Point( (cell.getXZeroBased() * this.csm.getCellWidth()) + this.csm.getCellWidthHalf(),
-                       (cell.getYZeroBased() * this.csm.getCellHeight()) + this.csm.getCellHeightHalf());
+      return new Point( (cell.getXZeroBased() * this.csm.getCellWidth()) +
+                             this.csm.getCellWidthHalf(),
+                       (cell.getYZeroBased() * this.csm.getCellHeight()) +
+                             this.csm.getCellHeightHalf());
    }
 
    /**
@@ -341,29 +351,37 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
       Point center = this.getCellCenter(cell);
       if (wall == Direction.North)
       {
-         return new Rectangle(center.x - (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
-                              center.y - (this.csm.getCellHeightHalf() + this.csm.getWallHeightHalf()),
+         return new Rectangle(center.x -
+                                    (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
+                              center.y -
+                                    (this.csm.getCellHeightHalf() + this.csm.getWallHeightHalf()),
                               this.csm.getCellWidth() - this.csm.getWallWidth(),
                               this.csm.getWallHeight());
       }
       else if (wall == Direction.South)
       {
-         return new Rectangle(center.x - (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
-                              center.y + (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
+         return new Rectangle(center.x -
+                                    (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
+                              center.y +
+                                    (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
                               this.csm.getCellWidth() - this.csm.getWallWidth(),
                               this.csm.getWallHeight());
       }
       else if (wall == Direction.East)
       {
-         return new Rectangle(center.x + (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
-                              center.y - (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
+         return new Rectangle(center.x +
+                                    (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),
+                              center.y -
+                                    (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
                               this.csm.getWallWidth(),
                               this.csm.getCellHeight() - this.csm.getWallHeight());
       }
       else if (wall == Direction.West)
       {
-         return new Rectangle(center.x - (this.csm.getCellWidthHalf() + this.csm.getWallWidthHalf()),
-                              center.y - (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
+         return new Rectangle(center.x -
+                                    (this.csm.getCellWidthHalf() + this.csm.getWallWidthHalf()),
+                              center.y -
+                                    (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),
                               this.csm.getWallWidth(),
                               this.csm.getCellHeight() - this.csm.getWallHeight());
       }
@@ -433,9 +451,10 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
    }
 
    /**
-    * @param cell
-    * @param mouseLocation
-    * @return
+    * Used to translate a point into the wall it is located in.
+    * @param cell Cell to look int.
+    * @param mouseLocation The location of the mouse cursor or other point.
+    * @return The direction of the wall found.
     * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.
     */
    private Direction getWallDirection(MazeCell cell, Point mouseLocation) throws Exception
@@ -452,8 +471,8 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
 
    /**
     * Converts a mouse pointer location into an actual maze wall object.
-    * @param mouseLocation
-    * @return
+    * @param mouseLocation Cursor location or other point.
+    * @return The maze wall that can be checked or changed.
     * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.
     */
    protected MazeWall getWall(Point mouseLocation) throws Exception
@@ -464,7 +483,7 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
 
    /**
     * Notifies the MazeView that it has been resized.
-    * @param e
+    * @param e Event object.
     */
    @Override
    public void componentResized(ComponentEvent e)
@@ -734,7 +753,11 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
             {
                //here is west of there
                x = here.getXZeroBased() * this.csm.getCellWidth() + 5 * this.csm.getCellWidth() / 8;
-               y = here.getYZeroBased() * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;
+               y = here.getYZeroBased() *
+                   this.csm.getCellHeight() +
+                   3 *
+                   this.csm.getCellHeight() /
+                   8;
                //width = 5 * this.csm.getCellWidth() / 4;
                width = this.csm.getCellWidth();
                height = this.csm.getCellHeight() / 4;
@@ -760,7 +783,11 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
             {
                //here is north of there
                x = here.getXZeroBased() * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;
-               y = here.getYZeroBased() * this.csm.getCellHeight() + 5 * this.csm.getCellHeight() / 8;
+               y = here.getYZeroBased() *
+                   this.csm.getCellHeight() +
+                   5 *
+                   this.csm.getCellHeight() /
+                   8;
                width = this.csm.getCellWidth() / 4;
                height = this.csm.getCellHeight();
             }

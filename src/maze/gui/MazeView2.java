@@ -24,16 +24,23 @@ import maze.model.MazeModel;
 import maze.model.RobotPathModel;
 import maze.util.Listener;
 
+/**
+ * This swing component displays a graphical view of a maze. It also has the
+ * capability to draw different things onto the maze like an image for the
+ * robots location.<br />
+ * Painting is handled by a UI delegate {@link maze.gui.MazePainter} that allows
+ * different themes to be used.
+ * @author Luke Last
+ */
 public class MazeView2 extends JComponent implements ComponentListener, Listener<MazeCell>,
       MazeViewInterface
 {
-
    private static final long serialVersionUID = 3249468255178771818L;
    private static final int WALL_SIZE_DIVIDER = 6;
    /**
     * The maze model that stores the configuration of the maze.
     */
-   protected MazeModel model;
+   private MazeModel model;
    /**
     * The background image holds the rendered maze cells. When cells are
     * invalidated they are redrawn on this background image. When the screen is
@@ -47,13 +54,13 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    private Graphics2D backgroundGraphics;
    /**
-    * 
+    * Stores the sizes of a cell and its walls.
     */
    final CellSizeModel2 csm = new CellSizeModel2();
    /**
-    * This must be initialized after the cell size model.
+    * UI delegate used for drawing each maze component.
     */
-   private MazePainter paints = new MazePainterDefault();
+   private MazePainter painter = new MazePainterDefault();
    /**
     * The current location of the robot while it is animating.
     */
@@ -124,7 +131,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
          final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
          this.csm.setWallWidth(wallSize);
          this.csm.setWallHeight(wallSize);
-         this.paints.setMazeSize(this.getMazeSize());
+         this.painter.setMazeSize(this.getMazeSize());
          this.repaint();
       }
    }
@@ -135,7 +142,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
    /**
     * Calls the draw cell method on every cell in the maze.
-    * @param g
+    * @param g What do draw on.
     */
    private void drawAllCells(final Graphics2D g)
    {
@@ -152,10 +159,10 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
    /**
     * Draws an arrow graphic.
-    * @param g
-    * @param local
-    * @param x
-    * @param y
+    * @param g What do draw on.
+    * @param local Direction to point the arrow.
+    * @param x Horizontal pixel location to draw arrow.
+    * @param y Vertical pixel location to draw arrow.
     */
    private void drawArrow(final Graphics2D g, final Direction local, final int x, final int y)
    {
@@ -222,25 +229,25 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    private void drawCell(final Graphics2D g, final MazeCell cell)
    {
-      this.paints.drawCellBackground(g, this.getCellAreaInner(cell));
+      this.painter.drawCellBackground(g, this.getCellAreaInner(cell));
 
       if (this.model.getWall(cell, Direction.East).isSet())
       {
-         this.paints.drawWallSet(g, this.getWallArea(cell, Direction.East));
+         this.painter.drawWallSet(g, this.getWallArea(cell, Direction.East));
       }
       else
       {
-         this.paints.drawWallEmpty(g, this.getWallArea(cell, Direction.East));
+         this.painter.drawWallEmpty(g, this.getWallArea(cell, Direction.East));
       }
       if (this.model.getWall(cell, Direction.South).isSet())
       {
-         this.paints.drawWallSet(g, this.getWallArea(cell, Direction.South));
+         this.painter.drawWallSet(g, this.getWallArea(cell, Direction.South));
       }
       else
       {
-         this.paints.drawWallEmpty(g, this.getWallArea(cell, Direction.South));
+         this.painter.drawWallEmpty(g, this.getWallArea(cell, Direction.South));
       }
-      this.paints.drawPeg(g, this.getPegArea(cell));
+      this.painter.drawPeg(g, this.getPegArea(cell));
       if (this.robotPathModel != null)
       {
          //Draw the fog of war.
@@ -259,7 +266,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
             {
                area.height -= this.csm.getWallHeight();
             }
-            this.paints.drawFog(g, area);
+            this.painter.drawFog(g, area);
          }
          // Draw a current path of dots.
          if (this.drawPathCurrent && this.robotPathModel.getPathRecent().contains(cell))
@@ -314,14 +321,14 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
       for (int i = 0; i <= this.model.getSize().width; i++)
       {
-         this.paints.drawPeg(g, pegArea);
+         this.painter.drawPeg(g, pegArea);
          pegArea.x += this.csm.getCellWidth();
          // We draw more pegs than walls.
          if (i == 0)
          {
             continue;
          }
-         this.paints.drawWallSet(g, wallArea);
+         this.painter.drawWallSet(g, wallArea);
          wallArea.x += this.csm.getCellWidth();
       }
 
@@ -331,9 +338,9 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       // Draw the left side column of pegs and walls.
       for (int i = 1; i <= this.model.getSize().height; i++)
       {
-         this.paints.drawPeg(g, pegArea);
+         this.painter.drawPeg(g, pegArea);
          pegArea.y += this.csm.getCellHeight();
-         this.paints.drawWallSet(g, wallArea);
+         this.painter.drawWallSet(g, wallArea);
          wallArea.y += this.csm.getCellHeight();
       }
    }
@@ -465,17 +472,17 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       {
          if (this.drawPathFirst)
          {
-            g.setPaint(this.paints.getRunFirst());
+            g.setPaint(this.painter.getRunFirst());
             this.drawPath(g, this.robotPathModel.getPathFirst(), this.csm.getWallWidth(), false);
          }
          if (this.drawPathBest)
          {
-            g.setPaint(this.paints.getRunBest());
+            g.setPaint(this.painter.getRunBest());
             this.drawPath(g, this.robotPathModel.getPathBest(), -this.csm.getWallWidth(), false);
          }
          if (this.drawPathCurrent)
          {
-            g.setPaint(this.paints.getRunCurrent());
+            g.setPaint(this.painter.getRunCurrent());
             this.drawPath(g, this.robotPathModel.getPathRecent(), 0, true);
          }
       }
@@ -486,11 +493,11 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       if (this.getRobotLocation() != null)
       {
          this.setRenderingQualityHigh(g);
-         this.paints.drawRobot(g,
-                               this.getRobotLocation(),
-                               this.getRobotRotation(),
-                               this.csm.getCellWidthInner(),
-                               this.csm.getCellHeightInner());
+         this.painter.drawRobot(g,
+                                this.getRobotLocation(),
+                                this.getRobotRotation(),
+                                this.csm.getCellWidthInner(),
+                                this.csm.getCellHeightInner());
       }
    }
 
@@ -516,7 +523,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
    /**
     * Draws the arrows and numbers on the maze.
-    * @param g
+    * @param g What to draw on.
     */
    private void drawUnderstanding(final Graphics2D g)
    {
@@ -567,8 +574,8 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
    /**
     * Gets all the cells that are adjacent to the given one.
-    * @param cell
-    * @return
+    * @param cell The cell in question.
+    * @return All adjacent or connecting cells.
     */
    @SuppressWarnings("unused")
    private MazeCell[] getAdjacentCells(final MazeCell cell)
@@ -585,8 +592,9 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    /**
     * Gets a direction for each adjacent cell that exists. The only time one
     * doesn't exists is when the given cell is on the maze edge.
-    * @param cell
-    * @return
+    * @param cell The cell in question.
+    * @return A set of directions with each direction confirming the existence
+    *         of a neighbor cell.
     */
    private EnumSet<Direction> getAdjacentDirections(final MazeCell cell)
    {
@@ -618,7 +626,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    /**
     * Get the graphics object that draws onto the background image. All drawing
     * onto the background image must use this.
-    * @return
+    * @return The graphics object.
     */
    private Graphics2D getBackgroundGraphics()
    {
@@ -640,8 +648,9 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    }
 
    /**
-    * @param cell
-    * @return
+    * Get the pixel space of a cell.
+    * @param cell The cell in question.
+    * @return The location and area in pixels of where the cell is located.
     */
    private Rectangle getCellArea(final MazeCell cell)
    {
@@ -654,8 +663,10 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    }
 
    /**
-    * @param cell
-    * @return
+    * Similar to <code>getCellArea</code> but just the inside of the cell without the
+    * walls.
+    * @param cell The cell in question.
+    * @return Cell area minus the walls and corner peg.
     */
    private Rectangle getCellAreaInner(final MazeCell cell)
    {
@@ -669,8 +680,8 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
 
    /**
     * Get the center of the inner cell part without the walls.
-    * @param cell
-    * @return
+    * @param cell The cell in question.
+    * @return The point in pixel coordinates.
     */
    Point getCellCenterInner(final MazeCell cell)
    {
@@ -935,9 +946,9 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    public void setPainterDelegate(MazePainter newPainterDelegate)
    {
-      if (newPainterDelegate != null && this.paints != newPainterDelegate)
+      if (newPainterDelegate != null && this.painter != newPainterDelegate)
       {
-         this.paints = newPainterDelegate;
+         this.painter = newPainterDelegate;
          // When changing the painter we want to redraw everything.
          this.componentResized(null);
       }

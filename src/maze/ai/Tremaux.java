@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import maze.model.Direction;
 import maze.model.MazeCell;
 
+/**
+ * Maze solving algorithm that provides a right wall follower with a memory so
+ * it prefers unexplored cells.
+ */
 public class Tremaux extends RobotBase
 {
-   /**
-	* @param args
-	*/
    private Direction[][] ballOfString;
    private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();
    private boolean turbo = false;
@@ -25,9 +26,9 @@ public class Tremaux extends RobotBase
    }
 
    /**
-	 * This function should be called by the controller any time a new run is
-	 * to commence
-	 */
+    * This function should be called by the controller any time a new run is to
+    * commence
+    */
    @Override
    public void initialize()
    {
@@ -36,8 +37,7 @@ public class Tremaux extends RobotBase
       Dimension size = robotLocation.getMazeSize();
       if (ballOfString == null)
       {
-         ballOfString = new Direction[(int) size.getWidth()]
-                                      [(int) size.getHeight()];
+         ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];
       }
       for (int i = 0; i < size.getWidth(); i++)
       {
@@ -50,7 +50,7 @@ public class Tremaux extends RobotBase
    }
 
    /**
-    * This returns the state of the turbo flag.  Turbo should be true when
+    * This returns the state of the turbo flag. Turbo should be true when
     * traversing previously explored territories.
     */
    public boolean isInTurboMode()
@@ -59,34 +59,30 @@ public class Tremaux extends RobotBase
    }
 
    /**
-    * This returns the next step for the robot to take.  It should be called
-    * by the controller.
+    * This returns the next step for the robot to take. It should be called by
+    * the controller.
     */
    public RobotStep nextStep()
    {
       RobotStep next;
-      if (getDirection(robotLocation.getCurrentLocation())
-    		  == null)
+      if (getDirection(robotLocation.getCurrentLocation()) == null)
       {
          setDirection();
       }
       if (moveQueue.isEmpty() == true)
       {
-         if ( (robotLocation.isWallRight() == false) &&
-             (getRightNeighborDirection() == null))
+         if ( (robotLocation.isWallRight() == false) && (getRightNeighborDirection() == null))
          {
             next = RobotStep.RotateRight;
             moveQueue.add(RobotStep.MoveForward);
             turbo = false;
          }
-         else if ( (robotLocation.isWallFront() == false) &&
-                  (getFrontNeighborDirection() == null))
+         else if ( (robotLocation.isWallFront() == false) && (getFrontNeighborDirection() == null))
          {
             next = RobotStep.MoveForward;
             turbo = false;
          }
-         else if ( (robotLocation.isWallLeft() == false) &&
-                  (getLeftNeighborDirection() == null))
+         else if ( (robotLocation.isWallLeft() == false) && (getLeftNeighborDirection() == null))
          {
             next = RobotStep.RotateLeft;
             moveQueue.add(RobotStep.MoveForward);
@@ -96,19 +92,16 @@ public class Tremaux extends RobotBase
          //Retrace the steps
          {
             turbo = true;
-            if (robotLocation.getDirection()
-            		== getDirection(robotLocation.getCurrentLocation()))
+            if (robotLocation.getDirection() == getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.MoveForward;
             }
-            else if (robotLocation.getDirection().getLeft()
-            		== getDirection(robotLocation.getCurrentLocation()))
+            else if (robotLocation.getDirection().getLeft() == getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.RotateLeft;
                moveQueue.add(RobotStep.MoveForward);
             }
-            else if (robotLocation.getDirection().getRight()
-            		== getDirection(robotLocation.getCurrentLocation()))
+            else if (robotLocation.getDirection().getRight() == getDirection(robotLocation.getCurrentLocation()))
             {
                next = RobotStep.RotateRight;
                moveQueue.add(RobotStep.MoveForward);
@@ -209,12 +202,13 @@ public class Tremaux extends RobotBase
    {
       return ballOfString[currentLocation.getX() - 1][currentLocation.getY() - 1];
    }
-   
+
    /**
-    * This returns the understanding of the maze.  Tremaux's understanding is
-    * the directions needed to return to the start.
+    * This returns the understanding of the maze. Tremaux's understanding is the
+    * directions needed to return to the start.
     */
-   public Direction[][] getUnderstandingDir(){
-	   return ballOfString;
+   public Direction[][] getUnderstandingDir()
+   {
+      return ballOfString;
    }
 }

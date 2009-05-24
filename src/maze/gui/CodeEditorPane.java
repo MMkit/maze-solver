@@ -301,7 +301,9 @@ public final class CodeEditorPane extends RTextScrollPane
    }
 
    /**
-    * @return
+    * Creates a new Python interpreter and sets some initial values like imports
+    * and the maze model variable.
+    * @return A new interpreter.
     */
    public PythonInterpreter getInitializedInterpreter()
    {

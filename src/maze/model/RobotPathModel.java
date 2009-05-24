@@ -49,7 +49,7 @@ public final class RobotPathModel extends ListenerSubject<MazeCell>
    /**
     * Get the most recent path the robot has taken since the last time it
     * visited the starting cell.
-    * @return
+    * @return An in order list of the robots most recent path.
     */
    public List<MazeCell> getPathRecent()
    {
@@ -71,7 +71,7 @@ public final class RobotPathModel extends ListenerSubject<MazeCell>
 
    /**
     * Gets the entire current path from the very beginning.
-    * @return
+    * @return An in order list of the total path taken by the robot.
     */
    public List<MazeCell> getPathCurrent()
    {

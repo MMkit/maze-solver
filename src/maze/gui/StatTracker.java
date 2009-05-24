@@ -1,6 +1,3 @@
-/**
- * 
- */
 package maze.gui;
 
 import java.awt.Dimension;
@@ -14,14 +11,11 @@ import maze.model.RobotModel;
 import maze.model.RobotModelMaster;
 
 /**
+ * Provides a means of generating statistics on a robots path through a maze.
  * @author Vincent Frey
  */
 public class StatTracker
 {
-
-   /**
-    * @param args
-    */
    private int totalSquaresTraversed;
    private int totalTurnsTaken;
    private int firstRunSquaresTraversed;
