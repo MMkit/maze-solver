@@ -19,7 +19,7 @@ import maze.util.ListenerSubject;
 
 /**
  * Represents all the walls of a This class extends
- * {@link maze.util.ListenerSubject<MazeCell>} which allows it to notify
+ * {@link maze.util.ListenerSubject} which allows it to notify
  * listeners when a wall changes and provide the {@link maze.model.MazeCell}
  * that contains the changed wall.
  */

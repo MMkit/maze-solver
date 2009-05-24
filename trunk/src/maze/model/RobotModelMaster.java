@@ -101,7 +101,7 @@ public class RobotModelMaster
 
    /**
     * Attempts to move the robot with the given step.
-    * @param nextStep
+    * @param nextStep The step/move to be taken.
     */
    public void takeNextStep(final RobotStep nextStep)
    {
@@ -196,7 +196,7 @@ public class RobotModelMaster
 
    /**
     * Tells you if the robot is currently at the starting position.
-    * @return
+    * @return true if the current robot location is at the start of the maze.
     */
    public boolean isAtStart()
    {
@@ -210,7 +210,7 @@ public class RobotModelMaster
 
    /**
     * Tells you if the robot is in the center 2x2 box. The winning area.
-    * @return
+    * @return true if the current robot location is in the winning area.
     */
    public boolean isAtCenter()
    {
