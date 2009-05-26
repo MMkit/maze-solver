@@ -24,8 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -81,8 +84,8 @@ public class NewMazeDialog extends JDialog
       mainPanel.add(mHeightLabel, gbc);
 
       // Create and add the maze size spinners
-      mWidth = new JSpinner(new MazeSizeSpinnerModel());
-      mHeight = new JSpinner(new MazeSizeSpinnerModel());
+      mWidth = new JSpinner(new SpinnerNumberModel(16, 4, Short.MAX_VALUE, 2));
+      mHeight = new JSpinner(new SpinnerNumberModel(16, 4, Short.MAX_VALUE, 2));
       mWidth.setFocusable(false);
       mWidth.setRequestFocusEnabled(false);
       mHeight.setFocusable(false);
@@ -219,60 +222,6 @@ public class NewMazeDialog extends JDialog
          last = (JRadioButton)e.getSource();
       }
 
-   }
-}
-
-class MazeSizeSpinnerModel extends AbstractSpinnerModel
-{
-   private int mCurrentValue = 16;
-   @Override
-   public Object getValue()
-   {
-      return mCurrentValue;
-   }
-
-   @Override
-   public void setValue(Object value)
-   {
-      int val;
-      if (value instanceof Integer)
-         val = (Integer)value;
-      else if (value instanceof String)
-      {
-         try
-         {
-            val = Integer.parseInt((String)value);
-         }
-         catch (NumberFormatException ex)
-         {
-            return;
-         }
-      }
-      else
-         return;
-
-      if (val <= 0)
-         return;
-
-      if (val%2 == 1)
-         val++;
-      mCurrentValue = val;
-   }
-
-   @Override
-   public Object getNextValue()
-   {
-      mCurrentValue+=2;
-      fireStateChanged();
-      return mCurrentValue;
-   }
-
-   @Override
-   public Object getPreviousValue()
-   {
-      mCurrentValue = Math.max(mCurrentValue-2, 4);
-      fireStateChanged();
-      return mCurrentValue;
    }
 }
 

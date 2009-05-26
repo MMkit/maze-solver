@@ -186,7 +186,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    {
       JFileChooser fc = new JFileChooser();
       //fc.setCurrentDirectory(new File(".." + File.separator + "Scripts"));
-
+      fc.setAcceptAllFileFilterUsed(false);
       fc.addChoosableFileFilter(new FileFilter()
       {
          @Override
