@@ -44,7 +44,7 @@ public class MazeView extends JComponent implements ComponentListener, MazeViewI
    /**
     * This holds the sizes of the cells and walls.
     */
-   protected final CellSizeModel csm = new CellSizeModel();
+   protected final CellSizeModel csm = new CellSizeModel(true);
    /**
     * Holds the active cell that the mouse is hovering over.
     */

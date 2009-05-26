@@ -219,7 +219,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            String m = "<html><b>Version:</b> 0.9.0<br />"
+            String m = "<html><b>Version:</b> 0.9.1<br />"
                        + "You can find more information about this application "
                        + "at the following project page.<br />"
                        + "<a href=\"http://code.google.com/p/maze-solver/\">"

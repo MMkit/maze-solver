@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.BitSet;
 import java.util.Comparator;
 import java.util.Set;
@@ -588,7 +589,7 @@ public class MazeModel extends ListenerSubject<MazeCell>
    /**
     * Used to store points in a Set.
     */
-   private static class PointCompare implements Comparator<Point>
+   private static class PointCompare implements Comparator<Point>, Serializable
    {
       @Override
       public int compare(Point o1, Point o2)

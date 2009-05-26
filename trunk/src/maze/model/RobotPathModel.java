@@ -1,5 +1,6 @@
 package maze.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Set;
 
 import maze.util.ListenerSubject;
 
-public final class RobotPathModel extends ListenerSubject<MazeCell>
+public final class RobotPathModel extends ListenerSubject<MazeCell> implements Serializable
 {
    private final Set<MazeCell> visited = new HashSet<MazeCell>(128);
    private final List<MazeCell> pathCurrent = new ArrayList<MazeCell>(128);

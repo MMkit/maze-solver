@@ -79,7 +79,7 @@ public class HelpInfo extends JPanel implements TreeSelectionListener
       displayURL(page.pageURL);
    }
 
-   private class pageInfo
+   private static class pageInfo
    {
       public String pageName;
       public URL pageURL;

@@ -6,13 +6,22 @@ import java.util.Observable;
  * This model stores the sizes of the cells and wall segments that are drawn to
  * the screen.
  */
-public class CellSizeModel extends Observable implements CellSizeModelInterface
+public class CellSizeModel extends Observable
 {
+   private int cellWidth;
+   private int cellHeight;
+   private int wallWidth;
+   private int wallHeight;
+   private final boolean forceEven;
 
-   private int cellWidth = 40;
-   private int cellHeight = 40;
-   private int wallWidth = 10;
-   private int wallHeight = 10;
+   /**
+    * Constructor.
+    * @param forceEven Force the values stored in this model to be even.
+    */
+   public CellSizeModel(boolean forceEven)
+   {
+      this.forceEven = forceEven;
+   }
 
    @Override
    public String toString()
@@ -30,7 +39,7 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
 
    public void setCellWidth(int cellWidth)
    {
-      if ( (cellWidth & 1) == 1)
+      if (this.forceEven && (cellWidth & 1) == 1)
       {
          cellWidth--;
       }
@@ -43,7 +52,7 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
 
    public void setCellHeight(int cellHeight)
    {
-      if ( (cellHeight & 1) == 1)
+      if (this.forceEven && (cellHeight & 1) == 1)
       {
          cellHeight--;
       }
@@ -56,7 +65,7 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
 
    public void setWallWidth(int wallWidth)
    {
-      if ( (wallWidth & 1) == 1)
+      if (this.forceEven && (wallWidth & 1) == 1)
       {
          wallWidth++;
       }
@@ -69,7 +78,7 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
 
    public void setWallHeight(int wallHeight)
    {
-      if ( (wallHeight & 1) == 1)
+      if (this.forceEven && (wallHeight & 1) == 1)
       {
          wallHeight++;
       }
@@ -127,6 +136,6 @@ public class CellSizeModel extends Observable implements CellSizeModelInterface
 
    public int getCellHeightInner()
    {
-      return this.cellHeight = this.wallHeight;
+      return this.cellHeight - this.wallHeight;
    }
 }

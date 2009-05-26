@@ -7,6 +7,7 @@ import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.io.Serializable;
 import java.util.EnumSet;
 
 import javax.swing.ImageIcon;
@@ -21,7 +22,7 @@ import maze.model.Direction;
  * methods for more control.
  * @author Luke Last
  */
-public abstract class MazePainter
+public abstract class MazePainter implements Serializable
 {
    protected Paint background;
    protected Paint cellBackground;

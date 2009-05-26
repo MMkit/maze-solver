@@ -125,7 +125,7 @@ public final class RobotAnimator implements Runnable
                {
                   rotationPercentage += velocity;
                   velocity += acceleration;
-                  rotationPercentage = inc * (4 / inc) / 2;
+                  rotationPercentage = inc * (4 / (double)inc) / 2;
                }
                else
                {

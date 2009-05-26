@@ -46,7 +46,7 @@ public final class CodeEditorPane extends RTextScrollPane
    private static final String PYTHON_FILE_EXTENSION = ".py";
    private static final String ROBOT_MODEL_VAR_NAME = "maze";
    private final RSyntaxTextArea textArea = new RSyntaxTextArea();
-   private RobotBase connectedRobot;
+   private transient RobotBase connectedRobot;
    private PythonInterpreter currentInterpreter;
    /**
     * The File (if any) that is attached to this editor.
@@ -62,10 +62,11 @@ public final class CodeEditorPane extends RTextScrollPane
    {
       this();
       this.scriptFile = fileToOpen;
+      Reader r = null;
       try
       {
          CharBuffer cb = CharBuffer.allocate(1024 * 16);
-         Reader r = new InputStreamReader(new FileInputStream(fileToOpen), "UTF-8");
+         r = new InputStreamReader(new FileInputStream(fileToOpen), "UTF-8");
          while (0 < r.read(cb))
             ;
          cb.flip();
@@ -74,6 +75,18 @@ public final class CodeEditorPane extends RTextScrollPane
       catch (Exception e)
       {
          e.printStackTrace();
+      }
+      finally
+      {
+         try
+         {
+            if (r != null)
+               r.close();
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
       }
    }
 
