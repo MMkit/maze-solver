@@ -39,23 +39,6 @@ public final class Main
          @Override
          public void run()
          {
-            try
-            {
-               UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-            }
-            catch (Exception e)
-            {
-               e.printStackTrace();
-               // If Nimbus isn't supported try the system default.
-               try
-               {
-                  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-               }
-               catch (Exception e1)
-               {
-                  e1.printStackTrace();
-               }
-            }
             primaryFrame = new PrimaryFrame();
             primaryFrame.init();
             primaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

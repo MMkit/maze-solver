@@ -8,7 +8,9 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -173,10 +175,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       });
 
       // Look and feel menu.
+      String defaultLAF = "";
       JMenu lookAndFeel = new JMenu("Look And Feel");
       helpMenu.add(lookAndFeel);
       ButtonGroup lafBG = new ButtonGroup();
       LookAndFeelListener lafal = new LookAndFeelListener();
+      boolean nimbusFound = false;
       for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
       {
          JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(laf.getName());
@@ -185,7 +189,23 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          jrbmi.setActionCommand(laf.getClassName());
          lookAndFeel.add(jrbmi);
          if (laf.getName().equals("Nimbus"))
+         {
+            defaultLAF = laf.getClassName();
             lafBG.setSelected(jrbmi.getModel(), true);
+            nimbusFound = true;
+         }
+      }
+      if (!nimbusFound)
+      {
+         defaultLAF = UIManager.getSystemLookAndFeelClassName();
+         Enumeration<AbstractButton> ab = lafBG.getElements();
+         while (ab.hasMoreElements())
+         {
+            JRadioButtonMenuItem jrbmi = (JRadioButtonMenuItem)ab.nextElement();
+            if (UIManager.getSystemLookAndFeelClassName().equals(
+                                                      jrbmi.getActionCommand()))
+               lafBG.setSelected(jrbmi.getModel(), true);
+         }
       }
 
       // Separate the about dialog.
@@ -223,6 +243,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
       this.addWindowListener(this);
+      try
+      {
+         UIManager.setLookAndFeel(defaultLAF);
+      }
+      catch (Exception ex){}
+      SwingUtilities.updateComponentTreeUI(this);
 
    }
 
