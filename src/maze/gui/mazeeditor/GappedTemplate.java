@@ -146,7 +146,7 @@ public class GappedTemplate extends MazeTemplate
       {
          int diffX = 0, diffY = 0;
 
-         if ((i/2)%2 == 1)
+         if (((i/2) & 1) == 1)
          {
             if (mVert)
                diffY = (size.getCellHeight()+size.getWallHeight())*count;

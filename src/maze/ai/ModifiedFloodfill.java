@@ -969,7 +969,7 @@ public class ModifiedFloodfill extends RobotBase
          {
             return Direction.West;
          }
-         if (dir.equals(Direction.East))
+         if (dir.equals(East))
          {
             return Direction.East;
          }

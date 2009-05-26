@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import java.awt.Color;
@@ -15,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.AbstractSpinnerModel;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,11 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 /**
- *
+ * Brings up a dialog prompting the user to choose a maze type, size, and name.
  * @author Johnathan Smith
  */
 public class NewMazeDialog extends JDialog
@@ -84,8 +77,8 @@ public class NewMazeDialog extends JDialog
       mainPanel.add(mHeightLabel, gbc);
 
       // Create and add the maze size spinners
-      mWidth = new JSpinner(new SpinnerNumberModel(16, 4, Short.MAX_VALUE, 2));
-      mHeight = new JSpinner(new SpinnerNumberModel(16, 4, Short.MAX_VALUE, 2));
+      mWidth = new JSpinner(new MazeSizeSpinnerModel());
+      mHeight = new JSpinner(new MazeSizeSpinnerModel());
       mWidth.setFocusable(false);
       mWidth.setRequestFocusEnabled(false);
       mHeight.setFocusable(false);
@@ -158,7 +151,7 @@ public class NewMazeDialog extends JDialog
       mainPanel.add(ok, gbc);
 
       // Set a border for the main panel and it to the dialog
-      mainPanel.setBorder(new EmptyBorder(5,5,5,5));
+      mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
       add(mainPanel);
 
       setResizable(false);
@@ -167,9 +160,11 @@ public class NewMazeDialog extends JDialog
       pack();
       Point loc = owner.getLocation();
       Dimension size = owner.getSize();
-      this.setBounds(loc.x+size.width/2-this.getWidth()/2,
-                     loc.y+size.height/2-this.getHeight()/2,
-                     getWidth(), getHeight());
+      this.setBounds(loc.x + size.width / 2 - this.getWidth() / 2, loc.y +
+                                                                   size.height /
+                                                                   2 -
+                                                                   this.getHeight() /
+                                                                   2, getWidth(), getHeight());
    }
 
    public String showDialog()
@@ -186,8 +181,7 @@ public class NewMazeDialog extends JDialog
 
    public Dimension getMazeSize()
    {
-      return new Dimension((Integer)mWidth.getValue(),
-                           (Integer)mHeight.getValue());
+      return new Dimension((Integer) mWidth.getValue(), (Integer) mHeight.getValue());
    }
 
    private void setOpsEnabled(boolean enabled)
@@ -205,11 +199,12 @@ public class NewMazeDialog extends JDialog
    class RadioButtonAction implements ActionListener
    {
       private JRadioButton last;
+
       public RadioButtonAction(JRadioButton last)
       {
          this.last = last;
       }
-      
+
       @Override
       public void actionPerformed(ActionEvent e)
       {
@@ -219,10 +214,34 @@ public class NewMazeDialog extends JDialog
             setOpsEnabled(false);
          else
             setOpsEnabled(true);
-         last = (JRadioButton)e.getSource();
+         last = (JRadioButton) e.getSource();
       }
 
    }
 }
 
+/**
+ * Controls the maze dimension spinners.
+ */
+class MazeSizeSpinnerModel extends SpinnerNumberModel
+{
+   public MazeSizeSpinnerModel()
+   {
+      this.setMinimum(4);
+      this.setMaximum(64);
+      this.setStepSize(2);
+      this.setValue(16);
+   }
 
+   @Override
+   public void setValue(Object value)
+   {
+      if (value instanceof Integer)
+      {
+         int v = ((int) (Integer) value);
+         if ( (v & 1) != 0)
+            v--;
+         super.setValue(v);
+      }
+   }
+}

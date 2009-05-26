@@ -2,13 +2,14 @@ package maze.model;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * Represents the coordinates of one cell/box of the maze. <br>
  * The upper left is x = 1, y = 1.<br>
  * Each instance is immutable.
  */
-public final class MazeCell implements Comparable<MazeCell>
+public final class MazeCell implements Comparable<MazeCell>, Serializable
 {
    /**
     * The column or X coordinate where this cell lives, starting from the left

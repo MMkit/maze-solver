@@ -2,6 +2,7 @@ package maze.gui;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.CharBuffer;
@@ -121,11 +122,11 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
     */
    private String loadScriptFromJar(String name)
    {
+      Reader r = null;
       try
       {
          CharBuffer cb = CharBuffer.allocate(1024 * 16);
-         Reader r = new InputStreamReader(Main.class.getResourceAsStream("ai/python/" + name),
-                                          "UTF-8");
+         r = new InputStreamReader(Main.class.getResourceAsStream("ai/python/" + name), "UTF-8");
          while (0 < r.read(cb))
             ;
          cb.flip();
@@ -134,6 +135,18 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       catch (Exception e)
       {
          e.printStackTrace();
+      }
+      finally
+      {
+         try
+         {
+            if (r != null)
+               r.close();
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
       }
       return "";
    }
@@ -232,7 +245,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
     * Creates a panel to display information about the current python script.
     * @author Luke Last
     */
-   private final class CodeInformationPanel extends JPanel
+   private static final class CodeInformationPanel extends JPanel
    {
       public CodeInformationPanel()
       {

@@ -17,7 +17,7 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 
-import maze.model.CellSizeModel2;
+import maze.model.CellSizeModel;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
@@ -56,7 +56,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    /**
     * Stores the sizes of a cell and its walls.
     */
-   final CellSizeModel2 csm = new CellSizeModel2();
+   private final CellSizeModel csm = new CellSizeModel(false);
    /**
     * UI delegate used for drawing each maze component.
     */
@@ -663,8 +663,8 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    }
 
    /**
-    * Similar to <code>getCellArea</code> but just the inside of the cell without the
-    * walls.
+    * Similar to <code>getCellArea</code> but just the inside of the cell
+    * without the walls.
     * @param cell The cell in question.
     * @return Cell area minus the walls and corner peg.
     */
@@ -822,6 +822,11 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       {
          this.repaintAll = false;
          this.drawOutsideWalls(bgg);
+         // Clear invalidated because we are going to redraw everything.
+         synchronized (this.invalidatedCells)
+         {
+            this.invalidatedCells.clear();
+         }
          this.drawAllCells(bgg);
          // Because the draw all can take so long we still want to redraw invalidated cells after.
       }
@@ -882,17 +887,19 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    @Override
    public void setModel(final MazeModel model)
    {
-      if (this.model != null)
+      if (this.model != model)
       {
-         this.model.removeListener(this);
+         if (this.model != null)
+         {
+            this.model.removeListener(this);
+         }
+         this.model = model;
+         if (this.model != null)
+         {
+            this.model.addListener(this);
+         }
+         this.componentResized(null);
       }
-      this.model = model;
-      if (this.model != null)
-      {
-         this.model.addListener(this);
-      }
-      componentResized(null);
-      repaint();
    }
 
    /**
