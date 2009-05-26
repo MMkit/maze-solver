@@ -95,7 +95,7 @@ public class MazeInfoModel
          try
          {
             mi = (MazeInfo) mMazeInfoModel.getElementAt(i);
-            if (mi.getPath().equalsIgnoreCase(file.getCanonicalPath()))
+            if (mi.getPath().equals(file.getCanonicalPath()))
                return false;
          }
          catch (IOException ex)

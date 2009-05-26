@@ -564,31 +564,12 @@ public class MazeModel extends ListenerSubject<MazeCell>
    {
 
       //Now for the actual file i/o
-      File file = new File(filename.toLowerCase());
-
-      String name = filename;
-
+      File file = new File(filename);
+      String name;
       FileInputStream in = null;
-      try
-      {
-         in = new FileInputStream(file);
-      }
-      catch (FileNotFoundException e)
-      {
-         System.out.println("first place");
-         System.out.println(filename);
-      }
-      
-      if (filename.endsWith(".mz2"))
-         name = loadMaze(in, true);
-      else
-         loadMaze(in, false);
-
-      try
-      {
-         in.close();
-      }
-      catch (IOException e){}
+      in = new FileInputStream(file);
+      name = loadMaze(in, true);
+      in.close();
       
       return name;
    }

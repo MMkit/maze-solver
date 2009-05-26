@@ -265,7 +265,9 @@ public class MazeEditor extends JPanel implements MenuControlled
    public void open()
    {
       JFileChooser chooser = new JFileChooser();
-      chooser.setFileFilter(new MazeFileFilter());
+      FileFilter ff = new MazeFileFilter();
+      chooser.setAcceptAllFileFilterUsed(false);
+      chooser.setFileFilter(ff);
       if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this))
       {
          MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
