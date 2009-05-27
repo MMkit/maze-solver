@@ -3,7 +3,8 @@ package maze.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,42 +18,41 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import maze.ai.Floodfill;
-import maze.ai.LeftWallFollower;
-import maze.ai.RightWallFollower;
 import maze.ai.RobotBase;
-import maze.ai.Tremaux;
-import maze.model.Direction;
-import maze.model.MazeCell;
 import maze.model.MazeInfo;
 import maze.model.MazeModel;
-import maze.model.RobotModelMaster;
 
 /**
  * @author Vincent Frey
+ * @author Luke Last
  */
 public class StatViewPanel extends JPanel
 {
    private StatTracker tracker;
    private MazeModel maze;
    private RobotBase algorithm;
-
-   private DefaultTableModel statTableModel;
-
-   private ArrayList<RobotBase> algorithms;
-   private ArrayList<String> algorithmNames;
-   private JComboBox algorithmCombo;
-
-   private final MazeView mazeView = new MazeView();
+   private final DefaultTableModel statTableModel;
+   private final JComboBox algorithmCombo;
+   private final MazeView2 mazeView = new MazeView2();
+   private final MazeList mazeList = new MazeList(this.mazeView);
 
    /**
     * This constructor creates the Panel.
     */
    public StatViewPanel()
    {
-      Box selectionBox = new Box(BoxLayout.Y_AXIS);
+      // Recalculate statistics every time the panel is displayed.
+      super.addComponentListener(new ComponentAdapter()
+      {
+         @Override
+         public void componentShown(ComponentEvent e)
+         {
+            displayStats();
+         }
+      });
 
-      final MazeList mazeList = new MazeList(this.mazeView);
+      final Box selectionBox = new Box(BoxLayout.Y_AXIS);
+
       selectionBox.add(mazeList);
       mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
       {
@@ -61,16 +61,12 @@ public class StatViewPanel extends JPanel
          {
             try
             {
-               Object o = mazeList.getList().getSelectedValue();
-               MazeInfo mi = (MazeInfo) o;
-               if (mi != null)
+               //Event is called multiple times when mouse is used.
+               //Currently we take a performance hit for that.
+               if (isVisible())
                {
-                  maze = new MazeModel(mi.getModel());
-                  tracker.reload(algorithm, new RobotModelMaster(maze,
-                                                                 new MazeCell(1, 16),
-                                                                 Direction.North));
+                  displayStats();
                }
-               displayStats();
             }
             catch (RuntimeException e1)
             {
@@ -79,42 +75,11 @@ public class StatViewPanel extends JPanel
          }
       });
 
-      mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
-      {
-         @Override
-         public void valueChanged(ListSelectionEvent e)
-         {
-            Object o = mazeList.getList().getSelectedValue();
-            MazeInfo mi = (MazeInfo) o;
-            maze = new MazeModel(mi.getModel());
-            tracker.reload(algorithm, new RobotModelMaster(maze,
-                                                           new MazeCell(1, 16),
-                                                           Direction.North));
-            displayStats();
-         }
-      });
-
-      //If time change this to incorporate the RobotBase list
-      algorithms = new ArrayList<RobotBase>();
-      algorithms.add(new LeftWallFollower());
-      algorithms.add(new RightWallFollower());
-      algorithms.add(new Tremaux());
-      algorithms.add(new Floodfill());
-
-      algorithmNames = new ArrayList<String>();
-      algorithmNames.add("Left Wall Follower");
-      algorithmNames.add("Right Wall Follower");
-      algorithmNames.add("Tremaux");
-      algorithmNames.add("Floodfill");
-
       ActionListener algorithmChange = new ActionListener()
       {
          public void actionPerformed(ActionEvent action)
          {
             algorithm = (RobotBase) algorithmCombo.getSelectedItem();
-            tracker.reload(algorithm, new RobotModelMaster(maze,
-                                                           new MazeCell(1, 16),
-                                                           Direction.North));
             displayStats();
          }
       };
@@ -170,18 +135,10 @@ public class StatViewPanel extends JPanel
       {
          this.maze = new MazeModel(mi.getModel());
       }
-      else
-      {
-         //Create a dummy maze so the application doesn't crash.
-         this.maze = new MazeModel(16, 16);
-      }
 
       this.algorithm = (RobotBase) algorithmCombo.getSelectedItem();
 
-      this.tracker = new StatTracker(algorithm, new RobotModelMaster(maze,
-                                                                     new MazeCell(1, 16),
-                                                                     Direction.North));
-      displayStats();
+      // Set the split pane divider in a delayed manner.
       SwingUtilities.invokeLater(new Runnable()
       {
          @Override
@@ -192,44 +149,65 @@ public class StatViewPanel extends JPanel
             statTable.doLayout();
          }
       });
-   }
+   } // End constructor.
 
+   /**
+    * Set values in the statistics table model. This function displays all of
+    * the information for the panel
+    */
    private void displayStats()
    {
-      //This function displays all of the information for the panel
-      //First lets display the table
-      statTableModel.setValueAt(String.valueOf(tracker.getTotalTraversed()), 0, 1);
-      if (tracker.getFirstRunCells() != StatTracker.USELESS)
+      Object o = mazeList.getList().getSelectedValue();
+      MazeInfo mi = (MazeInfo) o;
+      if (mi != null)
       {
-         statTableModel.setValueAt(String.valueOf(tracker.getFirstRunCells()), 1, 1);
-         statTableModel.setValueAt(String.valueOf(tracker.getFirstRunTurns()), 2, 1);
-         statTableModel.setValueAt(String.valueOf(tracker.getBestRunCells()), 3, 1);
-         statTableModel.setValueAt(String.valueOf(tracker.getBestRunTurns()), 4, 1);
-         statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunCells()), 5, 1);
-         statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunTurns()), 6, 1);
+         this.maze = new MazeModel(mi.getModel());
       }
-      else
+      if (this.algorithm != null && this.maze != null)
       {
-         statTableModel.setValueAt("N/A", 1, 1);
-         statTableModel.setValueAt("N/A", 2, 1);
-         statTableModel.setValueAt("N/A", 3, 1);
-         statTableModel.setValueAt("N/A", 4, 1);
-         statTableModel.setValueAt("N/A", 5, 1);
-         statTableModel.setValueAt("N/A", 6, 1);
+         if (this.tracker == null)
+         {
+            this.tracker = new StatTracker(algorithm, maze);
+         }
+         else
+         {
+            this.tracker.reload(this.algorithm, this.maze);
+         }
+         //Set the table stat values from the tracker.
+         if (this.tracker != null)
+         {
+            //First lets display the table
+            statTableModel.setValueAt(String.valueOf(tracker.getTotalTraversed()), 0, 1);
+            if (tracker.wasCenterFound())
+            {
+               statTableModel.setValueAt(String.valueOf(tracker.getFirstRunCells()), 1, 1);
+               statTableModel.setValueAt(String.valueOf(tracker.getFirstRunTurns()), 2, 1);
+               statTableModel.setValueAt(String.valueOf(tracker.getBestRunCells()), 3, 1);
+               statTableModel.setValueAt(String.valueOf(tracker.getBestRunTurns()), 4, 1);
+               statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunCells()), 5, 1);
+               statTableModel.setValueAt(String.valueOf(tracker.getThroughBestRunTurns()), 6, 1);
+            }
+            else
+            {
+               statTableModel.setValueAt("N/A", 1, 1);
+               statTableModel.setValueAt("N/A", 2, 1);
+               statTableModel.setValueAt("N/A", 3, 1);
+               statTableModel.setValueAt("N/A", 4, 1);
+               statTableModel.setValueAt("N/A", 5, 1);
+               statTableModel.setValueAt("N/A", 6, 1);
+            }
+
+            //Now lets display the mazeView
+            this.mazeView.setRobotPathModel(this.tracker.getRobotPathModel());
+            this.mazeView.setModel(maze);
+            // Tell the maze view what to draw.
+            this.mazeView.setDrawFog(true);
+            this.mazeView.setDrawPathCurrent(false);
+            this.mazeView.setDrawPathFirst(true);
+            this.mazeView.setDrawPathBest(true);
+            this.mazeView.setDrawUnderstanding(false);
+         }
       }
-
-      //Now lets display the mazeView
-      mazeView.setModel(maze);
-
-      mazeView.loadUnexplored(tracker.getAllUnexplored());
-
-      mazeView.loadFirstRun((ArrayList<MazeCell>) tracker.getFirstRun());
-
-      mazeView.loadBestRun((ArrayList<MazeCell>) tracker.getBestRun());
-
-      mazeView.setDrawFog(true);
-      mazeView.setDrawFirstRun(true);
-      mazeView.setDrawBestRun(true);
-
    }
+
 }

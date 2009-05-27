@@ -2,6 +2,7 @@ package maze.ai;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
 
 import maze.model.Direction;
 import maze.model.MazeCell;
@@ -13,7 +14,7 @@ import maze.model.MazeCell;
 public class Tremaux extends RobotBase
 {
    private Direction[][] ballOfString;
-   private ArrayList<RobotStep> moveQueue = new ArrayList<RobotStep>();
+   private List<RobotStep> moveQueue = new ArrayList<RobotStep>();
    private boolean turbo = false;
 
    /**
@@ -35,10 +36,8 @@ public class Tremaux extends RobotBase
       super.initialize();
 
       Dimension size = robotLocation.getMazeSize();
-      if (ballOfString == null)
-      {
-         ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];
-      }
+      ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];
+
       for (int i = 0; i < size.getWidth(); i++)
       {
          for (int j = 0; j < size.getHeight(); j++)
@@ -47,6 +46,7 @@ public class Tremaux extends RobotBase
          }
       }
       ballOfString[0][size.height - 1] = Direction.North;
+      this.moveQueue.clear();
    }
 
    /**

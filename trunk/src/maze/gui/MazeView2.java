@@ -146,15 +146,18 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    private void drawAllCells(final Graphics2D g)
    {
-      //Loop through each cell in the maze.
-      for (int x = 1; x <= this.model.getSize().width; x++)
+      if (g != null && this.model != null)
       {
-         for (int y = 1; y <= this.model.getSize().height; y++)
+         //Loop through each cell in the maze.
+         for (int x = 1; x <= this.model.getSize().width; x++)
          {
-            final MazeCell cell = new MazeCell(x, y);
-            this.drawCell(g, cell);
-         } //End y loop.
-      } //End x loop.
+            for (int y = 1; y <= this.model.getSize().height; y++)
+            {
+               final MazeCell cell = new MazeCell(x, y);
+               this.drawCell(g, cell);
+            } //End y loop.
+         } //End x loop.
+      }
    }
 
    /**
@@ -309,39 +312,41 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    private void drawOutsideWalls(final Graphics2D g)
    {
-
-      final Rectangle pegArea = new Rectangle(0,
-                                              0,
-                                              this.csm.getWallWidth(),
-                                              this.csm.getWallHeight());
-      final Rectangle wallArea = new Rectangle(this.csm.getWallWidth(),
-                                               0,
-                                               this.csm.getCellWidthInner(),
-                                               this.csm.getWallHeight());
-
-      for (int i = 0; i <= this.model.getSize().width; i++)
+      if (this.model != null && this.painter != null)
       {
-         this.painter.drawPeg(g, pegArea);
-         pegArea.x += this.csm.getCellWidth();
-         // We draw more pegs than walls.
-         if (i == 0)
+         final Rectangle pegArea = new Rectangle(0,
+                                                 0,
+                                                 this.csm.getWallWidth(),
+                                                 this.csm.getWallHeight());
+         final Rectangle wallArea = new Rectangle(this.csm.getWallWidth(),
+                                                  0,
+                                                  this.csm.getCellWidthInner(),
+                                                  this.csm.getWallHeight());
+
+         for (int i = 0; i <= this.model.getSize().width; i++)
          {
-            continue;
+            this.painter.drawPeg(g, pegArea);
+            pegArea.x += this.csm.getCellWidth();
+            // We draw more pegs than walls.
+            if (i == 0)
+            {
+               continue;
+            }
+            this.painter.drawWallSet(g, wallArea);
+            wallArea.x += this.csm.getCellWidth();
          }
-         this.painter.drawWallSet(g, wallArea);
-         wallArea.x += this.csm.getCellWidth();
-      }
 
-      pegArea.setLocation(0, this.csm.getCellHeight());
-      wallArea.setSize(this.csm.getWallWidth(), this.csm.getCellHeightInner());
-      wallArea.setLocation(0, this.csm.getWallHeight());
-      // Draw the left side column of pegs and walls.
-      for (int i = 1; i <= this.model.getSize().height; i++)
-      {
-         this.painter.drawPeg(g, pegArea);
-         pegArea.y += this.csm.getCellHeight();
-         this.painter.drawWallSet(g, wallArea);
-         wallArea.y += this.csm.getCellHeight();
+         pegArea.setLocation(0, this.csm.getCellHeight());
+         wallArea.setSize(this.csm.getWallWidth(), this.csm.getCellHeightInner());
+         wallArea.setLocation(0, this.csm.getWallHeight());
+         // Draw the left side column of pegs and walls.
+         for (int i = 1; i <= this.model.getSize().height; i++)
+         {
+            this.painter.drawPeg(g, pegArea);
+            pegArea.y += this.csm.getCellHeight();
+            this.painter.drawWallSet(g, wallArea);
+            wallArea.y += this.csm.getCellHeight();
+         }
       }
    }
 
@@ -426,7 +431,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
                height = this.csm.getCellHeight();
             }
             // If we are at the last cell and we are trimming the tail up to the robot.
-            if (i == path.size() - 1 && trimTail)
+            if (i == path.size() - 1 && trimTail && this.robotLocation != null)
             {
                if (here.getX() < there.getX())
                {
@@ -910,14 +915,18 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    public void setRobotPathModel(final RobotPathModel model)
    {
-      if (this.robotPathModel != null)
+      if (this.robotPathModel != model)
       {
-         this.robotPathModel.removeListener(this);
-      }
-      this.robotPathModel = model;
-      if (this.robotPathModel != null)
-      {
-         this.robotPathModel.addListener(this);
+         if (this.robotPathModel != null)
+         {
+            this.robotPathModel.removeListener(this);
+         }
+         this.robotPathModel = model;
+         if (this.robotPathModel != null)
+         {
+            this.robotPathModel.addListener(this);
+         }
+         this.invalidateAllCells();
       }
    }
 

@@ -1,5 +1,7 @@
 package maze.ai;
 
+import javax.swing.JOptionPane;
+
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeModel;
@@ -10,14 +12,26 @@ import maze.model.RobotModelMaster;
  * Controls the AI and models to move the robot through the maze.
  * @author Luke Last
  */
-public class RobotController
+public final class RobotController
 {
-   private static final int MAX_STEP_COUNT = 1500;
+   private static final int MAX_STEP_COUNT = 2000;
    private final MazeModel mazeModel;
    private final RobotModelMaster robotModelMaster;
    private final RobotModel robotModelClient;
    private final RobotBase ai;
-   private int robotStepCount = 0;
+   /**
+    * A flag that is set true if the robot crashes into a wall.
+    */
+   private boolean robotCrashed = false;
+   /**
+    * Stores the total number of moves taken from one cell to the next not
+    * counting turns.
+    */
+   private int robotMoveCount = 0;
+   /**
+    * Stores the total number of turns taken.
+    */
+   private int robotTurnCount = 0;
 
    /**
     * Constructor.
@@ -28,11 +42,8 @@ public class RobotController
    {
       this.mazeModel = model;
       this.ai = robotAI;
-
       final MazeCell start = new MazeCell(1, this.mazeModel.getSize().height);
-
       this.robotModelMaster = new RobotModelMaster(this.mazeModel, start, Direction.North);
-
       this.robotModelClient = new RobotModel(this.robotModelMaster);
       this.initialize();
    }
@@ -47,6 +58,9 @@ public class RobotController
       this.robotModelMaster.setDirection(Direction.North);
       this.ai.setRobotLocation(this.robotModelClient);
       this.ai.initialize();
+      this.robotCrashed = false;
+      this.robotMoveCount = 0;
+      this.robotTurnCount = 0;
    }
 
    /**
@@ -56,10 +70,21 @@ public class RobotController
    {
       final RobotStep nextStep = this.ai.nextStep();
       //System.out.println(nextStep);
+      try
+      {
+         this.robotModelMaster.takeNextStep(nextStep);
+      }
+      catch (maze.model.RobotModelMaster.RobotCrashedException e)
+      {
+         this.robotCrashed = true;
+         e.printStackTrace();
+         JOptionPane.showMessageDialog(maze.Main.getPrimaryFrameInstance(), e.getMessage());
+      }
+      if (nextStep.isTurn())
+         this.robotTurnCount++;
+      else
+         this.robotMoveCount++;
 
-      this.robotModelMaster.takeNextStep(nextStep);
-
-      this.robotStepCount++;
       return nextStep;
    }
 
@@ -68,7 +93,7 @@ public class RobotController
     */
    public boolean isRobotDone()
    {
-      return this.robotStepCount > MAX_STEP_COUNT;
+      return this.getStepCount() > MAX_STEP_COUNT || this.robotCrashed;
    }
 
    /**
@@ -77,7 +102,26 @@ public class RobotController
     */
    public int getStepCount()
    {
-      return this.robotStepCount;
+      return this.robotMoveCount + this.robotTurnCount;
+   }
+
+   /**
+    * Get the total number of moves from cell to cell taken by the robot so far.
+    * Turns not counted.
+    * @return Total moves.
+    */
+   public int getRobotMoveCount()
+   {
+      return robotMoveCount;
+   }
+
+   /**
+    * Get the total number of turns taken by the robot.
+    * @return Total turns taken.
+    */
+   public int getRobotTurnCount()
+   {
+      return robotTurnCount;
    }
 
    /**

@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 /**
- *
  * @author Johnathan Smith
  */
 public class TemplatePeg implements Comparable<TemplatePeg>
@@ -19,13 +13,12 @@ public class TemplatePeg implements Comparable<TemplatePeg>
    @Override
    public int compareTo(TemplatePeg o)
    {
-      if (left == o.left && right == o.right &&
-          bottom == o.bottom && top == o.top)
+      if (left == o.left && right == o.right && bottom == o.bottom && top == o.top)
          return 0;
       else if (left != null)
       {
          if (o.left != null)
-            return left.hashCode()-o.left.hashCode();
+            return left.hashCode() - o.left.hashCode();
          return 1;
       }
       else if (o.left != null)
@@ -33,7 +26,7 @@ public class TemplatePeg implements Comparable<TemplatePeg>
       else if (right != null)
       {
          if (o.right != null)
-            return right.hashCode()-o.right.hashCode();
+            return right.hashCode() - o.right.hashCode();
          return 1;
       }
       else if (o.right != null)
@@ -41,7 +34,7 @@ public class TemplatePeg implements Comparable<TemplatePeg>
       else if (bottom != null)
       {
          if (o.bottom != null)
-            return bottom.hashCode()-o.bottom.hashCode();
+            return bottom.hashCode() - o.bottom.hashCode();
          return 1;
       }
       else if (o.bottom != null)
@@ -49,7 +42,7 @@ public class TemplatePeg implements Comparable<TemplatePeg>
       else if (top != null)
       {
          if (o.top != null)
-            return top.hashCode()-o.top.hashCode();
+            return top.hashCode() - o.top.hashCode();
          return 1;
       }
       else if (o.top != null)
@@ -68,5 +61,4 @@ public class TemplatePeg implements Comparable<TemplatePeg>
       cloned.right = right;
       return cloned;
    }
-
 }

@@ -88,14 +88,18 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
    }
 
    /**
-    * This event is triggered when the list selection changes.
+    * This event is triggered when the list selection changes. When a selecting
+    * is made on the list this event is fired twice, once with ValueIsAdjusting
+    * true and once with it false. We don't worry about it here because when we
+    * set the maze view with the model that is already set it should be ignored
+    * and not trigger a repaint.
     */
    @Override
    public void valueChanged(ListSelectionEvent e)
    {
       try
       {
-         MazeInfo mi = (MazeInfo)this.myList.getSelectedValue();
+         MazeInfo mi = (MazeInfo) this.myList.getSelectedValue();
          if (mi != null)
             this.mazeView.setModel(mi.getModel());
       }
@@ -111,8 +115,8 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
    private static class OpenMazeRenderer extends DefaultListCellRenderer
    {
       @Override
-      public Component getListCellRendererComponent(JList list,Object value,
-              int index, boolean isSelected, boolean cellHasFocus)
+      public Component getListCellRendererComponent(JList list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus)
       {
          MazeInfo mi = (MazeInfo) value;
          final String postfix;
@@ -121,7 +125,7 @@ public class MazeList extends JScrollPane implements ListSelectionListener, List
          else
             postfix = "";
          Component c = super.getListCellRendererComponent(list,
-                                                          mi.getName()+postfix,
+                                                          mi.getName() + postfix,
                                                           index,
                                                           isSelected,
                                                           cellHasFocus);
