@@ -8,6 +8,12 @@ import java.util.Set;
 
 import maze.util.ListenerSubject;
 
+/**
+ * This model class stores a bunch of information about the robots path through
+ * the maze. Like which cells have been visited, and what the current, best, and
+ * first paths are.
+ * @author Luke Last
+ */
 public final class RobotPathModel extends ListenerSubject<MazeCell> implements Serializable
 {
    private final Set<MazeCell> visited = new HashSet<MazeCell>(128);
@@ -16,8 +22,16 @@ public final class RobotPathModel extends ListenerSubject<MazeCell> implements S
    final List<MazeCell> pathBest = new ArrayList<MazeCell>(128);
    private final MazeCell startCell;
 
+   /**
+    * Constructor.
+    * @param startingCell The cell that should be considered to be the starting
+    *           point of the maze. This is used to determine the recent path
+    *           since hitting the starting cell.
+    */
    public RobotPathModel(MazeCell startingCell)
    {
+      if (startingCell == null)
+         throw new IllegalArgumentException("Starting cell cannot be null.");
       this.startCell = startingCell;
    }
 
@@ -79,14 +93,31 @@ public final class RobotPathModel extends ListenerSubject<MazeCell> implements S
       return this.pathCurrent;
    }
 
+   /**
+    * Get the first path taken from the start to the center.
+    * @return Ordered list of cells.
+    */
    public List<MazeCell> getPathFirst()
    {
       return this.pathFirst;
    }
 
+   /**
+    * Get the best run that consists of the least number of cells to get from
+    * the start to the finish.
+    * @return Ordered list of cells.
+    */
    public List<MazeCell> getPathBest()
    {
       return this.pathBest;
    }
 
+   /**
+    * Get the total number of cells that have been visited.
+    * @return Number of cells.
+    */
+   public int getCellsVisited()
+   {
+      return this.visited.size();
+   }
 }

@@ -103,7 +103,7 @@ public class RobotModelMaster
     * Attempts to move the robot with the given step.
     * @param nextStep The step/move to be taken.
     */
-   public void takeNextStep(final RobotStep nextStep)
+   public void takeNextStep(final RobotStep nextStep) throws RobotCrashedException
    {
       Direction moveDirection = null;
       switch (nextStep)
@@ -128,7 +128,7 @@ public class RobotModelMaster
       {
          if (this.isWall(moveDirection))
          {
-            throw new RuntimeException("The mouse just crashed into a wall");
+            throw new RobotCrashedException(this.currentLocation, moveDirection);
          }
          else
          {
@@ -229,4 +229,14 @@ public class RobotModelMaster
       return false;
    }
 
+   public static final class RobotCrashedException extends Exception
+   {
+      public RobotCrashedException(MazeCell currentLocation, Direction attemptedDirection)
+      {
+         super("The mouse crashed into a wall going " +
+               attemptedDirection +
+               " from cell " +
+               currentLocation);
+      }
+   }
 }
