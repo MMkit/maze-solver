@@ -279,7 +279,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          {
             toSave = mi.getMutableClone();
             Box box = new Box(BoxLayout.Y_AXIS);
-            JLabel label = new JLabel("What would you like ot call the" + " maze?");
+            JLabel label = new JLabel("What would you like to call the" + " maze?");
             JTextField field = new JTextField();
             box.add(label);
             box.add(field);
