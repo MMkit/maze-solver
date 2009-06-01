@@ -172,6 +172,7 @@ public class MazeInfo implements Listener<MazeCell>
       theClone.isExtended = isExtended;
       theClone.isMutable = true;
       theClone.mModel = (MazeModel) mModel.clone();
+      theClone.mModel.addListener(theClone);
       theClone.mName = mName;
       theClone.mPath = mPath;
       return theClone;
