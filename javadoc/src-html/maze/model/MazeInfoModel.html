@@ -98,7 +98,7 @@
 <FONT color="green">095</FONT>             try<a name="line.95"></a>
 <FONT color="green">096</FONT>             {<a name="line.96"></a>
 <FONT color="green">097</FONT>                mi = (MazeInfo) mMazeInfoModel.getElementAt(i);<a name="line.97"></a>
-<FONT color="green">098</FONT>                if (mi.getPath().equalsIgnoreCase(file.getCanonicalPath()))<a name="line.98"></a>
+<FONT color="green">098</FONT>                if (mi.getPath().equals(file.getCanonicalPath()))<a name="line.98"></a>
 <FONT color="green">099</FONT>                   return false;<a name="line.99"></a>
 <FONT color="green">100</FONT>             }<a name="line.100"></a>
 <FONT color="green">101</FONT>             catch (IOException ex)<a name="line.101"></a>

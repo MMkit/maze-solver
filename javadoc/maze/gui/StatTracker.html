@@ -95,7 +95,7 @@ java.lang.Object
 </PRE>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/gui/StatTracker.html#line.17"><B>StatTracker</B></A><DT>extends java.lang.Object</DL>
+<DT><PRE>public class <A HREF="../../src-html/maze/gui/StatTracker.html#line.12"><B>StatTracker</B></A><DT>extends java.lang.Object</DL>
 </PRE>
 
 <P>
@@ -117,14 +117,6 @@ Provides a means of generating statistics on a robots path through a maze.
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#algorithm">algorithm</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -160,6 +152,15 @@ Provides a means of generating statistics on a robots path through a maze.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;<A HREF="../../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#controller">controller</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This robot controller is used to simulate the robots path through the
+ maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#currentRunSquaresTraversed">currentRunSquaresTraversed</A></B></CODE>
 
@@ -170,14 +171,6 @@ Provides a means of generating statistics on a robots path through a maze.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#currentRunTurnsTaken">currentRunTurnsTaken</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;boolean[][]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#explored">explored</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -200,30 +193,6 @@ Provides a means of generating statistics on a robots path through a maze.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#HOPELESS">HOPELESS</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;java.awt.Dimension</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#mazeSize">mazeSize</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#mouse">mouse</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#previousRunTotalSquaresTraversed">previousRunTotalSquaresTraversed</A></B></CODE>
 
@@ -234,30 +203,6 @@ Provides a means of generating statistics on a robots path through a maze.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#previousRunTotalTurnsTaken">previousRunTotalTurnsTaken</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#totalSquaresTraversed">totalSquaresTraversed</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#totalTurnsTaken">totalTurnsTaken</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#USELESS">USELESS</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -273,8 +218,8 @@ Provides a means of generating statistics on a robots path through a maze.
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#StatTracker(maze.ai.RobotBase, maze.model.RobotModelMaster)">StatTracker</A></B>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
-                       <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>&nbsp;mouse)</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#StatTracker(maze.ai.RobotBase, maze.model.MazeModel)">StatTracker</A></B>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
+                       <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;maze)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This constructor requires an algorithm and a mouse.</TD>
@@ -288,22 +233,6 @@ Provides a means of generating statistics on a robots path through a maze.
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getAllUnexplored()">getAllUnexplored</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getBestRun()">getBestRun</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -323,14 +252,6 @@ Provides a means of generating statistics on a robots path through a maze.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getFirstRun()">getFirstRun</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getFirstRunCells()">getFirstRunCells</A></B>()</CODE>
 
@@ -341,6 +262,14 @@ Provides a means of generating statistics on a robots path through a maze.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getFirstRunTurns()">getFirstRunTurns</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/RobotPathModel.html" title="class in maze.model">RobotPathModel</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#getRobotPathModel()">getRobotPathModel</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -380,22 +309,6 @@ Provides a means of generating statistics on a robots path through a maze.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#isAtCenter()">isAtCenter</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#isAtStart()">isAtStart</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#recompute()">recompute</A></B>()</CODE>
 
@@ -406,8 +319,8 @@ Provides a means of generating statistics on a robots path through a maze.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#reload(maze.ai.RobotBase, maze.model.RobotModelMaster)">reload</A></B>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
-             <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>&nbsp;mouse)</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#reload(maze.ai.RobotBase, maze.model.MazeModel)">reload</A></B>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
+             <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;maze)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This function requires an algorithm and a mouse.</TD>
@@ -415,18 +328,19 @@ Provides a means of generating statistics on a robots path through a maze.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#setExplored()">setExplored</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#trackARun()">trackARun</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Track a run.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/StatTracker.html#wasCenterFound()">wasCenterFound</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Did the robot find the center box at least once or did it fail to win at
+ all.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -451,30 +365,10 @@ Provides a means of generating statistics on a robots path through a maze.
 </TR>
 </TABLE>
 
-<A NAME="totalSquaresTraversed"><!-- --></A><H3>
-totalSquaresTraversed</H3>
-<PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.19"><B>totalSquaresTraversed</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="totalTurnsTaken"><!-- --></A><H3>
-totalTurnsTaken</H3>
-<PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.20"><B>totalTurnsTaken</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
 <A NAME="firstRunSquaresTraversed"><!-- --></A><H3>
 firstRunSquaresTraversed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.21"><B>firstRunSquaresTraversed</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.14"><B>firstRunSquaresTraversed</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -484,7 +378,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.21"><B>firstR
 <A NAME="firstRunTurnsTaken"><!-- --></A><H3>
 firstRunTurnsTaken</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.22"><B>firstRunTurnsTaken</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.15"><B>firstRunTurnsTaken</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -494,7 +388,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.22"><B>firstR
 <A NAME="bestRunSquaresTraversed"><!-- --></A><H3>
 bestRunSquaresTraversed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.23"><B>bestRunSquaresTraversed</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.16"><B>bestRunSquaresTraversed</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -504,7 +398,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.23"><B>bestRu
 <A NAME="bestRunTurnsTaken"><!-- --></A><H3>
 bestRunTurnsTaken</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.24"><B>bestRunTurnsTaken</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.17"><B>bestRunTurnsTaken</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -514,7 +408,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.24"><B>bestRu
 <A NAME="bestRunTotalSquaresTraversed"><!-- --></A><H3>
 bestRunTotalSquaresTraversed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.25"><B>bestRunTotalSquaresTraversed</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.18"><B>bestRunTotalSquaresTraversed</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -524,7 +418,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.25"><B>bestRu
 <A NAME="bestRunTotalTurnsTaken"><!-- --></A><H3>
 bestRunTotalTurnsTaken</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.26"><B>bestRunTotalTurnsTaken</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.19"><B>bestRunTotalTurnsTaken</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -534,7 +428,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.26"><B>bestRu
 <A NAME="previousRunTotalSquaresTraversed"><!-- --></A><H3>
 previousRunTotalSquaresTraversed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.27"><B>previousRunTotalSquaresTraversed</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.20"><B>previousRunTotalSquaresTraversed</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -544,7 +438,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.27"><B>previo
 <A NAME="previousRunTotalTurnsTaken"><!-- --></A><H3>
 previousRunTotalTurnsTaken</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.28"><B>previousRunTotalTurnsTaken</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.21"><B>previousRunTotalTurnsTaken</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -554,7 +448,7 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.28"><B>previo
 <A NAME="currentRunSquaresTraversed"><!-- --></A><H3>
 currentRunSquaresTraversed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.29"><B>currentRunSquaresTraversed</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.22"><B>currentRunSquaresTraversed</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -564,68 +458,21 @@ private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.29"><B>curren
 <A NAME="currentRunTurnsTaken"><!-- --></A><H3>
 currentRunTurnsTaken</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.30"><B>currentRunTurnsTaken</B></A></PRE>
+private int <A HREF="../../src-html/maze/gui/StatTracker.html#line.23"><B>currentRunTurnsTaken</B></A></PRE>
 <DL>
 <DL>
 </DL>
 </DL>
 <HR>
 
-<A NAME="explored"><!-- --></A><H3>
-explored</H3>
+<A NAME="controller"><!-- --></A><H3>
+controller</H3>
 <PRE>
-private boolean[][] <A HREF="../../src-html/maze/gui/StatTracker.html#line.31"><B>explored</B></A></PRE>
+private <A HREF="../../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A> <A HREF="../../src-html/maze/gui/StatTracker.html#line.29"><B>controller</B></A></PRE>
 <DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="USELESS"><!-- --></A><H3>
-USELESS</H3>
-<PRE>
-public static int <A HREF="../../src-html/maze/gui/StatTracker.html#line.32"><B>USELESS</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="HOPELESS"><!-- --></A><H3>
-HOPELESS</H3>
-<PRE>
-public static int <A HREF="../../src-html/maze/gui/StatTracker.html#line.33"><B>HOPELESS</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="algorithm"><!-- --></A><H3>
-algorithm</H3>
-<PRE>
-private <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/gui/StatTracker.html#line.35"><B>algorithm</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="mouse"><!-- --></A><H3>
-mouse</H3>
-<PRE>
-private <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A> <A HREF="../../src-html/maze/gui/StatTracker.html#line.36"><B>mouse</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="mazeSize"><!-- --></A><H3>
-mazeSize</H3>
-<PRE>
-private java.awt.Dimension <A HREF="../../src-html/maze/gui/StatTracker.html#line.37"><B>mazeSize</B></A></PRE>
-<DL>
+<DD>This robot controller is used to simulate the robots path through the
+ maze.
+<P>
 <DL>
 </DL>
 </DL>
@@ -640,11 +487,11 @@ private java.awt.Dimension <A HREF="../../src-html/maze/gui/StatTracker.html#lin
 </TR>
 </TABLE>
 
-<A NAME="StatTracker(maze.ai.RobotBase, maze.model.RobotModelMaster)"><!-- --></A><H3>
+<A NAME="StatTracker(maze.ai.RobotBase, maze.model.MazeModel)"><!-- --></A><H3>
 StatTracker</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/StatTracker.html#line.45"><B>StatTracker</B></A>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
-                   <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>&nbsp;mouse)</PRE>
+public <A HREF="../../src-html/maze/gui/StatTracker.html#line.35"><B>StatTracker</B></A>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
+                   <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;maze)</PRE>
 <DL>
 <DD>This constructor requires an algorithm and a mouse. It will then determine
  a handful of relevant statistics for the user to access
@@ -661,11 +508,11 @@ public <A HREF="../../src-html/maze/gui/StatTracker.html#line.45"><B>StatTracker
 </TR>
 </TABLE>
 
-<A NAME="reload(maze.ai.RobotBase, maze.model.RobotModelMaster)"><!-- --></A><H3>
+<A NAME="reload(maze.ai.RobotBase, maze.model.MazeModel)"><!-- --></A><H3>
 reload</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/StatTracker.html#line.54"><B>reload</B></A>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
-                   <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>&nbsp;mouse)</PRE>
+public void <A HREF="../../src-html/maze/gui/StatTracker.html#line.44"><B>reload</B></A>(<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;algorithm,
+                   <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;maze)</PRE>
 <DL>
 <DD>This function requires an algorithm and a mouse. It will then determine a
  handful of relevant statistics for the user to access
@@ -679,7 +526,7 @@ public void <A HREF="../../src-html/maze/gui/StatTracker.html#line.54"><B>reload
 <A NAME="initialize()"><!-- --></A><H3>
 initialize</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.70"><B>initialize</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.55"><B>initialize</B></A>()</PRE>
 <DL>
 <DD>This function prepares the mouse and algorithm to get ready to start a
  run.
@@ -693,7 +540,7 @@ private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.70"><B>initi
 <A NAME="recompute()"><!-- --></A><H3>
 recompute</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.102"><B>recompute</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.66"><B>recompute</B></A>()</PRE>
 <DL>
 <DD>This function simulates a run through the maze for the mouse and
  algorithm.
@@ -707,43 +554,27 @@ private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.102"><B>reco
 <A NAME="trackARun()"><!-- --></A><H3>
 trackARun</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.137"><B>trackARun</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.108"><B>trackARun</B></A>()</PRE>
 <DL>
+<DD>Track a run.
+<P>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="isAtStart()"><!-- --></A><H3>
-isAtStart</H3>
+<A NAME="wasCenterFound()"><!-- --></A><H3>
+wasCenterFound</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/gui/StatTracker.html#line.205"><B>isAtStart</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/gui/StatTracker.html#line.136"><B>wasCenterFound</B></A>()</PRE>
 <DL>
+<DD>Did the robot find the center box at least once or did it fail to win at
+ all.
+<P>
 <DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
 
-<A NAME="isAtCenter()"><!-- --></A><H3>
-isAtCenter</H3>
-<PRE>
-private boolean <A HREF="../../src-html/maze/gui/StatTracker.html#line.216"><B>isAtCenter</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setExplored()"><!-- --></A><H3>
-setExplored</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.233"><B>setExplored</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
+<DT><B>Returns:</B><DD>true if the robot made it to the center at least once.</DL>
 </DD>
 </DL>
 <HR>
@@ -751,7 +582,7 @@ private void <A HREF="../../src-html/maze/gui/StatTracker.html#line.233"><B>setE
 <A NAME="getTotalTraversed()"><!-- --></A><H3>
 getTotalTraversed</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.239"><B>getTotalTraversed</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.141"><B>getTotalTraversed</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -762,7 +593,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.239"><B>getTot
 <A NAME="getFirstRunCells()"><!-- --></A><H3>
 getFirstRunCells</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.255"><B>getFirstRunCells</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.146"><B>getFirstRunCells</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -773,7 +604,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.255"><B>getFir
 <A NAME="getFirstRunTurns()"><!-- --></A><H3>
 getFirstRunTurns</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.260"><B>getFirstRunTurns</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.151"><B>getFirstRunTurns</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -784,7 +615,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.260"><B>getFir
 <A NAME="getBestRunCells()"><!-- --></A><H3>
 getBestRunCells</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.265"><B>getBestRunCells</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.156"><B>getBestRunCells</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -795,7 +626,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.265"><B>getBes
 <A NAME="getBestRunTurns()"><!-- --></A><H3>
 getBestRunTurns</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.270"><B>getBestRunTurns</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.161"><B>getBestRunTurns</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -806,7 +637,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.270"><B>getBes
 <A NAME="getThroughBestRunCells()"><!-- --></A><H3>
 getThroughBestRunCells</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.275"><B>getThroughBestRunCells</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.166"><B>getThroughBestRunCells</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -817,7 +648,7 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.275"><B>getThr
 <A NAME="getThroughBestRunTurns()"><!-- --></A><H3>
 getThroughBestRunTurns</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.280"><B>getThroughBestRunTurns</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.171"><B>getThroughBestRunTurns</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -825,32 +656,10 @@ public int <A HREF="../../src-html/maze/gui/StatTracker.html#line.280"><B>getThr
 </DL>
 <HR>
 
-<A NAME="getAllUnexplored()"><!-- --></A><H3>
-getAllUnexplored</H3>
+<A NAME="getRobotPathModel()"><!-- --></A><H3>
+getRobotPathModel</H3>
 <PRE>
-public java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/gui/StatTracker.html#line.285"><B>getAllUnexplored</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getFirstRun()"><!-- --></A><H3>
-getFirstRun</H3>
-<PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/gui/StatTracker.html#line.290"><B>getFirstRun</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getBestRun()"><!-- --></A><H3>
-getBestRun</H3>
-<PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/gui/StatTracker.html#line.295"><B>getBestRun</B></A>()</PRE>
+public <A HREF="../../maze/model/RobotPathModel.html" title="class in maze.model">RobotPathModel</A> <A HREF="../../src-html/maze/gui/StatTracker.html#line.176"><B>getRobotPathModel</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>

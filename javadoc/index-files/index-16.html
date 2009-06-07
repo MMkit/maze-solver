@@ -93,7 +93,7 @@ Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/GappedTempla
 <DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#refreshPoints(java.awt.Point)"><B>refreshPoints(Point)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/StatTracker.html#reload(maze.ai.RobotBase, maze.model.RobotModelMaster)"><B>reload(RobotBase, RobotModelMaster)</B></A> - 
+<DT><A HREF="../maze/gui/StatTracker.html#reload(maze.ai.RobotBase, maze.model.MazeModel)"><B>reload(RobotBase, MazeModel)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in maze.gui">StatTracker</A>
 <DD>This function requires an algorithm and a mouse.
 <DT><A HREF="../maze/util/ListenerSubject.ListenerMulticaster.html#remove(maze.util.Listener)"><B>remove(Listener&lt;T&gt;)</B></A> - 
@@ -101,7 +101,7 @@ Method in class maze.util.<A HREF="../maze/util/ListenerSubject.ListenerMulticas
 <DD>Removes a Listener from this linked list.
 <DT><A HREF="../maze/util/ListenerSubject.html#removeAllListeners()"><B>removeAllListeners()</B></A> - 
 Method in class maze.util.<A HREF="../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>
-<DD>&nbsp;
+<DD>Removes all listeners registered with this subject.
 <DT><A HREF="../maze/gui/CodeEditorPane.html#removeFromRobotModel()"><B>removeFromRobotModel()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
 <DD>Removes this script from the global List of algorithms.
@@ -165,6 +165,9 @@ Constructor for class maze.ai.<A HREF="../maze/ai/RobotBase.html" title="class i
 <DT><A HREF="../maze/ai/RobotController.html" title="class in maze.ai"><B>RobotController</B></A> - Class in <A HREF="../maze/ai/package-summary.html">maze.ai</A><DD>Controls the AI and models to move the robot through the maze.<DT><A HREF="../maze/ai/RobotController.html#RobotController(maze.model.MazeModel, maze.ai.RobotBase)"><B>RobotController(MazeModel, RobotBase)</B></A> - 
 Constructor for class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A>
 <DD>Constructor.
+<DT><A HREF="../maze/ai/RobotController.html#robotCrashed"><B>robotCrashed</B></A> - 
+Variable in class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A>
+<DD>A flag that is set true if the robot crashes into a wall.
 <DT><A HREF="../maze/gui/MazePainter.html#robotImage"><B>robotImage</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
@@ -198,6 +201,13 @@ Variable in class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class
  maze.<DT><A HREF="../maze/model/RobotModelMaster.html#RobotModelMaster(maze.model.MazeModel, maze.model.MazeCell, maze.model.Direction)"><B>RobotModelMaster(MazeModel, MazeCell, Direction)</B></A> - 
 Constructor for class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>
 <DD>Sole constructor.
+<DT><A HREF="../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>RobotModelMaster.RobotCrashedException</B></A> - Exception in <A HREF="../maze/model/package-summary.html">maze.model</A><DD>&nbsp;<DT><A HREF="../maze/model/RobotModelMaster.RobotCrashedException.html#RobotModelMaster.RobotCrashedException(maze.model.MazeCell, maze.model.Direction)"><B>RobotModelMaster.RobotCrashedException(MazeCell, Direction)</B></A> - 
+Constructor for exception maze.model.<A HREF="../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model">RobotModelMaster.RobotCrashedException</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/ai/RobotController.html#robotMoveCount"><B>robotMoveCount</B></A> - 
+Variable in class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A>
+<DD>Stores the total number of moves taken from one cell to the next not
+ counting turns.
 <DT><A HREF="../maze/gui/MazeView2.html#robotPathModel"><B>robotPathModel</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>This is null unless an animation is running and then the
@@ -205,9 +215,10 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DT><A HREF="../maze/model/RobotModelMaster.html#robotPathModel"><B>robotPathModel</B></A> - 
 Variable in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>
 <DD>Stores all the information about where the robot has been.
-<DT><A HREF="../maze/model/RobotPathModel.html" title="class in maze.model"><B>RobotPathModel</B></A> - Class in <A HREF="../maze/model/package-summary.html">maze.model</A><DD>&nbsp;<DT><A HREF="../maze/model/RobotPathModel.html#RobotPathModel(maze.model.MazeCell)"><B>RobotPathModel(MazeCell)</B></A> - 
+<DT><A HREF="../maze/model/RobotPathModel.html" title="class in maze.model"><B>RobotPathModel</B></A> - Class in <A HREF="../maze/model/package-summary.html">maze.model</A><DD>This model class stores a bunch of information about the robots path through
+ the maze.<DT><A HREF="../maze/model/RobotPathModel.html#RobotPathModel(maze.model.MazeCell)"><B>RobotPathModel(MazeCell)</B></A> - 
 Constructor for class maze.model.<A HREF="../maze/model/RobotPathModel.html" title="class in maze.model">RobotPathModel</A>
-<DD>&nbsp;
+<DD>Constructor.
 <DT><A HREF="../maze/gui/MazeView.html#robotRotation"><B>robotRotation</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>The current rotation of the robot in radians.
@@ -217,9 +228,9 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DT><A HREF="../maze/ai/RobotStep.html" title="enum in maze.ai"><B>RobotStep</B></A> - Enum in <A HREF="../maze/ai/package-summary.html">maze.ai</A><DD>This represents one step taken by a robot.<DT><A HREF="../maze/ai/RobotStep.html#RobotStep()"><B>RobotStep()</B></A> - 
 Constructor for enum maze.ai.<A HREF="../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/ai/RobotController.html#robotStepCount"><B>robotStepCount</B></A> - 
+<DT><A HREF="../maze/ai/RobotController.html#robotTurnCount"><B>robotTurnCount</B></A> - 
 Variable in class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A>
-<DD>&nbsp;
+<DD>Stores the total number of turns taken.
 <DT><A HREF="../maze/gui/mazeeditor/StaggeredTemplate.html#rotation"><B>rotation</B></A> - 
 Variable in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/StaggeredTemplate.html" title="class in maze.gui.mazeeditor">StaggeredTemplate</A>
 <DD>&nbsp;
@@ -229,6 +240,9 @@ Variable in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/WaveTempla
 <DT><A HREF="../maze/gui/RobotAnimator.html#run()"><B>run()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/RobotAnimator.html" title="class in maze.gui">RobotAnimator</A>
 <DD>This runs in a background thread and handles the animation loop.
+<DT><A HREF="../maze/util/ListenerSubject.DelayedNotifier.html#run()"><B>run()</B></A> - 
+Method in class maze.util.<A HREF="../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazePainter.html#runBest"><B>runBest</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;

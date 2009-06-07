@@ -6,20 +6,23 @@
 <FONT color="green">003</FONT>    /**<a name="line.3"></a>
 <FONT color="green">004</FONT>     * This Listener interface allows the creation of Listener classes that can<a name="line.4"></a>
 <FONT color="green">005</FONT>     * register themselves with a ListenerSubject.<a name="line.5"></a>
-<FONT color="green">006</FONT>     * @author Luke Last<a name="line.6"></a>
-<FONT color="green">007</FONT>     * @param &lt;T&gt; The type of the event object that is passed in when the event is<a name="line.7"></a>
-<FONT color="green">008</FONT>     *           fired. This type should match the defined generic type of the<a name="line.8"></a>
-<FONT color="green">009</FONT>     *           ListenerSubject you want to register with.<a name="line.9"></a>
-<FONT color="green">010</FONT>     */<a name="line.10"></a>
-<FONT color="green">011</FONT>    public interface Listener&lt;T&gt;<a name="line.11"></a>
-<FONT color="green">012</FONT>    {<a name="line.12"></a>
-<FONT color="green">013</FONT>       /**<a name="line.13"></a>
-<FONT color="green">014</FONT>        * This is called when the ListenerSubject wants to notify the registered<a name="line.14"></a>
-<FONT color="green">015</FONT>        * Listeners.<a name="line.15"></a>
-<FONT color="green">016</FONT>        * @param event The event object.<a name="line.16"></a>
-<FONT color="green">017</FONT>        */<a name="line.17"></a>
-<FONT color="green">018</FONT>       public void eventFired(T event);<a name="line.18"></a>
-<FONT color="green">019</FONT>    }<a name="line.19"></a>
+<FONT color="green">006</FONT>     * @see ListenerSubject<a name="line.6"></a>
+<FONT color="green">007</FONT>     * @version 2009-05-30<a name="line.7"></a>
+<FONT color="green">008</FONT>     * @author Luke Last<a name="line.8"></a>
+<FONT color="green">009</FONT>     * @param &lt;T&gt; The type of the event object that is passed in when the event is<a name="line.9"></a>
+<FONT color="green">010</FONT>     *           fired. This type should match the defined generic type of the<a name="line.10"></a>
+<FONT color="green">011</FONT>     *           ListenerSubject you want to register with.<a name="line.11"></a>
+<FONT color="green">012</FONT>     */<a name="line.12"></a>
+<FONT color="green">013</FONT>    public interface Listener&lt;T&gt;<a name="line.13"></a>
+<FONT color="green">014</FONT>    {<a name="line.14"></a>
+<FONT color="green">015</FONT>       /**<a name="line.15"></a>
+<FONT color="green">016</FONT>        * This is called when the ListenerSubject wants to notify the registered<a name="line.16"></a>
+<FONT color="green">017</FONT>        * Listeners.<a name="line.17"></a>
+<FONT color="green">018</FONT>        * @param event The event object. It can be null so make sure and check for<a name="line.18"></a>
+<FONT color="green">019</FONT>        *           that.<a name="line.19"></a>
+<FONT color="green">020</FONT>        */<a name="line.20"></a>
+<FONT color="green">021</FONT>       public void eventFired(T event);<a name="line.21"></a>
+<FONT color="green">022</FONT>    }<a name="line.22"></a>
 
 
 

@@ -86,6 +86,9 @@ Static variable in class maze.model.<A HREF="../maze/model/MazeModel.html" title
 <DT><A HREF="../maze/util/ListenerSubject.html#delayedListener"><B>delayedListener</B></A> - 
 Variable in class maze.util.<A HREF="../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>
 <DD>Stores listeners that should be notified in a delayed manner.
+<DT><A HREF="../maze/util/ListenerSubject.html#delayedNotifier"><B>delayedNotifier</B></A> - 
+Variable in class maze.util.<A HREF="../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>
+<DD>This is created when needed.
 <DT><A HREF="../maze/model/Direction.html" title="enum in maze.model"><B>Direction</B></A> - Enum in <A HREF="../maze/model/package-summary.html">maze.model</A><DD>Represents each of the 4 locations a wall can be on each cell.<DT><A HREF="../maze/model/Direction.html#Direction(int)"><B>Direction(int)</B></A> - 
 Constructor for enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in maze.model">Direction</A>
 <DD>Constructor.
@@ -97,7 +100,7 @@ Variable in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="cla
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/StatViewPanel.html#displayStats()"><B>displayStats()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/StatViewPanel.html" title="class in maze.gui">StatViewPanel</A>
-<DD>&nbsp;
+<DD>Set values in the statistics table model.
 <DT><A HREF="../maze/gui/HelpInfo.html#displayURL(java.net.URL)"><B>displayURL(URL)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/HelpInfo.html" title="class in maze.gui">HelpInfo</A>
 <DD>&nbsp;
@@ -116,9 +119,6 @@ Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate
 <DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)"><B>draw(Graphics2D, CellSize)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#drawAllCells(java.awt.Graphics2D)"><B>drawAllCells(Graphics2D)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>Calls the draw cell method on every cell in the maze.
 <DT><A HREF="../maze/gui/MazeView.html#drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)"><B>drawArrow(Graphics2D, Direction, int, int)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
@@ -169,7 +169,7 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView2.html#drawInvalidatedCells(java.awt.Graphics2D)"><B>drawInvalidatedCells(Graphics2D)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>Draws all cells that have been invalidated.
+<DD>Draws cells that have been invalidated.
 <DT><A HREF="../maze/gui/MazeView2.html#drawOutsideWalls(java.awt.Graphics2D)"><B>drawOutsideWalls(Graphics2D)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Draws the top and left outside walls as these don't fall inside of any

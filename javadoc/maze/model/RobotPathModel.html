@@ -53,7 +53,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;NEXT CLASS</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/RobotPathModel.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -94,12 +94,25 @@ java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by "><A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">maze.util.ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;
       <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.model.RobotPathModel</B>
 </PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable</DD>
+</DL>
 <HR>
 <DL>
-<DT><PRE>public final class <A HREF="../../src-html/maze/model/RobotPathModel.html#line.10"><B>RobotPathModel</B></A><DT>extends <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/model/RobotPathModel.html#line.18"><B>RobotPathModel</B></A><DT>extends <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;<DT>implements java.io.Serializable</DL>
 </PRE>
 
 <P>
+This model class stores a bunch of information about the robots path through
+ the maze. Like which cells have been visited, and what the current, best, and
+ first paths are.
+<P>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Luke Last</DD>
+<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.model.RobotPathModel">Serialized Form</A></DL>
 <HR>
 
 <P>
@@ -165,7 +178,7 @@ java.lang.Object
 <TD><CODE><B><A HREF="../../maze/model/RobotPathModel.html#RobotPathModel(maze.model.MazeCell)">RobotPathModel</A></B>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;startingCell)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructor.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -187,11 +200,20 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/RobotPathModel.html#getCellsVisited()">getCellsVisited</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the total number of cells that have been visited.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/RobotPathModel.html#getPathBest()">getPathBest</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the best run that consists of the least number of cells to get from
+ the start to the finish.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -207,7 +229,7 @@ java.lang.Object
 <TD><CODE><B><A HREF="../../maze/model/RobotPathModel.html#getPathFirst()">getPathFirst</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the first path taken from the start to the center.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -261,7 +283,7 @@ java.lang.Object
 <A NAME="visited"><!-- --></A><H3>
 visited</H3>
 <PRE>
-private final java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.12"><B>visited</B></A></PRE>
+private final java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.20"><B>visited</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -271,7 +293,7 @@ private final java.util.Set&lt;<A HREF="../../maze/model/MazeCell.html" title="c
 <A NAME="pathCurrent"><!-- --></A><H3>
 pathCurrent</H3>
 <PRE>
-private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.13"><B>pathCurrent</B></A></PRE>
+private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.21"><B>pathCurrent</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -281,7 +303,7 @@ private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="
 <A NAME="pathFirst"><!-- --></A><H3>
 pathFirst</H3>
 <PRE>
-private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.14"><B>pathFirst</B></A></PRE>
+private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.22"><B>pathFirst</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -291,7 +313,7 @@ private final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="
 <A NAME="pathBest"><!-- --></A><H3>
 pathBest</H3>
 <PRE>
-final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.15"><B>pathBest</B></A></PRE>
+final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.23"><B>pathBest</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -301,7 +323,7 @@ final java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in
 <A NAME="startCell"><!-- --></A><H3>
 startCell</H3>
 <PRE>
-private final <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/RobotPathModel.html#line.16"><B>startCell</B></A></PRE>
+private final <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/RobotPathModel.html#line.24"><B>startCell</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -320,8 +342,14 @@ private final <A HREF="../../maze/model/MazeCell.html" title="class in maze.mode
 <A NAME="RobotPathModel(maze.model.MazeCell)"><!-- --></A><H3>
 RobotPathModel</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/RobotPathModel.html#line.18"><B>RobotPathModel</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;startingCell)</PRE>
+public <A HREF="../../src-html/maze/model/RobotPathModel.html#line.32"><B>RobotPathModel</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;startingCell)</PRE>
 <DL>
+<DD>Constructor.
+<P>
+<DL>
+<DT><B>Parameters:</B><DD><CODE>startingCell</CODE> - The cell that should be considered to be the starting
+           point of the maze. This is used to determine the recent path
+           since hitting the starting cell.</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -337,10 +365,13 @@ public <A HREF="../../src-html/maze/model/RobotPathModel.html#line.18"><B>RobotP
 <A NAME="addLocation(maze.model.MazeCell)"><!-- --></A><H3>
 addLocation</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/RobotPathModel.html#line.27"><B>addLocation</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
+public void <A HREF="../../src-html/maze/model/RobotPathModel.html#line.43"><B>addLocation</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
 <DL>
 <DD>Add a new visited cell to the path storage model.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>cell</CODE> - The cell that has just been visited.</DL>
 </DD>
@@ -350,8 +381,11 @@ public void <A HREF="../../src-html/maze/model/RobotPathModel.html#line.27"><B>a
 <A NAME="hasCellBeenVisited(maze.model.MazeCell)"><!-- --></A><H3>
 hasCellBeenVisited</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/RobotPathModel.html#line.44"><B>hasCellBeenVisited</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
+public boolean <A HREF="../../src-html/maze/model/RobotPathModel.html#line.60"><B>hasCellBeenVisited</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -361,11 +395,14 @@ public boolean <A HREF="../../src-html/maze/model/RobotPathModel.html#line.44"><
 <A NAME="getPathRecent()"><!-- --></A><H3>
 getPathRecent</H3>
 <PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.54"><B>getPathRecent</B></A>()</PRE>
+public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.70"><B>getPathRecent</B></A>()</PRE>
 <DL>
 <DD>Get the most recent path the robot has taken since the last time it
  visited the starting cell.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>An in order list of the robots most recent path.</DL>
@@ -376,13 +413,17 @@ public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class i
 <A NAME="getPathCurrent()"><!-- --></A><H3>
 getPathCurrent</H3>
 <PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.76"><B>getPathCurrent</B></A>()</PRE>
+public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.92"><B>getPathCurrent</B></A>()</PRE>
 <DL>
 <DD>Gets the entire current path from the very beginning.
 <P>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 
-<DT><B>Returns:</B><DD>An in order list of the total path taken by the robot.</DL>
+<DT><B>Returns:</B><DD>An in order list of the total path taken by the robot. The List is
+         read only.</DL>
 </DD>
 </DL>
 <HR>
@@ -390,10 +431,16 @@ public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class i
 <A NAME="getPathFirst()"><!-- --></A><H3>
 getPathFirst</H3>
 <PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.81"><B>getPathFirst</B></A>()</PRE>
+public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.101"><B>getPathFirst</B></A>()</PRE>
 <DL>
+<DD>Get the first path taken from the start to the center.
+<P>
 <DD><DL>
 </DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Ordered list of cells.</DL>
 </DD>
 </DL>
 <HR>
@@ -401,10 +448,34 @@ public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class i
 <A NAME="getPathBest()"><!-- --></A><H3>
 getPathBest</H3>
 <PRE>
-public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.86"><B>getPathBest</B></A>()</PRE>
+public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; <A HREF="../../src-html/maze/model/RobotPathModel.html#line.111"><B>getPathBest</B></A>()</PRE>
 <DL>
+<DD>Get the best run that consists of the least number of cells to get from
+ the start to the finish.
+<P>
 <DD><DL>
 </DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Ordered list of cells.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCellsVisited()"><!-- --></A><H3>
+getCellsVisited</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/model/RobotPathModel.html#line.120"><B>getCellsVisited</B></A>()</PRE>
+<DL>
+<DD>Get the total number of cells that have been visited.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Number of cells.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -438,7 +509,7 @@ public java.util.List&lt;<A HREF="../../maze/model/MazeCell.html" title="class i
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;NEXT CLASS</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/RobotPathModel.html" target="_top"><B>FRAMES</B></A>  &nbsp;

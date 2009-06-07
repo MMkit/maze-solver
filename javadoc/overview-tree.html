@@ -91,9 +91,11 @@ Class Hierarchy
 <LI TYPE="circle">java.lang.Object<UL>
 <LI TYPE="circle">javax.swing.AbstractSpinnerModel (implements javax.swing.SpinnerModel)
 <UL>
+<LI TYPE="circle">javax.swing.SpinnerNumberModel (implements java.io.Serializable)
+<UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeSizeSpinnerModel.html" title="class in maze.gui.mazeeditor"><B>MazeSizeSpinnerModel</B></A></UL>
+</UL>
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/CellSize.html" title="class in maze.gui"><B>CellSize</B></A> (implements java.lang.Comparable&lt;T&gt;)
-<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModel2.html" title="class in maze.model"><B>CellSizeModel2</B></A> (implements maze.model.<A HREF="maze/model/CellSizeModelInterface.html" title="interface in maze.model">CellSizeModelInterface</A>)
 <LI TYPE="circle">java.awt.Component (implements java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable)
 <UL>
 <LI TYPE="circle">java.awt.Container<UL>
@@ -123,7 +125,7 @@ Class Hierarchy
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView.html" title="class in maze.gui"><B>MazeView</B></A> (implements java.awt.event.ComponentListener, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
 <UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/EditableMazeView.html" title="class in maze.gui.mazeeditor"><B>EditableMazeView</B></A></UL>
-<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView2.html" title="class in maze.gui"><B>MazeView2</B></A> (implements java.awt.event.ComponentListener, maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
+<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeView2.html" title="class in maze.gui"><B>MazeView2</B></A> (implements maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;, maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>)
 </UL>
 <LI TYPE="circle">java.awt.Window (implements javax.accessibility.Accessible)
 <UL>
@@ -145,13 +147,16 @@ Class Hierarchy
 <LI TYPE="circle">javax.swing.filechooser.FileFilter<UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeFileFilter.html" title="class in maze.gui.mazeeditor"><B>MazeFileFilter</B></A></UL>
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/HelpInfo.pageInfo.html" title="class in maze.gui"><B>HelpInfo.pageInfo</B></A><LI TYPE="circle">maze.util.<A HREF="maze/util/ListenerSubject.html" title="class in maze.util"><B>ListenerSubject</B></A>&lt;T&gt;<UL>
-<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.html" title="class in maze.model"><B>MazeModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/RobotPathModel.html" title="class in maze.model"><B>RobotPathModel</B></A></UL>
+<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.html" title="class in maze.model"><B>MazeModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/RobotPathModel.html" title="class in maze.model"><B>RobotPathModel</B></A> (implements java.io.Serializable)
+</UL>
+<LI TYPE="circle">maze.util.<A HREF="maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util"><B>ListenerSubject.DelayedNotifier</B></A> (implements java.lang.Runnable)
 <LI TYPE="circle">maze.util.<A HREF="maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>ListenerSubject.ListenerMulticaster</B></A>&lt;T&gt; (implements maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;)
-<LI TYPE="circle">maze.<A HREF="maze/Main.html" title="class in maze"><B>Main</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeCell.html" title="class in maze.model"><B>MazeCell</B></A> (implements java.lang.Comparable&lt;T&gt;)
+<LI TYPE="circle">maze.<A HREF="maze/Main.html" title="class in maze"><B>Main</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeCell.html" title="class in maze.model"><B>MazeCell</B></A> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeEditor.TemplateActionListener.html" title="class in maze.gui.mazeeditor"><B>MazeEditor.TemplateActionListener</B></A> (implements java.awt.event.ActionListener)
 <LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfo.html" title="class in maze.model"><B>MazeInfo</B></A> (implements maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;)
-<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfoModel.html" title="class in maze.model"><B>MazeInfoModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.PointCompare.html" title="class in maze.model"><B>MazeModel.PointCompare</B></A> (implements java.util.Comparator&lt;T&gt;)
-<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainter.html" title="class in maze.gui"><B>MazePainter</B></A><UL>
+<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeInfoModel.html" title="class in maze.model"><B>MazeInfoModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.PointCompare.html" title="class in maze.model"><B>MazeModel.PointCompare</B></A> (implements java.util.Comparator&lt;T&gt;, java.io.Serializable)
+<LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainter.html" title="class in maze.gui"><B>MazePainter</B></A> (implements java.io.Serializable)
+<UL>
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainterClassic.html" title="class in maze.gui"><B>MazePainterClassic</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazePainterDefault.html" title="class in maze.gui"><B>MazePainterDefault</B></A></UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor"><B>MazeTemplate</B></A><UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/ConjoinedMazeTemplate.html" title="class in maze.gui.mazeeditor"><B>ConjoinedMazeTemplate</B></A><UL>
@@ -164,20 +169,24 @@ Class Hierarchy
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/MazeEditor.TemplateMouseAdapter.html" title="class in maze.gui.mazeeditor"><B>MazeEditor.TemplateMouseAdapter</B></A></UL>
 <LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/NewMazeDialog.RadioButtonAction.html" title="class in maze.gui.mazeeditor"><B>NewMazeDialog.RadioButtonAction</B></A> (implements java.awt.event.ActionListener)
 <LI TYPE="circle">java.util.Observable<UL>
-<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModel.html" title="class in maze.model"><B>CellSizeModel</B></A> (implements maze.model.<A HREF="maze/model/CellSizeModelInterface.html" title="interface in maze.model">CellSizeModelInterface</A>)
-</UL>
+<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModel.html" title="class in maze.model"><B>CellSizeModel</B></A></UL>
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/PrimaryFrame.LookAndFeelListener.html" title="class in maze.gui"><B>PrimaryFrame.LookAndFeelListener</B></A> (implements java.awt.event.ActionListener)
 <LI TYPE="circle">maze.gui.<A HREF="maze/gui/RobotAnimator.html" title="class in maze.gui"><B>RobotAnimator</B></A> (implements java.lang.Runnable)
 <LI TYPE="circle">maze.ai.<A HREF="maze/ai/RobotBase.html" title="class in maze.ai"><B>RobotBase</B></A><UL>
 <LI TYPE="circle">maze.ai.<A HREF="maze/ai/Floodfill.html" title="class in maze.ai"><B>Floodfill</B></A><LI TYPE="circle">maze.ai.<A HREF="maze/ai/LeftWallFollower.html" title="class in maze.ai"><B>LeftWallFollower</B></A><LI TYPE="circle">maze.ai.<A HREF="maze/ai/ModifiedFloodfill.html" title="class in maze.ai"><B>ModifiedFloodfill</B></A><LI TYPE="circle">maze.ai.<A HREF="maze/ai/PythonScriptRobot.html" title="class in maze.ai"><B>PythonScriptRobot</B></A><LI TYPE="circle">maze.ai.<A HREF="maze/ai/RightWallFollower.html" title="class in maze.ai"><B>RightWallFollower</B></A><LI TYPE="circle">maze.ai.<A HREF="maze/ai/Tremaux.html" title="class in maze.ai"><B>Tremaux</B></A></UL>
 <LI TYPE="circle">maze.ai.<A HREF="maze/ai/RobotController.html" title="class in maze.ai"><B>RobotController</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/RobotModel.html" title="class in maze.model"><B>RobotModel</B></A><LI TYPE="circle">maze.model.<A HREF="maze/model/RobotModelMaster.html" title="class in maze.model"><B>RobotModelMaster</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/StatTracker.html" title="class in maze.gui"><B>StatTracker</B></A><LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor"><B>TemplatePeg</B></A> (implements java.lang.Comparable&lt;T&gt;)
-<LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/TemplateWall.html" title="class in maze.gui.mazeeditor"><B>TemplateWall</B></A></UL>
+<LI TYPE="circle">maze.gui.mazeeditor.<A HREF="maze/gui/mazeeditor/TemplateWall.html" title="class in maze.gui.mazeeditor"><B>TemplateWall</B></A><LI TYPE="circle">java.lang.Throwable (implements java.io.Serializable)
+<UL>
+<LI TYPE="circle">java.lang.Exception<UL>
+<LI TYPE="circle">maze.model.<A HREF="maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>RobotModelMaster.RobotCrashedException</B></A></UL>
+</UL>
+</UL>
 </UL>
 <H2>
 Interface Hierarchy
 </H2>
 <UL>
-<LI TYPE="circle">maze.model.<A HREF="maze/model/CellSizeModelInterface.html" title="interface in maze.model"><B>CellSizeModelInterface</B></A><LI TYPE="circle">maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util"><B>Listener</B></A>&lt;T&gt;<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.MazeWall.html" title="interface in maze.model"><B>MazeModel.MazeWall</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui"><B>MazeViewInterface</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MenuControlled.html" title="interface in maze.gui"><B>MenuControlled</B></A></UL>
+<LI TYPE="circle">maze.util.<A HREF="maze/util/Listener.html" title="interface in maze.util"><B>Listener</B></A>&lt;T&gt;<LI TYPE="circle">maze.model.<A HREF="maze/model/MazeModel.MazeWall.html" title="interface in maze.model"><B>MazeModel.MazeWall</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MazeViewInterface.html" title="interface in maze.gui"><B>MazeViewInterface</B></A><LI TYPE="circle">maze.gui.<A HREF="maze/gui/MenuControlled.html" title="interface in maze.gui"><B>MenuControlled</B></A></UL>
 <H2>
 Enum Hierarchy
 </H2>

@@ -54,7 +54,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/model/RobotModel.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/model/RobotPathModel.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/RobotModelMaster.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RobotModelMaster.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -74,7 +74,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -112,7 +112,24 @@ Holds data and provides information about the robots journey through the
 <HR>
 
 <P>
-<!-- =========== FIELD SUMMARY =========== -->
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model">RobotModelMaster.RobotCrashedException</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
 
 <A NAME="field_summary"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -481,12 +498,15 @@ public <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">Maz
 <A NAME="takeNextStep(maze.ai.RobotStep)"><!-- --></A><H3>
 takeNextStep</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/RobotModelMaster.html#line.106"><B>takeNextStep</B></A>(<A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A>&nbsp;nextStep)</PRE>
+public void <A HREF="../../src-html/maze/model/RobotModelMaster.html#line.106"><B>takeNextStep</B></A>(<A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A>&nbsp;nextStep)
+                  throws <A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model">RobotModelMaster.RobotCrashedException</A></PRE>
 <DL>
 <DD>Attempts to move the robot with the given step.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>nextStep</CODE> - The step/move to be taken.</DL>
+<DT><B>Parameters:</B><DD><CODE>nextStep</CODE> - The step/move to be taken.
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model">RobotModelMaster.RobotCrashedException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -593,7 +613,7 @@ public boolean <A HREF="../../src-html/maze/model/RobotModelMaster.html#line.215
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/model/RobotModel.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/model/RobotPathModel.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/RobotModelMaster.RobotCrashedException.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/RobotModelMaster.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RobotModelMaster.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -613,7 +633,7 @@ public boolean <A HREF="../../src-html/maze/model/RobotModelMaster.html#line.215
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

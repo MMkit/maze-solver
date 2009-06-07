@@ -5,51 +5,51 @@
 <FONT color="green">002</FONT>    <a name="line.2"></a>
 <FONT color="green">003</FONT>    import java.awt.Dimension;<a name="line.3"></a>
 <FONT color="green">004</FONT>    import java.util.ArrayList;<a name="line.4"></a>
-<FONT color="green">005</FONT>    <a name="line.5"></a>
-<FONT color="green">006</FONT>    import maze.model.Direction;<a name="line.6"></a>
-<FONT color="green">007</FONT>    import maze.model.MazeCell;<a name="line.7"></a>
-<FONT color="green">008</FONT>    <a name="line.8"></a>
-<FONT color="green">009</FONT>    /**<a name="line.9"></a>
-<FONT color="green">010</FONT>     * Maze solving algorithm that provides a right wall follower with a memory so<a name="line.10"></a>
-<FONT color="green">011</FONT>     * it prefers unexplored cells.<a name="line.11"></a>
-<FONT color="green">012</FONT>     */<a name="line.12"></a>
-<FONT color="green">013</FONT>    public class Tremaux extends RobotBase<a name="line.13"></a>
-<FONT color="green">014</FONT>    {<a name="line.14"></a>
-<FONT color="green">015</FONT>       private Direction[][] ballOfString;<a name="line.15"></a>
-<FONT color="green">016</FONT>       private ArrayList&lt;RobotStep&gt; moveQueue = new ArrayList&lt;RobotStep&gt;();<a name="line.16"></a>
-<FONT color="green">017</FONT>       private boolean turbo = false;<a name="line.17"></a>
-<FONT color="green">018</FONT>    <a name="line.18"></a>
-<FONT color="green">019</FONT>       /**<a name="line.19"></a>
-<FONT color="green">020</FONT>        * This returns the name of the mathematician who came up with this process<a name="line.20"></a>
-<FONT color="green">021</FONT>        */<a name="line.21"></a>
-<FONT color="green">022</FONT>       @Override<a name="line.22"></a>
-<FONT color="green">023</FONT>       public String toString()<a name="line.23"></a>
-<FONT color="green">024</FONT>       {<a name="line.24"></a>
-<FONT color="green">025</FONT>          return "Tremaux";<a name="line.25"></a>
-<FONT color="green">026</FONT>       }<a name="line.26"></a>
-<FONT color="green">027</FONT>    <a name="line.27"></a>
-<FONT color="green">028</FONT>       /**<a name="line.28"></a>
-<FONT color="green">029</FONT>        * This function should be called by the controller any time a new run is to<a name="line.29"></a>
-<FONT color="green">030</FONT>        * commence<a name="line.30"></a>
-<FONT color="green">031</FONT>        */<a name="line.31"></a>
-<FONT color="green">032</FONT>       @Override<a name="line.32"></a>
-<FONT color="green">033</FONT>       public void initialize()<a name="line.33"></a>
-<FONT color="green">034</FONT>       {<a name="line.34"></a>
-<FONT color="green">035</FONT>          super.initialize();<a name="line.35"></a>
-<FONT color="green">036</FONT>    <a name="line.36"></a>
-<FONT color="green">037</FONT>          Dimension size = robotLocation.getMazeSize();<a name="line.37"></a>
-<FONT color="green">038</FONT>          if (ballOfString == null)<a name="line.38"></a>
-<FONT color="green">039</FONT>          {<a name="line.39"></a>
-<FONT color="green">040</FONT>             ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];<a name="line.40"></a>
-<FONT color="green">041</FONT>          }<a name="line.41"></a>
-<FONT color="green">042</FONT>          for (int i = 0; i &lt; size.getWidth(); i++)<a name="line.42"></a>
-<FONT color="green">043</FONT>          {<a name="line.43"></a>
-<FONT color="green">044</FONT>             for (int j = 0; j &lt; size.getHeight(); j++)<a name="line.44"></a>
-<FONT color="green">045</FONT>             {<a name="line.45"></a>
-<FONT color="green">046</FONT>                ballOfString[i][j] = null;<a name="line.46"></a>
-<FONT color="green">047</FONT>             }<a name="line.47"></a>
-<FONT color="green">048</FONT>          }<a name="line.48"></a>
-<FONT color="green">049</FONT>          ballOfString[0][size.height - 1] = Direction.North;<a name="line.49"></a>
+<FONT color="green">005</FONT>    import java.util.List;<a name="line.5"></a>
+<FONT color="green">006</FONT>    <a name="line.6"></a>
+<FONT color="green">007</FONT>    import maze.model.Direction;<a name="line.7"></a>
+<FONT color="green">008</FONT>    import maze.model.MazeCell;<a name="line.8"></a>
+<FONT color="green">009</FONT>    <a name="line.9"></a>
+<FONT color="green">010</FONT>    /**<a name="line.10"></a>
+<FONT color="green">011</FONT>     * Maze solving algorithm that provides a right wall follower with a memory so<a name="line.11"></a>
+<FONT color="green">012</FONT>     * it prefers unexplored cells.<a name="line.12"></a>
+<FONT color="green">013</FONT>     */<a name="line.13"></a>
+<FONT color="green">014</FONT>    public class Tremaux extends RobotBase<a name="line.14"></a>
+<FONT color="green">015</FONT>    {<a name="line.15"></a>
+<FONT color="green">016</FONT>       private Direction[][] ballOfString;<a name="line.16"></a>
+<FONT color="green">017</FONT>       private List&lt;RobotStep&gt; moveQueue = new ArrayList&lt;RobotStep&gt;();<a name="line.17"></a>
+<FONT color="green">018</FONT>       private boolean turbo = false;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>       /**<a name="line.20"></a>
+<FONT color="green">021</FONT>        * This returns the name of the mathematician who came up with this process<a name="line.21"></a>
+<FONT color="green">022</FONT>        */<a name="line.22"></a>
+<FONT color="green">023</FONT>       @Override<a name="line.23"></a>
+<FONT color="green">024</FONT>       public String toString()<a name="line.24"></a>
+<FONT color="green">025</FONT>       {<a name="line.25"></a>
+<FONT color="green">026</FONT>          return "Tremaux";<a name="line.26"></a>
+<FONT color="green">027</FONT>       }<a name="line.27"></a>
+<FONT color="green">028</FONT>    <a name="line.28"></a>
+<FONT color="green">029</FONT>       /**<a name="line.29"></a>
+<FONT color="green">030</FONT>        * This function should be called by the controller any time a new run is to<a name="line.30"></a>
+<FONT color="green">031</FONT>        * commence<a name="line.31"></a>
+<FONT color="green">032</FONT>        */<a name="line.32"></a>
+<FONT color="green">033</FONT>       @Override<a name="line.33"></a>
+<FONT color="green">034</FONT>       public void initialize()<a name="line.34"></a>
+<FONT color="green">035</FONT>       {<a name="line.35"></a>
+<FONT color="green">036</FONT>          super.initialize();<a name="line.36"></a>
+<FONT color="green">037</FONT>    <a name="line.37"></a>
+<FONT color="green">038</FONT>          Dimension size = robotLocation.getMazeSize();<a name="line.38"></a>
+<FONT color="green">039</FONT>          ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];<a name="line.39"></a>
+<FONT color="green">040</FONT>    <a name="line.40"></a>
+<FONT color="green">041</FONT>          for (int i = 0; i &lt; size.getWidth(); i++)<a name="line.41"></a>
+<FONT color="green">042</FONT>          {<a name="line.42"></a>
+<FONT color="green">043</FONT>             for (int j = 0; j &lt; size.getHeight(); j++)<a name="line.43"></a>
+<FONT color="green">044</FONT>             {<a name="line.44"></a>
+<FONT color="green">045</FONT>                ballOfString[i][j] = null;<a name="line.45"></a>
+<FONT color="green">046</FONT>             }<a name="line.46"></a>
+<FONT color="green">047</FONT>          }<a name="line.47"></a>
+<FONT color="green">048</FONT>          ballOfString[0][size.height - 1] = Direction.North;<a name="line.48"></a>
+<FONT color="green">049</FONT>          this.moveQueue.clear();<a name="line.49"></a>
 <FONT color="green">050</FONT>       }<a name="line.50"></a>
 <FONT color="green">051</FONT>    <a name="line.51"></a>
 <FONT color="green">052</FONT>       /**<a name="line.52"></a>

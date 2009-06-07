@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-ListenerSubject.ListenerMulticaster
+ListenerSubject.DelayedNotifier
 </TITLE>
 
 
@@ -13,7 +13,7 @@ ListenerSubject.ListenerMulticaster
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="ListenerSubject.ListenerMulticaster";
+        parent.document.title="ListenerSubject.DelayedNotifier";
     }
 }
 </SCRIPT>
@@ -38,7 +38,7 @@ function windowTitle()
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ListenerSubject.ListenerMulticaster.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ListenerSubject.DelayedNotifier.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -53,11 +53,11 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/util/ListenerSubject.ListenerMulticaster.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="ListenerSubject.ListenerMulticaster.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/util/ListenerSubject.DelayedNotifier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ListenerSubject.DelayedNotifier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -88,35 +88,29 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 maze.util</FONT>
 <BR>
-Class ListenerSubject.ListenerMulticaster&lt;T&gt;</H2>
+Class ListenerSubject.DelayedNotifier</H2>
 <PRE>
 java.lang.Object
-  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.util.ListenerSubject.ListenerMulticaster&lt;T&gt;</B>
+  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.util.ListenerSubject.DelayedNotifier</B>
 </PRE>
 <DL>
-<DT><DT><B>Type Parameters:</B><DD><CODE>T</CODE> - </DL>
-<DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;</DD>
+<DT><B>All Implemented Interfaces:</B> <DD>java.lang.Runnable</DD>
 </DL>
 <DL>
 <DT><B>Enclosing class:</B><DD><A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>private static final class <A HREF="../../src-html/maze/util/ListenerSubject.html#line.179"><B>ListenerSubject.ListenerMulticaster&lt;T&gt;</B></A><DT>extends java.lang.Object<DT>implements <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;T&gt;</DL>
+<DT><PRE>private final class <A HREF="../../src-html/maze/util/ListenerSubject.html#line.84"><B>ListenerSubject.DelayedNotifier</B></A><DT>extends java.lang.Object<DT>implements java.lang.Runnable</DL>
 </PRE>
 
 <P>
-A utility class used to join 2 Listeners into one Listener interface. It
- is used to create a read only linked list of Listeners.<br />
- Each instance is immutable.
+A <code>Runnable</code> which is invoked later on the event queue. We
+ create a special class for this and then instantiate it only once for
+ better performance.
 <P>
 
 <P>
-<DL>
-<DT><B>Author:</B></DT>
-  <DD>Luke Last</DD>
-</DL>
 <HR>
 
 <P>
@@ -130,16 +124,8 @@ A utility class used to join 2 Listeners into one Listener interface. It
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html#a">a</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html#b">b</A></B></CODE>
+<CODE>private &nbsp;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html#eventObject">eventObject</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -157,8 +143,7 @@ A utility class used to join 2 Listeners into one Listener interface. It
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private </CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html#ListenerSubject.ListenerMulticaster(maze.util.Listener, maze.util.Listener)">ListenerSubject.ListenerMulticaster</A></B>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;a,
-                                                                       <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;b)</CODE>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html#ListenerSubject.DelayedNotifier()">ListenerSubject.DelayedNotifier</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -176,18 +161,18 @@ A utility class used to join 2 Listeners into one Listener interface. It
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html#eventFired(T)">eventFired</A></B>(<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&nbsp;event)</CODE>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html#run()">run</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passes the event on to children.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html#remove(maze.util.Listener)">remove</A></B>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;toRemove)</CODE>
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html#setEventObject(T)">setEventObject</A></B>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;eventObject)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a Listener from this linked list.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -212,20 +197,10 @@ A utility class used to join 2 Listeners into one Listener interface. It
 </TR>
 </TABLE>
 
-<A NAME="a"><!-- --></A><H3>
-a</H3>
+<A NAME="eventObject"><!-- --></A><H3>
+eventObject</H3>
 <PRE>
-private final <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.html#line.181"><B>a</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="b"><!-- --></A><H3>
-b</H3>
-<PRE>
-private final <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.html#line.182"><B>b</B></A></PRE>
+private <A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A> <A HREF="../../src-html/maze/util/ListenerSubject.DelayedNotifier.html#line.86"><B>eventObject</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -241,14 +216,11 @@ private final <A HREF="../../maze/util/Listener.html" title="interface in maze.u
 </TR>
 </TABLE>
 
-<A NAME="ListenerSubject.ListenerMulticaster(maze.util.Listener, maze.util.Listener)"><!-- --></A><H3>
-ListenerSubject.ListenerMulticaster</H3>
+<A NAME="ListenerSubject.DelayedNotifier()"><!-- --></A><H3>
+ListenerSubject.DelayedNotifier</H3>
 <PRE>
-private <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.html#line.188"><B>ListenerSubject.ListenerMulticaster</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;a,
-                                            <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;b)</PRE>
+private <A HREF="../../src-html/maze/util/ListenerSubject.DelayedNotifier.html#line.84"><B>ListenerSubject.DelayedNotifier</B></A>()</PRE>
 <DL>
-<DL>
-<DT><B>Parameters:</B><DD><CODE>a</CODE> - First child branch.<DD><CODE>b</CODE> - Second child branch.</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -261,38 +233,30 @@ private <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.ht
 </TR>
 </TABLE>
 
-<A NAME="remove(maze.util.Listener)"><!-- --></A><H3>
-remove</H3>
+<A NAME="setEventObject(java.lang.Object)"><!-- --></A><A NAME="setEventObject(T)"><!-- --></A><H3>
+setEventObject</H3>
 <PRE>
-private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.html#line.201"><B>remove</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;&nbsp;toRemove)</PRE>
+public void <A HREF="../../src-html/maze/util/ListenerSubject.DelayedNotifier.html#line.88"><B>setEventObject</B></A>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;eventObject)</PRE>
 <DL>
-<DD>Removes a Listener from this linked list. Because we are immutable new
- instances must be created when removing an object.
-<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>toRemove</CODE> - The Listener to be removed.
-<DT><B>Returns:</B><DD>The new Listener resulting from the removal. Can return itself
-         if nothing changed.</DL>
+</DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="eventFired(java.lang.Object)"><!-- --></A><A NAME="eventFired(T)"><!-- --></A><H3>
-eventFired</H3>
+<A NAME="run()"><!-- --></A><H3>
+run</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaster.html#line.244"><B>eventFired</B></A>(<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&nbsp;event)</PRE>
+public void <A HREF="../../src-html/maze/util/ListenerSubject.DelayedNotifier.html#line.94"><B>run</B></A>()</PRE>
 <DL>
-<DD>Passes the event on to children.
-<P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../maze/util/Listener.html#eventFired(T)">eventFired</A></CODE> in interface <CODE><A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="type parameter in ListenerSubject.ListenerMulticaster">T</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>run</CODE> in interface <CODE>java.lang.Runnable</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object. It can be null so make sure and check for
-           that.</DL>
+</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -311,7 +275,7 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaste
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ListenerSubject.ListenerMulticaster.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ListenerSubject.DelayedNotifier.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -326,11 +290,11 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.ListenerMulticaste
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/util/ListenerSubject.ListenerMulticaster.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="ListenerSubject.ListenerMulticaster.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/util/ListenerSubject.DelayedNotifier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ListenerSubject.DelayedNotifier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
