@@ -95,7 +95,7 @@ java.lang.Object
 </PRE>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/ai/RobotController.html#line.13"><B>RobotController</B></A><DT>extends java.lang.Object</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/ai/RobotController.html#line.15"><B>RobotController</B></A><DT>extends java.lang.Object</DL>
 </PRE>
 
 <P>
@@ -144,6 +144,14 @@ Controls the AI and models to move the robot through the maze.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#robotCrashed">robotCrashed</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A flag that is set true if the robot crashes into a wall.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/ai/RobotController.html#robotModelClient">robotModelClient</A></B></CODE>
 
@@ -161,10 +169,19 @@ Controls the AI and models to move the robot through the maze.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#robotStepCount">robotStepCount</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#robotMoveCount">robotMoveCount</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the total number of moves taken from one cell to the next not
+ counting turns.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#robotTurnCount">robotTurnCount</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the total number of turns taken.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -200,6 +217,22 @@ Controls the AI and models to move the robot through the maze.
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the robot model being used by this controller.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#getRobotMoveCount()">getRobotMoveCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the total number of moves from cell to cell taken by the robot so far.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/ai/RobotController.html#getRobotTurnCount()">getRobotTurnCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the total number of turns taken by the robot.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -276,7 +309,7 @@ Controls the AI and models to move the robot through the maze.
 <A NAME="MAX_STEP_COUNT"><!-- --></A><H3>
 MAX_STEP_COUNT</H3>
 <PRE>
-private static final int <A HREF="../../src-html/maze/ai/RobotController.html#line.15"><B>MAX_STEP_COUNT</B></A></PRE>
+private static final int <A HREF="../../src-html/maze/ai/RobotController.html#line.17"><B>MAX_STEP_COUNT</B></A></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.ai.RobotController.MAX_STEP_COUNT">Constant Field Values</A></DL>
@@ -286,7 +319,7 @@ private static final int <A HREF="../../src-html/maze/ai/RobotController.html#li
 <A NAME="mazeModel"><!-- --></A><H3>
 mazeModel</H3>
 <PRE>
-private final <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.16"><B>mazeModel</B></A></PRE>
+private final <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.18"><B>mazeModel</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -296,7 +329,7 @@ private final <A HREF="../../maze/model/MazeModel.html" title="class in maze.mod
 <A NAME="robotModelMaster"><!-- --></A><H3>
 robotModelMaster</H3>
 <PRE>
-private final <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.17"><B>robotModelMaster</B></A></PRE>
+private final <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.19"><B>robotModelMaster</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -306,7 +339,7 @@ private final <A HREF="../../maze/model/RobotModelMaster.html" title="class in m
 <A NAME="robotModelClient"><!-- --></A><H3>
 robotModelClient</H3>
 <PRE>
-private final <A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.18"><B>robotModelClient</B></A></PRE>
+private final <A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.20"><B>robotModelClient</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -316,18 +349,45 @@ private final <A HREF="../../maze/model/RobotModel.html" title="class in maze.mo
 <A NAME="ai"><!-- --></A><H3>
 ai</H3>
 <PRE>
-private final <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.19"><B>ai</B></A></PRE>
+private final <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.21"><B>ai</B></A></PRE>
 <DL>
 <DL>
 </DL>
 </DL>
 <HR>
 
-<A NAME="robotStepCount"><!-- --></A><H3>
-robotStepCount</H3>
+<A NAME="robotCrashed"><!-- --></A><H3>
+robotCrashed</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/ai/RobotController.html#line.20"><B>robotStepCount</B></A></PRE>
+private boolean <A HREF="../../src-html/maze/ai/RobotController.html#line.25"><B>robotCrashed</B></A></PRE>
 <DL>
+<DD>A flag that is set true if the robot crashes into a wall.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="robotMoveCount"><!-- --></A><H3>
+robotMoveCount</H3>
+<PRE>
+private int <A HREF="../../src-html/maze/ai/RobotController.html#line.30"><B>robotMoveCount</B></A></PRE>
+<DL>
+<DD>Stores the total number of moves taken from one cell to the next not
+ counting turns.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="robotTurnCount"><!-- --></A><H3>
+robotTurnCount</H3>
+<PRE>
+private int <A HREF="../../src-html/maze/ai/RobotController.html#line.34"><B>robotTurnCount</B></A></PRE>
+<DL>
+<DD>Stores the total number of turns taken.
+<P>
 <DL>
 </DL>
 </DL>
@@ -345,7 +405,7 @@ private int <A HREF="../../src-html/maze/ai/RobotController.html#line.20"><B>rob
 <A NAME="RobotController(maze.model.MazeModel, maze.ai.RobotBase)"><!-- --></A><H3>
 RobotController</H3>
 <PRE>
-public <A HREF="../../src-html/maze/ai/RobotController.html#line.27"><B>RobotController</B></A>(<A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;model,
+public <A HREF="../../src-html/maze/ai/RobotController.html#line.41"><B>RobotController</B></A>(<A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;model,
                        <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;robotAI)</PRE>
 <DL>
 <DD>Constructor.
@@ -367,7 +427,7 @@ public <A HREF="../../src-html/maze/ai/RobotController.html#line.27"><B>RobotCon
 <A NAME="initialize()"><!-- --></A><H3>
 initialize</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/ai/RobotController.html#line.44"><B>initialize</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/ai/RobotController.html#line.55"><B>initialize</B></A>()</PRE>
 <DL>
 <DD>Initializes/resets all values of this controller allowing a new simulation
  to be run from the beginning.
@@ -381,7 +441,7 @@ public void <A HREF="../../src-html/maze/ai/RobotController.html#line.44"><B>ini
 <A NAME="nextStep()"><!-- --></A><H3>
 nextStep</H3>
 <PRE>
-public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.55"><B>nextStep</B></A>()</PRE>
+public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.69"><B>nextStep</B></A>()</PRE>
 <DL>
 <DD>Get the next step the robot has taken.
 <P>
@@ -394,7 +454,7 @@ public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep<
 <A NAME="isRobotDone()"><!-- --></A><H3>
 isRobotDone</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/ai/RobotController.html#line.69"><B>isRobotDone</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/ai/RobotController.html#line.94"><B>isRobotDone</B></A>()</PRE>
 <DL>
 <DD>Is the robot done moving.
 <P>
@@ -407,7 +467,7 @@ public boolean <A HREF="../../src-html/maze/ai/RobotController.html#line.69"><B>
 <A NAME="getStepCount()"><!-- --></A><H3>
 getStepCount</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/ai/RobotController.html#line.78"><B>getStepCount</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/ai/RobotController.html#line.103"><B>getStepCount</B></A>()</PRE>
 <DL>
 <DD>Get the total number of steps the robot has taken so far. Turns count as a
  step.
@@ -418,10 +478,39 @@ public int <A HREF="../../src-html/maze/ai/RobotController.html#line.78"><B>getS
 </DL>
 <HR>
 
+<A NAME="getRobotMoveCount()"><!-- --></A><H3>
+getRobotMoveCount</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/ai/RobotController.html#line.113"><B>getRobotMoveCount</B></A>()</PRE>
+<DL>
+<DD>Get the total number of moves from cell to cell taken by the robot so far.
+ Turns not counted.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Total moves.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRobotTurnCount()"><!-- --></A><H3>
+getRobotTurnCount</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/ai/RobotController.html#line.122"><B>getRobotTurnCount</B></A>()</PRE>
+<DL>
+<DD>Get the total number of turns taken by the robot.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Total turns taken.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getRobotModelMaster()"><!-- --></A><H3>
 getRobotModelMaster</H3>
 <PRE>
-public <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.86"><B>getRobotModelMaster</B></A>()</PRE>
+public <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A> <A HREF="../../src-html/maze/ai/RobotController.html#line.130"><B>getRobotModelMaster</B></A>()</PRE>
 <DL>
 <DD>Get the robot model being used by this controller.
 <P>
@@ -434,7 +523,7 @@ public <A HREF="../../maze/model/RobotModelMaster.html" title="class in maze.mod
 <A NAME="getUnderstandingDir()"><!-- --></A><H3>
 getUnderstandingDir</H3>
 <PRE>
-public <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/RobotController.html#line.91"><B>getUnderstandingDir</B></A>()</PRE>
+public <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][] <A HREF="../../src-html/maze/ai/RobotController.html#line.135"><B>getUnderstandingDir</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -445,7 +534,7 @@ public <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Dire
 <A NAME="getUnderstandingInt()"><!-- --></A><H3>
 getUnderstandingInt</H3>
 <PRE>
-public int[][] <A HREF="../../src-html/maze/ai/RobotController.html#line.96"><B>getUnderstandingInt</B></A>()</PRE>
+public int[][] <A HREF="../../src-html/maze/ai/RobotController.html#line.140"><B>getUnderstandingInt</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>

@@ -94,11 +94,14 @@ java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.gui.MazePainter</B>
 </PRE>
 <DL>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable</DD>
+</DL>
+<DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../maze/gui/MazePainterClassic.html" title="class in maze.gui">MazePainterClassic</A>, <A HREF="../../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <A HREF="../../src-html/maze/gui/MazePainter.html#line.24"><B>MazePainter</B></A><DT>extends java.lang.Object</DL>
+<DT><PRE>public abstract class <A HREF="../../src-html/maze/gui/MazePainter.html#line.25"><B>MazePainter</B></A><DT>extends java.lang.Object<DT>implements java.io.Serializable</DL>
 </PRE>
 
 <P>
@@ -112,7 +115,7 @@ This is the base class for the UI rendering delegate classes for painting the
 <DL>
 <DT><B>Author:</B></DT>
   <DD>Luke Last</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.gui.MazePainter">Serialized Form</A></DL>
 <HR>
 
 <P>
@@ -597,7 +600,7 @@ This is the base class for the UI rendering delegate classes for painting the
 <A NAME="background"><!-- --></A><H3>
 background</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.26"><B>background</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.27"><B>background</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -607,7 +610,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="cellBackground"><!-- --></A><H3>
 cellBackground</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.27"><B>cellBackground</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.28"><B>cellBackground</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -617,7 +620,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="fog"><!-- --></A><H3>
 fog</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.28"><B>fog</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.29"><B>fog</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -627,7 +630,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="hover"><!-- --></A><H3>
 hover</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.29"><B>hover</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.30"><B>hover</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -637,7 +640,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="mazeHeight"><!-- --></A><H3>
 mazeHeight</H3>
 <PRE>
-protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.30"><B>mazeHeight</B></A></PRE>
+protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.31"><B>mazeHeight</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -647,7 +650,7 @@ protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.30"><B>maze
 <A NAME="mazeWidth"><!-- --></A><H3>
 mazeWidth</H3>
 <PRE>
-protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.31"><B>mazeWidth</B></A></PRE>
+protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.32"><B>mazeWidth</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -657,7 +660,7 @@ protected int <A HREF="../../src-html/maze/gui/MazePainter.html#line.31"><B>maze
 <A NAME="peg"><!-- --></A><H3>
 peg</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.32"><B>peg</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.33"><B>peg</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -667,7 +670,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="pegInvalid"><!-- --></A><H3>
 pegInvalid</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.33"><B>pegInvalid</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.34"><B>pegInvalid</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -677,7 +680,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="pegValid"><!-- --></A><H3>
 pegValid</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.34"><B>pegValid</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.35"><B>pegValid</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -687,7 +690,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="robotImage"><!-- --></A><H3>
 robotImage</H3>
 <PRE>
-protected javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.html#line.35"><B>robotImage</B></A></PRE>
+protected javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.html#line.36"><B>robotImage</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -697,7 +700,7 @@ protected javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.htm
 <A NAME="runBest"><!-- --></A><H3>
 runBest</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.36"><B>runBest</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.37"><B>runBest</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -707,7 +710,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="runCurrent"><!-- --></A><H3>
 runCurrent</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.37"><B>runCurrent</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.38"><B>runCurrent</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -717,7 +720,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="runFirst"><!-- --></A><H3>
 runFirst</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.38"><B>runFirst</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.39"><B>runFirst</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -727,7 +730,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="wallEmpty"><!-- --></A><H3>
 wallEmpty</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.39"><B>wallEmpty</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.40"><B>wallEmpty</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -737,7 +740,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="wallSet"><!-- --></A><H3>
 wallSet</H3>
 <PRE>
-protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.40"><B>wallSet</B></A></PRE>
+protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.41"><B>wallSet</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -756,7 +759,7 @@ protected java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.
 <A NAME="MazePainter()"><!-- --></A><H3>
 MazePainter</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/MazePainter.html#line.45"><B>MazePainter</B></A>()</PRE>
+public <A HREF="../../src-html/maze/gui/MazePainter.html#line.46"><B>MazePainter</B></A>()</PRE>
 <DL>
 <DD>Constructor.
 <P>
@@ -775,9 +778,12 @@ public <A HREF="../../src-html/maze/gui/MazePainter.html#line.45"><B>MazePainter
 <A NAME="drawCellBackground(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawCellBackground</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.50"><B>drawCellBackground</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.51"><B>drawCellBackground</B></A>(java.awt.Graphics2D&nbsp;g,
                                java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -787,9 +793,12 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.50"><B>drawCe
 <A NAME="drawCellHover(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawCellHover</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.56"><B>drawCellHover</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.57"><B>drawCellHover</B></A>(java.awt.Graphics2D&nbsp;g,
                           java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -799,9 +808,12 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.56"><B>drawCe
 <A NAME="drawFog(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawFog</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.62"><B>drawFog</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.63"><B>drawFog</B></A>(java.awt.Graphics2D&nbsp;g,
                     java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -811,9 +823,12 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.62"><B>drawFo
 <A NAME="drawPeg(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawPeg</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.68"><B>drawPeg</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.69"><B>drawPeg</B></A>(java.awt.Graphics2D&nbsp;g,
                     java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -823,12 +838,15 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.68"><B>drawPe
 <A NAME="drawRobot(java.awt.Graphics2D, java.awt.Point, double, int, int)"><!-- --></A><H3>
 drawRobot</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.74"><B>drawRobot</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.75"><B>drawRobot</B></A>(java.awt.Graphics2D&nbsp;g,
                       java.awt.Point&nbsp;location,
                       double&nbsp;rotation,
                       int&nbsp;cellWidth,
                       int&nbsp;cellHeight)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -838,10 +856,13 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.74"><B>drawRo
 <A NAME="drawRunCurrent(java.awt.Graphics2D, java.awt.Rectangle, java.util.EnumSet)"><!-- --></A><H3>
 drawRunCurrent</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.104"><B>drawRunCurrent</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.105"><B>drawRunCurrent</B></A>(java.awt.Graphics2D&nbsp;g,
                            java.awt.Rectangle&nbsp;cellArea,
                            java.util.EnumSet&lt;<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&gt;&nbsp;dirsTraveled)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -851,9 +872,12 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.104"><B>drawR
 <A NAME="drawWallEmpty(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawWallEmpty</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.131"><B>drawWallEmpty</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.132"><B>drawWallEmpty</B></A>(java.awt.Graphics2D&nbsp;g,
                           java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -863,9 +887,12 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.131"><B>drawW
 <A NAME="drawWallSet(java.awt.Graphics2D, java.awt.Rectangle)"><!-- --></A><H3>
 drawWallSet</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.137"><B>drawWallSet</B></A>(java.awt.Graphics2D&nbsp;g,
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.138"><B>drawWallSet</B></A>(java.awt.Graphics2D&nbsp;g,
                         java.awt.Rectangle&nbsp;area)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -875,8 +902,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.137"><B>drawW
 <A NAME="getBackground()"><!-- --></A><H3>
 getBackground</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.146"><B>getBackground</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.147"><B>getBackground</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the background</DL>
@@ -887,8 +917,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.146
 <A NAME="getCellBackground()"><!-- --></A><H3>
 getCellBackground</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.154"><B>getCellBackground</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.155"><B>getCellBackground</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the cellBackground</DL>
@@ -899,8 +932,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.154
 <A NAME="getFog()"><!-- --></A><H3>
 getFog</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.162"><B>getFog</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.163"><B>getFog</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the fog</DL>
@@ -911,8 +947,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.162
 <A NAME="getHover()"><!-- --></A><H3>
 getHover</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.170"><B>getHover</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.171"><B>getHover</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the hover</DL>
@@ -923,8 +962,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.170
 <A NAME="getPeg()"><!-- --></A><H3>
 getPeg</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.178"><B>getPeg</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.179"><B>getPeg</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the peg</DL>
@@ -935,8 +977,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.178
 <A NAME="getPegInvalid()"><!-- --></A><H3>
 getPegInvalid</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.186"><B>getPegInvalid</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.187"><B>getPegInvalid</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the pegInvalid</DL>
@@ -947,8 +992,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.186
 <A NAME="getPegValid()"><!-- --></A><H3>
 getPegValid</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.194"><B>getPegValid</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.195"><B>getPegValid</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the pegValid</DL>
@@ -959,8 +1007,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.194
 <A NAME="getRobotImage()"><!-- --></A><H3>
 getRobotImage</H3>
 <PRE>
-public javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.html#line.202"><B>getRobotImage</B></A>()</PRE>
+public javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.html#line.203"><B>getRobotImage</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the robotImage</DL>
@@ -971,8 +1022,11 @@ public javax.swing.ImageIcon <A HREF="../../src-html/maze/gui/MazePainter.html#l
 <A NAME="getRunBest()"><!-- --></A><H3>
 getRunBest</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.210"><B>getRunBest</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.211"><B>getRunBest</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the runBest</DL>
@@ -983,8 +1037,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.210
 <A NAME="getRunCurrent()"><!-- --></A><H3>
 getRunCurrent</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.218"><B>getRunCurrent</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.219"><B>getRunCurrent</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the runCurrent</DL>
@@ -995,8 +1052,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.218
 <A NAME="getRunFirst()"><!-- --></A><H3>
 getRunFirst</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.226"><B>getRunFirst</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.227"><B>getRunFirst</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the runFirst</DL>
@@ -1007,8 +1067,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.226
 <A NAME="getWallEmpty()"><!-- --></A><H3>
 getWallEmpty</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.234"><B>getWallEmpty</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.235"><B>getWallEmpty</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the wallEmpty</DL>
@@ -1019,8 +1082,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.234
 <A NAME="getWallSet()"><!-- --></A><H3>
 getWallSet</H3>
 <PRE>
-public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.242"><B>getWallSet</B></A>()</PRE>
+public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.243"><B>getWallSet</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the wallSet</DL>
@@ -1031,8 +1097,11 @@ public java.awt.Paint <A HREF="../../src-html/maze/gui/MazePainter.html#line.242
 <A NAME="setBackground(java.awt.Paint)"><!-- --></A><H3>
 setBackground</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.250"><B>setBackground</B></A>(java.awt.Paint&nbsp;background)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.251"><B>setBackground</B></A>(java.awt.Paint&nbsp;background)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>background</CODE> - the background to set</DL>
 </DD>
@@ -1042,8 +1111,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.250"><B>setBa
 <A NAME="setCellBackground(java.awt.Paint)"><!-- --></A><H3>
 setCellBackground</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.258"><B>setCellBackground</B></A>(java.awt.Paint&nbsp;cellBackground)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.259"><B>setCellBackground</B></A>(java.awt.Paint&nbsp;cellBackground)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>cellBackground</CODE> - the cellBackground to set</DL>
 </DD>
@@ -1053,10 +1125,13 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.258"><B>setCe
 <A NAME="setDefaults()"><!-- --></A><H3>
 setDefaults</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.266"><B>setDefaults</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.267"><B>setDefaults</B></A>()</PRE>
 <DL>
 <DD>Set the default values for colors. The base class defaults are all black.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -1066,8 +1141,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.266"><B>setDe
 <A NAME="setFog(java.awt.Paint)"><!-- --></A><H3>
 setFog</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.286"><B>setFog</B></A>(java.awt.Paint&nbsp;fog)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.287"><B>setFog</B></A>(java.awt.Paint&nbsp;fog)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>fog</CODE> - the fog to set</DL>
 </DD>
@@ -1077,8 +1155,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.286"><B>setFo
 <A NAME="setHover(java.awt.Paint)"><!-- --></A><H3>
 setHover</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.294"><B>setHover</B></A>(java.awt.Paint&nbsp;hover)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.295"><B>setHover</B></A>(java.awt.Paint&nbsp;hover)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>hover</CODE> - the hover to set</DL>
 </DD>
@@ -1088,11 +1169,14 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.294"><B>setHo
 <A NAME="setMazeSize(java.awt.Dimension)"><!-- --></A><H3>
 setMazeSize</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.304"><B>setMazeSize</B></A>(java.awt.Dimension&nbsp;size)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.305"><B>setMazeSize</B></A>(java.awt.Dimension&nbsp;size)</PRE>
 <DL>
 <DD>Set the maze model dimensions so that this renderer knows how big the maze
  is and can calculate locations.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>size</CODE> - The size of the maze in pixels.</DL>
 </DD>
@@ -1102,8 +1186,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.304"><B>setMa
 <A NAME="setPeg(java.awt.Paint)"><!-- --></A><H3>
 setPeg</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.316"><B>setPeg</B></A>(java.awt.Paint&nbsp;peg)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.317"><B>setPeg</B></A>(java.awt.Paint&nbsp;peg)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>peg</CODE> - the peg to set</DL>
 </DD>
@@ -1113,8 +1200,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.316"><B>setPe
 <A NAME="setPegInvalid(java.awt.Paint)"><!-- --></A><H3>
 setPegInvalid</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.324"><B>setPegInvalid</B></A>(java.awt.Paint&nbsp;pegInvalid)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.325"><B>setPegInvalid</B></A>(java.awt.Paint&nbsp;pegInvalid)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>pegInvalid</CODE> - the pegInvalid to set</DL>
 </DD>
@@ -1124,8 +1214,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.324"><B>setPe
 <A NAME="setPegValid(java.awt.Paint)"><!-- --></A><H3>
 setPegValid</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.332"><B>setPegValid</B></A>(java.awt.Paint&nbsp;pegValid)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.333"><B>setPegValid</B></A>(java.awt.Paint&nbsp;pegValid)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>pegValid</CODE> - the pegValid to set</DL>
 </DD>
@@ -1135,8 +1228,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.332"><B>setPe
 <A NAME="setRobotImage(javax.swing.ImageIcon)"><!-- --></A><H3>
 setRobotImage</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.340"><B>setRobotImage</B></A>(javax.swing.ImageIcon&nbsp;robotImage)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.341"><B>setRobotImage</B></A>(javax.swing.ImageIcon&nbsp;robotImage)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>robotImage</CODE> - the robotImage to set</DL>
 </DD>
@@ -1146,8 +1242,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.340"><B>setRo
 <A NAME="setRunBest(java.awt.Paint)"><!-- --></A><H3>
 setRunBest</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.348"><B>setRunBest</B></A>(java.awt.Paint&nbsp;runBest)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.349"><B>setRunBest</B></A>(java.awt.Paint&nbsp;runBest)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>runBest</CODE> - the runBest to set</DL>
 </DD>
@@ -1157,8 +1256,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.348"><B>setRu
 <A NAME="setRunCurrent(java.awt.Paint)"><!-- --></A><H3>
 setRunCurrent</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.356"><B>setRunCurrent</B></A>(java.awt.Paint&nbsp;runCurrent)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.357"><B>setRunCurrent</B></A>(java.awt.Paint&nbsp;runCurrent)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>runCurrent</CODE> - the runCurrent to set</DL>
 </DD>
@@ -1168,8 +1270,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.356"><B>setRu
 <A NAME="setRunFirst(java.awt.Paint)"><!-- --></A><H3>
 setRunFirst</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.364"><B>setRunFirst</B></A>(java.awt.Paint&nbsp;runFirst)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.365"><B>setRunFirst</B></A>(java.awt.Paint&nbsp;runFirst)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>runFirst</CODE> - the runFirst to set</DL>
 </DD>
@@ -1179,8 +1284,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.364"><B>setRu
 <A NAME="setWallEmpty(java.awt.Paint)"><!-- --></A><H3>
 setWallEmpty</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.372"><B>setWallEmpty</B></A>(java.awt.Paint&nbsp;wallEmpty)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.373"><B>setWallEmpty</B></A>(java.awt.Paint&nbsp;wallEmpty)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>wallEmpty</CODE> - the wallEmpty to set</DL>
 </DD>
@@ -1190,8 +1298,11 @@ public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.372"><B>setWa
 <A NAME="setWallSet(java.awt.Paint)"><!-- --></A><H3>
 setWallSet</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.380"><B>setWallSet</B></A>(java.awt.Paint&nbsp;wallSet)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazePainter.html#line.381"><B>setWallSet</B></A>(java.awt.Paint&nbsp;wallSet)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>wallSet</CODE> - the wallSet to set</DL>
 </DD>

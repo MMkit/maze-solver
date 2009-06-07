@@ -483,9 +483,13 @@ public javax.swing.JList <A HREF="../../src-html/maze/gui/MazeList.html#line.85"
 <A NAME="valueChanged(javax.swing.event.ListSelectionEvent)"><!-- --></A><H3>
 valueChanged</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeList.html#line.94"><B>valueChanged</B></A>(javax.swing.event.ListSelectionEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeList.html#line.98"><B>valueChanged</B></A>(javax.swing.event.ListSelectionEvent&nbsp;e)</PRE>
 <DL>
-<DD>This event is triggered when the list selection changes.
+<DD>This event is triggered when the list selection changes. When a selecting
+ is made on the list this event is fired twice, once with ValueIsAdjusting
+ true and once with it false. We don't worry about it here because when we
+ set the maze view with the model that is already set it should be ignored
+ and not trigger a repaint.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>valueChanged</CODE> in interface <CODE>javax.swing.event.ListSelectionListener</CODE></DL>
@@ -499,7 +503,7 @@ public void <A HREF="../../src-html/maze/gui/MazeList.html#line.94"><B>valueChan
 <A NAME="contentsChanged(javax.swing.event.ListDataEvent)"><!-- --></A><H3>
 contentsChanged</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeList.html#line.137"><B>contentsChanged</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeList.html#line.141"><B>contentsChanged</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>contentsChanged</CODE> in interface <CODE>javax.swing.event.ListDataListener</CODE></DL>
@@ -513,7 +517,7 @@ public void <A HREF="../../src-html/maze/gui/MazeList.html#line.137"><B>contents
 <A NAME="intervalAdded(javax.swing.event.ListDataEvent)"><!-- --></A><H3>
 intervalAdded</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeList.html#line.145"><B>intervalAdded</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeList.html#line.149"><B>intervalAdded</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
 <DL>
 <DD>This listener is triggered when an item is added to the maze list data
  model (ComboBoxModel).
@@ -530,7 +534,7 @@ public void <A HREF="../../src-html/maze/gui/MazeList.html#line.145"><B>interval
 <A NAME="intervalRemoved(javax.swing.event.ListDataEvent)"><!-- --></A><H3>
 intervalRemoved</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/MazeList.html#line.159"><B>intervalRemoved</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
+public void <A HREF="../../src-html/maze/gui/MazeList.html#line.163"><B>intervalRemoved</B></A>(javax.swing.event.ListDataEvent&nbsp;e)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>intervalRemoved</CODE> in interface <CODE>javax.swing.event.ListDataListener</CODE></DL>

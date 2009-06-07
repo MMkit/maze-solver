@@ -98,7 +98,7 @@ Interface Listener&lt;T&gt;</H2>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public interface <A HREF="../../src-html/maze/util/Listener.html#line.11"><B>Listener&lt;T&gt;</B></A></DL>
+<DT><PRE>public interface <A HREF="../../src-html/maze/util/Listener.html#line.13"><B>Listener&lt;T&gt;</B></A></DL>
 </PRE>
 
 <P>
@@ -108,9 +108,11 @@ This Listener interface allows the creation of Listener classes that can
 
 <P>
 <DL>
+<DT><B>Version:</B></DT>
+  <DD>2009-05-30</DD>
 <DT><B>Author:</B></DT>
   <DD>Luke Last</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><CODE>ListenerSubject</CODE></A></DL>
 <HR>
 
 <P>
@@ -149,13 +151,14 @@ This Listener interface allows the creation of Listener classes that can
 <A NAME="eventFired(java.lang.Object)"><!-- --></A><A NAME="eventFired(T)"><!-- --></A><H3>
 eventFired</H3>
 <PRE>
-void <A HREF="../../src-html/maze/util/Listener.html#line.18"><B>eventFired</B></A>(<A HREF="../../maze/util/Listener.html" title="type parameter in Listener">T</A>&nbsp;event)</PRE>
+void <A HREF="../../src-html/maze/util/Listener.html#line.21"><B>eventFired</B></A>(<A HREF="../../maze/util/Listener.html" title="type parameter in Listener">T</A>&nbsp;event)</PRE>
 <DL>
 <DD>This is called when the ListenerSubject wants to notify the registered
  Listeners.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object.</DL>
+<DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object. It can be null so make sure and check for
+           that.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

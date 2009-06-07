@@ -1,285 +1,253 @@
 <HTML>
 <BODY BGCOLOR="white">
 <PRE>
-<FONT color="green">001</FONT>    /*<a name="line.1"></a>
-<FONT color="green">002</FONT>     * To change this template, choose Tools | Templates<a name="line.2"></a>
-<FONT color="green">003</FONT>     * and open the template in the editor.<a name="line.3"></a>
-<FONT color="green">004</FONT>     */<a name="line.4"></a>
-<FONT color="green">005</FONT>    <a name="line.5"></a>
-<FONT color="green">006</FONT>    package maze.gui.mazeeditor;<a name="line.6"></a>
-<FONT color="green">007</FONT>    <a name="line.7"></a>
-<FONT color="green">008</FONT>    import java.awt.Color;<a name="line.8"></a>
-<FONT color="green">009</FONT>    import java.awt.Dimension;<a name="line.9"></a>
-<FONT color="green">010</FONT>    import java.awt.Frame;<a name="line.10"></a>
-<FONT color="green">011</FONT>    import java.awt.GridBagConstraints;<a name="line.11"></a>
-<FONT color="green">012</FONT>    import java.awt.GridBagLayout;<a name="line.12"></a>
-<FONT color="green">013</FONT>    import java.awt.Point;<a name="line.13"></a>
-<FONT color="green">014</FONT>    import java.awt.event.ActionEvent;<a name="line.14"></a>
-<FONT color="green">015</FONT>    import java.awt.event.ActionListener;<a name="line.15"></a>
-<FONT color="green">016</FONT>    import java.awt.event.FocusAdapter;<a name="line.16"></a>
-<FONT color="green">017</FONT>    import java.awt.event.FocusEvent;<a name="line.17"></a>
-<FONT color="green">018</FONT>    import javax.swing.AbstractSpinnerModel;<a name="line.18"></a>
-<FONT color="green">019</FONT>    import javax.swing.ButtonGroup;<a name="line.19"></a>
-<FONT color="green">020</FONT>    import javax.swing.JButton;<a name="line.20"></a>
-<FONT color="green">021</FONT>    import javax.swing.JDialog;<a name="line.21"></a>
-<FONT color="green">022</FONT>    import javax.swing.JLabel;<a name="line.22"></a>
-<FONT color="green">023</FONT>    import javax.swing.JPanel;<a name="line.23"></a>
-<FONT color="green">024</FONT>    import javax.swing.JRadioButton;<a name="line.24"></a>
-<FONT color="green">025</FONT>    import javax.swing.JSpinner;<a name="line.25"></a>
-<FONT color="green">026</FONT>    import javax.swing.JTextField;<a name="line.26"></a>
-<FONT color="green">027</FONT>    import javax.swing.UIManager;<a name="line.27"></a>
-<FONT color="green">028</FONT>    import javax.swing.border.EmptyBorder;<a name="line.28"></a>
-<FONT color="green">029</FONT>    <a name="line.29"></a>
-<FONT color="green">030</FONT>    /**<a name="line.30"></a>
-<FONT color="green">031</FONT>     *<a name="line.31"></a>
-<FONT color="green">032</FONT>     * @author Johnathan Smith<a name="line.32"></a>
-<FONT color="green">033</FONT>     */<a name="line.33"></a>
-<FONT color="green">034</FONT>    public class NewMazeDialog extends JDialog<a name="line.34"></a>
-<FONT color="green">035</FONT>    {<a name="line.35"></a>
-<FONT color="green">036</FONT>       public static final String MAZ = "maz";<a name="line.36"></a>
-<FONT color="green">037</FONT>       public static final String MZ2 = "mz2";<a name="line.37"></a>
-<FONT color="green">038</FONT>       private JTextField mName;<a name="line.38"></a>
-<FONT color="green">039</FONT>       private JSpinner mWidth, mHeight;<a name="line.39"></a>
-<FONT color="green">040</FONT>       private ButtonGroup mGroup;<a name="line.40"></a>
-<FONT color="green">041</FONT>       private JRadioButton mOldSelect, mNewSelect;<a name="line.41"></a>
-<FONT color="green">042</FONT>       private JLabel mWidthLabel, mHeightLabel, mNameLabel;<a name="line.42"></a>
-<FONT color="green">043</FONT>       private String mSelection = null;<a name="line.43"></a>
+<FONT color="green">001</FONT>    package maze.gui.mazeeditor;<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    import java.awt.Color;<a name="line.3"></a>
+<FONT color="green">004</FONT>    import java.awt.Dimension;<a name="line.4"></a>
+<FONT color="green">005</FONT>    import java.awt.Frame;<a name="line.5"></a>
+<FONT color="green">006</FONT>    import java.awt.GridBagConstraints;<a name="line.6"></a>
+<FONT color="green">007</FONT>    import java.awt.GridBagLayout;<a name="line.7"></a>
+<FONT color="green">008</FONT>    import java.awt.Point;<a name="line.8"></a>
+<FONT color="green">009</FONT>    import java.awt.event.ActionEvent;<a name="line.9"></a>
+<FONT color="green">010</FONT>    import java.awt.event.ActionListener;<a name="line.10"></a>
+<FONT color="green">011</FONT>    import java.awt.event.FocusAdapter;<a name="line.11"></a>
+<FONT color="green">012</FONT>    import java.awt.event.FocusEvent;<a name="line.12"></a>
+<FONT color="green">013</FONT>    <a name="line.13"></a>
+<FONT color="green">014</FONT>    import javax.swing.ButtonGroup;<a name="line.14"></a>
+<FONT color="green">015</FONT>    import javax.swing.JButton;<a name="line.15"></a>
+<FONT color="green">016</FONT>    import javax.swing.JDialog;<a name="line.16"></a>
+<FONT color="green">017</FONT>    import javax.swing.JLabel;<a name="line.17"></a>
+<FONT color="green">018</FONT>    import javax.swing.JPanel;<a name="line.18"></a>
+<FONT color="green">019</FONT>    import javax.swing.JRadioButton;<a name="line.19"></a>
+<FONT color="green">020</FONT>    import javax.swing.JSpinner;<a name="line.20"></a>
+<FONT color="green">021</FONT>    import javax.swing.JTextField;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import javax.swing.SpinnerNumberModel;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import javax.swing.UIManager;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import javax.swing.border.EmptyBorder;<a name="line.24"></a>
+<FONT color="green">025</FONT>    <a name="line.25"></a>
+<FONT color="green">026</FONT>    /**<a name="line.26"></a>
+<FONT color="green">027</FONT>     * Brings up a dialog prompting the user to choose a maze type, size, and name.<a name="line.27"></a>
+<FONT color="green">028</FONT>     * @author Johnathan Smith<a name="line.28"></a>
+<FONT color="green">029</FONT>     */<a name="line.29"></a>
+<FONT color="green">030</FONT>    public class NewMazeDialog extends JDialog<a name="line.30"></a>
+<FONT color="green">031</FONT>    {<a name="line.31"></a>
+<FONT color="green">032</FONT>       public static final String MAZ = "maz";<a name="line.32"></a>
+<FONT color="green">033</FONT>       public static final String MZ2 = "mz2";<a name="line.33"></a>
+<FONT color="green">034</FONT>       private JTextField mName;<a name="line.34"></a>
+<FONT color="green">035</FONT>       private JSpinner mWidth, mHeight;<a name="line.35"></a>
+<FONT color="green">036</FONT>       private ButtonGroup mGroup;<a name="line.36"></a>
+<FONT color="green">037</FONT>       private JRadioButton mOldSelect, mNewSelect;<a name="line.37"></a>
+<FONT color="green">038</FONT>       private JLabel mWidthLabel, mHeightLabel, mNameLabel;<a name="line.38"></a>
+<FONT color="green">039</FONT>       private String mSelection = null;<a name="line.39"></a>
+<FONT color="green">040</FONT>    <a name="line.40"></a>
+<FONT color="green">041</FONT>       public NewMazeDialog(Frame owner)<a name="line.41"></a>
+<FONT color="green">042</FONT>       {<a name="line.42"></a>
+<FONT color="green">043</FONT>          super(owner, "New Maze", true);<a name="line.43"></a>
 <FONT color="green">044</FONT>    <a name="line.44"></a>
-<FONT color="green">045</FONT>       public NewMazeDialog(Frame owner)<a name="line.45"></a>
-<FONT color="green">046</FONT>       {<a name="line.46"></a>
-<FONT color="green">047</FONT>          super(owner, "New Maze", true);<a name="line.47"></a>
-<FONT color="green">048</FONT>    <a name="line.48"></a>
-<FONT color="green">049</FONT>          JPanel mainPanel = new JPanel(new GridBagLayout());<a name="line.49"></a>
-<FONT color="green">050</FONT>    <a name="line.50"></a>
-<FONT color="green">051</FONT>          // Create Button Group and radio buttons<a name="line.51"></a>
-<FONT color="green">052</FONT>          mGroup = new ButtonGroup();<a name="line.52"></a>
-<FONT color="green">053</FONT>          mOldSelect = new JRadioButton(".maz (A standard 16x16 with no name)");<a name="line.53"></a>
-<FONT color="green">054</FONT>          mOldSelect.setActionCommand(".maz");<a name="line.54"></a>
-<FONT color="green">055</FONT>          ActionListener l = new RadioButtonAction(mOldSelect);<a name="line.55"></a>
-<FONT color="green">056</FONT>          mOldSelect.addActionListener(l);<a name="line.56"></a>
-<FONT color="green">057</FONT>          mNewSelect = new JRadioButton(".mz2 (Custom Size and Name)");<a name="line.57"></a>
-<FONT color="green">058</FONT>          mNewSelect.setActionCommand(".mz2");<a name="line.58"></a>
-<FONT color="green">059</FONT>          mNewSelect.addActionListener(l);<a name="line.59"></a>
-<FONT color="green">060</FONT>          mGroup.add(mOldSelect);<a name="line.60"></a>
-<FONT color="green">061</FONT>          mGroup.setSelected(mOldSelect.getModel(), true);<a name="line.61"></a>
-<FONT color="green">062</FONT>          mGroup.add(mNewSelect);<a name="line.62"></a>
-<FONT color="green">063</FONT>    <a name="line.63"></a>
-<FONT color="green">064</FONT>          // Add radio buttons<a name="line.64"></a>
-<FONT color="green">065</FONT>          GridBagConstraints gbc = new GridBagConstraints();<a name="line.65"></a>
-<FONT color="green">066</FONT>          gbc.ipadx = 0;<a name="line.66"></a>
-<FONT color="green">067</FONT>          gbc.gridx = gbc.gridy = 0;<a name="line.67"></a>
-<FONT color="green">068</FONT>          gbc.gridwidth = 2;<a name="line.68"></a>
-<FONT color="green">069</FONT>          gbc.anchor = GridBagConstraints.WEST;<a name="line.69"></a>
-<FONT color="green">070</FONT>          mainPanel.add(mOldSelect, gbc);<a name="line.70"></a>
-<FONT color="green">071</FONT>          gbc.gridy++;<a name="line.71"></a>
-<FONT color="green">072</FONT>          mainPanel.add(mNewSelect, gbc);<a name="line.72"></a>
-<FONT color="green">073</FONT>    <a name="line.73"></a>
-<FONT color="green">074</FONT>          // Create and add the labels for the maze size spinners<a name="line.74"></a>
-<FONT color="green">075</FONT>          mWidthLabel = new JLabel("Width");<a name="line.75"></a>
-<FONT color="green">076</FONT>          mHeightLabel = new JLabel("Height");<a name="line.76"></a>
-<FONT color="green">077</FONT>          gbc.gridy = 2;<a name="line.77"></a>
-<FONT color="green">078</FONT>          gbc.gridwidth = 1;<a name="line.78"></a>
-<FONT color="green">079</FONT>          mainPanel.add(mWidthLabel, gbc);<a name="line.79"></a>
-<FONT color="green">080</FONT>          gbc.gridx = 1;<a name="line.80"></a>
-<FONT color="green">081</FONT>          mainPanel.add(mHeightLabel, gbc);<a name="line.81"></a>
-<FONT color="green">082</FONT>    <a name="line.82"></a>
-<FONT color="green">083</FONT>          // Create and add the maze size spinners<a name="line.83"></a>
-<FONT color="green">084</FONT>          mWidth = new JSpinner(new MazeSizeSpinnerModel());<a name="line.84"></a>
-<FONT color="green">085</FONT>          mHeight = new JSpinner(new MazeSizeSpinnerModel());<a name="line.85"></a>
-<FONT color="green">086</FONT>          mWidth.setFocusable(false);<a name="line.86"></a>
-<FONT color="green">087</FONT>          mWidth.setRequestFocusEnabled(false);<a name="line.87"></a>
-<FONT color="green">088</FONT>          mHeight.setFocusable(false);<a name="line.88"></a>
-<FONT color="green">089</FONT>          mHeight.setRequestFocusEnabled(false);<a name="line.89"></a>
-<FONT color="green">090</FONT>          gbc.gridx--;<a name="line.90"></a>
-<FONT color="green">091</FONT>          gbc.gridy++;<a name="line.91"></a>
-<FONT color="green">092</FONT>          gbc.fill = GridBagConstraints.HORIZONTAL;<a name="line.92"></a>
-<FONT color="green">093</FONT>          gbc.weightx = .5;<a name="line.93"></a>
-<FONT color="green">094</FONT>          mainPanel.add(mWidth, gbc);<a name="line.94"></a>
-<FONT color="green">095</FONT>          gbc.gridx++;<a name="line.95"></a>
-<FONT color="green">096</FONT>          mainPanel.add(mHeight, gbc);<a name="line.96"></a>
-<FONT color="green">097</FONT>          gbc.weightx = 0;<a name="line.97"></a>
-<FONT color="green">098</FONT>          gbc.fill = GridBagConstraints.NONE;<a name="line.98"></a>
-<FONT color="green">099</FONT>    <a name="line.99"></a>
-<FONT color="green">100</FONT>          // Create and add name label<a name="line.100"></a>
-<FONT color="green">101</FONT>          mNameLabel = new JLabel("Name");<a name="line.101"></a>
-<FONT color="green">102</FONT>          gbc.gridy++;<a name="line.102"></a>
-<FONT color="green">103</FONT>          gbc.gridx--;<a name="line.103"></a>
-<FONT color="green">104</FONT>          gbc.gridwidth = 2;<a name="line.104"></a>
-<FONT color="green">105</FONT>          mainPanel.add(mNameLabel, gbc);<a name="line.105"></a>
-<FONT color="green">106</FONT>    <a name="line.106"></a>
-<FONT color="green">107</FONT>          // Create and add name text field<a name="line.107"></a>
-<FONT color="green">108</FONT>          mName = new JTextField();<a name="line.108"></a>
-<FONT color="green">109</FONT>          mName.addFocusListener(new FocusAdapter()<a name="line.109"></a>
-<FONT color="green">110</FONT>          {<a name="line.110"></a>
-<FONT color="green">111</FONT>             @Override<a name="line.111"></a>
-<FONT color="green">112</FONT>             public void focusGained(FocusEvent e)<a name="line.112"></a>
-<FONT color="green">113</FONT>             {<a name="line.113"></a>
-<FONT color="green">114</FONT>                super.focusGained(e);<a name="line.114"></a>
-<FONT color="green">115</FONT>                mName.setBackground(UIManager.getColor("Panel.background"));<a name="line.115"></a>
-<FONT color="green">116</FONT>             }<a name="line.116"></a>
-<FONT color="green">117</FONT>          });<a name="line.117"></a>
-<FONT color="green">118</FONT>          gbc.fill = GridBagConstraints.HORIZONTAL;<a name="line.118"></a>
-<FONT color="green">119</FONT>          gbc.gridy++;<a name="line.119"></a>
-<FONT color="green">120</FONT>          mainPanel.add(mName, gbc);<a name="line.120"></a>
-<FONT color="green">121</FONT>          gbc.fill = GridBagConstraints.NONE;<a name="line.121"></a>
-<FONT color="green">122</FONT>    <a name="line.122"></a>
-<FONT color="green">123</FONT>          // Create listener for OK button and text field Enter action<a name="line.123"></a>
-<FONT color="green">124</FONT>          l = new ActionListener()<a name="line.124"></a>
-<FONT color="green">125</FONT>          {<a name="line.125"></a>
-<FONT color="green">126</FONT>             @Override<a name="line.126"></a>
-<FONT color="green">127</FONT>             public void actionPerformed(ActionEvent e)<a name="line.127"></a>
-<FONT color="green">128</FONT>             {<a name="line.128"></a>
-<FONT color="green">129</FONT>                if (mNewSelect.isSelected())<a name="line.129"></a>
-<FONT color="green">130</FONT>                {<a name="line.130"></a>
-<FONT color="green">131</FONT>                   if (mName.getText() == null || mName.getText().equals(""))<a name="line.131"></a>
-<FONT color="green">132</FONT>                      mName.setBackground(Color.PINK);<a name="line.132"></a>
-<FONT color="green">133</FONT>                   else<a name="line.133"></a>
-<FONT color="green">134</FONT>                   {<a name="line.134"></a>
-<FONT color="green">135</FONT>                      mSelection = MZ2;<a name="line.135"></a>
-<FONT color="green">136</FONT>                      setVisible(false);<a name="line.136"></a>
-<FONT color="green">137</FONT>                   }<a name="line.137"></a>
-<FONT color="green">138</FONT>                }<a name="line.138"></a>
-<FONT color="green">139</FONT>                else<a name="line.139"></a>
-<FONT color="green">140</FONT>                {<a name="line.140"></a>
-<FONT color="green">141</FONT>                   mSelection = MAZ;<a name="line.141"></a>
-<FONT color="green">142</FONT>                   setVisible(false);<a name="line.142"></a>
-<FONT color="green">143</FONT>                }<a name="line.143"></a>
-<FONT color="green">144</FONT>             }<a name="line.144"></a>
-<FONT color="green">145</FONT>          };<a name="line.145"></a>
-<FONT color="green">146</FONT>    <a name="line.146"></a>
-<FONT color="green">147</FONT>          // Add ActionListener to name field<a name="line.147"></a>
-<FONT color="green">148</FONT>          mName.addActionListener(l);<a name="line.148"></a>
-<FONT color="green">149</FONT>    <a name="line.149"></a>
-<FONT color="green">150</FONT>          // Create Ok button, add it and add the ActionListener to it<a name="line.150"></a>
-<FONT color="green">151</FONT>          JButton ok = new JButton("Ok");<a name="line.151"></a>
-<FONT color="green">152</FONT>          ok.addActionListener(l);<a name="line.152"></a>
-<FONT color="green">153</FONT>          gbc.gridy++;<a name="line.153"></a>
-<FONT color="green">154</FONT>          gbc.anchor = GridBagConstraints.CENTER;<a name="line.154"></a>
-<FONT color="green">155</FONT>          mainPanel.add(ok, gbc);<a name="line.155"></a>
+<FONT color="green">045</FONT>          JPanel mainPanel = new JPanel(new GridBagLayout());<a name="line.45"></a>
+<FONT color="green">046</FONT>    <a name="line.46"></a>
+<FONT color="green">047</FONT>          // Create Button Group and radio buttons<a name="line.47"></a>
+<FONT color="green">048</FONT>          mGroup = new ButtonGroup();<a name="line.48"></a>
+<FONT color="green">049</FONT>          mOldSelect = new JRadioButton(".maz (A standard 16x16 with no name)");<a name="line.49"></a>
+<FONT color="green">050</FONT>          mOldSelect.setActionCommand(".maz");<a name="line.50"></a>
+<FONT color="green">051</FONT>          ActionListener l = new RadioButtonAction(mOldSelect);<a name="line.51"></a>
+<FONT color="green">052</FONT>          mOldSelect.addActionListener(l);<a name="line.52"></a>
+<FONT color="green">053</FONT>          mNewSelect = new JRadioButton(".mz2 (Custom Size and Name)");<a name="line.53"></a>
+<FONT color="green">054</FONT>          mNewSelect.setActionCommand(".mz2");<a name="line.54"></a>
+<FONT color="green">055</FONT>          mNewSelect.addActionListener(l);<a name="line.55"></a>
+<FONT color="green">056</FONT>          mGroup.add(mOldSelect);<a name="line.56"></a>
+<FONT color="green">057</FONT>          mGroup.setSelected(mOldSelect.getModel(), true);<a name="line.57"></a>
+<FONT color="green">058</FONT>          mGroup.add(mNewSelect);<a name="line.58"></a>
+<FONT color="green">059</FONT>    <a name="line.59"></a>
+<FONT color="green">060</FONT>          // Add radio buttons<a name="line.60"></a>
+<FONT color="green">061</FONT>          GridBagConstraints gbc = new GridBagConstraints();<a name="line.61"></a>
+<FONT color="green">062</FONT>          gbc.ipadx = 0;<a name="line.62"></a>
+<FONT color="green">063</FONT>          gbc.gridx = gbc.gridy = 0;<a name="line.63"></a>
+<FONT color="green">064</FONT>          gbc.gridwidth = 2;<a name="line.64"></a>
+<FONT color="green">065</FONT>          gbc.anchor = GridBagConstraints.WEST;<a name="line.65"></a>
+<FONT color="green">066</FONT>          mainPanel.add(mOldSelect, gbc);<a name="line.66"></a>
+<FONT color="green">067</FONT>          gbc.gridy++;<a name="line.67"></a>
+<FONT color="green">068</FONT>          mainPanel.add(mNewSelect, gbc);<a name="line.68"></a>
+<FONT color="green">069</FONT>    <a name="line.69"></a>
+<FONT color="green">070</FONT>          // Create and add the labels for the maze size spinners<a name="line.70"></a>
+<FONT color="green">071</FONT>          mWidthLabel = new JLabel("Width");<a name="line.71"></a>
+<FONT color="green">072</FONT>          mHeightLabel = new JLabel("Height");<a name="line.72"></a>
+<FONT color="green">073</FONT>          gbc.gridy = 2;<a name="line.73"></a>
+<FONT color="green">074</FONT>          gbc.gridwidth = 1;<a name="line.74"></a>
+<FONT color="green">075</FONT>          mainPanel.add(mWidthLabel, gbc);<a name="line.75"></a>
+<FONT color="green">076</FONT>          gbc.gridx = 1;<a name="line.76"></a>
+<FONT color="green">077</FONT>          mainPanel.add(mHeightLabel, gbc);<a name="line.77"></a>
+<FONT color="green">078</FONT>    <a name="line.78"></a>
+<FONT color="green">079</FONT>          // Create and add the maze size spinners<a name="line.79"></a>
+<FONT color="green">080</FONT>          mWidth = new JSpinner(new MazeSizeSpinnerModel());<a name="line.80"></a>
+<FONT color="green">081</FONT>          mHeight = new JSpinner(new MazeSizeSpinnerModel());<a name="line.81"></a>
+<FONT color="green">082</FONT>          mWidth.setFocusable(false);<a name="line.82"></a>
+<FONT color="green">083</FONT>          mWidth.setRequestFocusEnabled(false);<a name="line.83"></a>
+<FONT color="green">084</FONT>          mHeight.setFocusable(false);<a name="line.84"></a>
+<FONT color="green">085</FONT>          mHeight.setRequestFocusEnabled(false);<a name="line.85"></a>
+<FONT color="green">086</FONT>          gbc.gridx--;<a name="line.86"></a>
+<FONT color="green">087</FONT>          gbc.gridy++;<a name="line.87"></a>
+<FONT color="green">088</FONT>          gbc.fill = GridBagConstraints.HORIZONTAL;<a name="line.88"></a>
+<FONT color="green">089</FONT>          gbc.weightx = .5;<a name="line.89"></a>
+<FONT color="green">090</FONT>          mainPanel.add(mWidth, gbc);<a name="line.90"></a>
+<FONT color="green">091</FONT>          gbc.gridx++;<a name="line.91"></a>
+<FONT color="green">092</FONT>          mainPanel.add(mHeight, gbc);<a name="line.92"></a>
+<FONT color="green">093</FONT>          gbc.weightx = 0;<a name="line.93"></a>
+<FONT color="green">094</FONT>          gbc.fill = GridBagConstraints.NONE;<a name="line.94"></a>
+<FONT color="green">095</FONT>    <a name="line.95"></a>
+<FONT color="green">096</FONT>          // Create and add name label<a name="line.96"></a>
+<FONT color="green">097</FONT>          mNameLabel = new JLabel("Name");<a name="line.97"></a>
+<FONT color="green">098</FONT>          gbc.gridy++;<a name="line.98"></a>
+<FONT color="green">099</FONT>          gbc.gridx--;<a name="line.99"></a>
+<FONT color="green">100</FONT>          gbc.gridwidth = 2;<a name="line.100"></a>
+<FONT color="green">101</FONT>          mainPanel.add(mNameLabel, gbc);<a name="line.101"></a>
+<FONT color="green">102</FONT>    <a name="line.102"></a>
+<FONT color="green">103</FONT>          // Create and add name text field<a name="line.103"></a>
+<FONT color="green">104</FONT>          mName = new JTextField();<a name="line.104"></a>
+<FONT color="green">105</FONT>          mName.addFocusListener(new FocusAdapter()<a name="line.105"></a>
+<FONT color="green">106</FONT>          {<a name="line.106"></a>
+<FONT color="green">107</FONT>             @Override<a name="line.107"></a>
+<FONT color="green">108</FONT>             public void focusGained(FocusEvent e)<a name="line.108"></a>
+<FONT color="green">109</FONT>             {<a name="line.109"></a>
+<FONT color="green">110</FONT>                super.focusGained(e);<a name="line.110"></a>
+<FONT color="green">111</FONT>                mName.setBackground(UIManager.getColor("Panel.background"));<a name="line.111"></a>
+<FONT color="green">112</FONT>             }<a name="line.112"></a>
+<FONT color="green">113</FONT>          });<a name="line.113"></a>
+<FONT color="green">114</FONT>          gbc.fill = GridBagConstraints.HORIZONTAL;<a name="line.114"></a>
+<FONT color="green">115</FONT>          gbc.gridy++;<a name="line.115"></a>
+<FONT color="green">116</FONT>          mainPanel.add(mName, gbc);<a name="line.116"></a>
+<FONT color="green">117</FONT>          gbc.fill = GridBagConstraints.NONE;<a name="line.117"></a>
+<FONT color="green">118</FONT>    <a name="line.118"></a>
+<FONT color="green">119</FONT>          // Create listener for OK button and text field Enter action<a name="line.119"></a>
+<FONT color="green">120</FONT>          l = new ActionListener()<a name="line.120"></a>
+<FONT color="green">121</FONT>          {<a name="line.121"></a>
+<FONT color="green">122</FONT>             @Override<a name="line.122"></a>
+<FONT color="green">123</FONT>             public void actionPerformed(ActionEvent e)<a name="line.123"></a>
+<FONT color="green">124</FONT>             {<a name="line.124"></a>
+<FONT color="green">125</FONT>                if (mNewSelect.isSelected())<a name="line.125"></a>
+<FONT color="green">126</FONT>                {<a name="line.126"></a>
+<FONT color="green">127</FONT>                   if (mName.getText() == null || mName.getText().equals(""))<a name="line.127"></a>
+<FONT color="green">128</FONT>                      mName.setBackground(Color.PINK);<a name="line.128"></a>
+<FONT color="green">129</FONT>                   else<a name="line.129"></a>
+<FONT color="green">130</FONT>                   {<a name="line.130"></a>
+<FONT color="green">131</FONT>                      mSelection = MZ2;<a name="line.131"></a>
+<FONT color="green">132</FONT>                      setVisible(false);<a name="line.132"></a>
+<FONT color="green">133</FONT>                   }<a name="line.133"></a>
+<FONT color="green">134</FONT>                }<a name="line.134"></a>
+<FONT color="green">135</FONT>                else<a name="line.135"></a>
+<FONT color="green">136</FONT>                {<a name="line.136"></a>
+<FONT color="green">137</FONT>                   mSelection = MAZ;<a name="line.137"></a>
+<FONT color="green">138</FONT>                   setVisible(false);<a name="line.138"></a>
+<FONT color="green">139</FONT>                }<a name="line.139"></a>
+<FONT color="green">140</FONT>             }<a name="line.140"></a>
+<FONT color="green">141</FONT>          };<a name="line.141"></a>
+<FONT color="green">142</FONT>    <a name="line.142"></a>
+<FONT color="green">143</FONT>          // Add ActionListener to name field<a name="line.143"></a>
+<FONT color="green">144</FONT>          mName.addActionListener(l);<a name="line.144"></a>
+<FONT color="green">145</FONT>    <a name="line.145"></a>
+<FONT color="green">146</FONT>          // Create Ok button, add it and add the ActionListener to it<a name="line.146"></a>
+<FONT color="green">147</FONT>          JButton ok = new JButton("Ok");<a name="line.147"></a>
+<FONT color="green">148</FONT>          ok.addActionListener(l);<a name="line.148"></a>
+<FONT color="green">149</FONT>          gbc.gridy++;<a name="line.149"></a>
+<FONT color="green">150</FONT>          gbc.anchor = GridBagConstraints.CENTER;<a name="line.150"></a>
+<FONT color="green">151</FONT>          mainPanel.add(ok, gbc);<a name="line.151"></a>
+<FONT color="green">152</FONT>    <a name="line.152"></a>
+<FONT color="green">153</FONT>          // Set a border for the main panel and it to the dialog<a name="line.153"></a>
+<FONT color="green">154</FONT>          mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));<a name="line.154"></a>
+<FONT color="green">155</FONT>          add(mainPanel);<a name="line.155"></a>
 <FONT color="green">156</FONT>    <a name="line.156"></a>
-<FONT color="green">157</FONT>          // Set a border for the main panel and it to the dialog<a name="line.157"></a>
-<FONT color="green">158</FONT>          mainPanel.setBorder(new EmptyBorder(5,5,5,5));<a name="line.158"></a>
-<FONT color="green">159</FONT>          add(mainPanel);<a name="line.159"></a>
-<FONT color="green">160</FONT>    <a name="line.160"></a>
-<FONT color="green">161</FONT>          setResizable(false);<a name="line.161"></a>
-<FONT color="green">162</FONT>          setOpsEnabled(false);<a name="line.162"></a>
-<FONT color="green">163</FONT>    <a name="line.163"></a>
-<FONT color="green">164</FONT>          pack();<a name="line.164"></a>
-<FONT color="green">165</FONT>          Point loc = owner.getLocation();<a name="line.165"></a>
-<FONT color="green">166</FONT>          Dimension size = owner.getSize();<a name="line.166"></a>
-<FONT color="green">167</FONT>          this.setBounds(loc.x+size.width/2-this.getWidth()/2,<a name="line.167"></a>
-<FONT color="green">168</FONT>                         loc.y+size.height/2-this.getHeight()/2,<a name="line.168"></a>
-<FONT color="green">169</FONT>                         getWidth(), getHeight());<a name="line.169"></a>
-<FONT color="green">170</FONT>       }<a name="line.170"></a>
-<FONT color="green">171</FONT>    <a name="line.171"></a>
-<FONT color="green">172</FONT>       public String showDialog()<a name="line.172"></a>
-<FONT color="green">173</FONT>       {<a name="line.173"></a>
-<FONT color="green">174</FONT>          mSelection = null;<a name="line.174"></a>
-<FONT color="green">175</FONT>          setVisible(true);<a name="line.175"></a>
-<FONT color="green">176</FONT>          return mSelection;<a name="line.176"></a>
-<FONT color="green">177</FONT>       }<a name="line.177"></a>
-<FONT color="green">178</FONT>    <a name="line.178"></a>
-<FONT color="green">179</FONT>       public String getText()<a name="line.179"></a>
-<FONT color="green">180</FONT>       {<a name="line.180"></a>
-<FONT color="green">181</FONT>          return mName.getText();<a name="line.181"></a>
-<FONT color="green">182</FONT>       }<a name="line.182"></a>
-<FONT color="green">183</FONT>    <a name="line.183"></a>
-<FONT color="green">184</FONT>       public Dimension getMazeSize()<a name="line.184"></a>
-<FONT color="green">185</FONT>       {<a name="line.185"></a>
-<FONT color="green">186</FONT>          return new Dimension((Integer)mWidth.getValue(),<a name="line.186"></a>
-<FONT color="green">187</FONT>                               (Integer)mHeight.getValue());<a name="line.187"></a>
-<FONT color="green">188</FONT>       }<a name="line.188"></a>
-<FONT color="green">189</FONT>    <a name="line.189"></a>
-<FONT color="green">190</FONT>       private void setOpsEnabled(boolean enabled)<a name="line.190"></a>
-<FONT color="green">191</FONT>       {<a name="line.191"></a>
-<FONT color="green">192</FONT>          mHeight.setEnabled(enabled);<a name="line.192"></a>
-<FONT color="green">193</FONT>          mWidth.setEnabled(enabled);<a name="line.193"></a>
+<FONT color="green">157</FONT>          setResizable(false);<a name="line.157"></a>
+<FONT color="green">158</FONT>          setOpsEnabled(false);<a name="line.158"></a>
+<FONT color="green">159</FONT>    <a name="line.159"></a>
+<FONT color="green">160</FONT>          pack();<a name="line.160"></a>
+<FONT color="green">161</FONT>          Point loc = owner.getLocation();<a name="line.161"></a>
+<FONT color="green">162</FONT>          Dimension size = owner.getSize();<a name="line.162"></a>
+<FONT color="green">163</FONT>          this.setBounds(loc.x + size.width / 2 - this.getWidth() / 2, loc.y +<a name="line.163"></a>
+<FONT color="green">164</FONT>                                                                       size.height /<a name="line.164"></a>
+<FONT color="green">165</FONT>                                                                       2 -<a name="line.165"></a>
+<FONT color="green">166</FONT>                                                                       this.getHeight() /<a name="line.166"></a>
+<FONT color="green">167</FONT>                                                                       2, getWidth(), getHeight());<a name="line.167"></a>
+<FONT color="green">168</FONT>       }<a name="line.168"></a>
+<FONT color="green">169</FONT>    <a name="line.169"></a>
+<FONT color="green">170</FONT>       public String showDialog()<a name="line.170"></a>
+<FONT color="green">171</FONT>       {<a name="line.171"></a>
+<FONT color="green">172</FONT>          mSelection = null;<a name="line.172"></a>
+<FONT color="green">173</FONT>          setVisible(true);<a name="line.173"></a>
+<FONT color="green">174</FONT>          return mSelection;<a name="line.174"></a>
+<FONT color="green">175</FONT>       }<a name="line.175"></a>
+<FONT color="green">176</FONT>    <a name="line.176"></a>
+<FONT color="green">177</FONT>       public String getText()<a name="line.177"></a>
+<FONT color="green">178</FONT>       {<a name="line.178"></a>
+<FONT color="green">179</FONT>          return mName.getText();<a name="line.179"></a>
+<FONT color="green">180</FONT>       }<a name="line.180"></a>
+<FONT color="green">181</FONT>    <a name="line.181"></a>
+<FONT color="green">182</FONT>       public Dimension getMazeSize()<a name="line.182"></a>
+<FONT color="green">183</FONT>       {<a name="line.183"></a>
+<FONT color="green">184</FONT>          return new Dimension((Integer) mWidth.getValue(), (Integer) mHeight.getValue());<a name="line.184"></a>
+<FONT color="green">185</FONT>       }<a name="line.185"></a>
+<FONT color="green">186</FONT>    <a name="line.186"></a>
+<FONT color="green">187</FONT>       private void setOpsEnabled(boolean enabled)<a name="line.187"></a>
+<FONT color="green">188</FONT>       {<a name="line.188"></a>
+<FONT color="green">189</FONT>          mHeight.setEnabled(enabled);<a name="line.189"></a>
+<FONT color="green">190</FONT>          mWidth.setEnabled(enabled);<a name="line.190"></a>
+<FONT color="green">191</FONT>          mName.setEnabled(enabled);<a name="line.191"></a>
+<FONT color="green">192</FONT>          mWidthLabel.setEnabled(enabled);<a name="line.192"></a>
+<FONT color="green">193</FONT>          mHeightLabel.setEnabled(enabled);<a name="line.193"></a>
 <FONT color="green">194</FONT>          mName.setEnabled(enabled);<a name="line.194"></a>
-<FONT color="green">195</FONT>          mWidthLabel.setEnabled(enabled);<a name="line.195"></a>
-<FONT color="green">196</FONT>          mHeightLabel.setEnabled(enabled);<a name="line.196"></a>
-<FONT color="green">197</FONT>          mName.setEnabled(enabled);<a name="line.197"></a>
-<FONT color="green">198</FONT>          mNameLabel.setEnabled(enabled);<a name="line.198"></a>
-<FONT color="green">199</FONT>          mName.requestFocus();<a name="line.199"></a>
-<FONT color="green">200</FONT>       }<a name="line.200"></a>
-<FONT color="green">201</FONT>    <a name="line.201"></a>
-<FONT color="green">202</FONT>       class RadioButtonAction implements ActionListener<a name="line.202"></a>
-<FONT color="green">203</FONT>       {<a name="line.203"></a>
-<FONT color="green">204</FONT>          private JRadioButton last;<a name="line.204"></a>
-<FONT color="green">205</FONT>          public RadioButtonAction(JRadioButton last)<a name="line.205"></a>
-<FONT color="green">206</FONT>          {<a name="line.206"></a>
-<FONT color="green">207</FONT>             this.last = last;<a name="line.207"></a>
-<FONT color="green">208</FONT>          }<a name="line.208"></a>
-<FONT color="green">209</FONT>          <a name="line.209"></a>
-<FONT color="green">210</FONT>          @Override<a name="line.210"></a>
-<FONT color="green">211</FONT>          public void actionPerformed(ActionEvent e)<a name="line.211"></a>
-<FONT color="green">212</FONT>          {<a name="line.212"></a>
-<FONT color="green">213</FONT>             if (e.getSource().equals(last))<a name="line.213"></a>
-<FONT color="green">214</FONT>                return;<a name="line.214"></a>
-<FONT color="green">215</FONT>             if (e.getActionCommand().equals(".maz"))<a name="line.215"></a>
-<FONT color="green">216</FONT>                setOpsEnabled(false);<a name="line.216"></a>
-<FONT color="green">217</FONT>             else<a name="line.217"></a>
-<FONT color="green">218</FONT>                setOpsEnabled(true);<a name="line.218"></a>
-<FONT color="green">219</FONT>             last = (JRadioButton)e.getSource();<a name="line.219"></a>
-<FONT color="green">220</FONT>          }<a name="line.220"></a>
-<FONT color="green">221</FONT>    <a name="line.221"></a>
-<FONT color="green">222</FONT>       }<a name="line.222"></a>
-<FONT color="green">223</FONT>    }<a name="line.223"></a>
-<FONT color="green">224</FONT>    <a name="line.224"></a>
-<FONT color="green">225</FONT>    class MazeSizeSpinnerModel extends AbstractSpinnerModel<a name="line.225"></a>
-<FONT color="green">226</FONT>    {<a name="line.226"></a>
-<FONT color="green">227</FONT>       private int mCurrentValue = 16;<a name="line.227"></a>
-<FONT color="green">228</FONT>       @Override<a name="line.228"></a>
-<FONT color="green">229</FONT>       public Object getValue()<a name="line.229"></a>
-<FONT color="green">230</FONT>       {<a name="line.230"></a>
-<FONT color="green">231</FONT>          return mCurrentValue;<a name="line.231"></a>
-<FONT color="green">232</FONT>       }<a name="line.232"></a>
-<FONT color="green">233</FONT>    <a name="line.233"></a>
-<FONT color="green">234</FONT>       @Override<a name="line.234"></a>
-<FONT color="green">235</FONT>       public void setValue(Object value)<a name="line.235"></a>
-<FONT color="green">236</FONT>       {<a name="line.236"></a>
-<FONT color="green">237</FONT>          int val;<a name="line.237"></a>
-<FONT color="green">238</FONT>          if (value instanceof Integer)<a name="line.238"></a>
-<FONT color="green">239</FONT>             val = (Integer)value;<a name="line.239"></a>
-<FONT color="green">240</FONT>          else if (value instanceof String)<a name="line.240"></a>
-<FONT color="green">241</FONT>          {<a name="line.241"></a>
-<FONT color="green">242</FONT>             try<a name="line.242"></a>
-<FONT color="green">243</FONT>             {<a name="line.243"></a>
-<FONT color="green">244</FONT>                val = Integer.parseInt((String)value);<a name="line.244"></a>
-<FONT color="green">245</FONT>             }<a name="line.245"></a>
-<FONT color="green">246</FONT>             catch (NumberFormatException ex)<a name="line.246"></a>
-<FONT color="green">247</FONT>             {<a name="line.247"></a>
-<FONT color="green">248</FONT>                return;<a name="line.248"></a>
-<FONT color="green">249</FONT>             }<a name="line.249"></a>
-<FONT color="green">250</FONT>          }<a name="line.250"></a>
-<FONT color="green">251</FONT>          else<a name="line.251"></a>
-<FONT color="green">252</FONT>             return;<a name="line.252"></a>
-<FONT color="green">253</FONT>    <a name="line.253"></a>
-<FONT color="green">254</FONT>          if (val &lt;= 0)<a name="line.254"></a>
-<FONT color="green">255</FONT>             return;<a name="line.255"></a>
-<FONT color="green">256</FONT>    <a name="line.256"></a>
-<FONT color="green">257</FONT>          if (val%2 == 1)<a name="line.257"></a>
-<FONT color="green">258</FONT>             val++;<a name="line.258"></a>
-<FONT color="green">259</FONT>          mCurrentValue = val;<a name="line.259"></a>
-<FONT color="green">260</FONT>       }<a name="line.260"></a>
-<FONT color="green">261</FONT>    <a name="line.261"></a>
-<FONT color="green">262</FONT>       @Override<a name="line.262"></a>
-<FONT color="green">263</FONT>       public Object getNextValue()<a name="line.263"></a>
-<FONT color="green">264</FONT>       {<a name="line.264"></a>
-<FONT color="green">265</FONT>          mCurrentValue+=2;<a name="line.265"></a>
-<FONT color="green">266</FONT>          fireStateChanged();<a name="line.266"></a>
-<FONT color="green">267</FONT>          return mCurrentValue;<a name="line.267"></a>
-<FONT color="green">268</FONT>       }<a name="line.268"></a>
-<FONT color="green">269</FONT>    <a name="line.269"></a>
-<FONT color="green">270</FONT>       @Override<a name="line.270"></a>
-<FONT color="green">271</FONT>       public Object getPreviousValue()<a name="line.271"></a>
-<FONT color="green">272</FONT>       {<a name="line.272"></a>
-<FONT color="green">273</FONT>          mCurrentValue = Math.max(mCurrentValue-2, 4);<a name="line.273"></a>
-<FONT color="green">274</FONT>          fireStateChanged();<a name="line.274"></a>
-<FONT color="green">275</FONT>          return mCurrentValue;<a name="line.275"></a>
-<FONT color="green">276</FONT>       }<a name="line.276"></a>
-<FONT color="green">277</FONT>    }<a name="line.277"></a>
-<FONT color="green">278</FONT>    <a name="line.278"></a>
-<FONT color="green">279</FONT>    <a name="line.279"></a>
+<FONT color="green">195</FONT>          mNameLabel.setEnabled(enabled);<a name="line.195"></a>
+<FONT color="green">196</FONT>          mName.requestFocus();<a name="line.196"></a>
+<FONT color="green">197</FONT>       }<a name="line.197"></a>
+<FONT color="green">198</FONT>    <a name="line.198"></a>
+<FONT color="green">199</FONT>       class RadioButtonAction implements ActionListener<a name="line.199"></a>
+<FONT color="green">200</FONT>       {<a name="line.200"></a>
+<FONT color="green">201</FONT>          private JRadioButton last;<a name="line.201"></a>
+<FONT color="green">202</FONT>    <a name="line.202"></a>
+<FONT color="green">203</FONT>          public RadioButtonAction(JRadioButton last)<a name="line.203"></a>
+<FONT color="green">204</FONT>          {<a name="line.204"></a>
+<FONT color="green">205</FONT>             this.last = last;<a name="line.205"></a>
+<FONT color="green">206</FONT>          }<a name="line.206"></a>
+<FONT color="green">207</FONT>    <a name="line.207"></a>
+<FONT color="green">208</FONT>          @Override<a name="line.208"></a>
+<FONT color="green">209</FONT>          public void actionPerformed(ActionEvent e)<a name="line.209"></a>
+<FONT color="green">210</FONT>          {<a name="line.210"></a>
+<FONT color="green">211</FONT>             if (e.getSource().equals(last))<a name="line.211"></a>
+<FONT color="green">212</FONT>                return;<a name="line.212"></a>
+<FONT color="green">213</FONT>             if (e.getActionCommand().equals(".maz"))<a name="line.213"></a>
+<FONT color="green">214</FONT>                setOpsEnabled(false);<a name="line.214"></a>
+<FONT color="green">215</FONT>             else<a name="line.215"></a>
+<FONT color="green">216</FONT>                setOpsEnabled(true);<a name="line.216"></a>
+<FONT color="green">217</FONT>             last = (JRadioButton) e.getSource();<a name="line.217"></a>
+<FONT color="green">218</FONT>          }<a name="line.218"></a>
+<FONT color="green">219</FONT>    <a name="line.219"></a>
+<FONT color="green">220</FONT>       }<a name="line.220"></a>
+<FONT color="green">221</FONT>    }<a name="line.221"></a>
+<FONT color="green">222</FONT>    <a name="line.222"></a>
+<FONT color="green">223</FONT>    /**<a name="line.223"></a>
+<FONT color="green">224</FONT>     * Controls the maze dimension spinners.<a name="line.224"></a>
+<FONT color="green">225</FONT>     */<a name="line.225"></a>
+<FONT color="green">226</FONT>    class MazeSizeSpinnerModel extends SpinnerNumberModel<a name="line.226"></a>
+<FONT color="green">227</FONT>    {<a name="line.227"></a>
+<FONT color="green">228</FONT>       public MazeSizeSpinnerModel()<a name="line.228"></a>
+<FONT color="green">229</FONT>       {<a name="line.229"></a>
+<FONT color="green">230</FONT>          this.setMinimum(4);<a name="line.230"></a>
+<FONT color="green">231</FONT>          this.setMaximum(64);<a name="line.231"></a>
+<FONT color="green">232</FONT>          this.setStepSize(2);<a name="line.232"></a>
+<FONT color="green">233</FONT>          this.setValue(16);<a name="line.233"></a>
+<FONT color="green">234</FONT>       }<a name="line.234"></a>
+<FONT color="green">235</FONT>    <a name="line.235"></a>
+<FONT color="green">236</FONT>       @Override<a name="line.236"></a>
+<FONT color="green">237</FONT>       public void setValue(Object value)<a name="line.237"></a>
+<FONT color="green">238</FONT>       {<a name="line.238"></a>
+<FONT color="green">239</FONT>          if (value instanceof Integer)<a name="line.239"></a>
+<FONT color="green">240</FONT>          {<a name="line.240"></a>
+<FONT color="green">241</FONT>             int v = ((int) (Integer) value);<a name="line.241"></a>
+<FONT color="green">242</FONT>             if ( (v &amp; 1) != 0)<a name="line.242"></a>
+<FONT color="green">243</FONT>                v--;<a name="line.243"></a>
+<FONT color="green">244</FONT>             super.setValue(v);<a name="line.244"></a>
+<FONT color="green">245</FONT>          }<a name="line.245"></a>
+<FONT color="green">246</FONT>       }<a name="line.246"></a>
+<FONT color="green">247</FONT>    }<a name="line.247"></a>
 
 
 

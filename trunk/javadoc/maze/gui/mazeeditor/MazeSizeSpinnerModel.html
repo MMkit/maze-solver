@@ -74,9 +74,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_javax.swing.AbstractSpinnerModel">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -92,15 +92,20 @@ Class MazeSizeSpinnerModel</H2>
 <PRE>
 java.lang.Object
   <IMG SRC="../../../resources/inherit.gif" ALT="extended by ">javax.swing.AbstractSpinnerModel
-      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>maze.gui.mazeeditor.MazeSizeSpinnerModel</B>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by ">javax.swing.SpinnerNumberModel
+          <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>maze.gui.mazeeditor.MazeSizeSpinnerModel</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD>javax.swing.SpinnerModel</DD>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable, javax.swing.SpinnerModel</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE> class <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.225"><B>MazeSizeSpinnerModel</B></A><DT>extends javax.swing.AbstractSpinnerModel</DL>
+<DT><PRE> class <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.226"><B>MazeSizeSpinnerModel</B></A><DT>extends javax.swing.SpinnerNumberModel</DL>
 </PRE>
+
+<P>
+Controls the maze dimension spinners.
+<P>
 
 <P>
 <HR>
@@ -113,14 +118,6 @@ java.lang.Object
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeSizeSpinnerModel.html#mCurrentValue">mCurrentValue</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="fields_inherited_from_class_javax.swing.AbstractSpinnerModel"><!-- --></A>
@@ -159,35 +156,20 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeSizeSpinnerModel.html#getNextValue()">getNextValue</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeSizeSpinnerModel.html#getPreviousValue()">getPreviousValue</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeSizeSpinnerModel.html#getValue()">getValue</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeSizeSpinnerModel.html#setValue(java.lang.Object)">setValue</A></B>(java.lang.Object&nbsp;value)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_javax.swing.SpinnerNumberModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class javax.swing.SpinnerNumberModel</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>getMaximum, getMinimum, getNextValue, getNumber, getPreviousValue, getStepSize, getValue, setMaximum, setMinimum, setStepSize</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_javax.swing.AbstractSpinnerModel"><!-- --></A>
@@ -211,25 +193,6 @@ java.lang.Object
 &nbsp;
 <P>
 
-<!-- ============ FIELD DETAIL =========== -->
-
-<A NAME="field_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Field Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="mCurrentValue"><!-- --></A><H3>
-mCurrentValue</H3>
-<PRE>
-private int <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.227"><B>mCurrentValue</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 
 <A NAME="constructor_detail"><!-- --></A>
@@ -243,7 +206,7 @@ private int <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.
 <A NAME="MazeSizeSpinnerModel()"><!-- --></A><H3>
 MazeSizeSpinnerModel</H3>
 <PRE>
-<A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.225"><B>MazeSizeSpinnerModel</B></A>()</PRE>
+public <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.228"><B>MazeSizeSpinnerModel</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -257,44 +220,14 @@ MazeSizeSpinnerModel</H3>
 </TR>
 </TABLE>
 
-<A NAME="getValue()"><!-- --></A><H3>
-getValue</H3>
-<PRE>
-public java.lang.Object <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.229"><B>getValue</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="setValue(java.lang.Object)"><!-- --></A><H3>
 setValue</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.235"><B>setValue</B></A>(java.lang.Object&nbsp;value)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.237"><B>setValue</B></A>(java.lang.Object&nbsp;value)</PRE>
 <DL>
 <DD><DL>
-</DL>
+<DT><B>Specified by:</B><DD><CODE>setValue</CODE> in interface <CODE>javax.swing.SpinnerModel</CODE><DT><B>Overrides:</B><DD><CODE>setValue</CODE> in class <CODE>javax.swing.SpinnerNumberModel</CODE></DL>
 </DD>
-</DL>
-<HR>
-
-<A NAME="getNextValue()"><!-- --></A><H3>
-getNextValue</H3>
-<PRE>
-public java.lang.Object <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.263"><B>getNextValue</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPreviousValue()"><!-- --></A><H3>
-getPreviousValue</H3>
-<PRE>
-public java.lang.Object <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeSpinnerModel.html#line.271"><B>getPreviousValue</B></A>()</PRE>
-<DL>
 <DD><DL>
 </DL>
 </DD>
@@ -351,9 +284,9 @@ public java.lang.Object <A HREF="../../../src-html/maze/gui/mazeeditor/MazeSizeS
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_javax.swing.AbstractSpinnerModel">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

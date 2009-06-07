@@ -54,7 +54,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/util/Listener.html" title="interface in maze.util"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/util/ListenerSubject.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="ListenerSubject.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -94,20 +94,31 @@ java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.util.ListenerSubject&lt;T&gt;</B>
 </PRE>
 <DL>
-<DT><DT><B>Type Parameters:</B><DD><CODE>T</CODE> - The type of the event objects to be used by the Listeners.</DL>
+<DT><DT><B>Type Parameters:</B><DD><CODE>T</CODE> - The type of the event objects to be used by the Listeners. Objects
+           of this type are passed to each registered Listener when they are
+           notified.</DL>
 <DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>, <A HREF="../../maze/model/RobotPathModel.html" title="class in maze.model">RobotPathModel</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/util/ListenerSubject.html#line.9"><B>ListenerSubject&lt;T&gt;</B></A><DT>extends java.lang.Object</DL>
+<DT><PRE>public class <A HREF="../../src-html/maze/util/ListenerSubject.html#line.17"><B>ListenerSubject&lt;T&gt;</B></A><DT>extends java.lang.Object</DL>
 </PRE>
 
 <P>
+Implements the observer design pattern. A ListenerSubject can have Listeners
+ registered with it and then notify those Listeners when something happens.
+ This class can be extended or instances of it can be created to allow a class
+ to have multiple events that can be registered with.
+<P>
+
+<P>
 <DL>
+<DT><B>Version:</B></DT>
+  <DD>2009-05-30</DD>
 <DT><B>Author:</B></DT>
   <DD>Luke Last</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../maze/util/Listener.html" title="interface in maze.util"><CODE>Listener</CODE></A></DL>
 <HR>
 
 <P>
@@ -118,6 +129,14 @@ java.lang.Object
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <code>Runnable</code> which is invoked later on the event queue.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -143,6 +162,14 @@ java.lang.Object
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores listeners that should be notified in a delayed manner.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.html#delayedNotifier">delayedNotifier</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is created when needed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -205,6 +232,15 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/util/ListenerSubject.html#getDelayedNotifier(T)">getDelayedNotifier</A></B>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;eventObject)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This allows us to only create a new instance once and then reuse it for
+ better performance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/util/ListenerSubject.html#notifyListeners(T)">notifyListeners</A></B>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;event)</CODE>
 
@@ -217,7 +253,7 @@ java.lang.Object
 <TD><CODE><B><A HREF="../../maze/util/ListenerSubject.html#removeAllListeners()">removeAllListeners</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes all listeners registered with this subject.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -253,7 +289,7 @@ java.lang.Object
 <A NAME="listener"><!-- --></A><H3>
 listener</H3>
 <PRE>
-private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.html#line.15"><B>listener</B></A></PRE>
+private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.html#line.23"><B>listener</B></A></PRE>
 <DL>
 <DD>Zero, one, or many listeners. Can be null. Multiple listeners form a
  linked list.
@@ -266,9 +302,9 @@ private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">L
 <A NAME="delayedListener"><!-- --></A><H3>
 delayedListener</H3>
 <PRE>
-private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.html#line.20"><B>delayedListener</B></A></PRE>
+private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt; <A HREF="../../src-html/maze/util/ListenerSubject.html#line.28"><B>delayedListener</B></A></PRE>
 <DL>
-<DD>Stores listeners that should be notified in a delayed manner.
+<DD>Stores listeners that should be notified in a delayed manner. Can be null.
 <P>
 <DL>
 </DL>
@@ -278,10 +314,22 @@ private <A HREF="../../maze/util/Listener.html" title="interface in maze.util">L
 <A NAME="pendingNotify"><!-- --></A><H3>
 pendingNotify</H3>
 <PRE>
-private volatile boolean <A HREF="../../src-html/maze/util/ListenerSubject.html#line.26"><B>pendingNotify</B></A></PRE>
+private volatile boolean <A HREF="../../src-html/maze/util/ListenerSubject.html#line.34"><B>pendingNotify</B></A></PRE>
 <DL>
 <DD>Stores whether or not a delayed notify Runnable has been created on the
  EventQueue but not yet executed.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="delayedNotifier"><!-- --></A><H3>
+delayedNotifier</H3>
+<PRE>
+private <A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A> <A HREF="../../src-html/maze/util/ListenerSubject.html#line.39"><B>delayedNotifier</B></A></PRE>
+<DL>
+<DD>This is created when needed.
 <P>
 <DL>
 </DL>
@@ -300,7 +348,7 @@ private volatile boolean <A HREF="../../src-html/maze/util/ListenerSubject.html#
 <A NAME="ListenerSubject()"><!-- --></A><H3>
 ListenerSubject</H3>
 <PRE>
-public <A HREF="../../src-html/maze/util/ListenerSubject.html#line.9"><B>ListenerSubject</B></A>()</PRE>
+public <A HREF="../../src-html/maze/util/ListenerSubject.html#line.17"><B>ListenerSubject</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -317,9 +365,11 @@ public <A HREF="../../src-html/maze/util/ListenerSubject.html#line.9"><B>Listene
 <A NAME="notifyListeners(java.lang.Object)"><!-- --></A><A NAME="notifyListeners(T)"><!-- --></A><H3>
 notifyListeners</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.33"><B>notifyListeners</B></A>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;event)</PRE>
+public final void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.48"><B>notifyListeners</B></A>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;event)</PRE>
 <DL>
-<DD>Notifies all registered listeners.
+<DD>Notifies all registered listeners. Normal listeners are notified
+ Immediately, delayed listeners are notified with a new task on the event
+ queue.
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object that should be passed to each registered
@@ -328,10 +378,26 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.33"><B>n
 </DL>
 <HR>
 
+<A NAME="getDelayedNotifier(java.lang.Object)"><!-- --></A><A NAME="getDelayedNotifier(T)"><!-- --></A><H3>
+getDelayedNotifier</H3>
+<PRE>
+private <A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A> <A HREF="../../src-html/maze/util/ListenerSubject.html#line.69"><B>getDelayedNotifier</B></A>(<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&nbsp;eventObject)</PRE>
+<DL>
+<DD>This allows us to only create a new instance once and then reuse it for
+ better performance.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>eventObject</CODE> - This event object is given to the notifier which it
+           then passes to the listeners.
+<DT><B>Returns:</B><DD>The one and only instance.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="addListener(maze.util.Listener)"><!-- --></A><H3>
 addListener</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.64"><B>addListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
+public final void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.110"><B>addListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
 <DL>
 <DD>Registers a Listener with this subject. The given Listener is not checked
  to see if it already is registered.
@@ -345,7 +411,7 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.64"><B>a
 <A NAME="addDelayedListener(maze.util.Listener)"><!-- --></A><H3>
 addDelayedListener</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.82"><B>addDelayedListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
+public final void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.128"><B>addDelayedListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - </DL>
@@ -356,9 +422,10 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.82"><B>a
 <A NAME="removeListener(maze.util.Listener)"><!-- --></A><H3>
 removeListener</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.101"><B>removeListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
+public final void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.148"><B>removeListener</B></A>(<A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/util/ListenerSubject.html" title="type parameter in ListenerSubject">T</A>&gt;&nbsp;listener)</PRE>
 <DL>
-<DD>Unregisters a Listener with this subject.
+<DD>Unregisters a Listener with this subject. If the given listener is null or
+ not already registered no changes are made.
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - The Listener you want to remove.</DL>
@@ -369,8 +436,10 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.101"><B>
 <A NAME="removeAllListeners()"><!-- --></A><H3>
 removeAllListeners</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.117"><B>removeAllListeners</B></A>()</PRE>
+public final void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.167"><B>removeAllListeners</B></A>()</PRE>
 <DL>
+<DD>Removes all listeners registered with this subject.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -407,7 +476,7 @@ public void <A HREF="../../src-html/maze/util/ListenerSubject.html#line.117"><B>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/util/Listener.html" title="interface in maze.util"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/util/ListenerSubject.ListenerMulticaster.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/util/ListenerSubject.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="ListenerSubject.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

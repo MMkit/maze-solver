@@ -525,7 +525,7 @@ private final org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <A HREF="../../src-htm
 <A NAME="connectedRobot"><!-- --></A><H3>
 connectedRobot</H3>
 <PRE>
-private <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.49"><B>connectedRobot</B></A></PRE>
+private transient <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.49"><B>connectedRobot</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -584,7 +584,7 @@ public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.61"><B>CodeEdit
 <A NAME="CodeEditorPane()"><!-- --></A><H3>
 CodeEditorPane</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.80"><B>CodeEditorPane</B></A>()</PRE>
+public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.93"><B>CodeEditorPane</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -601,7 +601,7 @@ public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.80"><B>CodeEdit
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.135"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.148"><B>toString</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>toString</CODE> in class <CODE>java.awt.Component</CODE></DL>
@@ -615,7 +615,7 @@ public java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#lin
 <A NAME="addToRobotModel()"><!-- --></A><H3>
 addToRobotModel</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.151"><B>addToRobotModel</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.164"><B>addToRobotModel</B></A>()</PRE>
 <DL>
 <DD>Adds a RobotBase instance to the global Robot list. This new AI instance
  is connected to this code editor.
@@ -629,7 +629,7 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.151"><B>a
 <A NAME="removeFromRobotModel()"><!-- --></A><H3>
 removeFromRobotModel</H3>
 <PRE>
-void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.160"><B>removeFromRobotModel</B></A>()</PRE>
+void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.173"><B>removeFromRobotModel</B></A>()</PRE>
 <DL>
 <DD>Removes this script from the global List of algorithms.
 <P>
@@ -642,7 +642,7 @@ void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.160"><B>removeFro
 <A NAME="saveScriptFileAs()"><!-- --></A><H3>
 saveScriptFileAs</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.169"><B>saveScriptFileAs</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.182"><B>saveScriptFileAs</B></A>()</PRE>
 <DL>
 <DD>Requests the user to choose a new file name and then saves the script
  there.
@@ -656,7 +656,7 @@ public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.169"><B>sa
 <A NAME="saveScriptFile()"><!-- --></A><H3>
 saveScriptFile</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.193"><B>saveScriptFile</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.206"><B>saveScriptFile</B></A>()</PRE>
 <DL>
 <DD>Saves the current script to the file it is connected to. If it is a new
  script and has no file that save as is called.
@@ -670,7 +670,7 @@ public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.193"><B>sa
 <A NAME="saveToFile()"><!-- --></A><H3>
 saveToFile</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.209"><B>saveToFile</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.222"><B>saveToFile</B></A>()</PRE>
 <DL>
 <DD>Internal method to save the script to the current file.
 <P>
@@ -683,7 +683,7 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.209"><B>s
 <A NAME="evaluateSelection()"><!-- --></A><H3>
 evaluateSelection</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.236"><B>evaluateSelection</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.249"><B>evaluateSelection</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -694,7 +694,7 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.236"><B>e
 <A NAME="analyzeSelection()"><!-- --></A><H3>
 analyzeSelection</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.254"><B>analyzeSelection</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.267"><B>analyzeSelection</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -705,7 +705,7 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.254"><B>a
 <A NAME="getInitializedInterpreter()"><!-- --></A><H3>
 getInitializedInterpreter</H3>
 <PRE>
-public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.308"><B>getInitializedInterpreter</B></A>()</PRE>
+public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.321"><B>getInitializedInterpreter</B></A>()</PRE>
 <DL>
 <DD>Creates a new Python interpreter and sets some initial values like imports
  and the maze model variable.
@@ -720,7 +720,7 @@ public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEd
 <A NAME="setRobotModel(maze.model.RobotModel)"><!-- --></A><H3>
 setRobotModel</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.326"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
+public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.339"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -731,7 +731,7 @@ public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.326"><B>se
 <A NAME="getNextStep()"><!-- --></A><H3>
 getNextStep</H3>
 <PRE>
-public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.338"><B>getNextStep</B></A>()</PRE>
+public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.351"><B>getNextStep</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -742,7 +742,7 @@ public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep<
 <A NAME="executeScript()"><!-- --></A><H3>
 executeScript</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.354"><B>executeScript</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.367"><B>executeScript</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>

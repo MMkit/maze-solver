@@ -654,7 +654,7 @@ public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">Maze
 <A NAME="eventFired(maze.model.MazeCell)"><!-- --></A><H3>
 eventFired</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.181"><B>eventFired</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;event)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.182"><B>eventFired</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;event)</PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../maze/util/Listener.html#eventFired(T)">Listener</A></CODE></B></DD>
 <DD>This is called when the ListenerSubject wants to notify the registered
@@ -664,7 +664,8 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.181"><B>eventF
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../maze/util/Listener.html#eventFired(T)">eventFired</A></CODE> in interface <CODE><A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object.</DL>
+<DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object. It can be null so make sure and check for
+           that.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
