@@ -2,6 +2,7 @@ package maze.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,29 +69,29 @@ public final class RobotPathModel extends ListenerSubject<MazeCell> implements S
     */
    public List<MazeCell> getPathRecent()
    {
-      if (this.pathCurrent.isEmpty())
+      //TODO This whole thing is slow.
+
+      if (this.pathCurrent.isEmpty() ||
+          this.startCell.equals(this.pathCurrent.get(this.pathCurrent.size() - 1)))
       {
-         return new ArrayList<MazeCell>();
+         return Collections.emptyList();
       }
-      if (this.startCell.equals(this.pathCurrent.get(this.pathCurrent.size() - 1)))
-      {
-         return new ArrayList<MazeCell>();
-      }
-      ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>();
+      final ArrayList<MazeCell> currentRun = new ArrayList<MazeCell>();
       for (int i = this.pathCurrent.lastIndexOf(this.startCell); i < this.pathCurrent.size(); i++)
       {
          currentRun.add(this.pathCurrent.get(i));
       }
-      return currentRun;
+      return Collections.unmodifiableList(currentRun);
    }
 
    /**
     * Gets the entire current path from the very beginning.
-    * @return An in order list of the total path taken by the robot.
+    * @return An in order list of the total path taken by the robot. The List is
+    *         read only.
     */
    public List<MazeCell> getPathCurrent()
    {
-      return this.pathCurrent;
+      return Collections.unmodifiableList(this.pathCurrent);
    }
 
    /**
