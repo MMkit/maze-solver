@@ -7,13 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.util.EnumSet;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.JComponent;
 
@@ -32,11 +33,11 @@ import maze.util.Listener;
  * different themes to be used.
  * @author Luke Last
  */
-public class MazeView2 extends JComponent implements ComponentListener, Listener<MazeCell>,
-      MazeViewInterface
+public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeViewInterface
 {
    private static final long serialVersionUID = 3249468255178771818L;
    private static final int WALL_SIZE_DIVIDER = 6;
+   private static final int MAX_CELLS_TO_DRAW = 64;
    /**
     * The maze model that stores the configuration of the maze.
     */
@@ -76,7 +77,10 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     */
    private RobotPathModel robotPathModel;
    /**
-    * A flag for redrawing everything.
+    * A flag for redrawing everything. When set true this tells us we are
+    * redrawing the whole view which means we must draw the outside walls.
+    * @see MazeView2#invalidateAllCells()
+    * @see MazeView2#paintComponent(Graphics)
     */
    private boolean repaintAll = true;
    /**
@@ -84,9 +88,11 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
     * redrawn. ALL access to this set should be synchronized on the object
     * itself.
     */
-   private final Set<MazeCell> invalidatedCells = new HashSet<MazeCell>();
+   private final Set<MazeCell> invalidatedCells = new TreeSet<MazeCell>();
+
    private int[][] understandingInt = null;
    private Direction[][] understandingDir = null;
+
    private boolean drawPathCurrent = true;
    private boolean drawPathFirst = true;
    private boolean drawPathBest = true;
@@ -101,63 +107,18 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       // We maintain our own background image buffer so we can turn this off.
       this.setDoubleBuffered(false);
       // For catching resize events.
-      this.addComponentListener(this);
-   }
-
-   @Override
-   public void componentHidden(final ComponentEvent e)
-   {}
-
-   @Override
-   public void componentMoved(final ComponentEvent e)
-   {}
-
-   /**
-    * When the component is resized we have to resize the cells and walls and
-    * resize the background image.
-    */
-   @Override
-   public void componentResized(final ComponentEvent e)
-   {
-      if (model != null)
+      this.addComponentListener(new ComponentAdapter()
       {
-         this.backgroundImage = null;
-         this.repaintAll = true;
-         this.csm.setCellWidth( (this.getWidth() - this.csm.getWallWidth()) /
-                               this.model.getSize().width);
-         this.csm.setCellHeight( (this.getHeight() - this.csm.getWallHeight()) /
-                                this.model.getSize().height);
-
-         final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
-         this.csm.setWallWidth(wallSize);
-         this.csm.setWallHeight(wallSize);
-         this.painter.setMazeSize(this.getMazeSize());
-         this.repaint();
-      }
-   }
-
-   @Override
-   public void componentShown(final ComponentEvent e)
-   {}
-
-   /**
-    * Calls the draw cell method on every cell in the maze.
-    * @param g What do draw on.
-    */
-   private void drawAllCells(final Graphics2D g)
-   {
-      if (g != null && this.model != null)
-      {
-         //Loop through each cell in the maze.
-         for (int x = 1; x <= this.model.getSize().width; x++)
+         /**
+          * When the component is resized we have to resize the cells and walls
+          * and resize the background image.
+          */
+         @Override
+         public void componentResized(ComponentEvent e)
          {
-            for (int y = 1; y <= this.model.getSize().height; y++)
-            {
-               final MazeCell cell = new MazeCell(x, y);
-               this.drawCell(g, cell);
-            } //End y loop.
-         } //End x loop.
-      }
+            updateViewSize();
+         }
+      });
    }
 
    /**
@@ -272,6 +233,7 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
             this.painter.drawFog(g, area);
          }
          // Draw a current path of dots.
+         /*
          if (this.drawPathCurrent && this.robotPathModel.getPathRecent().contains(cell))
          {
             final EnumSet<Direction> directions = EnumSet.noneOf(Direction.class);
@@ -283,26 +245,34 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
                   directions.add(dir);
                }
             }
-            //this.paints.drawRunCurrent(g, this.getCellAreaInner(cell), directions);
+            this.painter.drawRunCurrent(g, this.getCellAreaInner(cell), directions);
          }
+         */
       }
    }
 
    /**
-    * Draws all cells that have been invalidated.
+    * Draws cells that have been invalidated. We only draw a limited number of
+    * cells per call and if not all invalidated cells were drawn repaint() is
+    * called.
     * @param g Where to draw.
     */
    private void drawInvalidatedCells(final Graphics2D g)
    {
+      final boolean notDone;
       synchronized (this.invalidatedCells)
       {
-         for (final MazeCell cell : this.invalidatedCells)
+         final Iterator<MazeCell> itr = this.invalidatedCells.iterator();
+         int limit = MAX_CELLS_TO_DRAW;
+         while (itr.hasNext() && 0 < limit--)
          {
-            this.drawCell(g, cell);
-            //System.out.println("Drew cell: " + cell);
+            this.drawCell(g, itr.next());
+            itr.remove();
          }
-         this.invalidatedCells.clear();
+         notDone = this.invalidatedCells.isEmpty() ? false : true;
       }
+      if (notDone)
+         this.repaint();
    }
 
    /**
@@ -348,29 +318,6 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
             wallArea.y += this.csm.getCellHeight();
          }
       }
-   }
-
-   /**
-    * Get the cell that the given point is located in. This gives us a means to
-    * translate between coordinate positions and cells.
-    * @param location A coordinate point in the maze area.
-    * @return The cell or null if the point is not inside a valid cell.
-    */
-   @SuppressWarnings("unused")
-   private MazeCell getHostCell(Point location)
-   {
-      try
-      {
-         MazeCell cell = new MazeCell( ( (location.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
-                                      ( (location.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
-         if (cell.isInRange(model.getSize()))
-         {
-            return cell;
-         }
-      }
-      catch (Exception e)
-      {}
-      return null;
    }
 
    /**
@@ -507,26 +454,6 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    }
 
    /**
-    * Set the rendering hints to low quality.
-    * @param g The graphics object to set the rendering hints on.
-    */
-   private void setRenderingQualityLow(Graphics2D g)
-   {
-      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-   }
-
-   /**
-    * Set the rendering hints to high quality.
-    * @param g The graphics object to set the rendering hints on.
-    */
-   private void setRenderingQualityHigh(Graphics2D g)
-   {
-      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-   }
-
-   /**
     * Draws the arrows and numbers on the maze.
     * @param g What to draw on.
     */
@@ -638,7 +565,6 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       if (this.backgroundImage == null)
       {
          // If creating a new background image make sure we paint it.
-         this.repaintAll = true;
          this.backgroundGraphics = null;
          this.backgroundImage = new BufferedImage(getWidth(),
                                                   getHeight(),
@@ -696,6 +622,29 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
                        this.csm.getWallHeight() +
                              (cell.getYZeroBased() * this.csm.getCellHeight()) +
                              (this.csm.getCellHeightInner() / 2));
+   }
+
+   /**
+    * Get the cell that the given point is located in. This gives us a means to
+    * translate between coordinate positions and cells.
+    * @param location A coordinate point in the maze area.
+    * @return The cell or null if the point is not inside a valid cell.
+    */
+   @SuppressWarnings("unused")
+   private MazeCell getHostCell(Point location)
+   {
+      try
+      {
+         MazeCell cell = new MazeCell( ( (location.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
+                                      ( (location.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
+         if (cell.isInRange(model.getSize()))
+         {
+            return cell;
+         }
+      }
+      catch (Exception e)
+      {}
+      return null;
    }
 
    /**
@@ -786,6 +735,18 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    public void invalidateAllCells()
    {
       this.repaintAll = true;
+      synchronized (this.invalidatedCells)
+      {
+         // We clear it first because it might have cells that are out of the current size.
+         this.invalidatedCells.clear();
+         for (int x = 1; x <= this.model.getSize().width; x++)
+         {
+            for (int y = 1; y <= this.model.getSize().height; y++)
+            {
+               this.invalidatedCells.add(new MazeCell(x, y));
+            }
+         }
+      }
       this.repaint();
    }
 
@@ -827,18 +788,23 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
       {
          this.repaintAll = false;
          this.drawOutsideWalls(bgg);
-         // Clear invalidated because we are going to redraw everything.
-         synchronized (this.invalidatedCells)
-         {
-            this.invalidatedCells.clear();
-         }
-         this.drawAllCells(bgg);
-         // Because the draw all can take so long we still want to redraw invalidated cells after.
       }
       this.drawInvalidatedCells(bgg);
       final Graphics2D g = (Graphics2D) arg;
       g.drawImage(this.backgroundImage, null, 0, 0);
       this.drawTopLayer(g);
+   }
+
+   /**
+    * @param drawFog the drawFog to set
+    */
+   public void setDrawFog(boolean drawFog)
+   {
+      if (this.drawFog != drawFog)
+      {
+         this.drawFog = drawFog;
+         this.invalidateAllCells();
+      }
    }
 
    /**
@@ -903,8 +869,42 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
          {
             this.model.addListener(this);
          }
-         this.componentResized(null);
+         this.updateViewSize();
       }
+   }
+
+   /**
+    * Set a new maze painting delegate for this maze view to use when drawing.
+    * @param newPainterDelegate The new delegate to do drawing for this view.
+    */
+   public void setPainterDelegate(MazePainter newPainterDelegate)
+   {
+      if (newPainterDelegate != null && this.painter != newPainterDelegate)
+      {
+         this.painter = newPainterDelegate;
+         // When changing the painter we want to redraw everything.
+         this.updateViewSize();
+      }
+   }
+
+   /**
+    * Set the rendering hints to high quality.
+    * @param g The graphics object to set the rendering hints on.
+    */
+   private void setRenderingQualityHigh(Graphics2D g)
+   {
+      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+   }
+
+   /**
+    * Set the rendering hints to low quality.
+    * @param g The graphics object to set the rendering hints on.
+    */
+   private void setRenderingQualityLow(Graphics2D g)
+   {
+      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
    }
 
    /**
@@ -945,28 +945,25 @@ public class MazeView2 extends JComponent implements ComponentListener, Listener
    }
 
    /**
-    * @param drawFog the drawFog to set
+    * Recalculates the sizes of the cells and walls from the current size of the
+    * component. We also delete the background image buffer so it can be
+    * recreated at the new size. We also invalidate all cells so they can be
+    * redrawn. This method itself returns quickly but it triggers some expensive
+    * operations.
     */
-   public void setDrawFog(boolean drawFog)
+   private void updateViewSize()
    {
-      if (this.drawFog != drawFog)
+      if (model != null)
       {
-         this.drawFog = drawFog;
+         this.backgroundImage = null; // Trigger creation of a new buffer image.
+         csm.setCellWidth( (getWidth() - csm.getWallWidth()) / model.getSize().width);
+         csm.setCellHeight( (getHeight() - csm.getWallHeight()) / model.getSize().height);
+         final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
+         this.csm.setWallWidth(wallSize);
+         this.csm.setWallHeight(wallSize);
+         this.painter.setMazeSize(getMazeSize());
+         // Have everything repainted.
          this.invalidateAllCells();
-      }
-   }
-
-   /**
-    * Set a new maze painting delegate for this maze view to use when drawing.
-    * @param newPainterDelegate The new delegate to do drawing for this view.
-    */
-   public void setPainterDelegate(MazePainter newPainterDelegate)
-   {
-      if (newPainterDelegate != null && this.painter != newPainterDelegate)
-      {
-         this.painter = newPainterDelegate;
-         // When changing the painter we want to redraw everything.
-         this.componentResized(null);
       }
    }
 }

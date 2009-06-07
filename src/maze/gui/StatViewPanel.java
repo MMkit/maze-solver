@@ -23,6 +23,9 @@ import maze.model.MazeInfo;
 import maze.model.MazeModel;
 
 /**
+ * Creates a panel that allows selection of a maze and algorithm and then
+ * displays statistics about them.
+ * @see StatTracker
  * @author Vincent Frey
  * @author Luke Last
  */
@@ -56,15 +59,22 @@ public class StatViewPanel extends JPanel
       selectionBox.add(mazeList);
       mazeList.getList().getSelectionModel().addListSelectionListener(new ListSelectionListener()
       {
+         private MazeModel lastSelectedMaze;
+
+         /**
+          * This event is called multiple times when the mouse is used to make a
+          * selection. We want it to update only once on the first selection so
+          * we store the last selected maze model.
+          */
          @Override
          public void valueChanged(ListSelectionEvent e)
          {
             try
             {
-               //Event is called multiple times when mouse is used.
-               //Currently we take a performance hit for that.
-               if (isVisible())
+               MazeModel selectedMaze = getSelectedMazeModel();
+               if (isVisible() && this.lastSelectedMaze != selectedMaze)
                {
+                  this.lastSelectedMaze = selectedMaze;
                   displayStats();
                }
             }
@@ -75,17 +85,15 @@ public class StatViewPanel extends JPanel
          }
       });
 
-      ActionListener algorithmChange = new ActionListener()
+      algorithmCombo = new JComboBox(RobotBase.getRobotListModel());
+      algorithmCombo.addActionListener(new ActionListener()
       {
          public void actionPerformed(ActionEvent action)
          {
             algorithm = (RobotBase) algorithmCombo.getSelectedItem();
             displayStats();
          }
-      };
-
-      algorithmCombo = new JComboBox(RobotBase.getRobotListModel());
-      algorithmCombo.addActionListener(algorithmChange);
+      });
 
       selectionBox.add(algorithmCombo);
 
@@ -125,7 +133,6 @@ public class StatViewPanel extends JPanel
 
       final JTable statTable = new JTable(statTableModel);
       statTable.setEnabled(false);
-      //statTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
       JScrollPane statPane = new JScrollPane(statTable);
       rightPanel.add(statPane);
@@ -152,17 +159,28 @@ public class StatViewPanel extends JPanel
    } // End constructor.
 
    /**
+    * Get the maze model that is currently selected in the maze list.
+    * @return MazeModel or null if none selected.
+    */
+   private MazeModel getSelectedMazeModel()
+   {
+      MazeInfo mi = (MazeInfo) mazeList.getList().getSelectedValue();
+      if (mi != null)
+         return mi.getModel();
+      else
+         return null;
+   }
+
+   /**
     * Set values in the statistics table model. This function displays all of
     * the information for the panel
     */
    private void displayStats()
    {
-      Object o = mazeList.getList().getSelectedValue();
-      MazeInfo mi = (MazeInfo) o;
-      if (mi != null)
-      {
-         this.maze = new MazeModel(mi.getModel());
-      }
+      MazeModel selectedMaze = this.getSelectedMazeModel();
+      if (selectedMaze != null)
+         this.maze = selectedMaze;
+
       if (this.algorithm != null && this.maze != null)
       {
          if (this.tracker == null)
