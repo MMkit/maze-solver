@@ -20,11 +20,11 @@ import maze.util.ListenerSubject;
 
 /**
  * Represents all the walls of a This class extends
- * {@link maze.util.ListenerSubject} which allows it to notify
- * listeners when a wall changes and provide the {@link maze.model.MazeCell}
- * that contains the changed wall.
+ * {@link maze.util.ListenerSubject} which allows it to notify listeners when a
+ * wall changes and provide the {@link maze.model.MazeCell} that contains the
+ * changed wall.
  */
-public class MazeModel extends ListenerSubject<MazeCell>
+public final class MazeModel extends ListenerSubject<MazeCell> implements Cloneable, Serializable
 {
    /**
     * Number of columns or width of this maze.
@@ -560,10 +560,8 @@ public class MazeModel extends ListenerSubject<MazeCell>
       }
    }
 
-   public String loadMaze(String filename) throws FileNotFoundException,
-                                                  IOException
+   public String loadMaze(String filename) throws FileNotFoundException, IOException
    {
-
       //Now for the actual file i/o
       File file = new File(filename);
       String name;
@@ -571,7 +569,7 @@ public class MazeModel extends ListenerSubject<MazeCell>
       in = new FileInputStream(file);
       name = loadMaze(in, true);
       in.close();
-      
+
       return name;
    }
 

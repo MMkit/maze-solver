@@ -1,7 +1,8 @@
 package maze.ai;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import maze.model.Direction;
@@ -14,7 +15,7 @@ import maze.model.MazeCell;
 public class Tremaux extends RobotBase
 {
    private Direction[][] ballOfString;
-   private List<RobotStep> moveQueue = new ArrayList<RobotStep>();
+   private final List<RobotStep> moveQueue = new LinkedList<RobotStep>();
    private boolean turbo = false;
 
    /**
@@ -40,10 +41,7 @@ public class Tremaux extends RobotBase
 
       for (int i = 0; i < size.getWidth(); i++)
       {
-         for (int j = 0; j < size.getHeight(); j++)
-         {
-            ballOfString[i][j] = null;
-         }
+         Arrays.fill(this.ballOfString[i], null);
       }
       ballOfString[0][size.height - 1] = Direction.North;
       this.moveQueue.clear();
@@ -53,6 +51,7 @@ public class Tremaux extends RobotBase
     * This returns the state of the turbo flag. Turbo should be true when
     * traversing previously explored territories.
     */
+   @Override
    public boolean isInTurboMode()
    {
       return turbo;
@@ -62,6 +61,7 @@ public class Tremaux extends RobotBase
     * This returns the next step for the robot to take. It should be called by
     * the controller.
     */
+   @Override
    public RobotStep nextStep()
    {
       RobotStep next;
@@ -69,7 +69,7 @@ public class Tremaux extends RobotBase
       {
          setDirection();
       }
-      if (moveQueue.isEmpty() == true)
+      if (moveQueue.isEmpty())
       {
          if ( (robotLocation.isWallRight() == false) && (getRightNeighborDirection() == null))
          {
@@ -137,10 +137,6 @@ public class Tremaux extends RobotBase
     */
    private Direction getFrontNeighborDirection()
    {
-      if (robotLocation.getCurrentLocation().getY() == 1)
-      {
-         return null;
-      }
       return getNeighborDirection(robotLocation.getDirection());
    }
 
@@ -159,30 +155,18 @@ public class Tremaux extends RobotBase
     */
    private Direction getNeighborDirection(Direction direction)
    {
-      MazeCell here = robotLocation.getCurrentLocation();
-      MazeCell there;
-      Dimension size = robotLocation.getMazeSize();
-      if ( (direction == Direction.North) && (here.getY() != 1))
+      try
       {
-         there = new MazeCell(here.getX(), here.getY() - 1);
+         final MazeCell there = robotLocation.getCurrentLocation().neighbor(direction);
+         if (!there.isInRange(robotLocation.getMazeSize()))
+            return null;
+         else
+            return this.getDirection(there);
       }
-      else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
-      {
-         there = new MazeCell(here.getX(), here.getY() + 1);
-      }
-      else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
-      {
-         there = new MazeCell(here.getX() + 1, here.getY());
-      }
-      else if ( (direction == Direction.West) && (here.getX() != 1))
-      {
-         there = new MazeCell(here.getX() - 1, here.getY());
-      }
-      else
+      catch (IllegalArgumentException e)
       {
          return null;
       }
-      return getDirection(there);
    }
 
    /**
@@ -207,6 +191,7 @@ public class Tremaux extends RobotBase
     * This returns the understanding of the maze. Tremaux's understanding is the
     * directions needed to return to the start.
     */
+   @Override
    public Direction[][] getUnderstandingDir()
    {
       return ballOfString;
