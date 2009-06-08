@@ -1,16 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package maze.gui;
 
+import java.util.Arrays;
+
 /**
- * This model stores the sizes of the cells and wall segments that are drawn
- * to the screen.
+ * This model stores the sizes of the cells and wall segments that are drawn to
+ * the screen.
  */
 public class CellSize implements Comparable<CellSize>
 {
-   private int[] sizes = {44, 50, 10, 10, 0, 0};
+   private int[] sizes =
+   {
+      44, 50, 10, 10, 0, 0
+   };
 
    public CellSize(int cw, int ch, int ww, int wh, int tw, int th)
    {
@@ -76,8 +77,24 @@ public class CellSize implements Comparable<CellSize>
    public int compareTo(CellSize o)
    {
       for (int i = 0; i < sizes.length; i++)
-         if (sizes[i]-o.sizes[i] != 0)
-            return sizes[i]-o.sizes[i];
+         if (sizes[i] - o.sizes[i] != 0)
+            return sizes[i] - o.sizes[i];
       return 0;
+   }
+
+   @Override
+   public boolean equals(Object obj)
+   {
+      if (obj instanceof CellSize)
+      {
+         return Arrays.equals(this.sizes, ((CellSize) obj).sizes);
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return Arrays.hashCode(this.sizes);
    }
 }

@@ -52,6 +52,23 @@ public class TemplatePeg implements Comparable<TemplatePeg>
    }
 
    @Override
+   public boolean equals(Object obj)
+   {
+      if (obj instanceof TemplatePeg)
+      {
+         return this.compareTo((TemplatePeg) obj) == 0;
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      assert false; // Not to be used.
+      return 0;
+   }
+
+   @Override
    protected Object clone() throws CloneNotSupportedException
    {
       TemplatePeg cloned = new TemplatePeg();
