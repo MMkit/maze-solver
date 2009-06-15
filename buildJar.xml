@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for Project MazeSolver">
-    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
-    <!--ANT 1.7 is required                                        -->
-    <target name="create_run_jar">
-        <jar destfile="MicroMouse.jar" filesetmanifest="mergewithoutmain">
-            <manifest>
-                <attribute name="Built-By" value="Team Awsome"/>
-                <attribute name="Main-Class" value="maze.Main"/>
-                <attribute name="Class-Path" value="."/>
-            </manifest>
-            <fileset dir="bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="lib/rsyntaxtextarea.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="lib/jython.jar"/>
-        </jar>
-    </target>
+<project default="jar" name="Create Runnable Jar for Project MazeSolver">
+
+	<path id="MazeSolver.classpath">
+		<pathelement location="bin" />
+		<pathelement location="lib/rsyntaxtextarea.jar" />
+		<pathelement location="lib/jython.jar" />
+		<!--pathelement location="${ECLIPSE_HOME}/plugins/org.junit4_4.3.1/junit.jar"/-->
+	</path>
+
+	<target name="clean">
+		<delete dir="bin" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="bin" />
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src" excludes="**/*.launch, **/*.java" />
+		</copy>
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="test" excludes="**/*.launch, **/*.java" />
+		</copy>
+	</target>
+
+	<target name="build" depends="init">
+		<javac debug="false" destdir="bin" source="1.6" target="1.6">
+			<src path="src" />
+			<classpath refid="MazeSolver.classpath" />
+		</javac>
+		<!--javac debug="false" destdir="bin" source="1.6" target="1.6">
+			<src path="test" />
+			<classpath refid="MazeSolver.classpath" />
+		</javac-->
+	</target>
+
+	<target name="jar" depends="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<jar destfile="MicroMouse.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="maze.Main" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="bin" />
+			<zipfileset excludes="META-INF/*.SF" src="lib/rsyntaxtextarea.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="lib/jython.jar" />
+		</jar>
+	</target>
 </project>
