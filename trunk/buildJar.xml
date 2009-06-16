@@ -2,46 +2,60 @@
 <project default="jar" name="Create Runnable Jar for Project MazeSolver">
 
 	<property name="jarfile" value="MicroMouse.jar" />
+	<property name="build.dir" value="build/classes" />
+	<property name="test.dir" value="build/test/" />
+	<property name="test.report" value="build/report" />
+
 	<path id="MazeSolver.classpath">
-		<pathelement location="bin" />
+		<pathelement location="${build.dir}" />
+		<pathelement location="${test.dir}" />
 		<pathelement location="lib/rsyntaxtextarea.jar" />
 		<pathelement location="lib/jython.jar" />
-		<!--pathelement location="${ECLIPSE_HOME}/plugins/org.junit4_4.3.1/junit.jar"/-->
+		<pathelement location="lib/junit-4.6.jar" />
 	</path>
 
 	<target name="clean">
-		<delete dir="bin" />
+		<delete dir="${build.dir}" />
 		<delete file="${jarfile}" />
 	</target>
 
 	<target name="init" depends="clean">
-		<mkdir dir="bin" />
-		<copy includeemptydirs="false" todir="bin">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${test.dir}" />
+		<mkdir dir="${test.report}" />
+		<copy includeemptydirs="false" todir="${build.dir}">
 			<fileset dir="src" excludes="**/*.launch, **/*.java" />
-		</copy>
-		<copy includeemptydirs="false" todir="bin">
-			<fileset dir="test" excludes="**/*.launch, **/*.java" />
 		</copy>
 	</target>
 
 	<target name="build" depends="init" description="Compile source files.">
-		<javac debug="false" destdir="bin" source="1.6" target="1.6">
+		<javac debug="false" destdir="${build.dir}" source="1.6" target="1.6">
 			<src path="src" />
 			<classpath refid="MazeSolver.classpath" />
 		</javac>
-		<!--javac debug="false" destdir="bin" source="1.6" target="1.6">
+		<javac debug="false" destdir="${test.dir}" source="1.6" target="1.6">
 			<src path="test" />
 			<classpath refid="MazeSolver.classpath" />
-		</javac-->
+		</javac>
 	</target>
 
-	<target name="jar" depends="build">
+	<target name="test" depends="build" description="Run Junit tests">
+		<junit printsummary="true" haltonfailure="false">
+			<classpath refid="MazeSolver.classpath" />
+			<formatter type="xml" />
+			<batchtest todir="${test.report}">
+				<fileset dir="${test.dir}" includes="**/*Test.class" />
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="jar" depends="test">
 		<jar destfile="${jarfile}" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="maze.Main" />
 				<attribute name="Class-Path" value="." />
 			</manifest>
-			<fileset dir="bin" />
+			<fileset dir="${build.dir}" />
 			<zipfileset excludes="META-INF/*.SF" src="lib/rsyntaxtextarea.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="lib/jython.jar" />
 		</jar>
