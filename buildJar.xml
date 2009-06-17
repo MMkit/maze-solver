@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="jar" name="Create Runnable Jar for Project MazeSolver">
 
-	<property name="jarfile" value="MicroMouse.jar" />
+	<property environment="env" />
+	<condition property="jarfile" value="MicroMouse-r${env.SVN_REVISION}.jar" else="MicroMouse.jar">
+		<isset property="env.SVN_REVISION" />
+	</condition>
 	<property name="build.dir" value="build/classes" />
 	<property name="test.dir" value="build/test/" />
 	<property name="test.report" value="build/report" />
+	<property name="version.file" location="${build.dir}/maze/build.properties" />
+	<condition property="version.revision" value="${env.SVN_REVISION}" else="Unknown">
+		<isset property="env.SVN_REVISION" />
+	</condition>
 
 	<path id="MazeSolver.classpath">
 		<pathelement location="${build.dir}" />
@@ -15,8 +22,9 @@
 	</path>
 
 	<target name="clean">
-		<delete dir="${build.dir}" />
+		<delete dir="build" />
 		<delete file="${jarfile}" />
+		<delete dir="." includes="MicroMouse*.jar" />
 	</target>
 
 	<target name="init" depends="clean">
@@ -26,6 +34,11 @@
 		<copy includeemptydirs="false" todir="${build.dir}">
 			<fileset dir="src" excludes="**/*.launch, **/*.java" />
 		</copy>
+		<tstamp />
+		<echo file="${version.file}">date: ${TODAY}</echo>
+		<echo file="${version.file}" append="true">
+			revision: ${version.revision}
+		</echo>
 	</target>
 
 	<target name="build" depends="init" description="Compile source files.">

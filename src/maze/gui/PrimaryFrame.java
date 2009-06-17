@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.TreeSet;
 import java.util.Enumeration;
 
@@ -218,12 +219,30 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            String m = "<html><b>Version:</b> 0.9.2<br />"
-                       + "You can find more information about this application "
-                       + "at the following project page.<br />"
-                       + "<a href=\"http://code.google.com/p/maze-solver/\">"
-                       + "http://code.google.com/p/maze-solver/</a><br />"
-                       + "</html>";
+            String buildDate = "Unknown";
+            String revision = "Unknown";
+            try
+            {
+               Properties prop = new Properties();
+               prop.load(Main.class.getResourceAsStream("build.properties"));
+               buildDate = prop.getProperty("date", "Unknown");
+               revision = prop.getProperty("revision", "Unknown");
+            }
+            catch (Exception e1)
+            {
+               e1.printStackTrace();
+            }
+
+            String m = "<html><b>Version:</b> 0.9.3<br />" +
+                       "<b>Build Date:</b> " +
+                       buildDate +
+                       "<br /><b>Revision:</b> " +
+                       revision +
+                       "<br />You can find more information about this application " +
+                       "at the following project page.<br />" +
+                       "<a href=\"http://code.google.com/p/maze-solver/\">" +
+                       "http://code.google.com/p/maze-solver/</a><br />" +
+                       "</html>";
             JOptionPane.showMessageDialog(PrimaryFrame.this,
                                           m,
                                           "About",
