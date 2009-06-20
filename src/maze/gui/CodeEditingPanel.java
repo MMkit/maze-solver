@@ -10,7 +10,6 @@ import java.nio.CharBuffer;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileFilter;
 
 import maze.Main;
 
@@ -195,47 +193,6 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    }
 
    @Override
-   public void open()
-   {
-      JFileChooser fc = new JFileChooser();
-      //fc.setCurrentDirectory(new File(".." + File.separator + "Scripts"));
-      fc.setAcceptAllFileFilterUsed(false);
-      fc.addChoosableFileFilter(new FileFilter()
-      {
-         @Override
-         public boolean accept(File f)
-         {
-            if (f.isDirectory())
-            {
-               return true;
-            }
-            else
-            {
-               return f.getName().toLowerCase().endsWith(".py");
-            }
-         }
-
-         @Override
-         public String getDescription()
-         {
-            return "Python Scripts";
-         }
-      });
-
-      int result = fc.showOpenDialog(this);
-      if (result == JFileChooser.APPROVE_OPTION)
-      {
-         File file = fc.getSelectedFile();
-         if (file.exists())
-         {
-            CodeEditorPane editor = new CodeEditorPane(file);
-            this.editorTabs.add(file.getName(), editor);
-            this.editorTabs.setSelectedComponent(editor);
-         }
-      }
-   }
-
-   @Override
    public void close()
    {
       closeScriptAction.actionPerformed(null);
@@ -251,5 +208,25 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       {
          this.add(new JLabel("Coming soon."));
       }
+   }
+
+   @Override
+   public String getFileTypeDescription()
+   {
+      return "Python Scripts";
+   }
+
+   @Override
+   public boolean isMyFileType(File file)
+   {
+      return file.getName().toLowerCase().endsWith(".py");
+   }
+
+   @Override
+   public void open(File file)
+   {
+      CodeEditorPane editor = new CodeEditorPane(file);
+      this.editorTabs.add(file.getName(), editor);
+      this.editorTabs.setSelectedComponent(editor);
    }
 }

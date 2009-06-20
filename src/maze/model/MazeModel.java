@@ -567,7 +567,10 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
       String name;
       FileInputStream in = null;
       in = new FileInputStream(file);
-      name = loadMaze(in, true);
+      if (filename.toLowerCase().endsWith("maz"))
+         name = loadMaze(in, false); // Simple format.
+      else
+         name = loadMaze(in, true); // v2 format.
       in.close();
 
       return name;
