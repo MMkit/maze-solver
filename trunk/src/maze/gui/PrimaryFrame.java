@@ -6,10 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.TreeSet;
-import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -29,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.filechooser.FileFilter;
 
 import maze.Main;
 import maze.gui.mazeeditor.MazeEditor;
@@ -100,12 +102,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            Component c = mainTabs.getSelectedComponent();
-            if (c instanceof MenuControlled)
-            {
-               MenuControlled mc = (MenuControlled) c;
-               mc.open();
-            }
+            doOpenFile();
          }
       });
 
@@ -270,6 +267,119 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          ex.printStackTrace();
       }
       SwingUtilities.updateComponentTreeUI(this);
+   } // End init.
+
+   /**
+    * Bring up the open file dialog and based on the file type selected hand it
+    * off to the appropriate panel.
+    */
+   private void doOpenFile()
+   {
+      final MenuControlled[] panels =
+      {
+         codeEditorPanel, mazeEditor
+      };
+      final JFileChooser fc = new JFileChooser();
+      fc.setAcceptAllFileFilterUsed(false);
+
+      // Create a file filter for all our file types.
+      FileFilter allFiles = new FileFilter()
+      {
+         @Override
+         public String getDescription()
+         {
+            String msg = "";
+            for (MenuControlled mc : panels)
+            {
+               msg += mc.getFileTypeDescription() + ", ";
+            }
+            return msg.substring(0, msg.length() - 2);
+         }
+
+         @Override
+         public boolean accept(File f)
+         {
+            if (f.isDirectory())
+               return true;
+            for (MenuControlled mc : panels)
+            {
+               if (mc.isMyFileType(f))
+                  return true;
+            }
+            return false;
+         }
+      };
+      fc.addChoosableFileFilter(allFiles);
+
+      // Add filter for each type.
+      for (final MenuControlled mc : panels)
+      {
+         fc.addChoosableFileFilter(new FileFilter()
+         {
+            @Override
+            public boolean accept(File f)
+            {
+               if (f.isDirectory())
+                  return true;
+               else
+                  return mc.isMyFileType(f);
+            }
+
+            @Override
+            public String getDescription()
+            {
+               return mc.getFileTypeDescription();
+            }
+         });
+      }
+
+      fc.setFileFilter(allFiles); // Set initially selected.
+
+      if (fc.showOpenDialog(PrimaryFrame.this) == JFileChooser.APPROVE_OPTION)
+      {
+         File file = fc.getSelectedFile();
+         try
+         {
+            if (file.exists() && file.canRead())
+            {
+               // Try to open the file so it throws an exception if the file can not be read.
+               FileInputStream fileStream = null;
+               try
+               {
+                  fileStream = new FileInputStream(file);
+               }
+               finally
+               {
+                  if (fileStream != null)
+                     fileStream.close();
+               }
+               for (final MenuControlled mc : panels)
+               {
+                  if (mc.isMyFileType(file))
+                  {
+                     mainTabs.setSelectedComponent((Component) mc);
+                     mc.open(file);
+                     return;
+                  }
+               }
+               // If we make it this far then nobody recognized the file type.
+               throw new RuntimeException("The type of the selected file was not recognized.");
+            }
+            else
+            {
+               throw new SecurityException("File may not exist.");
+            }
+         }
+         catch (Exception ex)
+         {
+            ex.printStackTrace();
+            String msg = "There was an error opening the file.\n" + ex.getLocalizedMessage();
+            JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                          msg,
+                                          "File Open Error",
+                                          JOptionPane.ERROR_MESSAGE);
+         }
+      }
    }
 
    /**
@@ -282,6 +392,11 @@ public final class PrimaryFrame extends JFrame implements WindowListener
       return mMazeInfoModel;
    }
 
+   /**
+    * Save a maze.
+    * @param mi To save.
+    * @return The saved maze or null.
+    */
    public MazeInfo saveMaze(MazeInfo mi)
    {
       DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
@@ -333,7 +448,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          }
          else if (mi.getPath() == null || mi.getPath().equals(""))
          {
-            JFileChooser chooser = new JFileChooser(".");
+            JFileChooser chooser = new JFileChooser();
             while (true)
             {
                if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)

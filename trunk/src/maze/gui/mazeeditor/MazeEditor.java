@@ -11,14 +11,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import java.io.File;
+
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -28,14 +27,12 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
-import javax.swing.filechooser.FileFilter;
 import maze.Main;
 import maze.gui.MazeList;
 import maze.gui.MenuControlled;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 import maze.model.MazeModel;
-
 
 /**
  * This panel creates a GUI to edit mazes.
@@ -44,15 +41,13 @@ import maze.model.MazeModel;
 public class MazeEditor extends JPanel implements MenuControlled
 {
    private static final String NEXT_ORIENTATION_ACTION_KEY = "nextOrientation";
-   private static final String TOP_HELP =
-           "Left-Click: Add walls, Right-Click: " +
-           "Remove walls, Middle-Click or R Key: Change template Orientation, "+
-           "Wheelup: Grow template, Wheeldown: Shrink template";
-   private static final String POPUP_HELP =
-           "<html><b>Left-Click</b>: Add walls<br /><b>Right-Click</b>: " +
-           "Remove walls<br /><b>Middle-Click</b> or <b>R Key</b>: Change template " +
-           "Orientation<br /><b>Wheelup</b>: Grow template<br />" +
-           "<b>Wheeldown</b>: Shrink template</btml>";
+   private static final String TOP_HELP = "Left-Click: Add walls, Right-Click: "
+                                          + "Remove walls, Middle-Click or R Key: Change template Orientation, "
+                                          + "Wheelup: Grow template, Wheeldown: Shrink template";
+   private static final String POPUP_HELP = "<html><b>Left-Click</b>: Add walls<br /><b>Right-Click</b>: "
+                                            + "Remove walls<br /><b>Middle-Click</b> or <b>R Key</b>: Change template "
+                                            + "Orientation<br /><b>Wheelup</b>: Grow template<br />"
+                                            + "<b>Wheeldown</b>: Shrink template</btml>";
    private final ImageIcon mPointIcon = Main.getImageResource("gui/mazeeditor/images/Pointer.png");
    private MazeTemplate mCurrentTemplate = null;
    private EditableMazeView mMazeView;
@@ -62,16 +57,9 @@ public class MazeEditor extends JPanel implements MenuControlled
 
    private static final MazeTemplate[] mTemplates =
    {
-      new BoxTemplate(),
-      new StraightTemplate(),
-      new CornerTemplate(),
-      new CrossTemplate(),
-      new ZigZagTemplate(),
-      new WaveTemplate(),
-      new StaggeredTemplate(),
-      new JungleTemplate(),
-      new RungTemplate(),
-      new GappedTemplate()
+      new BoxTemplate(), new StraightTemplate(), new CornerTemplate(), new CrossTemplate(),
+      new ZigZagTemplate(), new WaveTemplate(), new StaggeredTemplate(), new JungleTemplate(),
+      new RungTemplate(), new GappedTemplate()
    };
 
    public MazeEditor()
@@ -84,11 +72,10 @@ public class MazeEditor extends JPanel implements MenuControlled
       NewMazeDialog dialog;
       String result;
       dialog = new NewMazeDialog(Main.getPrimaryFrameInstance());
-      if ((result = dialog.showDialog()) == null)
+      if ( (result = dialog.showDialog()) == null)
          return;
 
-      MazeInfoModel mim =
-              Main.getPrimaryFrameInstance().getMazeInfoModel();
+      MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
 
       if (result.equals(NewMazeDialog.MAZ))
       {
@@ -96,8 +83,9 @@ public class MazeEditor extends JPanel implements MenuControlled
          if (newMi == null)
          {
             JOptionPane.showMessageDialog(MazeEditor.this,
-                    "Unable to create new maze", "Maze Creation Error",
-                    JOptionPane.OK_OPTION);
+                                          "Unable to create new maze",
+                                          "Maze Creation Error",
+                                          JOptionPane.OK_OPTION);
             return;
          } // if (newMi == null)
          mLastNew++;
@@ -108,15 +96,15 @@ public class MazeEditor extends JPanel implements MenuControlled
          if (newMi == null)
          {
             JOptionPane.showMessageDialog(MazeEditor.this,
-                    "Unable to create new maze", "Maze Creation Error",
-                    JOptionPane.OK_OPTION);
+                                          "Unable to create new maze",
+                                          "Maze Creation Error",
+                                          JOptionPane.OK_OPTION);
             return;
          } // if (newMi == null)
          MazeModel mm = newMi.getModel();
          mm.setSize(dialog.getMazeSize());
       } // else if (result.equals(NewMazeDialog.MZ2))
    }
-
 
    private void buildPanel()
    {
@@ -133,7 +121,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
-      
+
       this.mOpenMazes = new MazeList(this.mMazeView);
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
@@ -141,8 +129,7 @@ public class MazeEditor extends JPanel implements MenuControlled
 
       rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
       splitPane.setRightComponent(rightPanel);
-      splitPane.addPropertyChangeListener("dividerLocation",
-                                          new PropertyChangeListener()
+      splitPane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener()
       {
          @Override
          public void propertyChange(PropertyChangeEvent evt)
@@ -157,6 +144,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       addComponentListener(new ComponentAdapter()
       {
          boolean notShown = true;
+
          @Override
          public void componentShown(ComponentEvent e)
          {
@@ -194,7 +182,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       }
 
       add(tBar, BorderLayout.WEST);
-      
+
       //Add an action for the 'r' key to change the template to the next orientation.
       this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke('r'),
                                                                           NEXT_ORIENTATION_ACTION_KEY);
@@ -210,10 +198,9 @@ public class MazeEditor extends JPanel implements MenuControlled
             }
          }
       });
-      
 
       mMouseAdapter = new TemplateMouseAdapter();
-      
+
       mMazeView.addMouseListener(mMouseAdapter);
       mMazeView.addMouseMotionListener(mMouseAdapter);
       mMazeView.addMouseWheelListener(mMouseAdapter);
@@ -253,7 +240,7 @@ public class MazeEditor extends JPanel implements MenuControlled
    @Override
    public void saveCurrent()
    {
-      MazeInfo mi = (MazeInfo)mOpenMazes.getList().getSelectedValue();
+      MazeInfo mi = (MazeInfo) mOpenMazes.getList().getSelectedValue();
       if (mi != null)
       {
          mi = Main.getPrimaryFrameInstance().saveMaze(mi);
@@ -262,47 +249,15 @@ public class MazeEditor extends JPanel implements MenuControlled
    }
 
    @Override
-   public void open()
-   {
-      JFileChooser chooser = new JFileChooser();
-      FileFilter ff = new MazeFileFilter();
-      chooser.setAcceptAllFileFilterUsed(false);
-      chooser.setFileFilter(ff);
-      if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this))
-      {
-         MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
-         File selected = chooser.getSelectedFile();
-         String path = "";
-         try
-         {
-            path = selected.getAbsolutePath();
-         }
-         catch(SecurityException ex)
-         {
-            String msg = "You do not have permission to open this file";
-            JOptionPane.showMessageDialog(this, msg,
-                                          "Maze Open Error",
-                                          JOptionPane.ERROR_MESSAGE);
-            return;
-         }
-         if (!mim.addMaze(selected))
-            JOptionPane.showMessageDialog(this, "<html>Unable to load " +
-                                          "<br />" + path + "</html",
-                                          "Maze Open Error",
-                                          JOptionPane.ERROR_MESSAGE);
-
-      }
-   }
-
-   @Override
    public void close()
    {
-      MazeInfo mi = (MazeInfo)mOpenMazes.getList().getSelectedValue();
+      MazeInfo mi = (MazeInfo) mOpenMazes.getList().getSelectedValue();
       if (mi != null)
       {
          if (!mi.isMutable())
          {
-            JOptionPane.showMessageDialog(this, "This maze cannot be closed",
+            JOptionPane.showMessageDialog(this,
+                                          "This maze cannot be closed",
                                           "Maze Close",
                                           JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -311,7 +266,7 @@ public class MazeEditor extends JPanel implements MenuControlled
             saveCurrent();
          MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
          JList list = mOpenMazes.getList();
-         list.setSelectedIndex(list.getSelectedIndex()-1);
+         list.setSelectedIndex(list.getSelectedIndex() - 1);
          mim.close(mi);
       }
    }
@@ -319,6 +274,7 @@ public class MazeEditor extends JPanel implements MenuControlled
    class TemplateActionListener implements ActionListener
    {
       private MazeTemplate mt;
+
       public TemplateActionListener(MazeTemplate mt)
       {
          this.mt = mt;
@@ -338,8 +294,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       {
          if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
-            mCurrentTemplate.updatePosition(e.getPoint(),
-                                            mMazeView.getCellSize());
+            mCurrentTemplate.updatePosition(e.getPoint(), mMazeView.getCellSize());
             mMazeView.repaint();
          }
       } // public void mouseMoved(MouseEvent e)
@@ -371,7 +326,7 @@ public class MazeEditor extends JPanel implements MenuControlled
          }
          mOpenMazes.repaint();
       } // public void mousePressed(MouseEvent e)
-      
+
       @Override
       public void mouseWheelMoved(MouseWheelEvent e)
       {
@@ -390,23 +345,32 @@ public class MazeEditor extends JPanel implements MenuControlled
          mMazeView.repaint();
       }
    }
-}
-class MazeFileFilter extends FileFilter
-{
+
    @Override
-   public boolean accept(File f)
+   public String getFileTypeDescription()
    {
-      if (f.isDirectory())
-         return true;
-      String lower = f.getName().toLowerCase();
-      if (lower.endsWith(".maz") || lower.endsWith(".mz2"))
-         return true;
-      return false;
+      return "Maze files (.maz, .mz2)";
    }
 
    @Override
-   public String getDescription()
+   public boolean isMyFileType(File file)
    {
-      return "Maze files (.maz, .mz2)";
+      String lower = file.getName().toLowerCase();
+      if (lower.endsWith(".maz") || lower.endsWith(".mz2"))
+         return true;
+      else
+         return false;
+   }
+
+   @Override
+   public void open(File file)
+   {
+      MazeInfoModel mim = Main.getPrimaryFrameInstance().getMazeInfoModel();
+      if (!mim.addMaze(file))
+         JOptionPane.showMessageDialog(this, "<html>Unable to load " +
+                                             "<br />" +
+                                             file.getAbsolutePath() +
+                                             "</html", "Maze Open Error", JOptionPane.ERROR_MESSAGE);
+
    }
 }
