@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public final class MazeCell implements Comparable<MazeCell>, Serializable
 {
+   private static final long serialVersionUID = -3456709665929349825L;
+
    /**
     * The column or X coordinate where this cell lives, starting from the left
     * with 1.
