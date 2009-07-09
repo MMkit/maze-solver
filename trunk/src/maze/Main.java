@@ -61,12 +61,12 @@ public final class Main
       catch (Exception e)
       {
          e.printStackTrace();
-         JOptionPane.showMessageDialog(null,
+         JOptionPane.showMessageDialog(getPrimaryFrameInstance(),
                                        "Cannot Load Image: " + imagePath + "\nException: " + e,
                                        "Error Loading Resource",
                                        JOptionPane.ERROR_MESSAGE);
          //Return a blank image on load error.
-         return new ImageIcon(new BufferedImage(10,10,BufferedImage.TYPE_INT_RGB));
+         return new ImageIcon(new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB));
       }
    }
 }

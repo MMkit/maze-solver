@@ -50,7 +50,7 @@ public class MazeEditor extends JPanel implements MenuControlled
                                             + "<b>Wheeldown</b>: Shrink template</btml>";
    private final ImageIcon mPointIcon = Main.getImageResource("gui/mazeeditor/images/Pointer.png");
    private MazeTemplate mCurrentTemplate = null;
-   private EditableMazeView mMazeView;
+   private final EditableMazeView mMazeView = new EditableMazeView();
    private MazeList mOpenMazes;
    private MouseAdapter mMouseAdapter = null;
    private int mLastNew = 1;
@@ -117,7 +117,6 @@ public class MazeEditor extends JPanel implements MenuControlled
       splitPane.setResizeWeight(.8);
       splitPane.setOneTouchExpandable(true);
 
-      mMazeView = new EditableMazeView();
       mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
@@ -127,7 +126,11 @@ public class MazeEditor extends JPanel implements MenuControlled
       rightPanel.setLayout(new BorderLayout());
       rightPanel.add(this.mOpenMazes, BorderLayout.CENTER);
 
-      rightPanel.add(makeNewMazeButton(), BorderLayout.SOUTH);
+      final JPanel rightPanelButtons = new JPanel(new BorderLayout());
+      rightPanelButtons.add(makeNewMazeButton(), BorderLayout.NORTH);
+      rightPanelButtons.add(makeRandomMazeButton(), BorderLayout.SOUTH);
+
+      rightPanel.add(rightPanelButtons, BorderLayout.SOUTH);
       splitPane.setRightComponent(rightPanel);
       splitPane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener()
       {
@@ -235,6 +238,26 @@ public class MazeEditor extends JPanel implements MenuControlled
          }
       });
       return newMaze;
+   }
+
+   private JButton makeRandomMazeButton()
+   {
+      JButton random = new JButton("Randomize Maze");
+      random.setToolTipText("Randomize all the walls of the currently selected Maze.");
+      random.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            final MazeModel maze = mMazeView.getModel();
+            if (maze != null)
+            {
+               maze.generateRandomMaze();
+               mMazeView.repaint();
+            }
+         }
+      });
+      return random;
    }
 
    @Override

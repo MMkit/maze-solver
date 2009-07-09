@@ -1,7 +1,6 @@
 package maze.gui.mazeeditor;
 
 import java.awt.Point;
-import maze.gui.CellSize;
 
 /**
  * This class provides a parent class to any maze template that is one piece.

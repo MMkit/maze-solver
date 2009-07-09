@@ -140,7 +140,7 @@ public class StatViewPanel extends JPanel
       MazeInfo mi = (MazeInfo) mazeList.getList().getSelectedValue();
       if (mi != null)
       {
-         this.maze = new MazeModel(mi.getModel());
+         this.maze = mi.getModel().clone();
       }
 
       this.algorithm = (RobotBase) algorithmCombo.getSelectedItem();
