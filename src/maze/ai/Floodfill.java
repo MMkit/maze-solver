@@ -413,7 +413,7 @@ public class Floodfill extends RobotBase
       MazeCell here = robotLocation.getCurrentLocation();
       if (getDistance(here) == USELESS)
       {
-         System.out.println("Purging Knowledge");
+         //System.out.println("Purging Knowledge");
          maze.clearMaze();
          speedRunCapable = false;
          for (int i = 0; i < size.width; i++)

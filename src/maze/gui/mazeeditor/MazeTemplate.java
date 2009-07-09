@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.util.TreeSet;
 import javax.swing.ImageIcon;
 
-import maze.gui.CellSize;
 
 /**
  *

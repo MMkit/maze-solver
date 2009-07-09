@@ -1,4 +1,4 @@
-package maze.gui;
+package maze.gui.mazeeditor;
 
 import java.util.Arrays;
 

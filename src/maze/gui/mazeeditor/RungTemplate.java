@@ -8,7 +8,6 @@ package maze.gui.mazeeditor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import maze.gui.CellSize;
 
 /**
  *

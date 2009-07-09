@@ -154,11 +154,11 @@ public final class MazeCell implements Comparable<MazeCell>, Serializable
    {
       if (this.y != other.y)
       {
-         return other.y - this.y;
+         return this.y - other.y;
       }
       else
       { // y's are equal so compare x.
-         return other.x - this.x;
+         return this.x - other.x;
       }
    }
 

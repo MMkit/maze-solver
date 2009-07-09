@@ -15,7 +15,15 @@ import javax.swing.ImageIcon;
  */
 public final class MazePainterDefault extends MazePainter
 {
+   private Color cellBackgroundEnd;
+   private Color cellBackgroundStart;
    private final ImageIcon pegImage = maze.Main.getImageResource("gui/images/peg.png");
+
+   private Color wallEmptyEnd;
+   private Color wallEmptyStart;
+
+   private Color wallSetEnd;
+   private Color wallSetStart;
 
    /**
     * Draw a special image for the peg.
@@ -33,8 +41,48 @@ public final class MazePainterDefault extends MazePainter
                   this.pegImage.getIconWidth(),
                   this.pegImage.getIconHeight(),
                   null);
-      g.setColor(new Color(0,0,0,185));
+      g.setPaint(this.peg);
       g.fill(area);
+   }
+
+   public Color getCellBackgroundEnd()
+   {
+      return cellBackgroundEnd;
+   }
+
+   public Color getCellBackgroundStart()
+   {
+      return cellBackgroundStart;
+   }
+
+   public Color getWallEmptyEnd()
+   {
+      return wallEmptyEnd;
+   }
+
+   public Color getWallEmptyStart()
+   {
+      return wallEmptyStart;
+   }
+
+   public Color getWallSetEnd()
+   {
+      return wallSetEnd;
+   }
+
+   public Color getWallSetStart()
+   {
+      return wallSetStart;
+   }
+
+   public void setCellBackgroundEnd(Color cellBackgroundEnd)
+   {
+      this.cellBackgroundEnd = cellBackgroundEnd;
+   }
+
+   public void setCellBackgroundStart(Color cellBackgroundStart)
+   {
+      this.cellBackgroundStart = cellBackgroundStart;
    }
 
    /**
@@ -44,11 +92,20 @@ public final class MazePainterDefault extends MazePainter
    @Override
    public void setDefaults()
    {
-      this.cellBackground = Color.BLACK;
+      this.cellBackground = Color.WHITE;
+      this.cellBackgroundStart = Color.WHITE;
+      this.cellBackgroundEnd = new Color(229, 236, 255); // Really light blue.
+
       this.wallSet = Color.BLACK;
+      this.wallSetStart = new Color(0, 94, 189);
+      this.wallSetEnd = new Color(0, 56, 112);
+
       this.wallEmpty = Color.BLACK;
+      this.wallEmptyStart = this.cellBackgroundEnd;
+      this.wallEmptyEnd = new Color(204, 218, 255); // Light blue.
+
       this.background = Color.WHITE;
-      this.peg = Color.BLACK;
+      this.peg = new Color(0, 0, 0, 185); // Slightly transparent black.
       this.pegValid = Color.BLACK;
       this.pegInvalid = new GradientPaint(0, 0, Color.RED, 2, 2, new Color(240, 0, 0), true);
       this.fog = new Color(0, 0, 0, 75);
@@ -75,20 +132,36 @@ public final class MazePainterDefault extends MazePainter
          final Point zero = new Point(0, 0);
          final Point middle = new Point(halfX, halfY);
          this.cellBackground = new GradientPaint(zero,
-                                                 Color.WHITE,
+                                                 this.cellBackgroundStart,
                                                  middle,
-                                                 new Color(229, 236, 255),
+                                                 this.cellBackgroundEnd,
                                                  true);
          this.wallEmpty = new GradientPaint(zero, //Gradient start corner.
-                                            new Color(229, 236, 255), //Really light blue.
+                                            this.wallEmptyStart,
                                             middle,
-                                            new Color(204, 218, 255), //Light blue.
+                                            this.wallEmptyEnd,
                                             true);
-         this.wallSet = new GradientPaint(zero,
-                                          new Color(0, 94, 189),
-                                          middle,
-                                          new Color(0, 56, 112),
-                                          true);
+         this.wallSet = new GradientPaint(zero, this.wallSetStart, middle, this.wallSetEnd, true);
       }
+   }
+
+   public void setWallEmptyEnd(Color wallEmptyEnd)
+   {
+      this.wallEmptyEnd = wallEmptyEnd;
+   }
+
+   public void setWallEmptyStart(Color wallEmptyStart)
+   {
+      this.wallEmptyStart = wallEmptyStart;
+   }
+
+   public void setWallSetEnd(Color wallSetEnd)
+   {
+      this.wallSetEnd = wallSetEnd;
+   }
+
+   public void setWallSetStart(Color wallSetStart)
+   {
+      this.wallSetStart = wallSetStart;
    }
 }

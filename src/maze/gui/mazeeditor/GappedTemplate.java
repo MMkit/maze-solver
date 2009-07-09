@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import maze.Main;
-import maze.gui.CellSize;
 
 /**
  * This class provides a corner shaped MazeTemplate that can be grown or shrunk
