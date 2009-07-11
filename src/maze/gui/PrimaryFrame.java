@@ -1,6 +1,7 @@
 package maze.gui;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -54,14 +55,17 @@ public final class PrimaryFrame extends JFrame implements WindowListener
     */
    public void init()
    {
+      this.setMinimumSize(new Dimension(750, 550)); // Set minimum to fit on an 800x600 screen.
+      this.setSize(1000, 730); // Set for an 1024x768 screen.
       this.mazeViewer = new MazeViewerPanel();
       this.codeEditorPanel = new CodeEditingPanel();
 
       this.setTitle("Micro Mouse Maze Editor and Simulator");
       this.setIconImage(Main.getImageResource("gui/images/logo.png").getImage());
 
-      // menu bar
-      JMenuBar menuBar = new JMenuBar();
+      // Main menu bar.
+      final JMenuBar menuBar = new JMenuBar();
+      this.setJMenuBar(menuBar);
       menuBar.add(this.fileMenu);
 
       //New file menu.
@@ -244,16 +248,12 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          }
       });
 
-      this.setJMenuBar(menuBar);
-
-      this.setSize(1000, 750);
-
       this.add(mainTabs);
-
       mainTabs.add("Micro Mouse Simulator", this.mazeViewer);
       mainTabs.add("Maze Editor", mazeEditor = new MazeEditor());
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
       mainTabs.add("Statistics Display", new StatViewPanel());
+
       this.addWindowListener(this);
       try
       {
@@ -268,7 +268,9 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
    /**
     * Bring up the open file dialog and based on the file type selected hand it
-    * off to the appropriate panel.
+    * off to the appropriate panel. The 2 groups of files are AI scripts and
+    * maze files. AI scripts are python .py files and maze maps can be .maz or
+    * .mz2.
     */
    private void doOpenFile()
    {

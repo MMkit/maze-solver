@@ -1,5 +1,6 @@
 package maze.gui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -52,11 +53,13 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
 
       //Set up the documentation tabs.
       final JTabbedPane docTabs = new JTabbedPane();
+      docTabs.setMinimumSize(new Dimension(200, 0));
 
       docTabs.add("Code Information", new CodeInformationPanel());
       docTabs.add("API Documentation", new JScrollPane(docPane));
 
       //Set up split pane.
+      this.setContinuousLayout(true);
       this.setLeftComponent(this.editorTabs);
       this.setRightComponent(docTabs);
       this.doLayout();
