@@ -56,7 +56,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    public void init()
    {
       this.setMinimumSize(new Dimension(750, 550)); // Set minimum to fit on an 800x600 screen.
-      this.setSize(1000, 730); // Set for an 1024x768 screen.
+      this.setSize(1000, 720); // Set for an 1024x768 screen.
       this.mazeViewer = new MazeViewerPanel();
       this.codeEditorPanel = new CodeEditingPanel();
 
