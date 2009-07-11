@@ -1,5 +1,5 @@
 #summary 2009.04.29 work in class
-#labels Phase-Requirements,Featured
+#labels Phase-Requirements
 
 = Introduction =
 
