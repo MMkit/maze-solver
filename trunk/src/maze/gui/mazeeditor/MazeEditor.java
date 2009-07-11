@@ -1,6 +1,7 @@
 package maze.gui.mazeeditor;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,14 +115,17 @@ public class MazeEditor extends JPanel implements MenuControlled
       add(instr, BorderLayout.NORTH);
 
       final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-      splitPane.setResizeWeight(.8);
+      splitPane.setContinuousLayout(true);
+      splitPane.setResizeWeight(.9);
       splitPane.setOneTouchExpandable(true);
 
+      mMazeView.setMinimumSize(new Dimension(400, 200));
       mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
 
       this.mOpenMazes = new MazeList(this.mMazeView);
+      this.mOpenMazes.setMinimumSize(new Dimension(160, 0));
       JPanel rightPanel = new JPanel();
       rightPanel.setLayout(new BorderLayout());
       rightPanel.add(this.mOpenMazes, BorderLayout.CENTER);
