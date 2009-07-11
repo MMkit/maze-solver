@@ -47,6 +47,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    private MazeEditor mazeEditor;
    private CodeEditingPanel codeEditorPanel;
    private final JTabbedPane mainTabs = new JTabbedPane();
+   private final JMenu fileMenu = new JMenu("File");
 
    /**
     * Initializes the contents of this frame.
@@ -61,10 +62,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
 
       // menu bar
       JMenuBar menuBar = new JMenuBar();
-
-      //File item
-      JMenu fileMenu = new JMenu("File");
-      menuBar.add(fileMenu);
+      menuBar.add(this.fileMenu);
 
       //New file menu.
       JMenu newMenu = new JMenu("New");
@@ -222,16 +220,15 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             {
                Properties prop = new Properties();
                prop.load(Main.class.getResourceAsStream("build.properties"));
-               buildDate = prop.getProperty("date", "Unknown");
-               revision = prop.getProperty("revision", "Unknown");
+               buildDate = prop.getProperty("date", buildDate);
+               revision = prop.getProperty("revision", revision);
             }
             catch (Exception e1)
             {
                e1.printStackTrace();
             }
 
-            String m = "<html><b>Version:</b> 0.9.3<br />" +
-                       "<b>Build Date:</b> " +
+            String m = "<html><b>Build Date:</b> " +
                        buildDate +
                        "<br /><b>Revision:</b> " +
                        revision +
@@ -542,6 +539,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    public void setSimulation(boolean simOn)
    {
       this.mainTabs.setEnabled(!simOn);
+      this.fileMenu.setEnabled(!simOn);
    }
 
    /**
