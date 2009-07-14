@@ -321,7 +321,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       {
          if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
-            mCurrentTemplate.updatePosition(e.getPoint(), mMazeView.getCellSize());
+            mCurrentTemplate.updatePosition(e.getPoint(), mMazeView.getCellSizeModel());
             mMazeView.repaint();
          }
       } // public void mouseMoved(MouseEvent e)

@@ -2,6 +2,8 @@ package maze.gui.mazeeditor;
 
 import java.awt.Point;
 
+import maze.model.CellSizeModel;
+
 /**
  * This class provides a parent class to any maze template that is one piece.
  * This means that a peg can be reached by any other peg just by traversing
@@ -31,7 +33,7 @@ public abstract class ConjoinedMazeTemplate extends MazeTemplate
     * @return an array consisting of one element, the center peg position
     */
    @Override
-   public Point[] getCenterPoints(CellSize size)
+   public Point[] getCenterPoints(CellSizeModel size)
    {
       return new Point[]{mCenterPoint};
    }
@@ -42,7 +44,7 @@ public abstract class ConjoinedMazeTemplate extends MazeTemplate
     * @param size the dimensions of the maze being displayed
     */
    @Override
-   public void updatePosition(Point p, CellSize size)
+   public void updatePosition(Point p, CellSizeModel size)
    {
       mCenterPoint = (Point)p.clone();
    }
