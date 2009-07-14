@@ -1,109 +1,128 @@
 package maze.gui.mazeeditor;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Point;
-
+import java.awt.Rectangle;
+import java.util.Set;
 import java.util.TreeSet;
+
 import javax.swing.ImageIcon;
 
+import maze.gui.MazePainter;
+import maze.model.CellSizeModel;
 
 /**
- *
  * @author John Smith
  */
 public abstract class MazeTemplate
 {
-   protected Paint mWallPaint;
-   protected static final Color PEG_COLOR = Color.BLACK;
    protected ImageIcon mIcon = null;
    protected String mDesc = "";
 
    public abstract TemplatePeg[] getCenterPegs();
-   public abstract Point[] getCenterPoints(CellSize size);
-   public abstract void updatePosition(Point p, CellSize size);
-   public abstract void nextOrientation();
-   public abstract void grow();
-   public abstract void shrink();
-   public void draw(Graphics2D g, CellSize size)
-   {
-      mWallPaint = new GradientPaint(new Point(0, 0), new Color(0, 94, 189),
-                                     new Point(size.getTotalWidth()/2, 
-                                     size.getTotalHeight()/2),
-                                     new Color(0, 56, 112), true);
 
+   public abstract Point[] getCenterPoints(CellSizeModel size);
+
+   public abstract void updatePosition(Point p, CellSizeModel size);
+
+   public abstract void nextOrientation();
+
+   public abstract void grow();
+
+   public abstract void shrink();
+
+   /**
+    * Draw the maze template on top of the maze view.
+    * @param g What to draw on.
+    * @param csm The model used to give us the sizes of cells, walls, and pegs.
+    * @param painter The maze painter used to do the actual drawing of the pegs
+    *           and wall segments.
+    */
+   public void draw(Graphics2D g, CellSizeModel csm, MazePainter painter)
+   {
       TemplatePeg[] pegs = this.getCenterPegs();
-      Point[] points = this.getCenterPoints(size);
+      Point[] points = this.getCenterPoints(csm);
 
       TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-      for (int i = 0; i < points.length; i+=2)
+      for (int i = 0; i < points.length; i += 2)
       {
-         Point origin = new Point(points[i].x-size.getWallWidth(),
-                                  points[i].y-size.getWallHeightHalf());
+         Point origin = new Point(points[i].x - csm.getWallWidth(), points[i].y -
+                                                                    csm.getWallHeightHalf());
 
-         drawPeg(pegs[i],visited, g, size, origin);
+         drawPeg(pegs[i], visited, g, csm, origin, painter);
       }
    }
 
    public abstract void reset();
-   
+
    public ImageIcon getTemplateIcon()
    {
       return mIcon;
    }
+
    public String getTemplateDescription()
    {
       return mDesc;
    }
 
-   protected void drawPeg(TemplatePeg peg, TreeSet<TemplatePeg> visited,
-                          Graphics2D g, CellSize size, Point origin)
+   /**
+    * Recursive method used to draw pegs and walls.
+    * @param peg Current peg to draw.
+    * @param visited Pegs we have drawn.
+    * @param g What to draw on.
+    * @param size Gives us the size of pegs and walls.
+    * @param origin The current location of what we are drawing.
+    * @param painter Maze painting delegate.
+    */
+   protected void drawPeg(TemplatePeg peg, Set<TemplatePeg> visited, Graphics2D g,
+         CellSizeModel size, Point origin, MazePainter painter)
    {
       if (peg == null || visited.contains(peg))
          return;
 
       visited.add(peg);
 
-      g.setPaint(null);
-      g.setColor(PEG_COLOR);
-      g.fillRect(origin.x, origin.y, size.getWallWidth(), size.getWallHeight());
+      painter.drawPeg(g, new Rectangle(origin.x,
+                                       origin.y,
+                                       size.getWallWidth(),
+                                       size.getWallHeight()));
 
       if (peg.top != null)
       {
-         origin.y -= size.getCellHeight();
-         g.setPaint(mWallPaint);
-         g.fillRect(origin.x, origin.y, size.getWallWidth(),
-                    size.getCellHeight());
+         origin.y -= size.getCellHeightInner();
+         painter.drawWallSet(g, new Rectangle(origin.x,
+                                              origin.y,
+                                              size.getWallWidth(),
+                                              size.getCellHeightInner()));
          origin.y -= size.getWallHeight();
-         drawPeg(peg.top.mRightTop, visited, g, size, origin);
-         origin.y += size.getCellHeight()+size.getWallHeight();
+         drawPeg(peg.top.mRightTop, visited, g, size, origin, painter);
+         origin.y += size.getCellHeightInner() + size.getWallHeight();
       }
 
       if (peg.bottom != null)
       {
-         origin.y += size.getCellHeight()+size.getWallHeight();
-         drawPeg(peg.bottom.mLeftBottom, visited, g, size, origin);
-         origin.y -= size.getCellHeight()+size.getWallHeight();
+         origin.y += size.getCellHeightInner() + size.getWallHeight();
+         drawPeg(peg.bottom.mLeftBottom, visited, g, size, origin, painter);
+         origin.y -= size.getCellHeightInner() + size.getWallHeight();
       }
 
       if (peg.left != null)
       {
-         origin.x -= size.getCellWidth();
-         g.setPaint(mWallPaint);
-         g.fillRect(origin.x, origin.y, size.getCellWidth(),
-                    size.getWallHeight());
+         origin.x -= size.getCellWidthInner();
+         painter.drawWallSet(g, new Rectangle(origin.x,
+                                              origin.y,
+                                              size.getCellWidthInner(),
+                                              size.getWallHeight()));
          origin.x -= size.getWallWidth();
-         drawPeg(peg.left.mLeftBottom, visited, g, size, origin);
-         origin.x += size.getCellWidth()+size.getWallWidth();
+         drawPeg(peg.left.mLeftBottom, visited, g, size, origin, painter);
+         origin.x += size.getCellWidthInner() + size.getWallWidth();
       }
 
       if (peg.right != null)
       {
-         origin.x += size.getCellWidth()+size.getWallWidth();
-         drawPeg(peg.right.mRightTop, visited, g, size, origin);
-         origin.x -= size.getCellWidth()+size.getWallWidth();
+         origin.x += size.getCellWidthInner() + size.getWallWidth();
+         drawPeg(peg.right.mRightTop, visited, g, size, origin, painter);
+         origin.x -= size.getCellWidthInner() + size.getWallWidth();
       }
    }
 }

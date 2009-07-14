@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.util.TreeSet;
 import java.util.Vector;
+
+import maze.model.CellSizeModel;
 import maze.model.Direction;
 import maze.model.MazeCell;
 import maze.model.MazeCellPeg;
@@ -19,26 +21,10 @@ import maze.model.MazeModel.MazeWall;
  * that will be applied.
  * @author Johnathan Smith
  */
-public class EditableMazeView extends maze.gui.MazeView
+public final class EditableMazeView extends maze.gui.MazeView
 {
    private static final int WALL_SIZE_DIVIDER = 3;
    private MazeTemplate mCurrentTemplate = null;
-
-   /**
-    * Returns a CellSize object that has the current size and dimensions of the
-    * maze cells and walls the whole maze based on the size of this MazeView
-    * panel.
-    * @return a CellSize object with the cell, walls and maze sizes
-    */
-   public CellSize getCellSize()
-   {
-      return new CellSize(csm.getCellWidth() - csm.getWallWidth(),
-                          csm.getCellHeight() - csm.getWallHeight(),
-                          csm.getWallWidth(),
-                          csm.getWallHeight(),
-                          csm.getCellWidth() * model.getSize().width,
-                          csm.getCellHeight() * model.getSize().height);
-   }
 
    /**
     * Resizes the wall width and height of the maze based on the size of this
@@ -56,6 +42,15 @@ public class EditableMazeView extends maze.gui.MazeView
    }
 
    /**
+    * Get the cell size model.
+    * @return A copy of the model instance.
+    */
+   public CellSizeModel getCellSizeModel()
+   {
+      return this.csm.clone();
+   }
+
+   /**
     * Paints the maze with a call to MazeView.paintComponent and paints the
     * currently selected maze template if one is selected.
     * @param arg the Graphics object that will be used for drawing operations
@@ -64,7 +59,7 @@ public class EditableMazeView extends maze.gui.MazeView
    protected void paintComponent(Graphics arg)
    {
       super.paintComponent(arg);
-      Graphics2D g2 = (Graphics2D) arg;
+      final Graphics2D g2 = (Graphics2D) arg;
       if (model != null)
       {
          g2.setPaint(super.paints.getPegInvalid());
@@ -85,7 +80,7 @@ public class EditableMazeView extends maze.gui.MazeView
          }
 
          if (mCurrentTemplate != null)
-            mCurrentTemplate.draw((Graphics2D) arg, getCellSize());
+            mCurrentTemplate.draw(g2, this.getCellSizeModel(), this.paints);
       }
    }
 
@@ -110,7 +105,7 @@ public class EditableMazeView extends maze.gui.MazeView
       if (model == null || mCurrentTemplate == null)
          return;
       TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
-      Point[] cp = mCurrentTemplate.getCenterPoints(getCellSize());
+      Point[] cp = mCurrentTemplate.getCenterPoints(this.getCellSizeModel());
       Vector<MazeWall> walls = new Vector<MazeWall>();
       TreeSet<TemplatePeg> applied = new TreeSet<TemplatePeg>();
       for (int i = 0; i < Math.min(tp.length, cp.length); i++)

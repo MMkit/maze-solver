@@ -1,12 +1,13 @@
 package maze.model;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * This model stores the sizes of the cells and wall segments that are drawn to
  * the screen.
  */
-public class CellSizeModel extends Observable
+public final class CellSizeModel extends Observable implements Cloneable, Serializable
 {
    private int cellWidth;
    private int cellHeight;
@@ -138,4 +139,51 @@ public class CellSizeModel extends Observable
    {
       return this.cellHeight - this.wallHeight;
    }
+
+   @Override
+   public int hashCode()
+   {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + cellHeight;
+      result = prime * result + cellWidth;
+      result = prime * result + wallHeight;
+      result = prime * result + wallWidth;
+      return result;
+   }
+
+   @Override
+   public boolean equals(Object obj)
+   {
+      if (this == obj)
+         return true;
+      if (obj == null)
+         return false;
+      if (! (obj instanceof CellSizeModel))
+         return false;
+      CellSizeModel other = (CellSizeModel) obj;
+      if (cellHeight != other.cellHeight)
+         return false;
+      if (cellWidth != other.cellWidth)
+         return false;
+      if (wallHeight != other.wallHeight)
+         return false;
+      if (wallWidth != other.wallWidth)
+         return false;
+      return true;
+   }
+
+   @Override
+   public CellSizeModel clone()
+   {
+      try
+      {
+         return (CellSizeModel) super.clone();
+      }
+      catch (CloneNotSupportedException e)
+      {
+         throw new RuntimeException(e);
+      }
+   }
+
 }

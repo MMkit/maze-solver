@@ -1,16 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze.gui.mazeeditor;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import maze.gui.MazePainter;
+import maze.model.*;
 
 /**
- *
  * @author Johnathan Smith
  */
 public class RungTemplate extends MazeTemplate
@@ -20,15 +16,17 @@ public class RungTemplate extends MazeTemplate
    private TemplatePeg[] mCenters;
    private Point[] mCenterPoints;
    private boolean mVert = true;
-   private CellSize mLastSize = new CellSize(4,4,2,2,0,0);
-
+   private CellSizeModel mLastSize = new CellSizeModel(false);
 
    RungTemplate()
    {
       this.mIcon = maze.Main.getImageResource("gui/mazeeditor/images/Rung.png");
       this.mDesc = "Rungs/Posts";
       updateTemplate();
-      mCenterPoints = new Point[]{new Point(0,0)};
+      mCenterPoints = new Point[]
+      {
+         new Point(0, 0)
+      };
    }
 
    @Override
@@ -38,20 +36,19 @@ public class RungTemplate extends MazeTemplate
    }
 
    @Override
-   public Point[] getCenterPoints(CellSize size)
+   public Point[] getCenterPoints(CellSizeModel size)
    {
-      if (mLastSize.compareTo(size) != 0)
+      if (mLastSize.equals(size) == false)
          generatePoints(size);
       return mCenterPoints;
    }
 
    @Override
-   public void updatePosition(Point p, CellSize size)
+   public void updatePosition(Point p, CellSizeModel size)
    {
-      if (mCenterPoints.length != mCenters.length || 
-          mLastSize.compareTo(size) != 0)
+      if (mCenterPoints.length != mCenters.length || mLastSize.equals(size) == false)
       {
-         mCenterPoints[0] = (Point)p.clone();
+         mCenterPoints[0] = (Point) p.clone();
          generatePoints(size);
       }
       refreshPoints(p);
@@ -85,12 +82,11 @@ public class RungTemplate extends MazeTemplate
    }
 
    @Override
-   public void draw(Graphics2D g, CellSize size)
+   public void draw(Graphics2D g, CellSizeModel size, MazePainter painter)
    {
-      if (mCenterPoints.length != mCenters.length ||
-          mLastSize.compareTo(size) != 0)
+      if (mCenterPoints.length != mCenters.length || mLastSize.equals(size) == false)
          generatePoints(size);
-      super.draw(g, size);
+      super.draw(g, size, painter);
    }
 
    @Override
@@ -103,12 +99,12 @@ public class RungTemplate extends MazeTemplate
 
    private void updateTemplate()
    {
-      mCenters = new TemplatePeg[mSize*2];
+      mCenters = new TemplatePeg[mSize * 2];
 
       TemplatePeg first, second;
       TemplateWall newWall;
 
-      for (int i = 0; i < mCenters.length; i+=2)
+      for (int i = 0; i < mCenters.length; i += 2)
       {
          if (mVert)
          {
@@ -130,11 +126,11 @@ public class RungTemplate extends MazeTemplate
             mCenters[i] = first;
          }
          mCenters[i] = first;
-         mCenters[i+1] = second;
+         mCenters[i + 1] = second;
       }
    }
 
-   private void generatePoints(CellSize size)
+   private void generatePoints(CellSizeModel size)
    {
       mLastSize = size;
       Point c = mCenterPoints[0];
@@ -143,43 +139,43 @@ public class RungTemplate extends MazeTemplate
 
       int count = 0;
 
-      for(int i = 0; i < mCenterPoints.length; i+=2)
+      for (int i = 0; i < mCenterPoints.length; i += 2)
       {
          int diffX = 0, diffY = 0;
-         
-         if (((i/2) & 1) == 1)
+
+         if ( ( (i / 2) & 1) == 1)
          {
             if (mVert)
-               diffY = -(size.getCellHeight()+size.getWallHeight())*count;
+               diffY = - (size.getCellHeightInner() + size.getWallHeight()) * count;
             else
-               diffX = (size.getCellWidth()+size.getWallWidth())*count;
+               diffX = (size.getCellWidthInner() + size.getWallWidth()) * count;
          }
          else
          {
             if (mVert)
-               diffY = (size.getCellHeight()+size.getWallHeight())*count;
+               diffY = (size.getCellHeightInner() + size.getWallHeight()) * count;
             else
-               diffX = -(size.getCellWidth()+size.getWallWidth())*count;
+               diffX = - (size.getCellWidthInner() + size.getWallWidth()) * count;
             count++;
-            
+
          }
 
-         Point np1 = new Point(c.x+diffX,c.y+diffY);
-         Point np2 = new Point(np1.x,np1.y);
+         Point np1 = new Point(c.x + diffX, c.y + diffY);
+         Point np2 = new Point(np1.x, np1.y);
 
-        if (mVert)
-            np2.x -= size.getCellWidth()+size.getWallWidth();
-        else
-            np2.y -= size.getCellHeight()+size.getWallHeight();
+         if (mVert)
+            np2.x -= size.getCellWidthInner() + size.getWallWidth();
+         else
+            np2.y -= size.getCellHeightInner() + size.getWallHeight();
 
          mCenterPoints[i] = np1;
-         mCenterPoints[i+1] = np2;
+         mCenterPoints[i + 1] = np2;
       }
    }
 
    private void refreshPoints(Point p)
    {
-      int diffX = p.x-mCenterPoints[0].x, diffY = p.y-mCenterPoints[0].y;
+      int diffX = p.x - mCenterPoints[0].x, diffY = p.y - mCenterPoints[0].y;
       for (int i = 0; i < mCenterPoints.length; i++)
       {
          mCenterPoints[i].x += diffX;
