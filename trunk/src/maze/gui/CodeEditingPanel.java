@@ -11,15 +11,15 @@ import java.nio.CharBuffer;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 import maze.Main;
+
+import org.python.util.PythonInterpreter;
 
 /**
  * Creates a robot AI script editor that allows the creation of Python scripts
@@ -55,7 +55,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       final JTabbedPane docTabs = new JTabbedPane();
       docTabs.setMinimumSize(new Dimension(200, 0));
 
-      docTabs.add("Code Information", new CodeInformationPanel());
+      docTabs.add("Code Information", CodeInformationPanel.getInstance());
       docTabs.add("API Documentation", new JScrollPane(docPane));
 
       //Set up split pane.
@@ -73,6 +73,34 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
             setDividerLocation(.7);
          }
       });
+      this.activatePythonInBackground();
+   }
+
+   /**
+    * Launches a background thread that initializes the Python interpreter which
+    * can take a while when done the first time. We do this early so that the
+    * interpreter runs quickly when it is needed.
+    */
+   private void activatePythonInBackground()
+   {
+      final Thread thread = new Thread()
+      {
+         @Override
+         public void run()
+         {
+            try
+            {
+               // Give the application some time to launch before we start burning the cpu.
+               Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {}
+            new PythonInterpreter();
+         }
+      };
+      thread.setDaemon(true);
+      thread.setPriority(Thread.MIN_PRIORITY);
+      thread.start();
    }
 
    /**
@@ -199,18 +227,6 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    public void close()
    {
       closeScriptAction.actionPerformed(null);
-   }
-
-   /**
-    * Creates a panel to display information about the current python script.
-    * @author Luke Last
-    */
-   private static final class CodeInformationPanel extends JPanel
-   {
-      public CodeInformationPanel()
-      {
-         this.add(new JLabel("Coming soon."));
-      }
    }
 
    @Override

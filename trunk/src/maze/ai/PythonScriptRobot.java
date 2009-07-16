@@ -21,7 +21,7 @@ public final class PythonScriptRobot extends RobotBase
    public void initialize()
    {
       super.initialize();
-      this.codeEditor.getInitializedInterpreter();
+      this.codeEditor.evalScript(true);
       this.codeEditor.setRobotModel(super.robotLocation);
    }
 
