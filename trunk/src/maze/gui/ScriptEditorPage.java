@@ -91,7 +91,7 @@ public class ScriptEditorPage extends JSplitPane implements MenuControlled
             try
             {
                // Give the application some time to launch before we start burning the cpu.
-               Thread.sleep(1000);
+               Thread.sleep(2000);
             }
             catch (InterruptedException e)
             {}
