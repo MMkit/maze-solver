@@ -1,5 +1,6 @@
 package maze;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -67,4 +68,32 @@ public final class Main
          return new ImageIcon(new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB));
       }
    }
+
+   /**
+    * Opens a URI in the systems default browser. Operation may not be
+    * supported. Fails silently.
+    * @param url The web URI to open.
+    */
+   public static void launchInBrowser(String url)
+   {
+      if (url != null && url.isEmpty() == false)
+      {
+         if (Desktop.isDesktopSupported())
+         {
+            final Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE))
+            {
+               try
+               {
+                  desktop.browse(new java.net.URI(url));
+               }
+               catch (Exception e)
+               {
+                  e.printStackTrace();
+               }
+            }
+         }
+      }
+   }
+
 }
