@@ -3,19 +3,51 @@
 <PRE>
 <FONT color="green">001</FONT>    package maze.gui;<a name="line.1"></a>
 <FONT color="green">002</FONT>    <a name="line.2"></a>
-<FONT color="green">003</FONT>    /**<a name="line.3"></a>
-<FONT color="green">004</FONT>     *Provides a common set of methods for the maze editor and code editor panels<a name="line.4"></a>
-<FONT color="green">005</FONT>     * that provide access to file operations from the main file menu.<a name="line.5"></a>
-<FONT color="green">006</FONT>     * @author Johnathan Smith<a name="line.6"></a>
-<FONT color="green">007</FONT>     */<a name="line.7"></a>
-<FONT color="green">008</FONT>    public interface MenuControlled<a name="line.8"></a>
-<FONT color="green">009</FONT>    {<a name="line.9"></a>
-<FONT color="green">010</FONT>       public void saveCurrent();<a name="line.10"></a>
-<FONT color="green">011</FONT>    <a name="line.11"></a>
-<FONT color="green">012</FONT>       public void open();<a name="line.12"></a>
-<FONT color="green">013</FONT>    <a name="line.13"></a>
-<FONT color="green">014</FONT>       public void close();<a name="line.14"></a>
-<FONT color="green">015</FONT>    }<a name="line.15"></a>
+<FONT color="green">003</FONT>    import java.io.File;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    /**<a name="line.5"></a>
+<FONT color="green">006</FONT>     * Provides a common set of methods for the maze editor and code editor panels<a name="line.6"></a>
+<FONT color="green">007</FONT>     * that provide access to file operations from the main file menu.<a name="line.7"></a>
+<FONT color="green">008</FONT>     * @author Johnathan Smith<a name="line.8"></a>
+<FONT color="green">009</FONT>     */<a name="line.9"></a>
+<FONT color="green">010</FONT>    public interface MenuControlled<a name="line.10"></a>
+<FONT color="green">011</FONT>    {<a name="line.11"></a>
+<FONT color="green">012</FONT>       /**<a name="line.12"></a>
+<FONT color="green">013</FONT>        * Closes the currently displayed item.<a name="line.13"></a>
+<FONT color="green">014</FONT>        */<a name="line.14"></a>
+<FONT color="green">015</FONT>       public void close();<a name="line.15"></a>
+<FONT color="green">016</FONT>    <a name="line.16"></a>
+<FONT color="green">017</FONT>       /**<a name="line.17"></a>
+<FONT color="green">018</FONT>        * Get a description for the types of files that this panel supports.<a name="line.18"></a>
+<FONT color="green">019</FONT>        * @return Description.<a name="line.19"></a>
+<FONT color="green">020</FONT>        */<a name="line.20"></a>
+<FONT color="green">021</FONT>       public String getFileTypeDescription();<a name="line.21"></a>
+<FONT color="green">022</FONT>    <a name="line.22"></a>
+<FONT color="green">023</FONT>       /**<a name="line.23"></a>
+<FONT color="green">024</FONT>        * Test whether the given file is of the type that this page supports.<a name="line.24"></a>
+<FONT color="green">025</FONT>        * @param file File to test.<a name="line.25"></a>
+<FONT color="green">026</FONT>        * @return true if it is a recognized file type.<a name="line.26"></a>
+<FONT color="green">027</FONT>        */<a name="line.27"></a>
+<FONT color="green">028</FONT>       public boolean isMyFileType(File file);<a name="line.28"></a>
+<FONT color="green">029</FONT>    <a name="line.29"></a>
+<FONT color="green">030</FONT>       /**<a name="line.30"></a>
+<FONT color="green">031</FONT>        * Open the file.<a name="line.31"></a>
+<FONT color="green">032</FONT>        * @param file The file to open.<a name="line.32"></a>
+<FONT color="green">033</FONT>        */<a name="line.33"></a>
+<FONT color="green">034</FONT>       public void open(File file);<a name="line.34"></a>
+<FONT color="green">035</FONT>    <a name="line.35"></a>
+<FONT color="green">036</FONT>       /**<a name="line.36"></a>
+<FONT color="green">037</FONT>        * Save the currently displayed item.<a name="line.37"></a>
+<FONT color="green">038</FONT>        */<a name="line.38"></a>
+<FONT color="green">039</FONT>       public void saveCurrent();<a name="line.39"></a>
+<FONT color="green">040</FONT>    <a name="line.40"></a>
+<FONT color="green">041</FONT>       /**<a name="line.41"></a>
+<FONT color="green">042</FONT>        * Perform cleanup operations like saving files before the application exits.<a name="line.42"></a>
+<FONT color="green">043</FONT>        * @return true if this page is ready for application exit, false if the exit<a name="line.43"></a>
+<FONT color="green">044</FONT>        *         should be stopped.<a name="line.44"></a>
+<FONT color="green">045</FONT>        */<a name="line.45"></a>
+<FONT color="green">046</FONT>       public boolean canExit();<a name="line.46"></a>
+<FONT color="green">047</FONT>    }<a name="line.47"></a>
 
 
 

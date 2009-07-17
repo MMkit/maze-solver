@@ -289,7 +289,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
 
    /**
     * Get the line of walls that surround the center.
-    * @return
+    * @return A list of walls.
     */
    private List<MazeWall> getWinningBorderWalls()
    {

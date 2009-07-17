@@ -94,19 +94,24 @@ java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by "><A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">maze.util.ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;
       <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.model.MazeModel</B>
 </PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable, java.lang.Cloneable</DD>
+</DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/model/MazeModel.html#line.27"><B>MazeModel</B></A><DT>extends <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/model/MazeModel.html#line.29"><B>MazeModel</B></A><DT>extends <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;<DT>implements java.lang.Cloneable, java.io.Serializable</DL>
 </PRE>
 
 <P>
 Represents all the walls of a This class extends
- <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><CODE>ListenerSubject</CODE></A> which allows it to notify
- listeners when a wall changes and provide the <A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><CODE>MazeCell</CODE></A>
- that contains the changed wall.
+ <A HREF="../../maze/util/ListenerSubject.html" title="class in maze.util"><CODE>ListenerSubject</CODE></A> which allows it to notify listeners when a
+ wall changes and provide the <A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><CODE>MazeCell</CODE></A> that contains the
+ changed wall.
 <P>
 
 <P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.model.MazeModel">Serialized Form</A></DL>
 <HR>
 
 <P>
@@ -127,14 +132,6 @@ Represents all the walls of a This class extends
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <code>MazeWall</code> object represents the model for a single wall in a
  maze.</TD>
 </TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private static&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/model/MazeModel.PointCompare.html" title="class in maze.model">MazeModel.PointCompare</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to store points in a Set.</TD>
-</TR>
 </TABLE>
 &nbsp;<!-- =========== FIELD SUMMARY =========== -->
 
@@ -150,7 +147,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#cwalls">cwalls</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Column walls.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -158,7 +155,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#DEFAULT_SIZE">DEFAULT_SIZE</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A maze is generally 16 x 16</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -190,7 +187,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#rwalls">rwalls</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Row walls.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -230,7 +227,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#MazeModel()">MazeModel</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a maze with the default size.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#MazeModel(int, int)">MazeModel</A></B>(int&nbsp;width,
@@ -238,12 +235,6 @@ Represents all the walls of a This class extends
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Construct a new maze model with the given dimensions.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#MazeModel(maze.model.MazeModel)">MazeModel</A></B>(<A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;model)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy constructor.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -258,10 +249,19 @@ Represents all the walls of a This class extends
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#clearCenterWalls()">clearCenterWalls</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clears the 4 walls around the center peg as is required by the rules for a
+ legal maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#clearMaze()">clearMaze</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clear all the walls of the maze and set the default corner wall.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -271,15 +271,23 @@ Represents all the walls of a This class extends
                    int&nbsp;dir)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clear/disable a wall segment.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#clone()">clone</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Make a deep copy of this maze model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#generateRandomMaze()">generateRandomMaze</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Randomizes all the walls of this maze.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -291,13 +299,21 @@ Represents all the walls of a This class extends
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#getStartingCell()">getStartingCell</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the location of where the robot starts in the maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#getWall(int, int, int)">getWall</A></B>(int&nbsp;x,
                int&nbsp;y,
                int&nbsp;dir)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is the wall set/enabled.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -310,7 +326,23 @@ Represents all the walls of a This class extends
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;java.util.Set&lt;java.awt.Point&gt;</CODE></FONT></TD>
+<CODE>private &nbsp;java.util.List&lt;<A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#getWinningBorderWalls()">getWinningBorderWalls</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the line of walls that surround the center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#getWinningCells()">getWinningCells</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gets the maze cells that make up the winning center of the maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.util.Set&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#illegalPegs()">illegalPegs</A></B>()</CODE>
 
 <BR>
@@ -328,7 +360,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#isCenterLegal()">isCenterLegal</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is the peg in the center of the maze legal.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -336,7 +368,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#isCenterOpen()">isCenterOpen</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is there a way in to the maze center.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -344,7 +376,7 @@ Represents all the walls of a This class extends
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#isLegal()">isLegal</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is this a legal maze.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -353,7 +385,7 @@ Represents all the walls of a This class extends
                      int&nbsp;y)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The peg is legal if at least one wall is attached to it.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -384,10 +416,18 @@ Represents all the walls of a This class extends
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeModel.html#setAllWalls()">setAllWalls</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set/Enable every wall in the maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeModel.html#setSize(java.awt.Dimension)">setSize</A></B>(java.awt.Dimension&nbsp;size)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the size dimensions of this maze.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -431,84 +471,42 @@ Represents all the walls of a This class extends
 </TR>
 </TABLE>
 
-<A NAME="width"><!-- --></A><H3>
-width</H3>
-<PRE>
-private int <A HREF="../../src-html/maze/model/MazeModel.html#line.32"><B>width</B></A></PRE>
-<DL>
-<DD>Number of columns or width of this maze.
-<P>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="height"><!-- --></A><H3>
-height</H3>
-<PRE>
-private int <A HREF="../../src-html/maze/model/MazeModel.html#line.37"><B>height</B></A></PRE>
-<DL>
-<DD>Number of rows or height of this maze.
-<P>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="cwalls"><!-- --></A><H3>
-cwalls</H3>
-<PRE>
-private java.util.BitSet <A HREF="../../src-html/maze/model/MazeModel.html#line.39"><B>cwalls</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="rwalls"><!-- --></A><H3>
-rwalls</H3>
-<PRE>
-private java.util.BitSet <A HREF="../../src-html/maze/model/MazeModel.html#line.40"><B>rwalls</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
 <A NAME="DEFAULT_SIZE"><!-- --></A><H3>
 DEFAULT_SIZE</H3>
 <PRE>
-private static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.41"><B>DEFAULT_SIZE</B></A></PRE>
+private static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.46"><B>DEFAULT_SIZE</B></A></PRE>
 <DL>
+<DD>A maze is generally 16 x 16
+<P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.DEFAULT_SIZE">Constant Field Values</A></DL>
-</DL>
-<HR>
-
-<A NAME="NORTH"><!-- --></A><H3>
-NORTH</H3>
-<PRE>
-public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.42"><B>NORTH</B></A></PRE>
-<DL>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.NORTH">Constant Field Values</A></DL>
 </DL>
 <HR>
 
 <A NAME="EAST"><!-- --></A><H3>
 EAST</H3>
 <PRE>
-public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.43"><B>EAST</B></A></PRE>
+public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.48"><B>EAST</B></A></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.EAST">Constant Field Values</A></DL>
 </DL>
 <HR>
 
+<A NAME="NORTH"><!-- --></A><H3>
+NORTH</H3>
+<PRE>
+public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.49"><B>NORTH</B></A></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.NORTH">Constant Field Values</A></DL>
+</DL>
+<HR>
+
 <A NAME="SOUTH"><!-- --></A><H3>
 SOUTH</H3>
 <PRE>
-public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.44"><B>SOUTH</B></A></PRE>
+public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.50"><B>SOUTH</B></A></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.SOUTH">Constant Field Values</A></DL>
@@ -518,10 +516,58 @@ public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.4
 <A NAME="WEST"><!-- --></A><H3>
 WEST</H3>
 <PRE>
-public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.45"><B>WEST</B></A></PRE>
+public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.51"><B>WEST</B></A></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeModel.WEST">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="cwalls"><!-- --></A><H3>
+cwalls</H3>
+<PRE>
+private java.util.BitSet <A HREF="../../src-html/maze/model/MazeModel.html#line.55"><B>cwalls</B></A></PRE>
+<DL>
+<DD>Column walls.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="height"><!-- --></A><H3>
+height</H3>
+<PRE>
+private int <A HREF="../../src-html/maze/model/MazeModel.html#line.59"><B>height</B></A></PRE>
+<DL>
+<DD>Number of rows or height of this maze.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="rwalls"><!-- --></A><H3>
+rwalls</H3>
+<PRE>
+private java.util.BitSet <A HREF="../../src-html/maze/model/MazeModel.html#line.63"><B>rwalls</B></A></PRE>
+<DL>
+<DD>Row walls.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="width"><!-- --></A><H3>
+width</H3>
+<PRE>
+private int <A HREF="../../src-html/maze/model/MazeModel.html#line.67"><B>width</B></A></PRE>
+<DL>
+<DD>Number of columns or width of this maze.
+<P>
+<DL>
+</DL>
 </DL>
 
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
@@ -537,27 +583,17 @@ public static final int <A HREF="../../src-html/maze/model/MazeModel.html#line.4
 <A NAME="MazeModel()"><!-- --></A><H3>
 MazeModel</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/MazeModel.html#line.48"><B>MazeModel</B></A>()</PRE>
+public <A HREF="../../src-html/maze/model/MazeModel.html#line.72"><B>MazeModel</B></A>()</PRE>
 <DL>
-</DL>
-<HR>
-
-<A NAME="MazeModel(maze.model.MazeModel)"><!-- --></A><H3>
-MazeModel</H3>
-<PRE>
-public <A HREF="../../src-html/maze/model/MazeModel.html#line.57"><B>MazeModel</B></A>(<A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>&nbsp;model)</PRE>
-<DL>
-<DD>Copy constructor.
+<DD>Create a maze with the default size.
 <P>
-<DL>
-<DT><B>Parameters:</B><DD><CODE>model</CODE> - The <code>MazeModel</code> to copy from.</DL>
 </DL>
 <HR>
 
 <A NAME="MazeModel(int, int)"><!-- --></A><H3>
 MazeModel</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/MazeModel.html#line.70"><B>MazeModel</B></A>(int&nbsp;width,
+public <A HREF="../../src-html/maze/model/MazeModel.html#line.82"><B>MazeModel</B></A>(int&nbsp;width,
                  int&nbsp;height)</PRE>
 <DL>
 <DD>Construct a new maze model with the given dimensions.
@@ -576,50 +612,18 @@ public <A HREF="../../src-html/maze/model/MazeModel.html#line.70"><B>MazeModel</
 </TR>
 </TABLE>
 
-<A NAME="setWall(int, int, int)"><!-- --></A><H3>
-setWall</H3>
+<A NAME="clearCenterWalls()"><!-- --></A><H3>
+clearCenterWalls</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeModel.html#line.79"><B>setWall</B></A>(int&nbsp;x,
-                    int&nbsp;y,
-                    int&nbsp;dir)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.96"><B>clearCenterWalls</B></A>()</PRE>
 <DL>
+<DD>Clears the 4 walls around the center peg as is required by the rules for a
+ legal maze. After calling this a call to <A HREF="../../maze/model/MazeModel.html#isCenterLegal()"><CODE>isCenterLegal()</CODE></A> should
+ return true.
+<P>
 <DD><DL>
 </DL>
 </DD>
-</DL>
-<HR>
-
-<A NAME="getWall(int, int, int)"><!-- --></A><H3>
-getWall</H3>
-<PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.119"><B>getWall</B></A>(int&nbsp;x,
-                       int&nbsp;y,
-                       int&nbsp;dir)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="clearWall(int, int, int)"><!-- --></A><H3>
-clearWall</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/model/MazeModel.html#line.144"><B>clearWall</B></A>(int&nbsp;x,
-                      int&nbsp;y,
-                      int&nbsp;dir)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="isLegal()"><!-- --></A><H3>
-isLegal</H3>
-<PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.181"><B>isLegal</B></A>()</PRE>
-<DL>
 <DD><DL>
 </DL>
 </DD>
@@ -629,44 +633,174 @@ public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.181"><B>is
 <A NAME="clearMaze()"><!-- --></A><H3>
 clearMaze</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeModel.html#line.212"><B>clearMaze</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.109"><B>clearMaze</B></A>()</PRE>
 <DL>
+<DD>Clear all the walls of the maze and set the default corner wall.
+<P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="isPegLegal(int, int)"><!-- --></A><H3>
-isPegLegal</H3>
+<A NAME="clearWall(int, int, int)"><!-- --></A><H3>
+clearWall</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.219"><B>isPegLegal</B></A>(int&nbsp;x,
-                          int&nbsp;y)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.122"><B>clearWall</B></A>(int&nbsp;x,
+                      int&nbsp;y,
+                      int&nbsp;dir)</PRE>
 <DL>
+<DD>Clear/disable a wall segment.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>x</CODE> - <DD><CODE>y</CODE> - <DD><CODE>dir</CODE> - </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clone()"><!-- --></A><H3>
+clone</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/model/MazeModel.html#line.163"><B>clone</B></A>()</PRE>
+<DL>
+<DD>Make a deep copy of this maze model.
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>clone</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="isCenterLegal()"><!-- --></A><H3>
-isCenterLegal</H3>
+<A NAME="generateRandomMaze()"><!-- --></A><H3>
+generateRandomMaze</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.266"><B>isCenterLegal</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.181"><B>generateRandomMaze</B></A>()</PRE>
 <DL>
+<DD>Randomizes all the walls of this maze.
+<P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="isCenterOpen()"><!-- --></A><H3>
-isCenterOpen</H3>
+<A NAME="getSize()"><!-- --></A><H3>
+getSize</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.278"><B>isCenterOpen</B></A>()</PRE>
+public java.awt.Dimension <A HREF="../../src-html/maze/model/MazeModel.html#line.215"><B>getSize</B></A>()</PRE>
 <DL>
+<DD>Get the size or dimension of this maze in columns by rows.
+<P>
 <DD><DL>
 </DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>The current size of this maze model.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getStartingCell()"><!-- --></A><H3>
+getStartingCell</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeModel.html#line.225"><B>getStartingCell</B></A>()</PRE>
+<DL>
+<DD>Get the location of where the robot starts in the maze. Using this instead
+ of the hard coded location allows it to be changed in the future.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Starting cell location.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWall(int, int, int)"><!-- --></A><H3>
+getWall</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.237"><B>getWall</B></A>(int&nbsp;x,
+                       int&nbsp;y,
+                       int&nbsp;dir)</PRE>
+<DL>
+<DD>Is the wall set/enabled.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>x</CODE> - <DD><CODE>y</CODE> - <DD><CODE>dir</CODE> - Direction of the wall from the cell center.
+<DT><B>Returns:</B><DD>true if the wall is set.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWall(maze.model.MazeCell, maze.model.Direction)"><!-- --></A><H3>
+getWall</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A> <A HREF="../../src-html/maze/model/MazeModel.html#line.269"><B>getWall</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
+                                  <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
+<DL>
+<DD>Get an object that can then be checked or changed.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>cell</CODE> - The cell containing the wall you want.<DD><CODE>direction</CODE> - The direction of the wall you want from within the given
+           cell.
+<DT><B>Returns:</B><DD>A <code>MazeWall</code> of the specified location.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWinningBorderWalls()"><!-- --></A><H3>
+getWinningBorderWalls</H3>
+<PRE>
+private java.util.List&lt;<A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A>&gt; <A HREF="../../src-html/maze/model/MazeModel.html#line.294"><B>getWinningBorderWalls</B></A>()</PRE>
+<DL>
+<DD>Get the line of walls that surround the center.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>A list of walls.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWinningCells()"><!-- --></A><H3>
+getWinningCells</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>[] <A HREF="../../src-html/maze/model/MazeModel.html#line.319"><B>getWinningCells</B></A>()</PRE>
+<DL>
+<DD>Gets the maze cells that make up the winning center of the maze. This
+ method should be used to allow the location of the winning cells to be
+ changed later.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>An array of the winning cell locations in order.</DL>
 </DD>
 </DL>
 <HR>
@@ -674,7 +808,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.278"><B>is
 <A NAME="illegalPegs()"><!-- --></A><H3>
 illegalPegs</H3>
 <PRE>
-public java.util.Set&lt;java.awt.Point&gt; <A HREF="../../src-html/maze/model/MazeModel.html#line.316"><B>illegalPegs</B></A>()</PRE>
+public java.util.Set&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt; <A HREF="../../src-html/maze/model/MazeModel.html#line.343"><B>illegalPegs</B></A>()</PRE>
 <DL>
 <DD>This function is basically isLegal with the added capability of returning
  the peg locations that are bad.<br />
@@ -685,6 +819,9 @@ public java.util.Set&lt;java.awt.Point&gt; <A HREF="../../src-html/maze/model/Ma
  shall still assume here that the total size will always be even.
 <P>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 
 <DT><B>Returns:</B><DD>A <code>set</code> of points where each point represents an
          illegal peg.</DL>
@@ -692,58 +829,73 @@ public java.util.Set&lt;java.awt.Point&gt; <A HREF="../../src-html/maze/model/Ma
 </DL>
 <HR>
 
-<A NAME="setSize(java.awt.Dimension)"><!-- --></A><H3>
-setSize</H3>
+<A NAME="isCenterLegal()"><!-- --></A><H3>
+isCenterLegal</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeModel.html#line.353"><B>setSize</B></A>(java.awt.Dimension&nbsp;size)</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.384"><B>isCenterLegal</B></A>()</PRE>
 <DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSize()"><!-- --></A><H3>
-getSize</H3>
-<PRE>
-public java.awt.Dimension <A HREF="../../src-html/maze/model/MazeModel.html#line.365"><B>getSize</B></A>()</PRE>
-<DL>
-<DD>Get the size or dimension of this maze in columns by rows.
+<DD>Is the peg in the center of the maze legal.
 <P>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 
-<DT><B>Returns:</B><DD>The current size of this maze model.</DL>
+<DT><B>Returns:</B><DD>true if the center peg does not have any walls touching it.</DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="getWall(maze.model.MazeCell, maze.model.Direction)"><!-- --></A><H3>
-getWall</H3>
+<A NAME="isCenterOpen()"><!-- --></A><H3>
+isCenterOpen</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A> <A HREF="../../src-html/maze/model/MazeModel.html#line.377"><B>getWall</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
-                                  <A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.400"><B>isCenterOpen</B></A>()</PRE>
 <DL>
-<DD>Get an object that can then be checked or changed.
+<DD>Is there a way in to the maze center.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>cell</CODE> - The cell containing the wall you want.<DD><CODE>direction</CODE> - The direction of the wall you want from within the given
-           cell.
-<DT><B>Returns:</B><DD>A <code>MazeWall</code> of the specified location.</DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>true if the center of the maze has one and only one way in.</DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="saveMaze(java.lang.String, java.lang.String)"><!-- --></A><H3>
-saveMaze</H3>
+<A NAME="isLegal()"><!-- --></A><H3>
+isLegal</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeModel.html#line.398"><B>saveMaze</B></A>(java.lang.String&nbsp;filename,
-                     java.lang.String&nbsp;name)
-              throws java.io.IOException</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.416"><B>isLegal</B></A>()</PRE>
 <DL>
+<DD>Is this a legal maze. Does not check if there is a clear path from the
+ start to the center.
+<P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
-<DT><B>Throws:</B>
-<DD><CODE>java.io.IOException</CODE></DL>
+<DT><B>Returns:</B><DD>true if all the pegs in the maze are legal.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isPegLegal(int, int)"><!-- --></A><H3>
+isPegLegal</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeModel.html#line.454"><B>isPegLegal</B></A>(int&nbsp;x,
+                          int&nbsp;y)</PRE>
+<DL>
+<DD>The peg is legal if at least one wall is attached to it. The North-West
+ peg of the given Maze Cell is checked.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>x</CODE> - The Cell X coordinate.<DD><CODE>y</CODE> - The Cell Y coordinate.
+<DT><B>Returns:</B><DD>true if the peg has at least one wall touching it.</DL>
 </DD>
 </DL>
 <HR>
@@ -751,10 +903,13 @@ public void <A HREF="../../src-html/maze/model/MazeModel.html#line.398"><B>saveM
 <A NAME="loadMaze(java.io.InputStream, boolean)"><!-- --></A><H3>
 loadMaze</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.491"><B>loadMaze</B></A>(java.io.InputStream&nbsp;in,
+public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.501"><B>loadMaze</B></A>(java.io.InputStream&nbsp;in,
                                  boolean&nbsp;extended)
                           throws java.io.IOException</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Throws:</B>
@@ -766,10 +921,13 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.4
 <A NAME="loadMaze(java.lang.String)"><!-- --></A><H3>
 loadMaze</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.563"><B>loadMaze</B></A>(java.lang.String&nbsp;filename)
+public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.573"><B>loadMaze</B></A>(java.lang.String&nbsp;filename)
                           throws java.io.FileNotFoundException,
                                  java.io.IOException</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 
 <DT><B>Throws:</B>
@@ -779,13 +937,67 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeModel.html#line.5
 </DL>
 <HR>
 
-<A NAME="clone()"><!-- --></A><H3>
-clone</H3>
+<A NAME="saveMaze(java.lang.String, java.lang.String)"><!-- --></A><H3>
+saveMaze</H3>
 <PRE>
-public java.lang.Object <A HREF="../../src-html/maze/model/MazeModel.html#line.579"><B>clone</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.589"><B>saveMaze</B></A>(java.lang.String&nbsp;filename,
+                     java.lang.String&nbsp;name)
+              throws java.io.IOException</PRE>
 <DL>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE>clone</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE>java.io.IOException</CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAllWalls()"><!-- --></A><H3>
+setAllWalls</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.685"><B>setAllWalls</B></A>()</PRE>
+<DL>
+<DD>Set/Enable every wall in the maze.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setSize(java.awt.Dimension)"><!-- --></A><H3>
+setSize</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.697"><B>setSize</B></A>(java.awt.Dimension&nbsp;size)</PRE>
+<DL>
+<DD>Set the size dimensions of this maze. The maze dimensions must always be
+ even numbers.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>size</CODE> - The new number of rows and columns that make up the size of
+           this maze.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setWall(int, int, int)"><!-- --></A><H3>
+setWall</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/model/MazeModel.html#line.705"><B>setWall</B></A>(int&nbsp;x,
+                    int&nbsp;y,
+                    int&nbsp;dir)</PRE>
+<DL>
+<DD><DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>

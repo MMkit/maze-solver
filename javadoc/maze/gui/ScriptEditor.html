@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-CodeEditorPane
+ScriptEditor
 </TITLE>
 
 
@@ -13,7 +13,7 @@ CodeEditorPane
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CodeEditorPane";
+        parent.document.title="ScriptEditor";
     }
 }
 </SCRIPT>
@@ -38,7 +38,7 @@ function windowTitle()
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CodeEditorPane.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ScriptEditor.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -53,11 +53,11 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/gui/CodeEditingPanel.CodeInformationPanel.html" title="class in maze.gui"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/gui/HelpInfo.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/gui/ScriptEditorPage.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/gui/CodeEditorPane.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CodeEditorPane.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/gui/ScriptEditor.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ScriptEditor.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -88,7 +88,7 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 maze.gui</FONT>
 <BR>
-Class CodeEditorPane</H2>
+Class ScriptEditor</H2>
 <PRE>
 java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by ">java.awt.Component
@@ -96,14 +96,14 @@ java.lang.Object
           <IMG SRC="../../resources/inherit.gif" ALT="extended by ">javax.swing.JComponent
               <IMG SRC="../../resources/inherit.gif" ALT="extended by ">javax.swing.JScrollPane
                   <IMG SRC="../../resources/inherit.gif" ALT="extended by ">org.fife.ui.rtextarea.RTextScrollPane
-                      <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.gui.CodeEditorPane</B>
+                      <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.gui.ScriptEditor</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD>java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable, javax.accessibility.Accessible, javax.swing.ScrollPaneConstants</DD>
+<DT><B>All Implemented Interfaces:</B> <DD>java.awt.event.ActionListener, java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable, java.util.EventListener, javax.accessibility.Accessible, javax.swing.ScrollPaneConstants</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public final class <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.43"><B>CodeEditorPane</B></A><DT>extends org.fife.ui.rtextarea.RTextScrollPane</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.45"><B>ScriptEditor</B></A><DT>extends org.fife.ui.rtextarea.RTextScrollPane<DT>implements java.awt.event.ActionListener</DL>
 </PRE>
 
 <P>
@@ -114,7 +114,7 @@ Creates an AI script text editor in Python.
 <DL>
 <DT><B>Author:</B></DT>
   <DD>Luke Last</DD>
-<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.gui.CodeEditorPane">Serialized Form</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.gui.ScriptEditor">Serialized Form</A></DL>
 <HR>
 
 <P>
@@ -177,8 +177,16 @@ Creates an AI script text editor in Python.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;javax.swing.Timer</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#codeEvalTimer">codeEvalTimer</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;<A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#connectedRobot">connectedRobot</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#connectedRobot">connectedRobot</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -186,15 +194,23 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;org.python.util.PythonInterpreter</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#currentInterpreter">currentInterpreter</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#currentInterpreter">currentInterpreter</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;java.lang.String[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#excludedStrings">excludedStrings</A></B></CODE>
+<CODE>private static&nbsp;java.lang.String[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#excludedStrings">excludedStrings</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#isDirty">isDirty</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -202,7 +218,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#NEW_SCRIPT_NAME">NEW_SCRIPT_NAME</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#NEW_SCRIPT_NAME">NEW_SCRIPT_NAME</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -210,7 +226,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private static&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#PYTHON_FILE_EXTENSION">PYTHON_FILE_EXTENSION</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#PYTHON_FILE_EXTENSION">PYTHON_FILE_EXTENSION</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -218,7 +234,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private static&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#ROBOT_MODEL_VAR_NAME">ROBOT_MODEL_VAR_NAME</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#ROBOT_MODEL_VAR_NAME">ROBOT_MODEL_VAR_NAME</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -226,7 +242,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;java.io.File</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#scriptFile">scriptFile</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#scriptFile">scriptFile</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The File (if any) that is attached to this editor.</TD>
@@ -234,7 +250,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;org.fife.ui.rsyntaxtextarea.RSyntaxTextArea</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#textArea">textArea</A></B></CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#textArea">textArea</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -295,16 +311,16 @@ Creates an AI script text editor in Python.
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#CodeEditorPane()">CodeEditorPane</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#ScriptEditor()">ScriptEditor</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Construct an empty editor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#CodeEditorPane(java.io.File)">CodeEditorPane</A></B>(java.io.File&nbsp;fileToOpen)</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#ScriptEditor(java.io.File)">ScriptEditor</A></B>(java.io.File&nbsp;fileToOpen)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create an editor from an existing file.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -318,40 +334,40 @@ Creates an AI script text editor in Python.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#actionPerformed(java.awt.event.ActionEvent)">actionPerformed</A></B>(java.awt.event.ActionEvent&nbsp;e)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer event action.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#addToRobotModel()">addToRobotModel</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#addToRobotModel()">addToRobotModel</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds a RobotBase instance to the global Robot list.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#analyzeSelection()">analyzeSelection</A></B>()</CODE>
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#evalScript(boolean)">evalScript</A></B>(boolean&nbsp;displayError)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#evaluateSelection()">evaluateSelection</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#executeScript()">executeScript</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluates the code from the editor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;org.python.util.PythonInterpreter</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#getInitializedInterpreter()">getInitializedInterpreter</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getCurrentInterpreter()">getCurrentInterpreter</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;org.python.util.PythonInterpreter</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getInitializedInterpreter()">getInitializedInterpreter</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new Python interpreter and sets some initial values like imports
@@ -360,15 +376,47 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#getNextStep()">getNextStep</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getNextStep()">getNextStep</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to adapt this script into robot script.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getSelectedToken()">getSelectedToken</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the string token that is currently selected or that the cursor is on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getVariableType(java.lang.String)">getVariableType</A></B>(java.lang.String&nbsp;variableName)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#getVariableValue(java.lang.String)">getVariableValue</A></B>(java.lang.String&nbsp;variableName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#isDirty()">isDirty</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Has this script been changed since being saved last.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>(package private) &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#removeFromRobotModel()">removeFromRobotModel</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#removeFromRobotModel()">removeFromRobotModel</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes this script from the global List of algorithms.</TD>
@@ -376,7 +424,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#saveScriptFile()">saveScriptFile</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#saveScriptFile()">saveScriptFile</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saves the current script to the file it is connected to.</TD>
@@ -384,7 +432,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#saveScriptFileAs()">saveScriptFileAs</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#saveScriptFileAs()">saveScriptFileAs</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Requests the user to choose a new file name and then saves the script
@@ -393,7 +441,7 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#saveToFile()">saveToFile</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#saveToFile()">saveToFile</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Internal method to save the script to the current file.</TD>
@@ -401,7 +449,15 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#setRobotModel(maze.model.RobotModel)">setRobotModel</A></B>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#setDirty(boolean)">setDirty</A></B>(boolean&nbsp;isDirty)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dirty means the file has been changed since last being saved.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#setRobotModel(maze.model.RobotModel)">setRobotModel</A></B>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -409,7 +465,15 @@ Creates an AI script text editor in Python.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CodeEditorPane.html#toString()">toString</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#toString()">toString</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/ScriptEditor.html#updateMethodsList(java.lang.String)">updateMethodsList</A></B>(java.lang.String&nbsp;selectedToken)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -482,40 +546,50 @@ Creates an AI script text editor in Python.
 </TR>
 </TABLE>
 
+<A NAME="excludedStrings"><!-- --></A><H3>
+excludedStrings</H3>
+<PRE>
+private static final java.lang.String[] <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.47"><B>excludedStrings</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
 <A NAME="NEW_SCRIPT_NAME"><!-- --></A><H3>
 NEW_SCRIPT_NAME</H3>
 <PRE>
-public static final java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.45"><B>NEW_SCRIPT_NAME</B></A></PRE>
+public static final java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.51"><B>NEW_SCRIPT_NAME</B></A></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.CodeEditorPane.NEW_SCRIPT_NAME">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.ScriptEditor.NEW_SCRIPT_NAME">Constant Field Values</A></DL>
 </DL>
 <HR>
 
 <A NAME="PYTHON_FILE_EXTENSION"><!-- --></A><H3>
 PYTHON_FILE_EXTENSION</H3>
 <PRE>
-private static final java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.46"><B>PYTHON_FILE_EXTENSION</B></A></PRE>
+private static final java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.52"><B>PYTHON_FILE_EXTENSION</B></A></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.CodeEditorPane.PYTHON_FILE_EXTENSION">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.ScriptEditor.PYTHON_FILE_EXTENSION">Constant Field Values</A></DL>
 </DL>
 <HR>
 
 <A NAME="ROBOT_MODEL_VAR_NAME"><!-- --></A><H3>
 ROBOT_MODEL_VAR_NAME</H3>
 <PRE>
-private static final java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.47"><B>ROBOT_MODEL_VAR_NAME</B></A></PRE>
+private static final java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.53"><B>ROBOT_MODEL_VAR_NAME</B></A></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.CodeEditorPane.ROBOT_MODEL_VAR_NAME">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.ScriptEditor.ROBOT_MODEL_VAR_NAME">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="textArea"><!-- --></A><H3>
-textArea</H3>
+<A NAME="codeEvalTimer"><!-- --></A><H3>
+codeEvalTimer</H3>
 <PRE>
-private final org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.48"><B>textArea</B></A></PRE>
+private final javax.swing.Timer <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.54"><B>codeEvalTimer</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -525,7 +599,7 @@ private final org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <A HREF="../../src-htm
 <A NAME="connectedRobot"><!-- --></A><H3>
 connectedRobot</H3>
 <PRE>
-private transient <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.49"><B>connectedRobot</B></A></PRE>
+private transient <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A> <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.55"><B>connectedRobot</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -535,7 +609,17 @@ private transient <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai
 <A NAME="currentInterpreter"><!-- --></A><H3>
 currentInterpreter</H3>
 <PRE>
-private org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.50"><B>currentInterpreter</B></A></PRE>
+private org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.56"><B>currentInterpreter</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="isDirty"><!-- --></A><H3>
+isDirty</H3>
+<PRE>
+private boolean <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.57"><B>isDirty</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -545,7 +629,7 @@ private org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeE
 <A NAME="scriptFile"><!-- --></A><H3>
 scriptFile</H3>
 <PRE>
-private java.io.File <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.54"><B>scriptFile</B></A></PRE>
+private java.io.File <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.62"><B>scriptFile</B></A></PRE>
 <DL>
 <DD>The File (if any) that is attached to this editor.
 <P>
@@ -554,10 +638,10 @@ private java.io.File <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.5
 </DL>
 <HR>
 
-<A NAME="excludedStrings"><!-- --></A><H3>
-excludedStrings</H3>
+<A NAME="textArea"><!-- --></A><H3>
+textArea</H3>
 <PRE>
-private final java.lang.String[] <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.56"><B>excludedStrings</B></A></PRE>
+private final org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.64"><B>textArea</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -573,19 +657,25 @@ private final java.lang.String[] <A HREF="../../src-html/maze/gui/CodeEditorPane
 </TR>
 </TABLE>
 
-<A NAME="CodeEditorPane(java.io.File)"><!-- --></A><H3>
-CodeEditorPane</H3>
+<A NAME="ScriptEditor()"><!-- --></A><H3>
+ScriptEditor</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.61"><B>CodeEditorPane</B></A>(java.io.File&nbsp;fileToOpen)</PRE>
+public <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.69"><B>ScriptEditor</B></A>()</PRE>
 <DL>
+<DD>Construct an empty editor.
+<P>
 </DL>
 <HR>
 
-<A NAME="CodeEditorPane()"><!-- --></A><H3>
-CodeEditorPane</H3>
+<A NAME="ScriptEditor(java.io.File)"><!-- --></A><H3>
+ScriptEditor</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.93"><B>CodeEditorPane</B></A>()</PRE>
+public <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.121"><B>ScriptEditor</B></A>(java.io.File&nbsp;fileToOpen)</PRE>
 <DL>
+<DD>Create an editor from an existing file.
+<P>
+<DL>
+<DT><B>Parameters:</B><DD><CODE>fileToOpen</CODE> - Python script file.</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -598,10 +688,270 @@ public <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.93"><B>CodeEdit
 </TR>
 </TABLE>
 
+<A NAME="actionPerformed(java.awt.event.ActionEvent)"><!-- --></A><H3>
+actionPerformed</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.160"><B>actionPerformed</B></A>(java.awt.event.ActionEvent&nbsp;e)</PRE>
+<DL>
+<DD>Timer event action. This is fired when the code information data should be
+ updated.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE>actionPerformed</CODE> in interface <CODE>java.awt.event.ActionListener</CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../maze/gui/ScriptEditor.html#codeEvalTimer"><CODE>codeEvalTimer</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addToRobotModel()"><!-- --></A><H3>
+addToRobotModel</H3>
+<PRE>
+private void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.177"><B>addToRobotModel</B></A>()</PRE>
+<DL>
+<DD>Adds a RobotBase instance to the global Robot list. This new AI instance
+ is connected to this code editor.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="evalScript(boolean)"><!-- --></A><H3>
+evalScript</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.188"><B>evalScript</B></A>(boolean&nbsp;displayError)</PRE>
+<DL>
+<DD>Evaluates the code from the editor.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>true if the script evaluated successfully, false if an error
+         occurred while interpreting the script.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCurrentInterpreter()"><!-- --></A><H3>
+getCurrentInterpreter</H3>
+<PRE>
+public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.212"><B>getCurrentInterpreter</B></A>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInitializedInterpreter()"><!-- --></A><H3>
+getInitializedInterpreter</H3>
+<PRE>
+private org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.222"><B>getInitializedInterpreter</B></A>()</PRE>
+<DL>
+<DD>Creates a new Python interpreter and sets some initial values like imports
+ and the maze model variable.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>A new interpreter.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNextStep()"><!-- --></A><H3>
+getNextStep</H3>
+<PRE>
+public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.243"><B>getNextStep</B></A>()</PRE>
+<DL>
+<DD>Used to adapt this script into robot script.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Next step.<DT><B>See Also:</B><DD><A HREF="../../maze/ai/PythonScriptRobot.html" title="class in maze.ai"><CODE>PythonScriptRobot</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSelectedToken()"><!-- --></A><H3>
+getSelectedToken</H3>
+<PRE>
+private java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.264"><B>getSelectedToken</B></A>()</PRE>
+<DL>
+<DD>Get the string token that is currently selected or that the cursor is on.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>The selected text or an empty string on error or if nothing is
+         selected.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getVariableType(java.lang.String)"><!-- --></A><H3>
+getVariableType</H3>
+<PRE>
+private java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.318"><B>getVariableType</B></A>(java.lang.String&nbsp;variableName)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getVariableValue(java.lang.String)"><!-- --></A><H3>
+getVariableValue</H3>
+<PRE>
+private java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.329"><B>getVariableValue</B></A>(java.lang.String&nbsp;variableName)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDirty()"><!-- --></A><H3>
+isDirty</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.344"><B>isDirty</B></A>()</PRE>
+<DL>
+<DD>Has this script been changed since being saved last.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>true if this script has not been saved.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="removeFromRobotModel()"><!-- --></A><H3>
+removeFromRobotModel</H3>
+<PRE>
+void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.352"><B>removeFromRobotModel</B></A>()</PRE>
+<DL>
+<DD>Removes this script from the global List of algorithms.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="saveScriptFile()"><!-- --></A><H3>
+saveScriptFile</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.361"><B>saveScriptFile</B></A>()</PRE>
+<DL>
+<DD>Saves the current script to the file it is connected to. If it is a new
+ script and has no file that save as is called.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="saveScriptFileAs()"><!-- --></A><H3>
+saveScriptFileAs</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.378"><B>saveScriptFileAs</B></A>()</PRE>
+<DL>
+<DD>Requests the user to choose a new file name and then saves the script
+ there.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="saveToFile()"><!-- --></A><H3>
+saveToFile</H3>
+<PRE>
+private void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.401"><B>saveToFile</B></A>()</PRE>
+<DL>
+<DD>Internal method to save the script to the current file.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDirty(boolean)"><!-- --></A><H3>
+setDirty</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.433"><B>setDirty</B></A>(boolean&nbsp;isDirty)</PRE>
+<DL>
+<DD>Dirty means the file has been changed since last being saved.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>isDirty</CODE> - true if dirty.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setRobotModel(maze.model.RobotModel)"><!-- --></A><H3>
+setRobotModel</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.438"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.148"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.451"><B>toString</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>toString</CODE> in class <CODE>java.awt.Component</CODE></DL>
@@ -612,138 +962,14 @@ public java.lang.String <A HREF="../../src-html/maze/gui/CodeEditorPane.html#lin
 </DL>
 <HR>
 
-<A NAME="addToRobotModel()"><!-- --></A><H3>
-addToRobotModel</H3>
+<A NAME="updateMethodsList(java.lang.String)"><!-- --></A><H3>
+updateMethodsList</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.164"><B>addToRobotModel</B></A>()</PRE>
-<DL>
-<DD>Adds a RobotBase instance to the global Robot list. This new AI instance
- is connected to this code editor.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeFromRobotModel()"><!-- --></A><H3>
-removeFromRobotModel</H3>
-<PRE>
-void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.173"><B>removeFromRobotModel</B></A>()</PRE>
-<DL>
-<DD>Removes this script from the global List of algorithms.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="saveScriptFileAs()"><!-- --></A><H3>
-saveScriptFileAs</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.182"><B>saveScriptFileAs</B></A>()</PRE>
-<DL>
-<DD>Requests the user to choose a new file name and then saves the script
- there.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="saveScriptFile()"><!-- --></A><H3>
-saveScriptFile</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.206"><B>saveScriptFile</B></A>()</PRE>
-<DL>
-<DD>Saves the current script to the file it is connected to. If it is a new
- script and has no file that save as is called.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="saveToFile()"><!-- --></A><H3>
-saveToFile</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.222"><B>saveToFile</B></A>()</PRE>
-<DL>
-<DD>Internal method to save the script to the current file.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="evaluateSelection()"><!-- --></A><H3>
-evaluateSelection</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.249"><B>evaluateSelection</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/ScriptEditor.html#line.463"><B>updateMethodsList</B></A>(java.lang.String&nbsp;selectedToken)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
-</DL>
-<HR>
-
-<A NAME="analyzeSelection()"><!-- --></A><H3>
-analyzeSelection</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.267"><B>analyzeSelection</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getInitializedInterpreter()"><!-- --></A><H3>
-getInitializedInterpreter</H3>
-<PRE>
-public org.python.util.PythonInterpreter <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.321"><B>getInitializedInterpreter</B></A>()</PRE>
-<DL>
-<DD>Creates a new Python interpreter and sets some initial values like imports
- and the maze model variable.
-<P>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>A new interpreter.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setRobotModel(maze.model.RobotModel)"><!-- --></A><H3>
-setRobotModel</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.339"><B>setRobotModel</B></A>(<A HREF="../../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>&nbsp;model)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getNextStep()"><!-- --></A><H3>
-getNextStep</H3>
-<PRE>
-public <A HREF="../../maze/ai/RobotStep.html" title="enum in maze.ai">RobotStep</A> <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.351"><B>getNextStep</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="executeScript()"><!-- --></A><H3>
-executeScript</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.367"><B>executeScript</B></A>()</PRE>
-<DL>
 <DD><DL>
 </DL>
 </DD>
@@ -764,7 +990,7 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.367"><B>e
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CodeEditorPane.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ScriptEditor.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -779,11 +1005,11 @@ private void <A HREF="../../src-html/maze/gui/CodeEditorPane.html#line.367"><B>e
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/gui/CodeEditingPanel.CodeInformationPanel.html" title="class in maze.gui"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/gui/HelpInfo.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/gui/ScriptEditorPage.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/gui/CodeEditorPane.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CodeEditorPane.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/gui/ScriptEditor.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ScriptEditor.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {

@@ -84,12 +84,15 @@ function windowTitle()
  by increasing the length of its sides.<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#GappedTemplate()"><B>GappedTemplate()</B></A> - 
 Constructor for class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/GappedTemplate.html" title="class in maze.gui.mazeeditor">GappedTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#generatePoints(maze.gui.CellSize)"><B>generatePoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#generatePoints(maze.model.CellSizeModel)"><B>generatePoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/GappedTemplate.html" title="class in maze.gui.mazeeditor">GappedTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#generatePoints(maze.gui.CellSize)"><B>generatePoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#generatePoints(maze.model.CellSizeModel)"><B>generatePoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/model/MazeModel.html#generateRandomMaze()"><B>generateRandomMaze()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
+<DD>Randomizes all the walls of this maze.
 <DT><A HREF="../maze/gui/MazeView2.html#getAdjacentCells(maze.model.MazeCell)"><B>getAdjacentCells(MazeCell)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Gets all the cells that are adjacent to the given one.
@@ -129,20 +132,20 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in ma
 <DT><A HREF="../maze/gui/MazePainter.html#getCellBackground()"><B>getCellBackground()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getCellBackgroundEnd()"><B>getCellBackgroundEnd()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getCellBackgroundStart()"><B>getCellBackgroundStart()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#getCellCenter(maze.model.MazeCell)"><B>getCellCenter(MazeCell)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Turns a maze cell into global coordinates for the center of the cell.
 <DT><A HREF="../maze/gui/MazeView2.html#getCellCenterInner(maze.model.MazeCell)"><B>getCellCenterInner(MazeCell)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Get the center of the inner cell part without the walls.
-<DT><A HREF="../maze/gui/CellSize.html#getCellHeight()"><B>getCellHeight()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getCellHeight()"><B>getCellHeight()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getCellHeightHalf()"><B>getCellHeightHalf()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getCellHeightHalf()"><B>getCellHeightHalf()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
@@ -150,22 +153,14 @@ Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="cla
 <DT><A HREF="../maze/model/CellSizeModel.html#getCellHeightInner()"><B>getCellHeightInner()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/EditableMazeView.html#getCellSize()"><B>getCellSize()</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/EditableMazeView.html#getCellSizeModel()"><B>getCellSizeModel()</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/EditableMazeView.html" title="class in maze.gui.mazeeditor">EditableMazeView</A>
-<DD>Returns a CellSize object that hass the current size and dimensions of
- the maze cells and walls the whole maze based on the size of this
- MazeView panel.
+<DD>Get the cell size model.
 <DT><A HREF="../maze/model/RobotPathModel.html#getCellsVisited()"><B>getCellsVisited()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/RobotPathModel.html" title="class in maze.model">RobotPathModel</A>
 <DD>Get the total number of cells that have been visited.
-<DT><A HREF="../maze/gui/CellSize.html#getCellWidth()"><B>getCellWidth()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getCellWidth()"><B>getCellWidth()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getCellWidthHalf()"><B>getCellWidthHalf()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getCellWidthHalf()"><B>getCellWidthHalf()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
@@ -185,17 +180,20 @@ Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate
 <DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#getCenterPegs()"><B>getCenterPegs()</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#getCenterPoints(maze.gui.CellSize)"><B>getCenterPoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#getCenterPoints(maze.model.CellSizeModel)"><B>getCenterPoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html" title="class in maze.gui.mazeeditor">ConjoinedMazeTemplate</A>
 <DD>Returns an array consisting of one element, the center peg position.
-<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#getCenterPoints(maze.gui.CellSize)"><B>getCenterPoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#getCenterPoints(maze.model.CellSizeModel)"><B>getCenterPoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/GappedTemplate.html" title="class in maze.gui.mazeeditor">GappedTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.gui.CellSize)"><B>getCenterPoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.model.CellSizeModel)"><B>getCenterPoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#getCenterPoints(maze.gui.CellSize)"><B>getCenterPoints(CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#getCenterPoints(maze.model.CellSizeModel)"><B>getCenterPoints(CellSizeModel)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptEditor.html#getCurrentInterpreter()"><B>getCurrentInterpreter()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/RobotModel.html#getCurrentLocation()"><B>getCurrentLocation()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/RobotModel.html" title="class in maze.model">RobotModel</A>
@@ -207,9 +205,6 @@ Method in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="
 Method in class maze.util.<A HREF="../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>
 <DD>This allows us to only create a new instance once and then reuse it for
  better performance.
-<DT><A HREF="../maze/gui/mazeeditor/MazeFileFilter.html#getDescription()"><B>getDescription()</B></A> - 
-Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeFileFilter.html" title="class in maze.gui.mazeeditor">MazeFileFilter</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/ai/ModifiedFloodfill.Direction2.html#getDirection(maze.model.Direction)"><B>getDirection(Direction)</B></A> - 
 Static method in enum maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.Direction2.html" title="enum in maze.ai">ModifiedFloodfill.Direction2</A>
 <DD>&nbsp;
@@ -247,6 +242,15 @@ Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getExplored()"><B>getExplored()</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>Returns the explored flag of the current location.
+<DT><A HREF="../maze/gui/mazeeditor/MazeEditorPage.html#getFileTypeDescription()"><B>getFileTypeDescription()</B></A> - 
+Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/MenuControlled.html#getFileTypeDescription()"><B>getFileTypeDescription()</B></A> - 
+Method in interface maze.gui.<A HREF="../maze/gui/MenuControlled.html" title="interface in maze.gui">MenuControlled</A>
+<DD>Get a description for the types of files that this panel supports.
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#getFileTypeDescription()"><B>getFileTypeDescription()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/RobotModelMaster.html#getFirstRun()"><B>getFirstRun()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>
 <DD>&nbsp;
@@ -285,10 +289,13 @@ Method in enum maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.Direction2.html" ti
 <DT><A HREF="../maze/model/Direction.html#getIndex()"><B>getIndex()</B></A> - 
 Method in enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in maze.model">Direction</A>
 <DD>Get an index value for this direction.
-<DT><A HREF="../maze/gui/CodeEditorPane.html#getInitializedInterpreter()"><B>getInitializedInterpreter()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
+<DT><A HREF="../maze/gui/ScriptEditor.html#getInitializedInterpreter()"><B>getInitializedInterpreter()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>Creates a new Python interpreter and sets some initial values like imports
  and the maze model variable.
+<DT><A HREF="../maze/gui/ScriptInfoPanel.html#getInstance()"><B>getInstance()</B></A> - 
+Static method in class maze.gui.<A HREF="../maze/gui/ScriptInfoPanel.html" title="class in maze.gui">ScriptInfoPanel</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/Direction.html#getLeft()"><B>getLeft()</B></A> - 
 Method in enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in maze.model">Direction</A>
 <DD>Gets the direction directly to the left of this one.
@@ -299,8 +306,14 @@ Method in class maze.ai.<A HREF="../maze/ai/Tremaux.html" title="class in maze.a
 <DT><A HREF="../maze/gui/MazeList.html#getList()"><B>getList()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeList.html" title="class in maze.gui">MazeList</A>
 <DD>Get the underlying JList instance.
+<DT><A HREF="../maze/gui/ScriptInfoPanel.html#getList()"><B>getList()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptInfoPanel.html" title="class in maze.gui">ScriptInfoPanel</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeList.OpenMazeRenderer.html#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)"><B>getListCellRendererComponent(JList, Object, int, boolean, boolean)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeList.OpenMazeRenderer.html" title="class in maze.gui">MazeList.OpenMazeRenderer</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptInfoPanel.html#getListModel()"><B>getListModel()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptInfoPanel.html" title="class in maze.gui">ScriptInfoPanel</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeList.html#getListSelectionModel()"><B>getListSelectionModel()</B></A> - 
 Static method in class maze.gui.<A HREF="../maze/gui/MazeList.html" title="class in maze.gui">MazeList</A>
@@ -375,12 +388,15 @@ Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#getNeighborExplored(maze.model.MazeCell, maze.model.Direction)"><B>getNeighborExplored(MazeCell, Direction)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>Returns the explored flag of the given location's neighbor.
-<DT><A HREF="../maze/gui/CodeEditorPane.html#getNextStep()"><B>getNextStep()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
-<DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptEditor.html#getNextStep()"><B>getNextStep()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
+<DD>Used to adapt this script into robot script.
 <DT><A HREF="../maze/model/RobotModelMaster.html#getNonHistory()"><B>getNonHistory()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#getOpenScriptEditors()"><B>getOpenScriptEditors()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
+<DD>Get all the script editors that are currently open and being edited.
 <DT><A HREF="../maze/model/Direction.html#getOpposite()"><B>getOpposite()</B></A> - 
 Method in enum maze.model.<A HREF="../maze/model/Direction.html" title="enum in maze.model">Direction</A>
 <DD>Get the opposite direction.
@@ -474,12 +490,18 @@ Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in 
 <DT><A HREF="../maze/gui/MazePainter.html#getRunFirst()"><B>getRunFirst()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/StatViewPanel.html#getSelectedMazeModel()"><B>getSelectedMazeModel()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/StatViewPanel.html" title="class in maze.gui">StatViewPanel</A>
+<DT><A HREF="../maze/gui/StatViewPage.html#getSelectedMazeModel()"><B>getSelectedMazeModel()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/StatViewPage.html" title="class in maze.gui">StatViewPage</A>
 <DD>Get the maze model that is currently selected in the maze list.
+<DT><A HREF="../maze/gui/ScriptEditor.html#getSelectedToken()"><B>getSelectedToken()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
+<DD>Get the string token that is currently selected or that the cursor is on.
 <DT><A HREF="../maze/model/MazeModel.html#getSize()"><B>getSize()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
 <DD>Get the size or dimension of this maze in columns by rows.
+<DT><A HREF="../maze/model/MazeModel.html#getStartingCell()"><B>getStartingCell()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
+<DD>Get the location of where the robot starts in the maze.
 <DT><A HREF="../maze/gui/RobotAnimator.html#getState()"><B>getState()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/RobotAnimator.html" title="class in maze.gui">RobotAnimator</A>
 <DD>Get the current state that this robot animator is in.
@@ -507,14 +529,8 @@ Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in 
 <DT><A HREF="../maze/gui/StatTracker.html#getThroughBestRunTurns()"><B>getThroughBestRunTurns()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in maze.gui">StatTracker</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getTotalHeight()"><B>getTotalHeight()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/gui/StatTracker.html#getTotalTraversed()"><B>getTotalTraversed()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/StatTracker.html" title="class in maze.gui">StatTracker</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getTotalWidth()"><B>getTotalWidth()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/ai/RobotBase.html#getUnderstandingDir()"><B>getUnderstandingDir()</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>
@@ -537,12 +553,18 @@ Method in class maze.ai.<A HREF="../maze/ai/RobotBase.html" title="class in maze
 <DT><A HREF="../maze/ai/RobotController.html#getUnderstandingInt()"><B>getUnderstandingInt()</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/RobotController.html" title="class in maze.ai">RobotController</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptEditor.html#getVariableType(java.lang.String)"><B>getVariableType(String)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/ScriptEditor.html#getVariableValue(java.lang.String)"><B>getVariableValue(String)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#getWall(java.awt.Point)"><B>getWall(Point)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Converts a mouse pointer location into an actual maze wall object.
 <DT><A HREF="../maze/model/MazeModel.html#getWall(int, int, int)"><B>getWall(int, int, int)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
+<DD>Is the wall set/enabled.
 <DT><A HREF="../maze/model/MazeModel.html#getWall(maze.model.MazeCell, maze.model.Direction)"><B>getWall(MazeCell, Direction)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
 <DD>Get an object that can then be checked or changed.
@@ -555,14 +577,14 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maz
 <DT><A HREF="../maze/gui/MazePainter.html#getWallEmpty()"><B>getWallEmpty()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getWallHeight()"><B>getWallHeight()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getWallEmptyEnd()"><B>getWallEmptyEnd()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getWallEmptyStart()"><B>getWallEmptyStart()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getWallHeight()"><B>getWallHeight()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getWallHeightHalf()"><B>getWallHeightHalf()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getWallHeightHalf()"><B>getWallHeightHalf()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
@@ -574,27 +596,39 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maz
 <DT><A HREF="../maze/gui/MazePainter.html#getWallSet()"><B>getWallSet()</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getWallWidth()"><B>getWallWidth()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getWallSetEnd()"><B>getWallSetEnd()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#getWallSetStart()"><B>getWallSetStart()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getWallWidth()"><B>getWallWidth()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#getWallWidthHalf()"><B>getWallWidthHalf()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#getWallWidthHalf()"><B>getWallWidthHalf()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/model/MazeModel.html#getWinningBorderWalls()"><B>getWinningBorderWalls()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
+<DD>Get the line of walls that surround the center.
+<DT><A HREF="../maze/model/MazeModel.html#getWinningCells()"><B>getWinningCells()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
+<DD>Gets the maze cells that make up the winning center of the maze.
 <DT><A HREF="../maze/model/MazeCell.html#getX()"><B>getX()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
 <DD>Get the X coordinate.
+<DT><A HREF="../maze/model/MazeCellPeg.html#getX()"><B>getX()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/MazeCell.html#getXZeroBased()"><B>getXZeroBased()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
 <DD>Get the X coordinate.
 <DT><A HREF="../maze/model/MazeCell.html#getY()"><B>getY()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
 <DD>Get the Y coordinate.
+<DT><A HREF="../maze/model/MazeCellPeg.html#getY()"><B>getY()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/MazeCell.html#getYZeroBased()"><B>getYZeroBased()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
 <DD>Get the Y coordinate.

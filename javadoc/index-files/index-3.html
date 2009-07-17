@@ -80,15 +80,29 @@ function windowTitle()
 <A NAME="_C_"><!-- --></A><H2>
 <B>C</B></H2>
 <DL>
+<DT><A HREF="../maze/gui/mazeeditor/MazeEditorPage.html#canExit()"><B>canExit()</B></A> - 
+Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A>
+<DD>Prompt the user to save any dirty mazes.
+<DT><A HREF="../maze/gui/MenuControlled.html#canExit()"><B>canExit()</B></A> - 
+Method in interface maze.gui.<A HREF="../maze/gui/MenuControlled.html" title="interface in maze.gui">MenuControlled</A>
+<DD>Perform cleanup operations like saving files before the application exits.
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#canExit()"><B>canExit()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/PrimaryFrame.html#canExitingApplication()"><B>canExitingApplication()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/PrimaryFrame.html" title="class in maze.gui">PrimaryFrame</A>
+<DD>Called when the application is closed.
 <DT><A HREF="../maze/gui/MazePainter.html#cellBackground"><B>cellBackground</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#cellBackgroundEnd"><B>cellBackgroundEnd</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
+<DT><A HREF="../maze/gui/MazePainterDefault.html#cellBackgroundStart"><B>cellBackgroundStart</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="class in maze.gui">MazePainterDefault</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html#cellHeight"><B>cellHeight</B></A> - 
 Variable in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html" title="class in maze.gui"><B>CellSize</B></A> - Class in <A HREF="../maze/gui/package-summary.html">maze.gui</A><DD>This model stores the sizes of the cells and wall segments that are drawn
- to the screen.<DT><A HREF="../maze/gui/CellSize.html#CellSize(int, int, int, int, int, int)"><B>CellSize(int, int, int, int, int, int)</B></A> - 
-Constructor for class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/CellSizeModel.html" title="class in maze.model"><B>CellSizeModel</B></A> - Class in <A HREF="../maze/model/package-summary.html">maze.model</A><DD>This model stores the sizes of the cells and wall segments that are drawn to
  the screen.<DT><A HREF="../maze/model/CellSizeModel.html#CellSizeModel(boolean)"><B>CellSizeModel(boolean)</B></A> - 
@@ -105,60 +119,51 @@ Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>Updates the algorithm's memory of the maze based upon the walls in the
  current cell.
+<DT><A HREF="../maze/model/MazeModel.html#clearCenterWalls()"><B>clearCenterWalls()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
+<DD>Clears the 4 walls around the center peg as is required by the rules for a
+ legal maze.
 <DT><A HREF="../maze/model/MazeInfo.html#clearDirty()"><B>clearDirty()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/MazeModel.html#clearMaze()"><B>clearMaze()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
+<DD>Clear all the walls of the maze and set the default corner wall.
 <DT><A HREF="../maze/model/MazeModel.html#clearWall(int, int, int)"><B>clearWall(int, int, int)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
+<DD>Clear/disable a wall segment.
 <DT><A HREF="../maze/gui/mazeeditor/TemplatePeg.html#clone()"><B>clone()</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/model/CellSizeModel.html#clone()"><B>clone()</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/MazeModel.html#clone()"><B>clone()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditingPanel.html#close()"><B>close()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/MazeEditor.html#close()"><B>close()</B></A> - 
-Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeEditor.html" title="class in maze.gui.mazeeditor">MazeEditor</A>
+<DD>Make a deep copy of this maze model.
+<DT><A HREF="../maze/gui/mazeeditor/MazeEditorPage.html#close()"><B>close()</B></A> - 
+Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MenuControlled.html#close()"><B>close()</B></A> - 
 Method in interface maze.gui.<A HREF="../maze/gui/MenuControlled.html" title="interface in maze.gui">MenuControlled</A>
+<DD>Closes the currently displayed item.
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#close()"><B>close()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/MazeInfoModel.html#close(maze.model.MazeInfo)"><B>close(MazeInfo)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditingPanel.html#closeScriptAction"><B>closeScriptAction</B></A> - 
-Variable in class maze.gui.<A HREF="../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A>
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#closeScriptAction"><B>closeScriptAction</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
 <DD>Closes the currently visible editor tab.
-<DT><A HREF="../maze/gui/CodeEditingPanel.html" title="class in maze.gui"><B>CodeEditingPanel</B></A> - Class in <A HREF="../maze/gui/package-summary.html">maze.gui</A><DD>Creates a robot AI script editor that allows the creation of Python scripts
- to control the AI robot.<DT><A HREF="../maze/gui/CodeEditingPanel.html#CodeEditingPanel()"><B>CodeEditingPanel()</B></A> - 
-Constructor for class maze.gui.<A HREF="../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A>
-<DD>Constructor.
-<DT><A HREF="../maze/gui/CodeEditingPanel.CodeInformationPanel.html" title="class in maze.gui"><B>CodeEditingPanel.CodeInformationPanel</B></A> - Class in <A HREF="../maze/gui/package-summary.html">maze.gui</A><DD>Creates a panel to display information about the current python script.<DT><A HREF="../maze/gui/CodeEditingPanel.CodeInformationPanel.html#CodeEditingPanel.CodeInformationPanel()"><B>CodeEditingPanel.CodeInformationPanel()</B></A> - 
-Constructor for class maze.gui.<A HREF="../maze/gui/CodeEditingPanel.CodeInformationPanel.html" title="class in maze.gui">CodeEditingPanel.CodeInformationPanel</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/ai/PythonScriptRobot.html#codeEditor"><B>codeEditor</B></A> - 
 Variable in class maze.ai.<A HREF="../maze/ai/PythonScriptRobot.html" title="class in maze.ai">PythonScriptRobot</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui"><B>CodeEditorPane</B></A> - Class in <A HREF="../maze/gui/package-summary.html">maze.gui</A><DD>Creates an AI script text editor in Python.<DT><A HREF="../maze/gui/CodeEditorPane.html#CodeEditorPane(java.io.File)"><B>CodeEditorPane(File)</B></A> - 
-Constructor for class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditorPane.html#CodeEditorPane()"><B>CodeEditorPane()</B></A> - 
-Constructor for class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/PrimaryFrame.html#codeEditorPanel"><B>codeEditorPanel</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/PrimaryFrame.html" title="class in maze.gui">PrimaryFrame</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/model/MazeModel.PointCompare.html#compare(java.awt.Point, java.awt.Point)"><B>compare(Point, Point)</B></A> - 
-Method in class maze.model.<A HREF="../maze/model/MazeModel.PointCompare.html" title="class in maze.model">MazeModel.PointCompare</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/CellSize.html#compareTo(maze.gui.CellSize)"><B>compareTo(CellSize)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>
+<DT><A HREF="../maze/gui/ScriptEditor.html#codeEvalTimer"><B>codeEvalTimer</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/mazeeditor/TemplatePeg.html#compareTo(maze.gui.mazeeditor.TemplatePeg)"><B>compareTo(TemplatePeg)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>
@@ -166,6 +171,9 @@ Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/TemplatePeg.
 <DT><A HREF="../maze/model/MazeCell.html#compareTo(maze.model.MazeCell)"><B>compareTo(MazeCell)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
 <DD>Sorts in order from (x,y) (1,1),(2,1),(3,1),(1,2),(2,2),(3,2).
+<DT><A HREF="../maze/model/MazeCellPeg.html#compareTo(maze.model.MazeCellPeg)"><B>compareTo(MazeCellPeg)</B></A> - 
+Method in class maze.model.<A HREF="../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#componentHidden(java.awt.event.ComponentEvent)"><B>componentHidden(ComponentEvent)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
@@ -185,8 +193,8 @@ Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maz
 <DT><A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html" title="class in maze.gui.mazeeditor"><B>ConjoinedMazeTemplate</B></A> - Class in <A HREF="../maze/gui/mazeeditor/package-summary.html">maze.gui.mazeeditor</A><DD>This class provides a parent class to any maze template that is one piece.<DT><A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#ConjoinedMazeTemplate()"><B>ConjoinedMazeTemplate()</B></A> - 
 Constructor for class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/ConjoinedMazeTemplate.html" title="class in maze.gui.mazeeditor">ConjoinedMazeTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditorPane.html#connectedRobot"><B>connectedRobot</B></A> - 
-Variable in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
+<DT><A HREF="../maze/gui/ScriptEditor.html#connectedRobot"><B>connectedRobot</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/ai/ModifiedFloodfill.Direction2.html#containsDirection(int, maze.ai.ModifiedFloodfill.Direction2)"><B>containsDirection(int, ModifiedFloodfill.Direction2)</B></A> - 
 Static method in enum maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.Direction2.html" title="enum in maze.ai">ModifiedFloodfill.Direction2</A>
@@ -219,8 +227,8 @@ Static method in class maze.model.<A HREF="../maze/model/MazeInfo.html" title="c
 <DT><A HREF="../maze/model/MazeInfoModel.html#createNew(java.lang.String, boolean)"><B>createNew(String, boolean)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditingPanel.html#createNewEditor()"><B>createNewEditor()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A>
+<DT><A HREF="../maze/gui/ScriptEditorPage.html#createNewEditor()"><B>createNewEditor()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A>
 <DD>Creates a new script by prompting the user to choose a template and then
  creates a new editor tab.
 <DT><A HREF="../maze/gui/HelpInfo.html#createNodes(javax.swing.tree.DefaultMutableTreeNode)"><B>createNodes(DefaultMutableTreeNode)</B></A> - 
@@ -243,8 +251,8 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DT><A HREF="../maze/gui/mazeeditor/CornerTemplate.html#currentCorner"><B>currentCorner</B></A> - 
 Variable in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/CornerTemplate.html" title="class in maze.gui.mazeeditor">CornerTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/CodeEditorPane.html#currentInterpreter"><B>currentInterpreter</B></A> - 
-Variable in class maze.gui.<A HREF="../maze/gui/CodeEditorPane.html" title="class in maze.gui">CodeEditorPane</A>
+<DT><A HREF="../maze/gui/ScriptEditor.html#currentInterpreter"><B>currentInterpreter</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/RobotModelMaster.html#currentLocation"><B>currentLocation</B></A> - 
 Variable in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title="class in maze.model">RobotModelMaster</A>
@@ -263,7 +271,7 @@ Variable in class maze.gui.<A HREF="../maze/gui/RobotAnimator.html" title="class
 <DD>The state that this animator is currently in.
 <DT><A HREF="../maze/model/MazeModel.html#cwalls"><B>cwalls</B></A> - 
 Variable in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
+<DD>Column walls.
 </DL>
 <HR>
 

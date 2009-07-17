@@ -94,9 +94,12 @@ java.lang.Object
   <IMG SRC="../../resources/inherit.gif" ALT="extended by ">java.util.Observable
       <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.model.CellSizeModel</B>
 </PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable, java.lang.Cloneable</DD>
+</DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/model/CellSizeModel.html#line.9"><B>CellSizeModel</B></A><DT>extends java.util.Observable</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/model/CellSizeModel.html#line.10"><B>CellSizeModel</B></A><DT>extends java.util.Observable<DT>implements java.lang.Cloneable, java.io.Serializable</DL>
 </PRE>
 
 <P>
@@ -105,6 +108,8 @@ This model stores the sizes of the cells and wall segments that are drawn to
 <P>
 
 <P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../serialized-form.html#maze.model.CellSizeModel">Serialized Form</A></DL>
 <HR>
 
 <P>
@@ -181,6 +186,22 @@ This model stores the sizes of the cells and wall segments that are drawn to
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/CellSizeModel.html#clone()">clone</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/CellSizeModel.html#equals(java.lang.Object)">equals</A></B>(java.lang.Object&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -264,6 +285,14 @@ This model stores the sizes of the cells and wall segments that are drawn to
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/CellSizeModel.html#hashCode()">hashCode</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/CellSizeModel.html#setCellHeight(int)">setCellHeight</A></B>(int&nbsp;cellHeight)</CODE>
 
@@ -318,7 +347,7 @@ This model stores the sizes of the cells and wall segments that are drawn to
 <TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+<TD><CODE>finalize, getClass, notify, notifyAll, wait, wait, wait</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -337,7 +366,7 @@ This model stores the sizes of the cells and wall segments that are drawn to
 <A NAME="cellWidth"><!-- --></A><H3>
 cellWidth</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.11"><B>cellWidth</B></A></PRE>
+private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.12"><B>cellWidth</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -347,7 +376,7 @@ private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.11"><B>ce
 <A NAME="cellHeight"><!-- --></A><H3>
 cellHeight</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.12"><B>cellHeight</B></A></PRE>
+private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.13"><B>cellHeight</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -357,7 +386,7 @@ private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.12"><B>ce
 <A NAME="wallWidth"><!-- --></A><H3>
 wallWidth</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.13"><B>wallWidth</B></A></PRE>
+private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.14"><B>wallWidth</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -367,7 +396,7 @@ private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.13"><B>wa
 <A NAME="wallHeight"><!-- --></A><H3>
 wallHeight</H3>
 <PRE>
-private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.14"><B>wallHeight</B></A></PRE>
+private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.15"><B>wallHeight</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -377,7 +406,7 @@ private int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.14"><B>wa
 <A NAME="forceEven"><!-- --></A><H3>
 forceEven</H3>
 <PRE>
-private final boolean <A HREF="../../src-html/maze/model/CellSizeModel.html#line.15"><B>forceEven</B></A></PRE>
+private final boolean <A HREF="../../src-html/maze/model/CellSizeModel.html#line.16"><B>forceEven</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -396,7 +425,7 @@ private final boolean <A HREF="../../src-html/maze/model/CellSizeModel.html#line
 <A NAME="CellSizeModel(boolean)"><!-- --></A><H3>
 CellSizeModel</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/CellSizeModel.html#line.21"><B>CellSizeModel</B></A>(boolean&nbsp;forceEven)</PRE>
+public <A HREF="../../src-html/maze/model/CellSizeModel.html#line.22"><B>CellSizeModel</B></A>(boolean&nbsp;forceEven)</PRE>
 <DL>
 <DD>Constructor.
 <P>
@@ -417,7 +446,7 @@ public <A HREF="../../src-html/maze/model/CellSizeModel.html#line.21"><B>CellSiz
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/CellSizeModel.html#line.27"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/model/CellSizeModel.html#line.28"><B>toString</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DL>
@@ -431,8 +460,11 @@ public java.lang.String <A HREF="../../src-html/maze/model/CellSizeModel.html#li
 <A NAME="setCellWidth(int)"><!-- --></A><H3>
 setCellWidth</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.40"><B>setCellWidth</B></A>(int&nbsp;cellWidth)</PRE>
+public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.41"><B>setCellWidth</B></A>(int&nbsp;cellWidth)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -442,8 +474,11 @@ public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.40"><B>se
 <A NAME="setCellHeight(int)"><!-- --></A><H3>
 setCellHeight</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.53"><B>setCellHeight</B></A>(int&nbsp;cellHeight)</PRE>
+public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.54"><B>setCellHeight</B></A>(int&nbsp;cellHeight)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -453,8 +488,11 @@ public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.53"><B>se
 <A NAME="setWallWidth(int)"><!-- --></A><H3>
 setWallWidth</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.66"><B>setWallWidth</B></A>(int&nbsp;wallWidth)</PRE>
+public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.67"><B>setWallWidth</B></A>(int&nbsp;wallWidth)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -464,8 +502,11 @@ public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.66"><B>se
 <A NAME="setWallHeight(int)"><!-- --></A><H3>
 setWallHeight</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.79"><B>setWallHeight</B></A>(int&nbsp;wallHeight)</PRE>
+public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.80"><B>setWallHeight</B></A>(int&nbsp;wallHeight)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -475,8 +516,11 @@ public void <A HREF="../../src-html/maze/model/CellSizeModel.html#line.79"><B>se
 <A NAME="getCellWidth()"><!-- --></A><H3>
 getCellWidth</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.92"><B>getCellWidth</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.93"><B>getCellWidth</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -486,8 +530,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.92"><B>get
 <A NAME="getCellHeight()"><!-- --></A><H3>
 getCellHeight</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.97"><B>getCellHeight</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.98"><B>getCellHeight</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -497,8 +544,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.97"><B>get
 <A NAME="getWallWidth()"><!-- --></A><H3>
 getWallWidth</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.102"><B>getWallWidth</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.103"><B>getWallWidth</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -508,8 +558,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.102"><B>ge
 <A NAME="getWallHeight()"><!-- --></A><H3>
 getWallHeight</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.107"><B>getWallHeight</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.108"><B>getWallHeight</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -519,8 +572,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.107"><B>ge
 <A NAME="getCellWidthHalf()"><!-- --></A><H3>
 getCellWidthHalf</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.112"><B>getCellWidthHalf</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.113"><B>getCellWidthHalf</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -530,8 +586,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.112"><B>ge
 <A NAME="getCellHeightHalf()"><!-- --></A><H3>
 getCellHeightHalf</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.117"><B>getCellHeightHalf</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.118"><B>getCellHeightHalf</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -541,8 +600,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.117"><B>ge
 <A NAME="getWallWidthHalf()"><!-- --></A><H3>
 getWallWidthHalf</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.122"><B>getWallWidthHalf</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.123"><B>getWallWidthHalf</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -552,8 +614,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.122"><B>ge
 <A NAME="getWallHeightHalf()"><!-- --></A><H3>
 getWallHeightHalf</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.127"><B>getWallHeightHalf</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.128"><B>getWallHeightHalf</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -563,8 +628,11 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.127"><B>ge
 <A NAME="getCellWidthInner()"><!-- --></A><H3>
 getCellWidthInner</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.132"><B>getCellWidthInner</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.133"><B>getCellWidthInner</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -574,8 +642,53 @@ public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.132"><B>ge
 <A NAME="getCellHeightInner()"><!-- --></A><H3>
 getCellHeightInner</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.137"><B>getCellHeightInner</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.138"><B>getCellHeightInner</B></A>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hashCode()"><!-- --></A><H3>
+hashCode</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/model/CellSizeModel.html#line.144"><B>hashCode</B></A>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/model/CellSizeModel.html#line.156"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clone()"><!-- --></A><H3>
+clone</H3>
+<PRE>
+public <A HREF="../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A> <A HREF="../../src-html/maze/model/CellSizeModel.html#line.177"><B>clone</B></A>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>clone</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>

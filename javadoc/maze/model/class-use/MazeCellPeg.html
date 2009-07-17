@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Uses of Interface maze.model.CellSizeModelInterface
+Uses of Class maze.model.MazeCellPeg
 </TITLE>
 
 
@@ -13,7 +13,7 @@ Uses of Interface maze.model.CellSizeModelInterface
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface maze.model.CellSizeModelInterface";
+        parent.document.title="Uses of Class maze.model.MazeCellPeg";
     }
 }
 </SCRIPT>
@@ -37,7 +37,7 @@ function windowTitle()
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interface in maze.model"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -56,8 +56,8 @@ function windowTitle()
 &nbsp;PREV&nbsp;
 &nbsp;NEXT</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../index.html?maze/model/\class-useCellSizeModelInterface.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CellSizeModelInterface.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../index.html?maze/model/\class-useMazeCellPeg.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MazeCellPeg.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -79,13 +79,13 @@ function windowTitle()
 <HR>
 <CENTER>
 <H2>
-<B>Uses of Interface<br>maze.model.CellSizeModelInterface</B></H2>
+<B>Uses of Class<br>maze.model.MazeCellPeg</B></H2>
 </CENTER>
 
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Packages that use <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interface in maze.model">CellSizeModelInterface</A></FONT></TH>
+Packages that use <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#maze.model"><B>maze.model</B></A></TD>
@@ -98,7 +98,7 @@ Packages that use <A HREF="../../../maze/model/CellSizeModelInterface.html" titl
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Uses of <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interface in maze.model">CellSizeModelInterface</A> in <A HREF="../../../maze/model/package-summary.html">maze.model</A></FONT></TH>
+Uses of <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A> in <A HREF="../../../maze/model/package-summary.html">maze.model</A></FONT></TH>
 </TR>
 </TABLE>
 &nbsp;
@@ -106,21 +106,34 @@ Uses of <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interfa
 
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../maze/model/package-summary.html">maze.model</A> that implement <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interface in maze.model">CellSizeModelInterface</A></FONT></TH>
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../maze/model/package-summary.html">maze.model</A> that return types with arguments of type <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A></B></CODE>
+<CODE>&nbsp;java.util.Set&lt;<A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>MazeModel.</B><B><A HREF="../../../maze/model/MazeModel.html#illegalPegs()">illegalPegs</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This model stores the sizes of the cells and wall segments that are drawn to
- the screen.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This function is basically isLegal with the added capability of returning
+ the peg locations that are bad.<br />
+ There are rules that must be upheld to be a valid maze.<br />
+ Rule 1: There is a wall next to the starting square.<br />
+ Rule 2: There is one and only one way into the center of the maze.<br />
+ Even though I've coded this to accept a variable size in the future I
+ shall still assume here that the total size will always be even.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../maze/model/package-summary.html">maze.model</A> with parameters of type <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/model/CellSizeModel2.html" title="class in maze.model">CellSizeModel2</A></B></CODE>
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B>MazeCellPeg.</B><B><A HREF="../../../maze/model/MazeCellPeg.html#compareTo(maze.model.MazeCellPeg)">compareTo</A></B>(<A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&nbsp;o)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -142,7 +155,7 @@ Uses of <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interfa
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interface in maze.model"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../maze/model/MazeCellPeg.html" title="class in maze.model"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -161,8 +174,8 @@ Uses of <A HREF="../../../maze/model/CellSizeModelInterface.html" title="interfa
 &nbsp;PREV&nbsp;
 &nbsp;NEXT</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../index.html?maze/model/\class-useCellSizeModelInterface.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CellSizeModelInterface.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../index.html?maze/model/\class-useMazeCellPeg.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MazeCellPeg.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
