@@ -10,6 +10,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.CharBuffer;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -37,13 +40,220 @@ import maze.model.MazeInfoModel;
  */
 public final class PrimaryFrame extends JFrame
 {
-   private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
-   private MazeViewerPage mazeViewer;
-   private MazeEditorPage mazeEditor;
-   private ScriptEditorPage codeEditorPanel;
-   private final JTabbedPane mainTabs = new JTabbedPane();
-   private final JMenu fileMenu = new JMenu("File");
+   private static final String PROJECT_HOMEPAGE = "http://code.google.com/p/maze-solver/";
+
+   /**
+    * An ActionListener that changes the swing look and feel.
+    */
+   private class LookAndFeelListener implements ActionListener
+   {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         try
+         {
+            UIManager.setLookAndFeel(e.getActionCommand());
+            SwingUtilities.updateComponentTreeUI(PrimaryFrame.this);
+         }
+         catch (Exception ex)
+         {}
+      }
+   }
+
    private static final Dimension DEFAULT_SIZE = new Dimension(1024, 768);
+   private ScriptEditorPage codeEditorPanel;
+   private final JMenu fileMenu = new JMenu("File");
+   private final JTabbedPane mainTabs = new JTabbedPane();
+   private MazeEditorPage mazeEditor;
+   private MazeViewerPage mazeViewer;
+   private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
+
+   /**
+    * Called when the application is closed. Perform application exit
+    * cleanup.This gives us a chance to cleanup and prompt to save things.
+    * @return true if it is OK for the application to exit. false if the
+    *         application should about the exit.
+    */
+   private boolean canExitingApplication()
+   {
+      return this.mazeEditor.canExit() && this.codeEditorPanel.canExit();
+   }
+
+   /**
+    * Bring up the open file dialog and based on the file type selected hand it
+    * off to the appropriate panel. The 2 groups of files are AI scripts and
+    * maze files. AI scripts are python .py files and maze maps can be .maz or
+    * .mz2.
+    */
+   private void doOpenFile()
+   {
+      final MenuControlled[] panels =
+      {
+         codeEditorPanel, mazeEditor
+      };
+      final JFileChooser fc = new JFileChooser();
+      fc.setAcceptAllFileFilterUsed(false);
+
+      // Create a file filter for all our file types.
+      FileFilter allFiles = new FileFilter()
+      {
+         @Override
+         public boolean accept(File f)
+         {
+            if (f.isDirectory())
+               return true;
+            for (MenuControlled mc : panels)
+            {
+               if (mc.isMyFileType(f))
+                  return true;
+            }
+            return false;
+         }
+
+         @Override
+         public String getDescription()
+         {
+            String msg = "";
+            for (MenuControlled mc : panels)
+            {
+               msg += mc.getFileTypeDescription() + ", ";
+            }
+            return msg.substring(0, msg.length() - 2);
+         }
+      };
+      fc.addChoosableFileFilter(allFiles);
+
+      // Add filter for each type.
+      for (final MenuControlled mc : panels)
+      {
+         fc.addChoosableFileFilter(new FileFilter()
+         {
+            @Override
+            public boolean accept(File f)
+            {
+               if (f.isDirectory())
+                  return true;
+               else
+                  return mc.isMyFileType(f);
+            }
+
+            @Override
+            public String getDescription()
+            {
+               return mc.getFileTypeDescription();
+            }
+         });
+      }
+
+      fc.setFileFilter(allFiles); // Set initially selected.
+
+      if (fc.showOpenDialog(PrimaryFrame.this) == JFileChooser.APPROVE_OPTION)
+      {
+         File file = fc.getSelectedFile();
+         try
+         {
+            if (file.exists() && file.canRead())
+            {
+               // Try to open the file so it throws an exception if the file can not be read.
+               FileInputStream fileStream = null;
+               try
+               {
+                  fileStream = new FileInputStream(file);
+               }
+               finally
+               {
+                  if (fileStream != null)
+                     fileStream.close();
+               }
+               for (final MenuControlled mc : panels)
+               {
+                  if (mc.isMyFileType(file))
+                  {
+                     mainTabs.setSelectedComponent((Component) mc);
+                     mc.open(file);
+                     return;
+                  }
+               }
+               // If we make it this far then nobody recognized the file type.
+               throw new RuntimeException("The type of the selected file was not recognized.");
+            }
+            else
+            {
+               throw new SecurityException("File may not exist.");
+            }
+         }
+         catch (Exception ex)
+         {
+            ex.printStackTrace();
+            String msg = "There was an error opening the file.\n" + ex.getLocalizedMessage();
+            JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                          msg,
+                                          "File Open Error",
+                                          JOptionPane.ERROR_MESSAGE);
+         }
+      }
+   } // End open file.
+
+   /**
+    * Exits the application.
+    */
+   public void exit()
+   {
+      if (this.canExitingApplication())
+      {
+         this.setVisible(false);
+         System.exit(0);
+      }
+   }
+
+   /**
+    * Get the date that this build was created on.
+    * @return Date string or <code>Unknown</code>.
+    */
+   private String getApplicationBuildDate()
+   {
+      final String unknown = "Unknown";
+      try
+      {
+         Properties prop = new Properties();
+         // This properties file is created by Ant during the build process.
+         prop.load(Main.class.getResourceAsStream("build.properties"));
+         return prop.getProperty("date", unknown);
+      }
+      catch (Exception e1)
+      {
+         return unknown;
+      }
+   }
+
+   /**
+    * Get the subversion revision this application was built from.
+    * @return The Subversion revision number or 0 if unknown.
+    */
+   private int getApplicationRevision()
+   {
+      try
+      {
+         Properties prop = new Properties();
+         // This properties file is created by Ant during the build process.
+         prop.load(Main.class.getResourceAsStream("build.properties"));
+         return Integer.parseInt(prop.getProperty("revision", "0"));
+      }
+      catch (Exception e1)
+      {
+         return 0;
+      }
+   }
+
+   /**
+    * Returns a MazeInfoModel object containing all of the currently loaded
+    * mazes.
+    * @return said MazeInfoModel object.
+    */
+   public MazeInfoModel getMazeInfoModel()
+   {
+      return mMazeInfoModel;
+   }
 
    /**
     * Initializes the contents of this frame.
@@ -225,47 +435,15 @@ public final class PrimaryFrame extends JFrame
          }
       }
 
+      helpMenu.add(this.makeUpdateCheckMenuItem());
+      helpMenu.add(this.makeWebsiteMenuItem());
+
       // Separate the about dialog.
       helpMenu.addSeparator();
 
       // Help->About menu item.
-      JMenuItem aboutMenuItem = new JMenuItem("About...");
-      helpMenu.add(aboutMenuItem);
-      aboutMenuItem.addActionListener(new ActionListener()
-      {
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-            String buildDate = "Unknown";
-            String revision = "Unknown";
-            try
-            {
-               Properties prop = new Properties();
-               // This properties file is created by Ant during the build process.
-               prop.load(Main.class.getResourceAsStream("build.properties"));
-               buildDate = prop.getProperty("date", buildDate);
-               revision = prop.getProperty("revision", revision);
-            }
-            catch (Exception e1)
-            {
-               e1.printStackTrace();
-            }
+      helpMenu.add(this.makeAboutMenuItem());
 
-            String m = "<html><b>Build Date:</b> " +
-                       buildDate +
-                       "<br /><b>Revision:</b> " +
-                       revision +
-                       "<br />You can find more information about this application " +
-                       "at the following project page.<br />" +
-                       "<a href=\"http://code.google.com/p/maze-solver/\">" +
-                       "http://code.google.com/p/maze-solver/</a><br />" +
-                       "</html>";
-            JOptionPane.showMessageDialog(PrimaryFrame.this,
-                                          m,
-                                          "About",
-                                          JOptionPane.INFORMATION_MESSAGE);
-         }
-      });
       this.mazeViewer = new MazeViewerPage();
       this.codeEditorPanel = new ScriptEditorPage();
       this.mazeEditor = new MazeEditorPage();
@@ -288,151 +466,117 @@ public final class PrimaryFrame extends JFrame
    } // End init.
 
    /**
-    * Bring up the open file dialog and based on the file type selected hand it
-    * off to the appropriate panel. The 2 groups of files are AI scripts and
-    * maze files. AI scripts are python .py files and maze maps can be .maz or
-    * .mz2.
+    * Create the Help->About menu item.
+    * @return Created item.
     */
-   private void doOpenFile()
+   private JMenuItem makeAboutMenuItem()
    {
-      final MenuControlled[] panels =
-      {
-         codeEditorPanel, mazeEditor
-      };
-      final JFileChooser fc = new JFileChooser();
-      fc.setAcceptAllFileFilterUsed(false);
-
-      // Create a file filter for all our file types.
-      FileFilter allFiles = new FileFilter()
+      final JMenuItem aboutMenuItem = new JMenuItem("About...");
+      aboutMenuItem.addActionListener(new ActionListener()
       {
          @Override
-         public String getDescription()
+         public void actionPerformed(ActionEvent e)
          {
-            String msg = "";
-            for (MenuControlled mc : panels)
-            {
-               msg += mc.getFileTypeDescription() + ", ";
-            }
-            return msg.substring(0, msg.length() - 2);
+            String m = "<html><b>Build Date:</b> " +
+                       getApplicationBuildDate() +
+                       "<br /><b>Revision:</b> " +
+                       getApplicationRevision() +
+                       "<br />You can find more information about this application " +
+                       "at the following project page.<br />" +
+                       "<a href=\"" +
+                       PROJECT_HOMEPAGE +
+                       "\">" +
+                       "http://code.google.com/p/maze-solver/</a><br />" +
+                       "</html>";
+            JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                          m,
+                                          "About",
+                                          JOptionPane.INFORMATION_MESSAGE);
          }
+      });
+      return aboutMenuItem;
+   }
 
+   /**
+    * Creates a menu item that checks if you have the latest revision of the
+    * application.
+    * @return Menu item.
+    */
+   private JMenuItem makeUpdateCheckMenuItem()
+   {
+      final JMenuItem item = new JMenuItem("Check for Update...");
+      item.addActionListener(new ActionListener()
+      {
          @Override
-         public boolean accept(File f)
+         public void actionPerformed(ActionEvent e)
          {
-            if (f.isDirectory())
-               return true;
-            for (MenuControlled mc : panels)
+            Thread t = new Thread()
             {
-               if (mc.isMyFileType(f))
-                  return true;
-            }
-            return false;
-         }
-      };
-      fc.addChoosableFileFilter(allFiles);
-
-      // Add filter for each type.
-      for (final MenuControlled mc : panels)
-      {
-         fc.addChoosableFileFilter(new FileFilter()
-         {
-            @Override
-            public boolean accept(File f)
-            {
-               if (f.isDirectory())
-                  return true;
-               else
-                  return mc.isMyFileType(f);
-            }
-
-            @Override
-            public String getDescription()
-            {
-               return mc.getFileTypeDescription();
-            }
-         });
-      }
-
-      fc.setFileFilter(allFiles); // Set initially selected.
-
-      if (fc.showOpenDialog(PrimaryFrame.this) == JFileChooser.APPROVE_OPTION)
-      {
-         File file = fc.getSelectedFile();
-         try
-         {
-            if (file.exists() && file.canRead())
-            {
-               // Try to open the file so it throws an exception if the file can not be read.
-               FileInputStream fileStream = null;
-               try
+               @Override
+               public void run()
                {
-                  fileStream = new FileInputStream(file);
-               }
-               finally
-               {
-                  if (fileStream != null)
-                     fileStream.close();
-               }
-               for (final MenuControlled mc : panels)
-               {
-                  if (mc.isMyFileType(file))
+                  try
                   {
-                     mainTabs.setSelectedComponent((Component) mc);
-                     mc.open(file);
-                     return;
+                     Reader r = new InputStreamReader(new java.net.URI("http://maze-solver.googlecode.com/svn/wiki/LatestRevision.wiki").toURL().openConnection().getInputStream(),
+                                                      "ASCII");
+                     CharBuffer cb = CharBuffer.allocate(1024);
+                     r.read(cb);
+                     cb.flip();
+                     System.out.println(cb.toString());
+                     final int revision = Integer.parseInt(cb.toString());
+                     final int myRevision = getApplicationRevision();
+                     if (myRevision == 0)
+                     {
+                        JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                                      "Unable to determine your current version.");
+                     }
+                     else if (revision == myRevision)
+                     {
+                        JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                                      "You have the latest version.");
+                     }
+                     else
+                     {
+                        JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                                      "There is a newer version available.\nYou have Revision: " +
+                                                            myRevision +
+                                                            "\nLatest Revision: " +
+                                                            revision);
+                     }
+                  }
+                  catch (Exception e)
+                  {
+                     e.printStackTrace();
+                     JOptionPane.showMessageDialog(PrimaryFrame.this,
+                                                   "An error occured while checking for the latest version.\n" +
+                                                         e.toString());
                   }
                }
-               // If we make it this far then nobody recognized the file type.
-               throw new RuntimeException("The type of the selected file was not recognized.");
-            }
-            else
-            {
-               throw new SecurityException("File may not exist.");
-            }
+            };
+            t.setDaemon(true);
+            t.start();
          }
-         catch (Exception ex)
-         {
-            ex.printStackTrace();
-            String msg = "There was an error opening the file.\n" + ex.getLocalizedMessage();
-            JOptionPane.showMessageDialog(PrimaryFrame.this,
-                                          msg,
-                                          "File Open Error",
-                                          JOptionPane.ERROR_MESSAGE);
-         }
-      }
+      });
+      return item;
    }
 
    /**
-    * Returns a MazeInfoModel object containing all of the currently loaded
-    * mazes.
-    * @return said MazeInfoModel object.
+    * Help->Project Web-site menu item launches the project web site in the
+    * system browser.
+    * @return Menu item.
     */
-   public MazeInfoModel getMazeInfoModel()
+   private JMenuItem makeWebsiteMenuItem()
    {
-      return mMazeInfoModel;
-   }
-
-   /**
-    * Exits the application.
-    */
-   public void exit()
-   {
-      if (this.canExitingApplication())
+      JMenuItem websiteMenuItem = new JMenuItem("Project Website...");
+      websiteMenuItem.addActionListener(new ActionListener()
       {
-         this.setVisible(false);
-         System.exit(0);
-      }
-   }
-
-   /**
-    * Called when the application is closed. Perform application exit
-    * cleanup.This gives us a chance to cleanup and prompt to save things.
-    * @return true if it is OK for the application to exit. false if the
-    *         application should about the exit.
-    */
-   private boolean canExitingApplication()
-   {
-      return this.mazeEditor.canExit() && this.codeEditorPanel.canExit();
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            Main.launchInBrowser(PROJECT_HOMEPAGE);
+         }
+      });
+      return websiteMenuItem;
    }
 
    /**
@@ -444,23 +588,5 @@ public final class PrimaryFrame extends JFrame
    {
       this.mainTabs.setEnabled(!simOn);
       this.fileMenu.setEnabled(!simOn);
-   }
-
-   /**
-    * An ActionListener that changes the swing look and feel.
-    */
-   private class LookAndFeelListener implements ActionListener
-   {
-      @Override
-      public void actionPerformed(ActionEvent e)
-      {
-         try
-         {
-            UIManager.setLookAndFeel(e.getActionCommand());
-            SwingUtilities.updateComponentTreeUI(PrimaryFrame.this);
-         }
-         catch (Exception ex)
-         {}
-      }
    }
 }
