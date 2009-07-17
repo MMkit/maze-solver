@@ -13,9 +13,9 @@ import javax.swing.JScrollPane;
  * class is a singelton.
  * @author Luke Last
  */
-public final class CodeInformationPanel extends JPanel
+public final class ScriptInfoPanel extends JPanel
 {
-   private static CodeInformationPanel instance;
+   private static ScriptInfoPanel instance;
    private final JList list = new JList();
    private final DefaultListModel model = new DefaultListModel();
    private final JLabel labelErrorStatus = new JLabel();
@@ -23,17 +23,17 @@ public final class CodeInformationPanel extends JPanel
    private final JLabel labelTokenValue = new JLabel();
    private final JLabel labelTokenType = new JLabel();
 
-   public synchronized static CodeInformationPanel getInstance()
+   public synchronized static ScriptInfoPanel getInstance()
    {
       if (instance == null)
-         instance = new CodeInformationPanel();
+         instance = new ScriptInfoPanel();
       return instance;
    }
 
    /**
     * Constructor, build the panel.
     */
-   private CodeInformationPanel()
+   private ScriptInfoPanel()
    {
       this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
       this.list.setModel(this.model);

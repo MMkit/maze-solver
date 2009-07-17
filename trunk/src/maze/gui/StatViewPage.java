@@ -29,7 +29,7 @@ import maze.model.MazeModel;
  * @author Vincent Frey
  * @author Luke Last
  */
-public class StatViewPanel extends JPanel
+public class StatViewPage extends JPanel
 {
    private StatTracker tracker;
    private MazeModel maze;
@@ -42,7 +42,7 @@ public class StatViewPanel extends JPanel
    /**
     * This constructor creates the Panel.
     */
-   public StatViewPanel()
+   public StatViewPage()
    {
       // Recalculate statistics every time the panel is displayed.
       super.addComponentListener(new ComponentAdapter()

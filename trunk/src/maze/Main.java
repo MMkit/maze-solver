@@ -3,7 +3,6 @@ package maze;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -40,7 +39,6 @@ public final class Main
          {
             primaryFrame = new PrimaryFrame();
             primaryFrame.init();
-            primaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             primaryFrame.setVisible(true);
          }
       });

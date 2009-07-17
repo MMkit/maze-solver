@@ -3,7 +3,18 @@ package maze.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.TreeSet;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import maze.Main;
+import maze.gui.PrimaryFrame;
 import maze.util.Listener;
 
 /**
@@ -66,7 +77,8 @@ public class MazeInfo implements Listener<MazeCell>
          mi.mModel.addDelayedListener(mi);
          returned = mi;
       }
-      catch (IOException ex){}
+      catch (IOException ex)
+      {}
 
       return returned;
    }
@@ -182,5 +194,101 @@ public class MazeInfo implements Listener<MazeCell>
    public void eventFired(MazeCell event)
    {
       this.isDirty = true;
+   }
+
+   /**
+    * Save a maze.
+    * @return The saved maze or null. Can return itself or a new instance.
+    */
+   public MazeInfo saveMaze()
+   {
+      final PrimaryFrame frame = Main.getPrimaryFrameInstance();
+      DefaultComboBoxModel cbm = frame.getMazeInfoModel().getMazeInfoComboBoxModel();
+      TreeSet<String> paths = new TreeSet<String>();
+      for (int i = 0; i < cbm.getSize(); i++)
+      {
+         String path = ((MazeInfo) cbm.getElementAt(i)).getPath();
+         if (path.isEmpty() == false)
+            paths.add(path.toLowerCase());
+      }
+      if (this.isDirty())
+      {
+         MazeInfo toSave = this;
+         if (!this.isMutable())
+         {
+            toSave = this.getMutableClone();
+            Box box = new Box(BoxLayout.Y_AXIS);
+            JLabel label = new JLabel("What would you like to call the" + " maze?");
+            JTextField field = new JTextField();
+            box.add(label);
+            box.add(field);
+            String newName = null;
+            while (true)
+            {
+               int result = JOptionPane.showConfirmDialog(frame,
+                                                          box,
+                                                          "Maze Name",
+                                                          JOptionPane.OK_CANCEL_OPTION,
+                                                          JOptionPane.QUESTION_MESSAGE);
+               if (result == JOptionPane.OK_OPTION)
+               {
+                  if (field.getText().length() > 0)
+                  {
+                     newName = field.getText();
+                     break;
+                  }
+               }
+               else
+                  break;
+            }
+            if (newName == null)
+               return null;
+            this.clearDirty();
+            toSave.setName(newName);
+            toSave.setPath("");
+            frame.getMazeInfoModel().addMaze(toSave);
+            toSave.saveMaze();
+            return toSave;
+         }
+         else if (this.getPath() == null || this.getPath().isEmpty())
+         {
+            JFileChooser chooser = new JFileChooser();
+            while (true)
+            {
+               if (chooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION)
+               {
+                  File file = chooser.getSelectedFile();
+                  try
+                  {
+                     if (paths.contains(file.getCanonicalPath().toLowerCase()))
+                     {
+                        JOptionPane.showMessageDialog(frame,
+                                                      "That file is being used by another maze",
+                                                      "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
+                     }
+                     else
+                     {
+                        this.setPath(file.getCanonicalPath());
+                        break;
+                     }
+                  }
+                  catch (IOException ex)
+                  {
+                     JOptionPane.showMessageDialog(frame,
+                                                   "Invalid Save File",
+                                                   "Error",
+                                                   JOptionPane.ERROR_MESSAGE);
+                  }
+               }
+               else
+               { // Save dialog not approved.
+                  break;
+               }
+            } // End infinite loop.
+         }
+         this.store();
+      } // if (mi.isDirty())
+      return this;
    }
 }

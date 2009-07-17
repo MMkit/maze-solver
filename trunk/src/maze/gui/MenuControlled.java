@@ -37,4 +37,11 @@ public interface MenuControlled
     * Save the currently displayed item.
     */
    public void saveCurrent();
+
+   /**
+    * Perform cleanup operations like saving files before the application exits.
+    * @return true if this page is ready for application exit, false if the exit
+    *         should be stopped.
+    */
+   public boolean canExit();
 }

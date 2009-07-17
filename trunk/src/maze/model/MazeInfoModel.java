@@ -3,19 +3,24 @@ package maze.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.swing.DefaultComboBoxModel;
 
 /**
+ * Manages the global collection of mazes.
  * @author Johnathan Smith
  */
 public class MazeInfoModel
 {
-   private static final String[] NAMES = {"APEC2002.MAZ", "DEFAULT.MAZ",
-                                          "HITEL01.MAZ", "HITEL02.MAZ",
-                                          "LongPath.MAZ", "MINOS03Final.MAZ",
-                                          "MM03FINS.MAZ", "SEOUL01.MAZ",
-                                          "SEOUL02.MAZ"};
-   private static final String[] NAME_EXT = {".mz2", ".maz"};
+   private static final String[] NAMES =
+   {
+      "APEC2002.MAZ", "DEFAULT.MAZ", "HITEL01.MAZ", "HITEL02.MAZ", "LongPath.MAZ",
+      "MINOS03Final.MAZ", "MM03FINS.MAZ", "SEOUL01.MAZ", "SEOUL02.MAZ"
+   };
+   private static final String[] NAME_EXT =
+   {
+      ".mz2", ".maz"
+   };
    final DefaultComboBoxModel mMazeInfoModel = new DefaultComboBoxModel();
 
    public MazeInfoModel()
@@ -44,8 +49,8 @@ public class MazeInfoModel
       {
          InputStream in;
          MazeInfo mi;
-         
-         in = MazeInfo.class.getResourceAsStream("mazeExamples/"+name);
+
+         in = MazeInfo.class.getResourceAsStream("mazeExamples/" + name);
          if (in != null && (mi = MazeInfo.load(in, name)) != null)
             mMazeInfoModel.addElement(mi);
       } // for (String name : names)

@@ -26,14 +26,14 @@ import org.python.util.PythonInterpreter;
  * to control the AI robot.
  * @author Luke Last
  */
-public class CodeEditingPanel extends JSplitPane implements MenuControlled
+public class ScriptEditorPage extends JSplitPane implements MenuControlled
 {
    private final JTabbedPane editorTabs = new JTabbedPane();
 
    /**
     * Constructor.
     */
-   public CodeEditingPanel()
+   public ScriptEditorPage()
    {
 
       //Set up the documentation browser.
@@ -43,7 +43,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
 
       try
       {
-         docPane.setPage(CodeEditingPanel.class.getResource("html/api.html"));
+         docPane.setPage(ScriptEditorPage.class.getResource("html/api.html"));
       }
       catch (Exception e)
       {
@@ -55,7 +55,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       final JTabbedPane docTabs = new JTabbedPane();
       docTabs.setMinimumSize(new Dimension(200, 0));
 
-      docTabs.add("Code Information", CodeInformationPanel.getInstance());
+      docTabs.add("Code Information", ScriptInfoPanel.getInstance());
       docTabs.add("API Documentation", new JScrollPane(docPane));
 
       //Set up split pane.
@@ -83,7 +83,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
     */
    private void activatePythonInBackground()
    {
-      final Thread thread = new Thread()
+      final Thread thread = new Thread("Python Initializer")
       {
          @Override
          public void run()
@@ -135,8 +135,9 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       }
       if (contents != null)
       {
-         CodeEditorPane editor = new CodeEditorPane();
+         ScriptEditor editor = new ScriptEditor();
          editor.getTextArea().setText(this.loadScriptFromJar(contents));
+         editor.setDirty(false);
          this.editorTabs.add(editor.toString(), editor);
          this.editorTabs.setSelectedComponent(editor);
       }
@@ -192,7 +193,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       @Override
       public void actionPerformed(ActionEvent e)
       {
-         CodeEditorPane editor = (CodeEditorPane) editorTabs.getSelectedComponent();
+         ScriptEditor editor = (ScriptEditor) editorTabs.getSelectedComponent();
          if (editor != null)
          {
             editor.removeFromRobotModel();
@@ -210,7 +211,7 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    {
       try
       {
-         CodeEditorPane editor = (CodeEditorPane) this.editorTabs.getSelectedComponent();
+         ScriptEditor editor = (ScriptEditor) this.editorTabs.getSelectedComponent();
          if (editor != null)
          {
             editor.saveScriptFile();
@@ -221,6 +222,24 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
       {
          ex.printStackTrace();
       }
+   }
+
+   /**
+    * Get all the script editors that are currently open and being edited.
+    * @return An empty array if none open.
+    */
+   private ScriptEditor[] getOpenScriptEditors()
+   {
+      final int tabCount = this.editorTabs.getComponentCount();
+      if (tabCount <= 0)
+         return new ScriptEditor[0];
+
+      final ScriptEditor[] editors = new ScriptEditor[tabCount];
+      for (int i = 0; i < tabCount; i++)
+      {
+         editors[i] = (ScriptEditor) this.editorTabs.getComponentAt(i);
+      }
+      return editors;
    }
 
    @Override
@@ -244,8 +263,30 @@ public class CodeEditingPanel extends JSplitPane implements MenuControlled
    @Override
    public void open(File file)
    {
-      CodeEditorPane editor = new CodeEditorPane(file);
+      ScriptEditor editor = new ScriptEditor(file);
       this.editorTabs.add(file.getName(), editor);
       this.editorTabs.setSelectedComponent(editor);
+   }
+
+   @Override
+   public boolean canExit()
+   {
+      for (ScriptEditor editor : this.getOpenScriptEditors())
+      {
+         if (editor.isDirty())
+         {
+            int result = JOptionPane.showConfirmDialog(Main.getPrimaryFrameInstance(),
+                                                       "You have an unsaved AI script open.\nAre you sure you want to EXIT?",
+                                                       "Continue to exit?",
+                                                       JOptionPane.YES_NO_OPTION,
+                                                       JOptionPane.QUESTION_MESSAGE);
+            if (result != JOptionPane.YES_OPTION)
+               return false;
+            else
+               return true;
+         }
+      }
+      // TODO prompt to save dirty scripts.
+      return true;
    }
 }
