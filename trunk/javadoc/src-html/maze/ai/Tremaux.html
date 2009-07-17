@@ -4,67 +4,67 @@
 <FONT color="green">001</FONT>    package maze.ai;<a name="line.1"></a>
 <FONT color="green">002</FONT>    <a name="line.2"></a>
 <FONT color="green">003</FONT>    import java.awt.Dimension;<a name="line.3"></a>
-<FONT color="green">004</FONT>    import java.util.ArrayList;<a name="line.4"></a>
-<FONT color="green">005</FONT>    import java.util.List;<a name="line.5"></a>
-<FONT color="green">006</FONT>    <a name="line.6"></a>
-<FONT color="green">007</FONT>    import maze.model.Direction;<a name="line.7"></a>
-<FONT color="green">008</FONT>    import maze.model.MazeCell;<a name="line.8"></a>
-<FONT color="green">009</FONT>    <a name="line.9"></a>
-<FONT color="green">010</FONT>    /**<a name="line.10"></a>
-<FONT color="green">011</FONT>     * Maze solving algorithm that provides a right wall follower with a memory so<a name="line.11"></a>
-<FONT color="green">012</FONT>     * it prefers unexplored cells.<a name="line.12"></a>
-<FONT color="green">013</FONT>     */<a name="line.13"></a>
-<FONT color="green">014</FONT>    public class Tremaux extends RobotBase<a name="line.14"></a>
-<FONT color="green">015</FONT>    {<a name="line.15"></a>
-<FONT color="green">016</FONT>       private Direction[][] ballOfString;<a name="line.16"></a>
-<FONT color="green">017</FONT>       private List&lt;RobotStep&gt; moveQueue = new ArrayList&lt;RobotStep&gt;();<a name="line.17"></a>
-<FONT color="green">018</FONT>       private boolean turbo = false;<a name="line.18"></a>
-<FONT color="green">019</FONT>    <a name="line.19"></a>
-<FONT color="green">020</FONT>       /**<a name="line.20"></a>
-<FONT color="green">021</FONT>        * This returns the name of the mathematician who came up with this process<a name="line.21"></a>
-<FONT color="green">022</FONT>        */<a name="line.22"></a>
-<FONT color="green">023</FONT>       @Override<a name="line.23"></a>
-<FONT color="green">024</FONT>       public String toString()<a name="line.24"></a>
-<FONT color="green">025</FONT>       {<a name="line.25"></a>
-<FONT color="green">026</FONT>          return "Tremaux";<a name="line.26"></a>
-<FONT color="green">027</FONT>       }<a name="line.27"></a>
-<FONT color="green">028</FONT>    <a name="line.28"></a>
-<FONT color="green">029</FONT>       /**<a name="line.29"></a>
-<FONT color="green">030</FONT>        * This function should be called by the controller any time a new run is to<a name="line.30"></a>
-<FONT color="green">031</FONT>        * commence<a name="line.31"></a>
-<FONT color="green">032</FONT>        */<a name="line.32"></a>
-<FONT color="green">033</FONT>       @Override<a name="line.33"></a>
-<FONT color="green">034</FONT>       public void initialize()<a name="line.34"></a>
-<FONT color="green">035</FONT>       {<a name="line.35"></a>
-<FONT color="green">036</FONT>          super.initialize();<a name="line.36"></a>
-<FONT color="green">037</FONT>    <a name="line.37"></a>
-<FONT color="green">038</FONT>          Dimension size = robotLocation.getMazeSize();<a name="line.38"></a>
-<FONT color="green">039</FONT>          ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];<a name="line.39"></a>
-<FONT color="green">040</FONT>    <a name="line.40"></a>
-<FONT color="green">041</FONT>          for (int i = 0; i &lt; size.getWidth(); i++)<a name="line.41"></a>
-<FONT color="green">042</FONT>          {<a name="line.42"></a>
-<FONT color="green">043</FONT>             for (int j = 0; j &lt; size.getHeight(); j++)<a name="line.43"></a>
-<FONT color="green">044</FONT>             {<a name="line.44"></a>
-<FONT color="green">045</FONT>                ballOfString[i][j] = null;<a name="line.45"></a>
-<FONT color="green">046</FONT>             }<a name="line.46"></a>
-<FONT color="green">047</FONT>          }<a name="line.47"></a>
-<FONT color="green">048</FONT>          ballOfString[0][size.height - 1] = Direction.North;<a name="line.48"></a>
-<FONT color="green">049</FONT>          this.moveQueue.clear();<a name="line.49"></a>
-<FONT color="green">050</FONT>       }<a name="line.50"></a>
-<FONT color="green">051</FONT>    <a name="line.51"></a>
-<FONT color="green">052</FONT>       /**<a name="line.52"></a>
-<FONT color="green">053</FONT>        * This returns the state of the turbo flag. Turbo should be true when<a name="line.53"></a>
-<FONT color="green">054</FONT>        * traversing previously explored territories.<a name="line.54"></a>
-<FONT color="green">055</FONT>        */<a name="line.55"></a>
-<FONT color="green">056</FONT>       public boolean isInTurboMode()<a name="line.56"></a>
-<FONT color="green">057</FONT>       {<a name="line.57"></a>
-<FONT color="green">058</FONT>          return turbo;<a name="line.58"></a>
-<FONT color="green">059</FONT>       }<a name="line.59"></a>
-<FONT color="green">060</FONT>    <a name="line.60"></a>
-<FONT color="green">061</FONT>       /**<a name="line.61"></a>
-<FONT color="green">062</FONT>        * This returns the next step for the robot to take. It should be called by<a name="line.62"></a>
-<FONT color="green">063</FONT>        * the controller.<a name="line.63"></a>
-<FONT color="green">064</FONT>        */<a name="line.64"></a>
+<FONT color="green">004</FONT>    import java.util.Arrays;<a name="line.4"></a>
+<FONT color="green">005</FONT>    import java.util.LinkedList;<a name="line.5"></a>
+<FONT color="green">006</FONT>    import java.util.List;<a name="line.6"></a>
+<FONT color="green">007</FONT>    <a name="line.7"></a>
+<FONT color="green">008</FONT>    import maze.model.Direction;<a name="line.8"></a>
+<FONT color="green">009</FONT>    import maze.model.MazeCell;<a name="line.9"></a>
+<FONT color="green">010</FONT>    <a name="line.10"></a>
+<FONT color="green">011</FONT>    /**<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Maze solving algorithm that provides a right wall follower with a memory so<a name="line.12"></a>
+<FONT color="green">013</FONT>     * it prefers unexplored cells.<a name="line.13"></a>
+<FONT color="green">014</FONT>     */<a name="line.14"></a>
+<FONT color="green">015</FONT>    public class Tremaux extends RobotBase<a name="line.15"></a>
+<FONT color="green">016</FONT>    {<a name="line.16"></a>
+<FONT color="green">017</FONT>       private Direction[][] ballOfString;<a name="line.17"></a>
+<FONT color="green">018</FONT>       private final List&lt;RobotStep&gt; moveQueue = new LinkedList&lt;RobotStep&gt;();<a name="line.18"></a>
+<FONT color="green">019</FONT>       private boolean turbo = false;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>       /**<a name="line.21"></a>
+<FONT color="green">022</FONT>        * This returns the name of the mathematician who came up with this process<a name="line.22"></a>
+<FONT color="green">023</FONT>        */<a name="line.23"></a>
+<FONT color="green">024</FONT>       @Override<a name="line.24"></a>
+<FONT color="green">025</FONT>       public String toString()<a name="line.25"></a>
+<FONT color="green">026</FONT>       {<a name="line.26"></a>
+<FONT color="green">027</FONT>          return "Tremaux";<a name="line.27"></a>
+<FONT color="green">028</FONT>       }<a name="line.28"></a>
+<FONT color="green">029</FONT>    <a name="line.29"></a>
+<FONT color="green">030</FONT>       /**<a name="line.30"></a>
+<FONT color="green">031</FONT>        * This function should be called by the controller any time a new run is to<a name="line.31"></a>
+<FONT color="green">032</FONT>        * commence<a name="line.32"></a>
+<FONT color="green">033</FONT>        */<a name="line.33"></a>
+<FONT color="green">034</FONT>       @Override<a name="line.34"></a>
+<FONT color="green">035</FONT>       public void initialize()<a name="line.35"></a>
+<FONT color="green">036</FONT>       {<a name="line.36"></a>
+<FONT color="green">037</FONT>          super.initialize();<a name="line.37"></a>
+<FONT color="green">038</FONT>    <a name="line.38"></a>
+<FONT color="green">039</FONT>          Dimension size = robotLocation.getMazeSize();<a name="line.39"></a>
+<FONT color="green">040</FONT>          ballOfString = new Direction[(int) size.getWidth()][(int) size.getHeight()];<a name="line.40"></a>
+<FONT color="green">041</FONT>    <a name="line.41"></a>
+<FONT color="green">042</FONT>          for (int i = 0; i &lt; size.getWidth(); i++)<a name="line.42"></a>
+<FONT color="green">043</FONT>          {<a name="line.43"></a>
+<FONT color="green">044</FONT>             Arrays.fill(this.ballOfString[i], null);<a name="line.44"></a>
+<FONT color="green">045</FONT>          }<a name="line.45"></a>
+<FONT color="green">046</FONT>          ballOfString[0][size.height - 1] = Direction.North;<a name="line.46"></a>
+<FONT color="green">047</FONT>          this.moveQueue.clear();<a name="line.47"></a>
+<FONT color="green">048</FONT>       }<a name="line.48"></a>
+<FONT color="green">049</FONT>    <a name="line.49"></a>
+<FONT color="green">050</FONT>       /**<a name="line.50"></a>
+<FONT color="green">051</FONT>        * This returns the state of the turbo flag. Turbo should be true when<a name="line.51"></a>
+<FONT color="green">052</FONT>        * traversing previously explored territories.<a name="line.52"></a>
+<FONT color="green">053</FONT>        */<a name="line.53"></a>
+<FONT color="green">054</FONT>       @Override<a name="line.54"></a>
+<FONT color="green">055</FONT>       public boolean isInTurboMode()<a name="line.55"></a>
+<FONT color="green">056</FONT>       {<a name="line.56"></a>
+<FONT color="green">057</FONT>          return turbo;<a name="line.57"></a>
+<FONT color="green">058</FONT>       }<a name="line.58"></a>
+<FONT color="green">059</FONT>    <a name="line.59"></a>
+<FONT color="green">060</FONT>       /**<a name="line.60"></a>
+<FONT color="green">061</FONT>        * This returns the next step for the robot to take. It should be called by<a name="line.61"></a>
+<FONT color="green">062</FONT>        * the controller.<a name="line.62"></a>
+<FONT color="green">063</FONT>        */<a name="line.63"></a>
+<FONT color="green">064</FONT>       @Override<a name="line.64"></a>
 <FONT color="green">065</FONT>       public RobotStep nextStep()<a name="line.65"></a>
 <FONT color="green">066</FONT>       {<a name="line.66"></a>
 <FONT color="green">067</FONT>          RobotStep next;<a name="line.67"></a>
@@ -72,7 +72,7 @@
 <FONT color="green">069</FONT>          {<a name="line.69"></a>
 <FONT color="green">070</FONT>             setDirection();<a name="line.70"></a>
 <FONT color="green">071</FONT>          }<a name="line.71"></a>
-<FONT color="green">072</FONT>          if (moveQueue.isEmpty() == true)<a name="line.72"></a>
+<FONT color="green">072</FONT>          if (moveQueue.isEmpty())<a name="line.72"></a>
 <FONT color="green">073</FONT>          {<a name="line.73"></a>
 <FONT color="green">074</FONT>             if ( (robotLocation.isWallRight() == false) &amp;&amp; (getRightNeighborDirection() == null))<a name="line.74"></a>
 <FONT color="green">075</FONT>             {<a name="line.75"></a>
@@ -140,81 +140,66 @@
 <FONT color="green">137</FONT>        */<a name="line.137"></a>
 <FONT color="green">138</FONT>       private Direction getFrontNeighborDirection()<a name="line.138"></a>
 <FONT color="green">139</FONT>       {<a name="line.139"></a>
-<FONT color="green">140</FONT>          if (robotLocation.getCurrentLocation().getY() == 1)<a name="line.140"></a>
-<FONT color="green">141</FONT>          {<a name="line.141"></a>
-<FONT color="green">142</FONT>             return null;<a name="line.142"></a>
-<FONT color="green">143</FONT>          }<a name="line.143"></a>
-<FONT color="green">144</FONT>          return getNeighborDirection(robotLocation.getDirection());<a name="line.144"></a>
-<FONT color="green">145</FONT>       }<a name="line.145"></a>
-<FONT color="green">146</FONT>    <a name="line.146"></a>
-<FONT color="green">147</FONT>       /**<a name="line.147"></a>
-<FONT color="green">148</FONT>        * This returns the direction for the understanding for the neighbor to the<a name="line.148"></a>
-<FONT color="green">149</FONT>        * right.<a name="line.149"></a>
-<FONT color="green">150</FONT>        */<a name="line.150"></a>
-<FONT color="green">151</FONT>       private Direction getRightNeighborDirection()<a name="line.151"></a>
-<FONT color="green">152</FONT>       {<a name="line.152"></a>
-<FONT color="green">153</FONT>          return getNeighborDirection(robotLocation.getDirection().getRight());<a name="line.153"></a>
-<FONT color="green">154</FONT>       }<a name="line.154"></a>
-<FONT color="green">155</FONT>    <a name="line.155"></a>
-<FONT color="green">156</FONT>       /**<a name="line.156"></a>
-<FONT color="green">157</FONT>        * This returns the direction for the understanding for the neighbor to the<a name="line.157"></a>
-<FONT color="green">158</FONT>        * direction given from the current cell.<a name="line.158"></a>
-<FONT color="green">159</FONT>        */<a name="line.159"></a>
-<FONT color="green">160</FONT>       private Direction getNeighborDirection(Direction direction)<a name="line.160"></a>
-<FONT color="green">161</FONT>       {<a name="line.161"></a>
-<FONT color="green">162</FONT>          MazeCell here = robotLocation.getCurrentLocation();<a name="line.162"></a>
-<FONT color="green">163</FONT>          MazeCell there;<a name="line.163"></a>
-<FONT color="green">164</FONT>          Dimension size = robotLocation.getMazeSize();<a name="line.164"></a>
-<FONT color="green">165</FONT>          if ( (direction == Direction.North) &amp;&amp; (here.getY() != 1))<a name="line.165"></a>
-<FONT color="green">166</FONT>          {<a name="line.166"></a>
-<FONT color="green">167</FONT>             there = new MazeCell(here.getX(), here.getY() - 1);<a name="line.167"></a>
-<FONT color="green">168</FONT>          }<a name="line.168"></a>
-<FONT color="green">169</FONT>          else if ( (direction == Direction.South) &amp;&amp; (here.getY() != size.getHeight()))<a name="line.169"></a>
-<FONT color="green">170</FONT>          {<a name="line.170"></a>
-<FONT color="green">171</FONT>             there = new MazeCell(here.getX(), here.getY() + 1);<a name="line.171"></a>
-<FONT color="green">172</FONT>          }<a name="line.172"></a>
-<FONT color="green">173</FONT>          else if ( (direction == Direction.East) &amp;&amp; (here.getX() != size.getWidth()))<a name="line.173"></a>
-<FONT color="green">174</FONT>          {<a name="line.174"></a>
-<FONT color="green">175</FONT>             there = new MazeCell(here.getX() + 1, here.getY());<a name="line.175"></a>
-<FONT color="green">176</FONT>          }<a name="line.176"></a>
-<FONT color="green">177</FONT>          else if ( (direction == Direction.West) &amp;&amp; (here.getX() != 1))<a name="line.177"></a>
-<FONT color="green">178</FONT>          {<a name="line.178"></a>
-<FONT color="green">179</FONT>             there = new MazeCell(here.getX() - 1, here.getY());<a name="line.179"></a>
-<FONT color="green">180</FONT>          }<a name="line.180"></a>
-<FONT color="green">181</FONT>          else<a name="line.181"></a>
-<FONT color="green">182</FONT>          {<a name="line.182"></a>
-<FONT color="green">183</FONT>             return null;<a name="line.183"></a>
-<FONT color="green">184</FONT>          }<a name="line.184"></a>
-<FONT color="green">185</FONT>          return getDirection(there);<a name="line.185"></a>
-<FONT color="green">186</FONT>       }<a name="line.186"></a>
-<FONT color="green">187</FONT>    <a name="line.187"></a>
-<FONT color="green">188</FONT>       /**<a name="line.188"></a>
-<FONT color="green">189</FONT>        * This sets the direction for the understanding for the current cell.<a name="line.189"></a>
-<FONT color="green">190</FONT>        */<a name="line.190"></a>
-<FONT color="green">191</FONT>       private void setDirection()<a name="line.191"></a>
-<FONT color="green">192</FONT>       {<a name="line.192"></a>
-<FONT color="green">193</FONT>          Direction wayBack = robotLocation.getDirection().getOpposite();<a name="line.193"></a>
-<FONT color="green">194</FONT>          MazeCell here = robotLocation.getCurrentLocation();<a name="line.194"></a>
-<FONT color="green">195</FONT>          ballOfString[here.getX() - 1][here.getY() - 1] = wayBack;<a name="line.195"></a>
-<FONT color="green">196</FONT>       }<a name="line.196"></a>
-<FONT color="green">197</FONT>    <a name="line.197"></a>
-<FONT color="green">198</FONT>       /**<a name="line.198"></a>
-<FONT color="green">199</FONT>        * This returns the direction for the understanding for the given cell<a name="line.199"></a>
-<FONT color="green">200</FONT>        */<a name="line.200"></a>
-<FONT color="green">201</FONT>       private Direction getDirection(MazeCell currentLocation)<a name="line.201"></a>
-<FONT color="green">202</FONT>       {<a name="line.202"></a>
-<FONT color="green">203</FONT>          return ballOfString[currentLocation.getX() - 1][currentLocation.getY() - 1];<a name="line.203"></a>
-<FONT color="green">204</FONT>       }<a name="line.204"></a>
-<FONT color="green">205</FONT>    <a name="line.205"></a>
-<FONT color="green">206</FONT>       /**<a name="line.206"></a>
-<FONT color="green">207</FONT>        * This returns the understanding of the maze. Tremaux's understanding is the<a name="line.207"></a>
-<FONT color="green">208</FONT>        * directions needed to return to the start.<a name="line.208"></a>
-<FONT color="green">209</FONT>        */<a name="line.209"></a>
-<FONT color="green">210</FONT>       public Direction[][] getUnderstandingDir()<a name="line.210"></a>
-<FONT color="green">211</FONT>       {<a name="line.211"></a>
-<FONT color="green">212</FONT>          return ballOfString;<a name="line.212"></a>
-<FONT color="green">213</FONT>       }<a name="line.213"></a>
-<FONT color="green">214</FONT>    }<a name="line.214"></a>
+<FONT color="green">140</FONT>          return getNeighborDirection(robotLocation.getDirection());<a name="line.140"></a>
+<FONT color="green">141</FONT>       }<a name="line.141"></a>
+<FONT color="green">142</FONT>    <a name="line.142"></a>
+<FONT color="green">143</FONT>       /**<a name="line.143"></a>
+<FONT color="green">144</FONT>        * This returns the direction for the understanding for the neighbor to the<a name="line.144"></a>
+<FONT color="green">145</FONT>        * right.<a name="line.145"></a>
+<FONT color="green">146</FONT>        */<a name="line.146"></a>
+<FONT color="green">147</FONT>       private Direction getRightNeighborDirection()<a name="line.147"></a>
+<FONT color="green">148</FONT>       {<a name="line.148"></a>
+<FONT color="green">149</FONT>          return getNeighborDirection(robotLocation.getDirection().getRight());<a name="line.149"></a>
+<FONT color="green">150</FONT>       }<a name="line.150"></a>
+<FONT color="green">151</FONT>    <a name="line.151"></a>
+<FONT color="green">152</FONT>       /**<a name="line.152"></a>
+<FONT color="green">153</FONT>        * This returns the direction for the understanding for the neighbor to the<a name="line.153"></a>
+<FONT color="green">154</FONT>        * direction given from the current cell.<a name="line.154"></a>
+<FONT color="green">155</FONT>        */<a name="line.155"></a>
+<FONT color="green">156</FONT>       private Direction getNeighborDirection(Direction direction)<a name="line.156"></a>
+<FONT color="green">157</FONT>       {<a name="line.157"></a>
+<FONT color="green">158</FONT>          try<a name="line.158"></a>
+<FONT color="green">159</FONT>          {<a name="line.159"></a>
+<FONT color="green">160</FONT>             final MazeCell there = robotLocation.getCurrentLocation().neighbor(direction);<a name="line.160"></a>
+<FONT color="green">161</FONT>             if (!there.isInRange(robotLocation.getMazeSize()))<a name="line.161"></a>
+<FONT color="green">162</FONT>                return null;<a name="line.162"></a>
+<FONT color="green">163</FONT>             else<a name="line.163"></a>
+<FONT color="green">164</FONT>                return this.getDirection(there);<a name="line.164"></a>
+<FONT color="green">165</FONT>          }<a name="line.165"></a>
+<FONT color="green">166</FONT>          catch (IllegalArgumentException e)<a name="line.166"></a>
+<FONT color="green">167</FONT>          {<a name="line.167"></a>
+<FONT color="green">168</FONT>             return null;<a name="line.168"></a>
+<FONT color="green">169</FONT>          }<a name="line.169"></a>
+<FONT color="green">170</FONT>       }<a name="line.170"></a>
+<FONT color="green">171</FONT>    <a name="line.171"></a>
+<FONT color="green">172</FONT>       /**<a name="line.172"></a>
+<FONT color="green">173</FONT>        * This sets the direction for the understanding for the current cell.<a name="line.173"></a>
+<FONT color="green">174</FONT>        */<a name="line.174"></a>
+<FONT color="green">175</FONT>       private void setDirection()<a name="line.175"></a>
+<FONT color="green">176</FONT>       {<a name="line.176"></a>
+<FONT color="green">177</FONT>          Direction wayBack = robotLocation.getDirection().getOpposite();<a name="line.177"></a>
+<FONT color="green">178</FONT>          MazeCell here = robotLocation.getCurrentLocation();<a name="line.178"></a>
+<FONT color="green">179</FONT>          ballOfString[here.getX() - 1][here.getY() - 1] = wayBack;<a name="line.179"></a>
+<FONT color="green">180</FONT>       }<a name="line.180"></a>
+<FONT color="green">181</FONT>    <a name="line.181"></a>
+<FONT color="green">182</FONT>       /**<a name="line.182"></a>
+<FONT color="green">183</FONT>        * This returns the direction for the understanding for the given cell<a name="line.183"></a>
+<FONT color="green">184</FONT>        */<a name="line.184"></a>
+<FONT color="green">185</FONT>       private Direction getDirection(MazeCell currentLocation)<a name="line.185"></a>
+<FONT color="green">186</FONT>       {<a name="line.186"></a>
+<FONT color="green">187</FONT>          return ballOfString[currentLocation.getX() - 1][currentLocation.getY() - 1];<a name="line.187"></a>
+<FONT color="green">188</FONT>       }<a name="line.188"></a>
+<FONT color="green">189</FONT>    <a name="line.189"></a>
+<FONT color="green">190</FONT>       /**<a name="line.190"></a>
+<FONT color="green">191</FONT>        * This returns the understanding of the maze. Tremaux's understanding is the<a name="line.191"></a>
+<FONT color="green">192</FONT>        * directions needed to return to the start.<a name="line.192"></a>
+<FONT color="green">193</FONT>        */<a name="line.193"></a>
+<FONT color="green">194</FONT>       @Override<a name="line.194"></a>
+<FONT color="green">195</FONT>       public Direction[][] getUnderstandingDir()<a name="line.195"></a>
+<FONT color="green">196</FONT>       {<a name="line.196"></a>
+<FONT color="green">197</FONT>          return ballOfString;<a name="line.197"></a>
+<FONT color="green">198</FONT>       }<a name="line.198"></a>
+<FONT color="green">199</FONT>    }<a name="line.199"></a>
 
 
 

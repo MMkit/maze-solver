@@ -18,83 +18,156 @@
 <FONT color="green">015</FONT>     */<a name="line.15"></a>
 <FONT color="green">016</FONT>    public final class MazePainterDefault extends MazePainter<a name="line.16"></a>
 <FONT color="green">017</FONT>    {<a name="line.17"></a>
-<FONT color="green">018</FONT>       private final ImageIcon pegImage = maze.Main.getImageResource("gui/images/peg.png");<a name="line.18"></a>
-<FONT color="green">019</FONT>    <a name="line.19"></a>
-<FONT color="green">020</FONT>       /**<a name="line.20"></a>
-<FONT color="green">021</FONT>        * Draw a special image for the peg.<a name="line.21"></a>
-<FONT color="green">022</FONT>        */<a name="line.22"></a>
-<FONT color="green">023</FONT>       @Override<a name="line.23"></a>
-<FONT color="green">024</FONT>       public void drawPeg(Graphics2D g, Rectangle area)<a name="line.24"></a>
-<FONT color="green">025</FONT>       {<a name="line.25"></a>
-<FONT color="green">026</FONT>          g.drawImage(this.pegImage.getImage(),<a name="line.26"></a>
-<FONT color="green">027</FONT>                      area.x,<a name="line.27"></a>
-<FONT color="green">028</FONT>                      area.y,<a name="line.28"></a>
-<FONT color="green">029</FONT>                      area.x + area.width,<a name="line.29"></a>
-<FONT color="green">030</FONT>                      area.y + area.height,<a name="line.30"></a>
-<FONT color="green">031</FONT>                      0,<a name="line.31"></a>
-<FONT color="green">032</FONT>                      0,<a name="line.32"></a>
-<FONT color="green">033</FONT>                      this.pegImage.getIconWidth(),<a name="line.33"></a>
-<FONT color="green">034</FONT>                      this.pegImage.getIconHeight(),<a name="line.34"></a>
-<FONT color="green">035</FONT>                      null);<a name="line.35"></a>
-<FONT color="green">036</FONT>          g.setColor(new Color(0,0,0,185));<a name="line.36"></a>
-<FONT color="green">037</FONT>          g.fill(area);<a name="line.37"></a>
-<FONT color="green">038</FONT>       }<a name="line.38"></a>
-<FONT color="green">039</FONT>    <a name="line.39"></a>
-<FONT color="green">040</FONT>       /**<a name="line.40"></a>
-<FONT color="green">041</FONT>        * Set the default values for colors. You may also want to call<a name="line.41"></a>
-<FONT color="green">042</FONT>        * &lt;code&gt;setGradients(...)&lt;/code&gt; to completely initialize all paints.<a name="line.42"></a>
-<FONT color="green">043</FONT>        */<a name="line.43"></a>
-<FONT color="green">044</FONT>       @Override<a name="line.44"></a>
-<FONT color="green">045</FONT>       public void setDefaults()<a name="line.45"></a>
-<FONT color="green">046</FONT>       {<a name="line.46"></a>
-<FONT color="green">047</FONT>          this.cellBackground = Color.BLACK;<a name="line.47"></a>
-<FONT color="green">048</FONT>          this.wallSet = Color.BLACK;<a name="line.48"></a>
-<FONT color="green">049</FONT>          this.wallEmpty = Color.BLACK;<a name="line.49"></a>
-<FONT color="green">050</FONT>          this.background = Color.WHITE;<a name="line.50"></a>
-<FONT color="green">051</FONT>          this.peg = Color.BLACK;<a name="line.51"></a>
-<FONT color="green">052</FONT>          this.pegValid = Color.BLACK;<a name="line.52"></a>
-<FONT color="green">053</FONT>          this.pegInvalid = new GradientPaint(0, 0, Color.RED, 2, 2, new Color(240, 0, 0), true);<a name="line.53"></a>
-<FONT color="green">054</FONT>          this.fog = new Color(0, 0, 0, 75);<a name="line.54"></a>
-<FONT color="green">055</FONT>          this.runFirst = new Color(0, 0, 255, 75);<a name="line.55"></a>
-<FONT color="green">056</FONT>          this.runBest = new Color(255, 0, 0, 75);<a name="line.56"></a>
-<FONT color="green">057</FONT>          this.runCurrent = new Color(0, 255, 0, 50);<a name="line.57"></a>
-<FONT color="green">058</FONT>          this.hover = new Color(255, 255, 0, 100);<a name="line.58"></a>
-<FONT color="green">059</FONT>          this.robotImage = maze.Main.getImageResource("gui/images/mouse.png");<a name="line.59"></a>
-<FONT color="green">060</FONT>       }<a name="line.60"></a>
-<FONT color="green">061</FONT>    <a name="line.61"></a>
-<FONT color="green">062</FONT>       /**<a name="line.62"></a>
-<FONT color="green">063</FONT>        * When the maze size changes we want to recalculate our gradients.<a name="line.63"></a>
-<FONT color="green">064</FONT>        * {@inheritDoc}<a name="line.64"></a>
-<FONT color="green">065</FONT>        */<a name="line.65"></a>
-<FONT color="green">066</FONT>       @Override<a name="line.66"></a>
-<FONT color="green">067</FONT>       public void setMazeSize(Dimension size)<a name="line.67"></a>
-<FONT color="green">068</FONT>       {<a name="line.68"></a>
-<FONT color="green">069</FONT>          if (this.mazeWidth != size.width || this.mazeHeight != size.height)<a name="line.69"></a>
-<FONT color="green">070</FONT>          {<a name="line.70"></a>
-<FONT color="green">071</FONT>             this.mazeWidth = size.width;<a name="line.71"></a>
-<FONT color="green">072</FONT>             this.mazeHeight = size.height;<a name="line.72"></a>
-<FONT color="green">073</FONT>             final int halfX = this.mazeWidth / 2;<a name="line.73"></a>
-<FONT color="green">074</FONT>             final int halfY = this.mazeHeight / 2;<a name="line.74"></a>
-<FONT color="green">075</FONT>             final Point zero = new Point(0, 0);<a name="line.75"></a>
-<FONT color="green">076</FONT>             final Point middle = new Point(halfX, halfY);<a name="line.76"></a>
-<FONT color="green">077</FONT>             this.cellBackground = new GradientPaint(zero,<a name="line.77"></a>
-<FONT color="green">078</FONT>                                                     Color.WHITE,<a name="line.78"></a>
-<FONT color="green">079</FONT>                                                     middle,<a name="line.79"></a>
-<FONT color="green">080</FONT>                                                     new Color(229, 236, 255),<a name="line.80"></a>
-<FONT color="green">081</FONT>                                                     true);<a name="line.81"></a>
-<FONT color="green">082</FONT>             this.wallEmpty = new GradientPaint(zero, //Gradient start corner.<a name="line.82"></a>
-<FONT color="green">083</FONT>                                                new Color(229, 236, 255), //Really light blue.<a name="line.83"></a>
-<FONT color="green">084</FONT>                                                middle,<a name="line.84"></a>
-<FONT color="green">085</FONT>                                                new Color(204, 218, 255), //Light blue.<a name="line.85"></a>
-<FONT color="green">086</FONT>                                                true);<a name="line.86"></a>
-<FONT color="green">087</FONT>             this.wallSet = new GradientPaint(zero,<a name="line.87"></a>
-<FONT color="green">088</FONT>                                              new Color(0, 94, 189),<a name="line.88"></a>
-<FONT color="green">089</FONT>                                              middle,<a name="line.89"></a>
-<FONT color="green">090</FONT>                                              new Color(0, 56, 112),<a name="line.90"></a>
-<FONT color="green">091</FONT>                                              true);<a name="line.91"></a>
-<FONT color="green">092</FONT>          }<a name="line.92"></a>
-<FONT color="green">093</FONT>       }<a name="line.93"></a>
-<FONT color="green">094</FONT>    }<a name="line.94"></a>
+<FONT color="green">018</FONT>       private Color cellBackgroundEnd;<a name="line.18"></a>
+<FONT color="green">019</FONT>       private Color cellBackgroundStart;<a name="line.19"></a>
+<FONT color="green">020</FONT>       private final ImageIcon pegImage = maze.Main.getImageResource("gui/images/peg.png");<a name="line.20"></a>
+<FONT color="green">021</FONT>    <a name="line.21"></a>
+<FONT color="green">022</FONT>       private Color wallEmptyEnd;<a name="line.22"></a>
+<FONT color="green">023</FONT>       private Color wallEmptyStart;<a name="line.23"></a>
+<FONT color="green">024</FONT>    <a name="line.24"></a>
+<FONT color="green">025</FONT>       private Color wallSetEnd;<a name="line.25"></a>
+<FONT color="green">026</FONT>       private Color wallSetStart;<a name="line.26"></a>
+<FONT color="green">027</FONT>    <a name="line.27"></a>
+<FONT color="green">028</FONT>       /**<a name="line.28"></a>
+<FONT color="green">029</FONT>        * Draw a special image for the peg.<a name="line.29"></a>
+<FONT color="green">030</FONT>        */<a name="line.30"></a>
+<FONT color="green">031</FONT>       @Override<a name="line.31"></a>
+<FONT color="green">032</FONT>       public void drawPeg(Graphics2D g, Rectangle area)<a name="line.32"></a>
+<FONT color="green">033</FONT>       {<a name="line.33"></a>
+<FONT color="green">034</FONT>          g.drawImage(this.pegImage.getImage(),<a name="line.34"></a>
+<FONT color="green">035</FONT>                      area.x,<a name="line.35"></a>
+<FONT color="green">036</FONT>                      area.y,<a name="line.36"></a>
+<FONT color="green">037</FONT>                      area.x + area.width,<a name="line.37"></a>
+<FONT color="green">038</FONT>                      area.y + area.height,<a name="line.38"></a>
+<FONT color="green">039</FONT>                      0,<a name="line.39"></a>
+<FONT color="green">040</FONT>                      0,<a name="line.40"></a>
+<FONT color="green">041</FONT>                      this.pegImage.getIconWidth(),<a name="line.41"></a>
+<FONT color="green">042</FONT>                      this.pegImage.getIconHeight(),<a name="line.42"></a>
+<FONT color="green">043</FONT>                      null);<a name="line.43"></a>
+<FONT color="green">044</FONT>          g.setPaint(this.peg);<a name="line.44"></a>
+<FONT color="green">045</FONT>          g.fill(area);<a name="line.45"></a>
+<FONT color="green">046</FONT>       }<a name="line.46"></a>
+<FONT color="green">047</FONT>    <a name="line.47"></a>
+<FONT color="green">048</FONT>       public Color getCellBackgroundEnd()<a name="line.48"></a>
+<FONT color="green">049</FONT>       {<a name="line.49"></a>
+<FONT color="green">050</FONT>          return cellBackgroundEnd;<a name="line.50"></a>
+<FONT color="green">051</FONT>       }<a name="line.51"></a>
+<FONT color="green">052</FONT>    <a name="line.52"></a>
+<FONT color="green">053</FONT>       public Color getCellBackgroundStart()<a name="line.53"></a>
+<FONT color="green">054</FONT>       {<a name="line.54"></a>
+<FONT color="green">055</FONT>          return cellBackgroundStart;<a name="line.55"></a>
+<FONT color="green">056</FONT>       }<a name="line.56"></a>
+<FONT color="green">057</FONT>    <a name="line.57"></a>
+<FONT color="green">058</FONT>       public Color getWallEmptyEnd()<a name="line.58"></a>
+<FONT color="green">059</FONT>       {<a name="line.59"></a>
+<FONT color="green">060</FONT>          return wallEmptyEnd;<a name="line.60"></a>
+<FONT color="green">061</FONT>       }<a name="line.61"></a>
+<FONT color="green">062</FONT>    <a name="line.62"></a>
+<FONT color="green">063</FONT>       public Color getWallEmptyStart()<a name="line.63"></a>
+<FONT color="green">064</FONT>       {<a name="line.64"></a>
+<FONT color="green">065</FONT>          return wallEmptyStart;<a name="line.65"></a>
+<FONT color="green">066</FONT>       }<a name="line.66"></a>
+<FONT color="green">067</FONT>    <a name="line.67"></a>
+<FONT color="green">068</FONT>       public Color getWallSetEnd()<a name="line.68"></a>
+<FONT color="green">069</FONT>       {<a name="line.69"></a>
+<FONT color="green">070</FONT>          return wallSetEnd;<a name="line.70"></a>
+<FONT color="green">071</FONT>       }<a name="line.71"></a>
+<FONT color="green">072</FONT>    <a name="line.72"></a>
+<FONT color="green">073</FONT>       public Color getWallSetStart()<a name="line.73"></a>
+<FONT color="green">074</FONT>       {<a name="line.74"></a>
+<FONT color="green">075</FONT>          return wallSetStart;<a name="line.75"></a>
+<FONT color="green">076</FONT>       }<a name="line.76"></a>
+<FONT color="green">077</FONT>    <a name="line.77"></a>
+<FONT color="green">078</FONT>       public void setCellBackgroundEnd(Color cellBackgroundEnd)<a name="line.78"></a>
+<FONT color="green">079</FONT>       {<a name="line.79"></a>
+<FONT color="green">080</FONT>          this.cellBackgroundEnd = cellBackgroundEnd;<a name="line.80"></a>
+<FONT color="green">081</FONT>       }<a name="line.81"></a>
+<FONT color="green">082</FONT>    <a name="line.82"></a>
+<FONT color="green">083</FONT>       public void setCellBackgroundStart(Color cellBackgroundStart)<a name="line.83"></a>
+<FONT color="green">084</FONT>       {<a name="line.84"></a>
+<FONT color="green">085</FONT>          this.cellBackgroundStart = cellBackgroundStart;<a name="line.85"></a>
+<FONT color="green">086</FONT>       }<a name="line.86"></a>
+<FONT color="green">087</FONT>    <a name="line.87"></a>
+<FONT color="green">088</FONT>       /**<a name="line.88"></a>
+<FONT color="green">089</FONT>        * Set the default values for colors. You may also want to call<a name="line.89"></a>
+<FONT color="green">090</FONT>        * &lt;code&gt;setGradients(...)&lt;/code&gt; to completely initialize all paints.<a name="line.90"></a>
+<FONT color="green">091</FONT>        */<a name="line.91"></a>
+<FONT color="green">092</FONT>       @Override<a name="line.92"></a>
+<FONT color="green">093</FONT>       public void setDefaults()<a name="line.93"></a>
+<FONT color="green">094</FONT>       {<a name="line.94"></a>
+<FONT color="green">095</FONT>          this.cellBackground = Color.WHITE;<a name="line.95"></a>
+<FONT color="green">096</FONT>          this.cellBackgroundStart = Color.WHITE;<a name="line.96"></a>
+<FONT color="green">097</FONT>          this.cellBackgroundEnd = new Color(229, 236, 255); // Really light blue.<a name="line.97"></a>
+<FONT color="green">098</FONT>    <a name="line.98"></a>
+<FONT color="green">099</FONT>          this.wallSet = Color.BLACK;<a name="line.99"></a>
+<FONT color="green">100</FONT>          this.wallSetStart = new Color(0, 94, 189);<a name="line.100"></a>
+<FONT color="green">101</FONT>          this.wallSetEnd = new Color(0, 56, 112);<a name="line.101"></a>
+<FONT color="green">102</FONT>    <a name="line.102"></a>
+<FONT color="green">103</FONT>          this.wallEmpty = Color.BLACK;<a name="line.103"></a>
+<FONT color="green">104</FONT>          this.wallEmptyStart = this.cellBackgroundEnd;<a name="line.104"></a>
+<FONT color="green">105</FONT>          this.wallEmptyEnd = new Color(204, 218, 255); // Light blue.<a name="line.105"></a>
+<FONT color="green">106</FONT>    <a name="line.106"></a>
+<FONT color="green">107</FONT>          this.background = Color.WHITE;<a name="line.107"></a>
+<FONT color="green">108</FONT>          this.peg = new Color(0, 0, 0, 185); // Slightly transparent black.<a name="line.108"></a>
+<FONT color="green">109</FONT>          this.pegValid = Color.BLACK;<a name="line.109"></a>
+<FONT color="green">110</FONT>          this.pegInvalid = new GradientPaint(0, 0, Color.RED, 2, 2, new Color(240, 0, 0), true);<a name="line.110"></a>
+<FONT color="green">111</FONT>          this.fog = new Color(0, 0, 0, 75);<a name="line.111"></a>
+<FONT color="green">112</FONT>          this.runFirst = new Color(0, 0, 255, 75);<a name="line.112"></a>
+<FONT color="green">113</FONT>          this.runBest = new Color(255, 0, 0, 75);<a name="line.113"></a>
+<FONT color="green">114</FONT>          this.runCurrent = new Color(0, 255, 0, 50);<a name="line.114"></a>
+<FONT color="green">115</FONT>          this.hover = new Color(255, 255, 0, 100);<a name="line.115"></a>
+<FONT color="green">116</FONT>          this.robotImage = maze.Main.getImageResource("gui/images/mouse.png");<a name="line.116"></a>
+<FONT color="green">117</FONT>       }<a name="line.117"></a>
+<FONT color="green">118</FONT>    <a name="line.118"></a>
+<FONT color="green">119</FONT>       /**<a name="line.119"></a>
+<FONT color="green">120</FONT>        * When the maze size changes we want to recalculate our gradients.<a name="line.120"></a>
+<FONT color="green">121</FONT>        * {@inheritDoc}<a name="line.121"></a>
+<FONT color="green">122</FONT>        */<a name="line.122"></a>
+<FONT color="green">123</FONT>       @Override<a name="line.123"></a>
+<FONT color="green">124</FONT>       public void setMazeSize(Dimension size)<a name="line.124"></a>
+<FONT color="green">125</FONT>       {<a name="line.125"></a>
+<FONT color="green">126</FONT>          if (this.mazeWidth != size.width || this.mazeHeight != size.height)<a name="line.126"></a>
+<FONT color="green">127</FONT>          {<a name="line.127"></a>
+<FONT color="green">128</FONT>             this.mazeWidth = size.width;<a name="line.128"></a>
+<FONT color="green">129</FONT>             this.mazeHeight = size.height;<a name="line.129"></a>
+<FONT color="green">130</FONT>             final int halfX = this.mazeWidth / 2;<a name="line.130"></a>
+<FONT color="green">131</FONT>             final int halfY = this.mazeHeight / 2;<a name="line.131"></a>
+<FONT color="green">132</FONT>             final Point zero = new Point(0, 0);<a name="line.132"></a>
+<FONT color="green">133</FONT>             final Point middle = new Point(halfX, halfY);<a name="line.133"></a>
+<FONT color="green">134</FONT>             this.cellBackground = new GradientPaint(zero,<a name="line.134"></a>
+<FONT color="green">135</FONT>                                                     this.cellBackgroundStart,<a name="line.135"></a>
+<FONT color="green">136</FONT>                                                     middle,<a name="line.136"></a>
+<FONT color="green">137</FONT>                                                     this.cellBackgroundEnd,<a name="line.137"></a>
+<FONT color="green">138</FONT>                                                     true);<a name="line.138"></a>
+<FONT color="green">139</FONT>             this.wallEmpty = new GradientPaint(zero, //Gradient start corner.<a name="line.139"></a>
+<FONT color="green">140</FONT>                                                this.wallEmptyStart,<a name="line.140"></a>
+<FONT color="green">141</FONT>                                                middle,<a name="line.141"></a>
+<FONT color="green">142</FONT>                                                this.wallEmptyEnd,<a name="line.142"></a>
+<FONT color="green">143</FONT>                                                true);<a name="line.143"></a>
+<FONT color="green">144</FONT>             this.wallSet = new GradientPaint(zero, this.wallSetStart, middle, this.wallSetEnd, true);<a name="line.144"></a>
+<FONT color="green">145</FONT>          }<a name="line.145"></a>
+<FONT color="green">146</FONT>       }<a name="line.146"></a>
+<FONT color="green">147</FONT>    <a name="line.147"></a>
+<FONT color="green">148</FONT>       public void setWallEmptyEnd(Color wallEmptyEnd)<a name="line.148"></a>
+<FONT color="green">149</FONT>       {<a name="line.149"></a>
+<FONT color="green">150</FONT>          this.wallEmptyEnd = wallEmptyEnd;<a name="line.150"></a>
+<FONT color="green">151</FONT>       }<a name="line.151"></a>
+<FONT color="green">152</FONT>    <a name="line.152"></a>
+<FONT color="green">153</FONT>       public void setWallEmptyStart(Color wallEmptyStart)<a name="line.153"></a>
+<FONT color="green">154</FONT>       {<a name="line.154"></a>
+<FONT color="green">155</FONT>          this.wallEmptyStart = wallEmptyStart;<a name="line.155"></a>
+<FONT color="green">156</FONT>       }<a name="line.156"></a>
+<FONT color="green">157</FONT>    <a name="line.157"></a>
+<FONT color="green">158</FONT>       public void setWallSetEnd(Color wallSetEnd)<a name="line.158"></a>
+<FONT color="green">159</FONT>       {<a name="line.159"></a>
+<FONT color="green">160</FONT>          this.wallSetEnd = wallSetEnd;<a name="line.160"></a>
+<FONT color="green">161</FONT>       }<a name="line.161"></a>
+<FONT color="green">162</FONT>    <a name="line.162"></a>
+<FONT color="green">163</FONT>       public void setWallSetStart(Color wallSetStart)<a name="line.163"></a>
+<FONT color="green">164</FONT>       {<a name="line.164"></a>
+<FONT color="green">165</FONT>          this.wallSetStart = wallSetStart;<a name="line.165"></a>
+<FONT color="green">166</FONT>       }<a name="line.166"></a>
+<FONT color="green">167</FONT>    }<a name="line.167"></a>
 
 
 

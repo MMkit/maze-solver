@@ -54,7 +54,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/model/Direction.html" title="enum in maze.model"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/MazeCell.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="MazeCell.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -120,6 +120,14 @@ Represents the coordinates of one cell/box of the maze. <br>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeCell.html#serialVersionUID">serialVersionUID</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -297,10 +305,20 @@ Represents the coordinates of one cell/box of the maze. <br>
 </TR>
 </TABLE>
 
+<A NAME="serialVersionUID"><!-- --></A><H3>
+serialVersionUID</H3>
+<PRE>
+private static final long <A HREF="../../src-html/maze/model/MazeCell.html#line.14"><B>serialVersionUID</B></A></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.model.MazeCell.serialVersionUID">Constant Field Values</A></DL>
+</DL>
+<HR>
+
 <A NAME="x"><!-- --></A><H3>
 x</H3>
 <PRE>
-private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.18"><B>x</B></A></PRE>
+private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.20"><B>x</B></A></PRE>
 <DL>
 <DD>The column or X coordinate where this cell lives, starting from the left
  with 1.
@@ -313,7 +331,7 @@ private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.18"><B>x
 <A NAME="y"><!-- --></A><H3>
 y</H3>
 <PRE>
-private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.24"><B>y</B></A></PRE>
+private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.26"><B>y</B></A></PRE>
 <DL>
 <DD>The row or Y coordinate where this cell lives in the maze, starting from
  the top with 1.
@@ -335,7 +353,7 @@ private final int <A HREF="../../src-html/maze/model/MazeCell.html#line.24"><B>y
 <A NAME="MazeCell(int, int)"><!-- --></A><H3>
 MazeCell</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/MazeCell.html#line.33"><B>MazeCell</B></A>(int&nbsp;xCoordinate,
+public <A HREF="../../src-html/maze/model/MazeCell.html#line.35"><B>MazeCell</B></A>(int&nbsp;xCoordinate,
                 int&nbsp;yCoordinate)</PRE>
 <DL>
 <DD>Sole Constructor.
@@ -359,7 +377,7 @@ public <A HREF="../../src-html/maze/model/MazeCell.html#line.33"><B>MazeCell</B>
 <A NAME="plusX(int)"><!-- --></A><H3>
 plusX</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.48"><B>plusX</B></A>(int&nbsp;x)</PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.50"><B>plusX</B></A>(int&nbsp;x)</PRE>
 <DL>
 <DD>Creates a new <code>MazeCell</code> with its x value changed by the given
  amount.
@@ -376,7 +394,7 @@ public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">Maze
 <A NAME="plusY(int)"><!-- --></A><H3>
 plusY</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.57"><B>plusY</B></A>(int&nbsp;y)</PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.59"><B>plusY</B></A>(int&nbsp;y)</PRE>
 <DL>
 <DD>Creates a new <code>MazeCell</code> with its y value changed by the given
  amount.
@@ -393,7 +411,7 @@ public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">Maze
 <A NAME="neighbor(maze.model.Direction)"><!-- --></A><H3>
 neighbor</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.68"><B>neighbor</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCell.html#line.70"><B>neighbor</B></A>(<A HREF="../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;direction)</PRE>
 <DL>
 <DD>Create a new <code>MazeCell</code> that has been moved one cell in the
  given direction.
@@ -411,7 +429,7 @@ public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">Maze
 <A NAME="getX()"><!-- --></A><H3>
 getX</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.89"><B>getX</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.91"><B>getX</B></A>()</PRE>
 <DL>
 <DD>Get the X coordinate.
 <P>
@@ -428,7 +446,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.89"><B>getX</B>
 <A NAME="getY()"><!-- --></A><H3>
 getY</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.98"><B>getY</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.100"><B>getY</B></A>()</PRE>
 <DL>
 <DD>Get the Y coordinate.
 <P>
@@ -445,7 +463,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.98"><B>getY</B>
 <A NAME="getXZeroBased()"><!-- --></A><H3>
 getXZeroBased</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.107"><B>getXZeroBased</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.109"><B>getXZeroBased</B></A>()</PRE>
 <DL>
 <DD>Get the X coordinate.
 <P>
@@ -462,7 +480,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.107"><B>getXZer
 <A NAME="getYZeroBased()"><!-- --></A><H3>
 getYZeroBased</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.116"><B>getYZeroBased</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.118"><B>getYZeroBased</B></A>()</PRE>
 <DL>
 <DD>Get the Y coordinate.
 <P>
@@ -479,7 +497,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.116"><B>getYZer
 <A NAME="getPoint()"><!-- --></A><H3>
 getPoint</H3>
 <PRE>
-public java.awt.Point <A HREF="../../src-html/maze/model/MazeCell.html#line.125"><B>getPoint</B></A>()</PRE>
+public java.awt.Point <A HREF="../../src-html/maze/model/MazeCell.html#line.127"><B>getPoint</B></A>()</PRE>
 <DL>
 <DD>Get the x and y coordinates in the form of a <code>Point</code>.
 <P>
@@ -496,7 +514,7 @@ public java.awt.Point <A HREF="../../src-html/maze/model/MazeCell.html#line.125"
 <A NAME="isInRange(java.awt.Dimension)"><!-- --></A><H3>
 isInRange</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.135"><B>isInRange</B></A>(java.awt.Dimension&nbsp;mazeSize)</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.137"><B>isInRange</B></A>(java.awt.Dimension&nbsp;mazeSize)</PRE>
 <DL>
 <DD>Test to see if this maze cell is within the coordinate range of the given
  maze dimension. The maze dimension gives the number of columns and rows in
@@ -514,7 +532,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.135"><B>isI
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeCell.html#line.141"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/model/MazeCell.html#line.143"><B>toString</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DL>
@@ -528,7 +546,7 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeCell.html#line.14
 <A NAME="compareTo(maze.model.MazeCell)"><!-- --></A><H3>
 compareTo</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.151"><B>compareTo</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;other)</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.153"><B>compareTo</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;other)</PRE>
 <DL>
 <DD>Sorts in order from (x,y) (1,1),(2,1),(3,1),(1,2),(2,2),(3,2). In other
  words from left to right, top to bottom.
@@ -545,7 +563,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.151"><B>compare
 <A NAME="equals(java.lang.Object)"><!-- --></A><H3>
 equals</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.164"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.166"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DL>
@@ -559,7 +577,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeCell.html#line.164"><B>equ
 <A NAME="hashCode()"><!-- --></A><H3>
 hashCode</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCell.html#line.178"><B>hashCode</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCell.html#line.180"><B>hashCode</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DL>
@@ -600,7 +618,7 @@ public int <A HREF="../../src-html/maze/model/MazeCell.html#line.178"><B>hashCod
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../maze/model/Direction.html" title="enum in maze.model"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/MazeCell.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="MazeCell.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

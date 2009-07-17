@@ -99,7 +99,7 @@ java.lang.Object
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.12"><B>ConjoinedMazeTemplate</B></A><DT>extends <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></DL>
+<DT><PRE>public abstract class <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.13"><B>ConjoinedMazeTemplate</B></A><DT>extends <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></DL>
 </PRE>
 
 <P>
@@ -147,7 +147,7 @@ This class provides a parent class to any maze template that is one piece.
 <TH ALIGN="left"><B>Fields inherited from class maze.gui.mazeeditor.<A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mDesc">mDesc</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mIcon">mIcon</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mWallPaint">mWallPaint</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#PEG_COLOR">PEG_COLOR</A></CODE></TD>
+<TD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mDesc">mDesc</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mIcon">mIcon</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -186,7 +186,7 @@ This class provides a parent class to any maze template that is one piece.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.awt.Point[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#getCenterPoints(maze.gui.CellSize)">getCenterPoints</A></B>(<A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</CODE>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#getCenterPoints(maze.model.CellSizeModel)">getCenterPoints</A></B>(<A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array consisting of one element, the center peg position.</TD>
@@ -194,8 +194,8 @@ This class provides a parent class to any maze template that is one piece.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#updatePosition(java.awt.Point, maze.gui.CellSize)">updatePosition</A></B>(java.awt.Point&nbsp;p,
-                             <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</CODE>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/ConjoinedMazeTemplate.html#updatePosition(java.awt.Point, maze.model.CellSizeModel)">updatePosition</A></B>(java.awt.Point&nbsp;p,
+                             <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates the center point of the center peg.</TD>
@@ -207,7 +207,7 @@ This class provides a parent class to any maze template that is one piece.
 <TH ALIGN="left"><B>Methods inherited from class maze.gui.mazeeditor.<A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)">draw</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.TreeSet, java.awt.Graphics2D, maze.gui.CellSize, java.awt.Point)">drawPeg</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getTemplateDescription()">getTemplateDescription</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getTemplateIcon()">getTemplateIcon</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#grow()">grow</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#nextOrientation()">nextOrientation</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#reset()">reset</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#shrink()">shrink</A></CODE></TD>
+<TD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)">draw</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.Set, java.awt.Graphics2D, maze.model.CellSizeModel, java.awt.Point, maze.gui.MazePainter)">drawPeg</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getTemplateDescription()">getTemplateDescription</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getTemplateIcon()">getTemplateIcon</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#grow()">grow</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#nextOrientation()">nextOrientation</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#reset()">reset</A>, <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#shrink()">shrink</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -235,7 +235,7 @@ This class provides a parent class to any maze template that is one piece.
 <A NAME="mCenter"><!-- --></A><H3>
 mCenter</H3>
 <PRE>
-protected <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A> <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.14"><B>mCenter</B></A></PRE>
+protected <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A> <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.15"><B>mCenter</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -245,7 +245,7 @@ protected <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class i
 <A NAME="mCenterPoint"><!-- --></A><H3>
 mCenterPoint</H3>
 <PRE>
-protected java.awt.Point <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.15"><B>mCenterPoint</B></A></PRE>
+protected java.awt.Point <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.16"><B>mCenterPoint</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -264,7 +264,7 @@ protected java.awt.Point <A HREF="../../../src-html/maze/gui/mazeeditor/Conjoine
 <A NAME="ConjoinedMazeTemplate()"><!-- --></A><H3>
 ConjoinedMazeTemplate</H3>
 <PRE>
-public <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.12"><B>ConjoinedMazeTemplate</B></A>()</PRE>
+public <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.13"><B>ConjoinedMazeTemplate</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -281,7 +281,7 @@ public <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html
 <A NAME="getCenterPegs()"><!-- --></A><H3>
 getCenterPegs</H3>
 <PRE>
-public <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>[] <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.22"><B>getCenterPegs</B></A>()</PRE>
+public <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>[] <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.23"><B>getCenterPegs</B></A>()</PRE>
 <DL>
 <DD>Returns an array consisting of one element, the center peg.
 <P>
@@ -295,17 +295,17 @@ public <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in m
 </DL>
 <HR>
 
-<A NAME="getCenterPoints(maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="getCenterPoints(maze.model.CellSizeModel)"><!-- --></A><H3>
 getCenterPoints</H3>
 <PRE>
-public java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.35"><B>getCenterPoints</B></A>(<A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</PRE>
+public java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.36"><B>getCenterPoints</B></A>(<A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</PRE>
 <DL>
 <DD>Returns an array consisting of one element, the center peg position.  This
  position represents where the center peg should be positioned on the
  screen.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.gui.CellSize)">getCenterPoints</A></CODE> in class <CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.model.CellSizeModel)">getCenterPoints</A></CODE> in class <CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>size</CODE> - the dimensions of the maze being displayed
@@ -314,16 +314,16 @@ public java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/Conjoined
 </DL>
 <HR>
 
-<A NAME="updatePosition(java.awt.Point, maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="updatePosition(java.awt.Point, maze.model.CellSizeModel)"><!-- --></A><H3>
 updatePosition</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.46"><B>updatePosition</B></A>(java.awt.Point&nbsp;p,
-                           <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/ConjoinedMazeTemplate.html#line.47"><B>updatePosition</B></A>(java.awt.Point&nbsp;p,
+                           <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</PRE>
 <DL>
 <DD>Updates the center point of the center peg.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#updatePosition(java.awt.Point, maze.gui.CellSize)">updatePosition</A></CODE> in class <CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#updatePosition(java.awt.Point, maze.model.CellSizeModel)">updatePosition</A></CODE> in class <CODE><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>p</CODE> - the new center position for the center peg<DD><CODE>size</CODE> - the dimensions of the maze being displayed</DL>

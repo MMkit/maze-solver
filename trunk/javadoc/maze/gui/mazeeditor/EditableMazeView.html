@@ -102,12 +102,12 @@ java.lang.Object
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.22"><B>EditableMazeView</B></A><DT>extends <A HREF="../../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A></DL>
+<DT><PRE>public final class <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.24"><B>EditableMazeView</B></A><DT>extends <A HREF="../../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A></DL>
 </PRE>
 
 <P>
 This class provides a MazeView on which maze templates can be applied to the
- underlying model.  This view is repsonsible for drawing the current template
+ underlying model. This view is responsible for drawing the current template
  that will be applied.
 <P>
 
@@ -253,8 +253,8 @@ This class provides a MazeView on which maze templates can be applied to the
                  int[]&nbsp;coords)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recursively fetches all walls from the model that will be affected by
- the template application.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recursively fetches all walls from the model that will be affected by the
+ template application.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -276,13 +276,11 @@ This class provides a MazeView on which maze templates can be applied to the
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/EditableMazeView.html#getCellSize()">getCellSize</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/EditableMazeView.html#getCellSizeModel()">getCellSizeModel</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a CellSize object that hass the current size and dimensions of
- the maze cells and walls the whole maze based on the size of this
- MazeView panel.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the cell size model.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -363,7 +361,7 @@ This class provides a MazeView on which maze templates can be applied to the
 <A NAME="WALL_SIZE_DIVIDER"><!-- --></A><H3>
 WALL_SIZE_DIVIDER</H3>
 <PRE>
-private static final int <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.24"><B>WALL_SIZE_DIVIDER</B></A></PRE>
+private static final int <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.26"><B>WALL_SIZE_DIVIDER</B></A></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#maze.gui.mazeeditor.EditableMazeView.WALL_SIZE_DIVIDER">Constant Field Values</A></DL>
@@ -373,7 +371,7 @@ private static final int <A HREF="../../../src-html/maze/gui/mazeeditor/Editable
 <A NAME="mCurrentTemplate"><!-- --></A><H3>
 mCurrentTemplate</H3>
 <PRE>
-private <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A> <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.25"><B>mCurrentTemplate</B></A></PRE>
+private <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A> <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.27"><B>mCurrentTemplate</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -392,7 +390,7 @@ private <A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in
 <A NAME="EditableMazeView()"><!-- --></A><H3>
 EditableMazeView</H3>
 <PRE>
-public <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.22"><B>EditableMazeView</B></A>()</PRE>
+public <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.24"><B>EditableMazeView</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -406,26 +404,10 @@ public <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line
 </TR>
 </TABLE>
 
-<A NAME="getCellSize()"><!-- --></A><H3>
-getCellSize</H3>
-<PRE>
-public <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A> <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.33"><B>getCellSize</B></A>()</PRE>
-<DL>
-<DD>Returns a CellSize object that hass the current size and dimensions of
- the maze cells and walls the whole maze based on the size of this
- MazeView panel.
-<P>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>a CellSize object with the cell, walls and maze sizes</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="componentResized(java.awt.event.ComponentEvent)"><!-- --></A><H3>
 componentResized</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.48"><B>componentResized</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.35"><B>componentResized</B></A>(java.awt.event.ComponentEvent&nbsp;e)</PRE>
 <DL>
 <DD>Resizes the wall width and height of the maze based on the size of this
  MazeView panel when the panel is resized.
@@ -439,10 +421,24 @@ public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html
 </DL>
 <HR>
 
+<A NAME="getCellSizeModel()"><!-- --></A><H3>
+getCellSizeModel</H3>
+<PRE>
+public <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A> <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.48"><B>getCellSizeModel</B></A>()</PRE>
+<DL>
+<DD>Get the cell size model.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>A copy of the model instance.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="paintComponent(java.awt.Graphics)"><!-- --></A><H3>
 paintComponent</H3>
 <PRE>
-protected void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.64"><B>paintComponent</B></A>(java.awt.Graphics&nbsp;arg)</PRE>
+protected void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.59"><B>paintComponent</B></A>(java.awt.Graphics&nbsp;arg)</PRE>
 <DL>
 <DD>Paints the maze with a call to MazeView.paintComponent and paints the
  currently selected maze template if one is selected.
@@ -459,7 +455,7 @@ protected void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.h
 <A NAME="setTemplate(maze.gui.mazeeditor.MazeTemplate)"><!-- --></A><H3>
 setTemplate</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.96"><B>setTemplate</B></A>(<A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A>&nbsp;mt)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.91"><B>setTemplate</B></A>(<A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A>&nbsp;mt)</PRE>
 <DL>
 <DD>Sets the currently selected template to mt
 <P>
@@ -472,15 +468,15 @@ public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html
 <A NAME="applyTemplate(boolean)"><!-- --></A><H3>
 applyTemplate</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.108"><B>applyTemplate</B></A>(boolean&nbsp;setWall)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.103"><B>applyTemplate</B></A>(boolean&nbsp;setWall)</PRE>
 <DL>
 <DD>Applied the currently selected template either setting walls or clearing
- walls based on the value of setWall.  If setWall is true, the walls under
+ walls based on the value of setWall. If setWall is true, the walls under
  the template will be set, otherwise they will be cleared.
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>setWall</CODE> - true if the walls under the template should be set, false
-                     if the walls under the template should be cleared</DL>
+           if the walls under the template should be cleared</DL>
 </DD>
 </DL>
 <HR>
@@ -488,20 +484,19 @@ public void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html
 <A NAME="applyPeg(maze.gui.mazeeditor.TemplatePeg, java.util.TreeSet, java.util.Vector, int[])"><!-- --></A><H3>
 applyPeg</H3>
 <PRE>
-private void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.172"><B>applyPeg</B></A>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
+private void <A HREF="../../../src-html/maze/gui/mazeeditor/EditableMazeView.html#line.169"><B>applyPeg</B></A>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
                       java.util.TreeSet&lt;<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&gt;&nbsp;visited,
                       java.util.Vector&lt;<A HREF="../../../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A>&gt;&nbsp;walls,
                       int[]&nbsp;coords)</PRE>
 <DL>
-<DD>Recursively fetches all walls from the model that will be affected by
- the template application.  Each peg is only visited once so that this
- method will not recurse infinitely.
+<DD>Recursively fetches all walls from the model that will be affected by the
+ template application. Each peg is only visited once so that this method
+ will not recurse infinitely.
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>peg</CODE> - the peg from which to start.<DD><CODE>visited</CODE> - a set of all pegs that have already be visited<DD><CODE>walls</CODE> - a Vector holding all walls that have already been found to be
-              affected by the template.  New walls will be added when
-              found.<DD><CODE>coords</CODE> - the maze coordinates for peg which may be outside of the
-               actual maze.</DL>
+           affected by the template. New walls will be added when found.<DD><CODE>coords</CODE> - the maze coordinates for peg which may be outside of the
+           actual maze.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

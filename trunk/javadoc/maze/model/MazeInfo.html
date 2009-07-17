@@ -53,7 +53,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/MazeInfo.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -98,7 +98,7 @@ java.lang.Object
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/model/MazeInfo.html#line.13"><B>MazeInfo</B></A><DT>extends java.lang.Object<DT>implements <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
+<DT><PRE>public class <A HREF="../../src-html/maze/model/MazeInfo.html#line.24"><B>MazeInfo</B></A><DT>extends java.lang.Object<DT>implements <A HREF="../../maze/util/Listener.html" title="interface in maze.util">Listener</A>&lt;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt;</DL>
 </PRE>
 
 <P>
@@ -298,6 +298,14 @@ Stores information about a Maze including its file name and model.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeInfo.html#saveMaze()">saveMaze</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save a maze.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeInfo.html#setName(java.lang.String)">setName</A></B>(java.lang.String&nbsp;name)</CODE>
 
@@ -354,7 +362,7 @@ Stores information about a Maze including its file name and model.
 <A NAME="mModel"><!-- --></A><H3>
 mModel</H3>
 <PRE>
-private <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.15"><B>mModel</B></A></PRE>
+private <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.26"><B>mModel</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -364,7 +372,7 @@ private <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">Ma
 <A NAME="mPath"><!-- --></A><H3>
 mPath</H3>
 <PRE>
-private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.16"><B>mPath</B></A></PRE>
+private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.27"><B>mPath</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -374,7 +382,7 @@ private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.1
 <A NAME="mName"><!-- --></A><H3>
 mName</H3>
 <PRE>
-private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.17"><B>mName</B></A></PRE>
+private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.28"><B>mName</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -384,7 +392,7 @@ private java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.1
 <A NAME="isDirty"><!-- --></A><H3>
 isDirty</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.18"><B>isDirty</B></A></PRE>
+private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.29"><B>isDirty</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -394,7 +402,7 @@ private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.18"><B>isD
 <A NAME="isMutable"><!-- --></A><H3>
 isMutable</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.19"><B>isMutable</B></A></PRE>
+private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.30"><B>isMutable</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -404,7 +412,7 @@ private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.19"><B>isM
 <A NAME="isExtended"><!-- --></A><H3>
 isExtended</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.20"><B>isExtended</B></A></PRE>
+private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.31"><B>isExtended</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -423,7 +431,7 @@ private boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.20"><B>isE
 <A NAME="MazeInfo()"><!-- --></A><H3>
 MazeInfo</H3>
 <PRE>
-private <A HREF="../../src-html/maze/model/MazeInfo.html#line.159"><B>MazeInfo</B></A>()</PRE>
+private <A HREF="../../src-html/maze/model/MazeInfo.html#line.171"><B>MazeInfo</B></A>()</PRE>
 <DL>
 <DD>Private constructor. Instances must be retrieved from factory methods.
 <P>
@@ -442,7 +450,7 @@ private <A HREF="../../src-html/maze/model/MazeInfo.html#line.159"><B>MazeInfo</
 <A NAME="load(java.io.InputStream, java.lang.String)"><!-- --></A><H3>
 load</H3>
 <PRE>
-public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.22"><B>load</B></A>(java.io.InputStream&nbsp;in,
+public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.33"><B>load</B></A>(java.io.InputStream&nbsp;in,
                             java.lang.String&nbsp;name)</PRE>
 <DL>
 <DD><DL>
@@ -457,7 +465,7 @@ public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.mode
 <A NAME="load(java.io.File)"><!-- --></A><H3>
 load</H3>
 <PRE>
-public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.45"><B>load</B></A>(java.io.File&nbsp;file)</PRE>
+public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.56"><B>load</B></A>(java.io.File&nbsp;file)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -471,7 +479,7 @@ public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.mode
 <A NAME="createEmptyMaze(java.lang.String, boolean)"><!-- --></A><H3>
 createEmptyMaze</H3>
 <PRE>
-public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.74"><B>createEmptyMaze</B></A>(java.lang.String&nbsp;name,
+public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.86"><B>createEmptyMaze</B></A>(java.lang.String&nbsp;name,
                                        boolean&nbsp;extended)</PRE>
 <DL>
 <DD><DL>
@@ -486,7 +494,7 @@ public static <A HREF="../../maze/model/MazeInfo.html" title="class in maze.mode
 <A NAME="store()"><!-- --></A><H3>
 store</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.86"><B>store</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.98"><B>store</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -500,7 +508,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.86"><B>stor
 <A NAME="getName()"><!-- --></A><H3>
 getName</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.105"><B>getName</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.117"><B>getName</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -514,7 +522,7 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.10
 <A NAME="getPath()"><!-- --></A><H3>
 getPath</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.110"><B>getPath</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.122"><B>getPath</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -528,7 +536,7 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.11
 <A NAME="getModel()"><!-- --></A><H3>
 getModel</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.115"><B>getModel</B></A>()</PRE>
+public <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.127"><B>getModel</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -542,7 +550,7 @@ public <A HREF="../../maze/model/MazeModel.html" title="class in maze.model">Maz
 <A NAME="isDirty()"><!-- --></A><H3>
 isDirty</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.120"><B>isDirty</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.132"><B>isDirty</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -556,7 +564,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.120"><B>isD
 <A NAME="clearDirty()"><!-- --></A><H3>
 clearDirty</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.125"><B>clearDirty</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.137"><B>clearDirty</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -570,7 +578,7 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.125"><B>clearD
 <A NAME="isMutable()"><!-- --></A><H3>
 isMutable</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.131"><B>isMutable</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.143"><B>isMutable</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -584,7 +592,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.131"><B>isM
 <A NAME="isExtended()"><!-- --></A><H3>
 isExtended</H3>
 <PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.136"><B>isExtended</B></A>()</PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.148"><B>isExtended</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -598,7 +606,7 @@ public boolean <A HREF="../../src-html/maze/model/MazeInfo.html#line.136"><B>isE
 <A NAME="setName(java.lang.String)"><!-- --></A><H3>
 setName</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.141"><B>setName</B></A>(java.lang.String&nbsp;name)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.153"><B>setName</B></A>(java.lang.String&nbsp;name)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -612,7 +620,7 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.141"><B>setNam
 <A NAME="setPath(java.lang.String)"><!-- --></A><H3>
 setPath</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.147"><B>setPath</B></A>(java.lang.String&nbsp;path)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.159"><B>setPath</B></A>(java.lang.String&nbsp;path)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -626,7 +634,7 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.147"><B>setPat
 <A NAME="toString()"><!-- --></A><H3>
 toString</H3>
 <PRE>
-public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.163"><B>toString</B></A>()</PRE>
+public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.175"><B>toString</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DL>
@@ -640,7 +648,7 @@ public java.lang.String <A HREF="../../src-html/maze/model/MazeInfo.html#line.16
 <A NAME="getMutableClone()"><!-- --></A><H3>
 getMutableClone</H3>
 <PRE>
-public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.168"><B>getMutableClone</B></A>()</PRE>
+public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.180"><B>getMutableClone</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -654,7 +662,7 @@ public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">Maze
 <A NAME="eventFired(maze.model.MazeCell)"><!-- --></A><H3>
 eventFired</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.182"><B>eventFired</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;event)</PRE>
+public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.194"><B>eventFired</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;event)</PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../maze/util/Listener.html#eventFired(T)">Listener</A></CODE></B></DD>
 <DD>This is called when the ListenerSubject wants to notify the registered
@@ -666,6 +674,23 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.182"><B>eventF
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>event</CODE> - The event object. It can be null so make sure and check for
            that.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="saveMaze()"><!-- --></A><H3>
+saveMaze</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A> <A HREF="../../src-html/maze/model/MazeInfo.html#line.203"><B>saveMaze</B></A>()</PRE>
+<DL>
+<DD>Save a maze.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>The saved maze or null. Can return itself or a new instance.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -699,7 +724,7 @@ public void <A HREF="../../src-html/maze/model/MazeInfo.html#line.182"><B>eventF
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../index.html?maze/model/MazeInfo.html" target="_top"><B>FRAMES</B></A>  &nbsp;

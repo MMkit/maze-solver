@@ -90,11 +90,11 @@ maze.gui</FONT>
 <BR>
 Interface MenuControlled</H2>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A>, <A HREF="../../maze/gui/mazeeditor/MazeEditor.html" title="class in maze.gui.mazeeditor">MazeEditor</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A>, <A HREF="../../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public interface <A HREF="../../src-html/maze/gui/MenuControlled.html#line.8"><B>MenuControlled</B></A></DL>
+<DT><PRE>public interface <A HREF="../../src-html/maze/gui/MenuControlled.html#line.10"><B>MenuControlled</B></A></DL>
 </PRE>
 
 <P>
@@ -121,19 +121,43 @@ Provides a common set of methods for the maze editor and code editor panels
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#close()">close</A></B>()</CODE>
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#canExit()">canExit</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perform cleanup operations like saving files before the application exits.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#open()">open</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#close()">close</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closes the currently displayed item.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#getFileTypeDescription()">getFileTypeDescription</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a description for the types of files that this panel supports.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#isMyFileType(java.io.File)">isMyFileType</A></B>(java.io.File&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test whether the given file is of the type that this page supports.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#open(java.io.File)">open</A></B>(java.io.File&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open the file.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -141,7 +165,7 @@ Provides a common set of methods for the maze editor and code editor panels
 <TD><CODE><B><A HREF="../../maze/gui/MenuControlled.html#saveCurrent()">saveCurrent</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save the currently displayed item.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -157,35 +181,84 @@ Provides a common set of methods for the maze editor and code editor panels
 </TR>
 </TABLE>
 
-<A NAME="saveCurrent()"><!-- --></A><H3>
-saveCurrent</H3>
-<PRE>
-void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.10"><B>saveCurrent</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="open()"><!-- --></A><H3>
-open</H3>
-<PRE>
-void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.12"><B>open</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="close()"><!-- --></A><H3>
 close</H3>
 <PRE>
-void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.14"><B>close</B></A>()</PRE>
+void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.15"><B>close</B></A>()</PRE>
 <DL>
+<DD>Closes the currently displayed item.
+<P>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFileTypeDescription()"><!-- --></A><H3>
+getFileTypeDescription</H3>
+<PRE>
+java.lang.String <A HREF="../../src-html/maze/gui/MenuControlled.html#line.21"><B>getFileTypeDescription</B></A>()</PRE>
+<DL>
+<DD>Get a description for the types of files that this panel supports.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Description.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isMyFileType(java.io.File)"><!-- --></A><H3>
+isMyFileType</H3>
+<PRE>
+boolean <A HREF="../../src-html/maze/gui/MenuControlled.html#line.28"><B>isMyFileType</B></A>(java.io.File&nbsp;file)</PRE>
+<DL>
+<DD>Test whether the given file is of the type that this page supports.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>file</CODE> - File to test.
+<DT><B>Returns:</B><DD>true if it is a recognized file type.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="open(java.io.File)"><!-- --></A><H3>
+open</H3>
+<PRE>
+void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.34"><B>open</B></A>(java.io.File&nbsp;file)</PRE>
+<DL>
+<DD>Open the file.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>file</CODE> - The file to open.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="saveCurrent()"><!-- --></A><H3>
+saveCurrent</H3>
+<PRE>
+void <A HREF="../../src-html/maze/gui/MenuControlled.html#line.39"><B>saveCurrent</B></A>()</PRE>
+<DL>
+<DD>Save the currently displayed item.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="canExit()"><!-- --></A><H3>
+canExit</H3>
+<PRE>
+boolean <A HREF="../../src-html/maze/gui/MenuControlled.html#line.46"><B>canExit</B></A>()</PRE>
+<DL>
+<DD>Perform cleanup operations like saving files before the application exits.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>true if this page is ready for application exit, false if the exit
+         should be stopped.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

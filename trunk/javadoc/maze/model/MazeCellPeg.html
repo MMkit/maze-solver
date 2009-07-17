@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-CellSize
+MazeCellPeg
 </TITLE>
 
 
@@ -13,7 +13,7 @@ CellSize
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CellSize";
+        parent.document.title="MazeCellPeg";
     }
 }
 </SCRIPT>
@@ -38,7 +38,7 @@ function windowTitle()
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CellSize.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/MazeCellPeg.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -53,11 +53,11 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/gui/CellSize.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CellSize.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/model/MazeCellPeg.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MazeCellPeg.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -86,25 +86,20 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-maze.gui</FONT>
+maze.model</FONT>
 <BR>
-Class CellSize</H2>
+Class MazeCellPeg</H2>
 <PRE>
 java.lang.Object
-  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.gui.CellSize</B>
+  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>maze.model.MazeCellPeg</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD>java.lang.Comparable&lt;<A HREF="../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&gt;</DD>
+<DT><B>All Implemented Interfaces:</B> <DD>java.lang.Comparable&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <A HREF="../../src-html/maze/gui/CellSize.html#line.11"><B>CellSize</B></A><DT>extends java.lang.Object<DT>implements java.lang.Comparable&lt;<A HREF="../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&gt;</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.3"><B>MazeCellPeg</B></A><DT>extends java.lang.Object<DT>implements java.lang.Comparable&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</DL>
 </PRE>
-
-<P>
-This model stores the sizes of the cells and wall segments that are drawn
- to the screen.
-<P>
 
 <P>
 <HR>
@@ -120,8 +115,16 @@ This model stores the sizes of the cells and wall segments that are drawn
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;int[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#sizes">sizes</A></B></CODE>
+<CODE>private &nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#x">x</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#y">y</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -137,15 +140,17 @@ This model stores the sizes of the cells and wall segments that are drawn
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#CellSize(int, int, int, int, int, int)">CellSize</A></B>(int&nbsp;cw,
-                 int&nbsp;ch,
-                 int&nbsp;ww,
-                 int&nbsp;wh,
-                 int&nbsp;tw,
-                 int&nbsp;th)</CODE>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#MazeCellPeg(int, int)">MazeCellPeg</A></B>(int&nbsp;x,
+                       int&nbsp;y)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#MazeCellPeg(maze.model.MazeCell)">MazeCellPeg</A></B>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a Peg of the North-West Peg of the Cell.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -160,7 +165,15 @@ This model stores the sizes of the cells and wall segments that are drawn
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#compareTo(maze.gui.CellSize)">compareTo</A></B>(<A HREF="../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;o)</CODE>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#compareTo(maze.model.MazeCellPeg)">compareTo</A></B>(<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&nbsp;o)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#equals(java.lang.Object)">equals</A></B>(java.lang.Object&nbsp;obj)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -168,7 +181,7 @@ This model stores the sizes of the cells and wall segments that are drawn
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getCellHeight()">getCellHeight</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#getX()">getX</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -176,7 +189,7 @@ This model stores the sizes of the cells and wall segments that are drawn
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getCellHeightHalf()">getCellHeightHalf</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#getY()">getY</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -184,63 +197,7 @@ This model stores the sizes of the cells and wall segments that are drawn
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getCellWidth()">getCellWidth</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getCellWidthHalf()">getCellWidthHalf</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getTotalHeight()">getTotalHeight</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getTotalWidth()">getTotalWidth</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getWallHeight()">getWallHeight</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getWallHeightHalf()">getWallHeightHalf</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getWallWidth()">getWallWidth</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/CellSize.html#getWallWidthHalf()">getWallWidthHalf</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#hashCode()">hashCode</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -252,7 +209,7 @@ This model stores the sizes of the cells and wall segments that are drawn
 <TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+<TD><CODE>clone, finalize, getClass, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -268,10 +225,20 @@ This model stores the sizes of the cells and wall segments that are drawn
 </TR>
 </TABLE>
 
-<A NAME="sizes"><!-- --></A><H3>
-sizes</H3>
+<A NAME="x"><!-- --></A><H3>
+x</H3>
 <PRE>
-private int[] <A HREF="../../src-html/maze/gui/CellSize.html#line.13"><B>sizes</B></A></PRE>
+private final int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.5"><B>x</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="y"><!-- --></A><H3>
+y</H3>
+<PRE>
+private final int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.6"><B>y</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -287,15 +254,23 @@ private int[] <A HREF="../../src-html/maze/gui/CellSize.html#line.13"><B>sizes</
 </TR>
 </TABLE>
 
-<A NAME="CellSize(int, int, int, int, int, int)"><!-- --></A><H3>
-CellSize</H3>
+<A NAME="MazeCellPeg(maze.model.MazeCell)"><!-- --></A><H3>
+MazeCellPeg</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/CellSize.html#line.15"><B>CellSize</B></A>(int&nbsp;cw,
-                int&nbsp;ch,
-                int&nbsp;ww,
-                int&nbsp;wh,
-                int&nbsp;tw,
-                int&nbsp;th)</PRE>
+public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.12"><B>MazeCellPeg</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
+<DL>
+<DD>Creates a Peg of the North-West Peg of the Cell.
+<P>
+<DL>
+<DT><B>Parameters:</B><DD><CODE>cell</CODE> - The Maze Cell to create a Peg from.</DL>
+</DL>
+<HR>
+
+<A NAME="MazeCellPeg(int, int)"><!-- --></A><H3>
+MazeCellPeg</H3>
+<PRE>
+public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.18"><B>MazeCellPeg</B></A>(int&nbsp;x,
+                   int&nbsp;y)</PRE>
 <DL>
 </DL>
 
@@ -309,10 +284,10 @@ public <A HREF="../../src-html/maze/gui/CellSize.html#line.15"><B>CellSize</B></
 </TR>
 </TABLE>
 
-<A NAME="getCellWidth()"><!-- --></A><H3>
-getCellWidth</H3>
+<A NAME="getX()"><!-- --></A><H3>
+getX</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.25"><B>getCellWidth</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.24"><B>getX</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -323,10 +298,10 @@ public int <A HREF="../../src-html/maze/gui/CellSize.html#line.25"><B>getCellWid
 </DL>
 <HR>
 
-<A NAME="getCellHeight()"><!-- --></A><H3>
-getCellHeight</H3>
+<A NAME="getY()"><!-- --></A><H3>
+getY</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.30"><B>getCellHeight</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.29"><B>getY</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -337,125 +312,41 @@ public int <A HREF="../../src-html/maze/gui/CellSize.html#line.30"><B>getCellHei
 </DL>
 <HR>
 
-<A NAME="getWallWidth()"><!-- --></A><H3>
-getWallWidth</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.35"><B>getWallWidth</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getWallHeight()"><!-- --></A><H3>
-getWallHeight</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.40"><B>getWallHeight</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCellWidthHalf()"><!-- --></A><H3>
-getCellWidthHalf</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.45"><B>getCellWidthHalf</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCellHeightHalf()"><!-- --></A><H3>
-getCellHeightHalf</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.50"><B>getCellHeightHalf</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getWallWidthHalf()"><!-- --></A><H3>
-getWallWidthHalf</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.55"><B>getWallWidthHalf</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getWallHeightHalf()"><!-- --></A><H3>
-getWallHeightHalf</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.60"><B>getWallHeightHalf</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getTotalWidth()"><!-- --></A><H3>
-getTotalWidth</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.65"><B>getTotalWidth</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getTotalHeight()"><!-- --></A><H3>
-getTotalHeight</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.70"><B>getTotalHeight</B></A>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="compareTo(maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="compareTo(maze.model.MazeCellPeg)"><!-- --></A><H3>
 compareTo</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/CellSize.html#line.76"><B>compareTo</B></A>(<A HREF="../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;o)</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.35"><B>compareTo</B></A>(<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&nbsp;o)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE>compareTo</CODE> in interface <CODE>java.lang.Comparable&lt;<A HREF="../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>compareTo</CODE> in interface <CODE>java.lang.Comparable&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hashCode()"><!-- --></A><H3>
+hashCode</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.44"><B>hashCode</B></A>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.50"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -477,7 +368,7 @@ public int <A HREF="../../src-html/maze/gui/CellSize.html#line.76"><B>compareTo<
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CellSize.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/MazeCellPeg.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
@@ -492,11 +383,11 @@ public int <A HREF="../../src-html/maze/gui/CellSize.html#line.76"><B>compareTo<
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../maze/gui/CodeEditingPanel.html" title="class in maze.gui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../maze/model/MazeInfo.html" title="class in maze.model"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../index.html?maze/gui/CellSize.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CellSize.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../index.html?maze/model/MazeCellPeg.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MazeCellPeg.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {

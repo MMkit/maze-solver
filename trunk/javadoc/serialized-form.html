@@ -91,100 +91,6 @@ Serialized Form</H1>
 </TABLE>
 
 <P>
-<A NAME="maze.gui.CodeEditingPanel"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="maze/gui/CodeEditingPanel.html" title="class in maze.gui">maze.gui.CodeEditingPanel</A> extends javax.swing.JSplitPane implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-editorTabs</H3>
-<PRE>
-javax.swing.JTabbedPane <B>editorTabs</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-closeScriptAction</H3>
-<PRE>
-javax.swing.Action <B>closeScriptAction</B></PRE>
-<DL>
-<DD>Closes the currently visible editor tab.
-<P>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="maze.gui.CodeEditorPane"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="maze/gui/CodeEditorPane.html" title="class in maze.gui">maze.gui.CodeEditorPane</A> extends org.fife.ui.rtextarea.RTextScrollPane implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-textArea</H3>
-<PRE>
-org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <B>textArea</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-currentInterpreter</H3>
-<PRE>
-org.python.util.PythonInterpreter <B>currentInterpreter</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-scriptFile</H3>
-<PRE>
-java.io.File <B>scriptFile</B></PRE>
-<DL>
-<DD>The File (if any) that is attached to this editor.
-<P>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-excludedStrings</H3>
-<PRE>
-java.lang.String[] <B>excludedStrings</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
 <A NAME="maze.gui.HelpInfo"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
@@ -452,9 +358,63 @@ java.awt.Paint <B>wallSet</B></PRE>
 </TABLE>
 
 <H3>
+cellBackgroundEnd</H3>
+<PRE>
+java.awt.Color <B>cellBackgroundEnd</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+cellBackgroundStart</H3>
+<PRE>
+java.awt.Color <B>cellBackgroundStart</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
 pegImage</H3>
 <PRE>
 javax.swing.ImageIcon <B>pegImage</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallEmptyEnd</H3>
+<PRE>
+java.awt.Color <B>wallEmptyEnd</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallEmptyStart</H3>
+<PRE>
+java.awt.Color <B>wallEmptyStart</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallSetEnd</H3>
+<PRE>
+java.awt.Color <B>wallSetEnd</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallSetStart</H3>
+<PRE>
+java.awt.Color <B>wallSetStart</B></PRE>
 <DL>
 <DL>
 </DL>
@@ -891,11 +851,11 @@ boolean <B>drawFog</B></PRE>
 </DL>
 
 <P>
-<A NAME="maze.gui.MazeViewerPanel"><!-- --></A>
+<A NAME="maze.gui.MazeViewerPage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="maze/gui/MazeViewerPanel.html" title="class in maze.gui">maze.gui.MazeViewerPanel</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
+<B>Class <A HREF="maze/gui/MazeViewerPage.html" title="class in maze.gui">maze.gui.MazeViewerPage</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
 </TR>
 </TABLE>
 
@@ -1122,7 +1082,7 @@ mMazeInfoModel</H3>
 <H3>
 mazeViewer</H3>
 <PRE>
-<A HREF="maze/gui/MazeViewerPanel.html" title="class in maze.gui">MazeViewerPanel</A> <B>mazeViewer</B></PRE>
+<A HREF="maze/gui/MazeViewerPage.html" title="class in maze.gui">MazeViewerPage</A> <B>mazeViewer</B></PRE>
 <DL>
 <DL>
 </DL>
@@ -1131,7 +1091,7 @@ mazeViewer</H3>
 <H3>
 mazeEditor</H3>
 <PRE>
-<A HREF="maze/gui/mazeeditor/MazeEditor.html" title="class in maze.gui.mazeeditor">MazeEditor</A> <B>mazeEditor</B></PRE>
+<A HREF="maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A> <B>mazeEditor</B></PRE>
 <DL>
 <DL>
 </DL>
@@ -1140,7 +1100,7 @@ mazeEditor</H3>
 <H3>
 codeEditorPanel</H3>
 <PRE>
-<A HREF="maze/gui/CodeEditingPanel.html" title="class in maze.gui">CodeEditingPanel</A> <B>codeEditorPanel</B></PRE>
+<A HREF="maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A> <B>codeEditorPanel</B></PRE>
 <DL>
 <DL>
 </DL>
@@ -1154,13 +1114,197 @@ javax.swing.JTabbedPane <B>mainTabs</B></PRE>
 <DL>
 </DL>
 </DL>
+<HR>
+<H3>
+fileMenu</H3>
+<PRE>
+javax.swing.JMenu <B>fileMenu</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
 
 <P>
-<A NAME="maze.gui.StatViewPanel"><!-- --></A>
+<A NAME="maze.gui.ScriptEditor"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="maze/gui/StatViewPanel.html" title="class in maze.gui">maze.gui.StatViewPanel</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
+<B>Class <A HREF="maze/gui/ScriptEditor.html" title="class in maze.gui">maze.gui.ScriptEditor</A> extends org.fife.ui.rtextarea.RTextScrollPane implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+codeEvalTimer</H3>
+<PRE>
+javax.swing.Timer <B>codeEvalTimer</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+currentInterpreter</H3>
+<PRE>
+org.python.util.PythonInterpreter <B>currentInterpreter</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+isDirty</H3>
+<PRE>
+boolean <B>isDirty</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+scriptFile</H3>
+<PRE>
+java.io.File <B>scriptFile</B></PRE>
+<DL>
+<DD>The File (if any) that is attached to this editor.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+textArea</H3>
+<PRE>
+org.fife.ui.rsyntaxtextarea.RSyntaxTextArea <B>textArea</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<P>
+<A NAME="maze.gui.ScriptEditorPage"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="maze/gui/ScriptEditorPage.html" title="class in maze.gui">maze.gui.ScriptEditorPage</A> extends javax.swing.JSplitPane implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+editorTabs</H3>
+<PRE>
+javax.swing.JTabbedPane <B>editorTabs</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+closeScriptAction</H3>
+<PRE>
+javax.swing.Action <B>closeScriptAction</B></PRE>
+<DL>
+<DD>Closes the currently visible editor tab.
+<P>
+<DL>
+</DL>
+</DL>
+
+<P>
+<A NAME="maze.gui.ScriptInfoPanel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="maze/gui/ScriptInfoPanel.html" title="class in maze.gui">maze.gui.ScriptInfoPanel</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+list</H3>
+<PRE>
+javax.swing.JList <B>list</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+model</H3>
+<PRE>
+javax.swing.DefaultListModel <B>model</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+labelErrorStatus</H3>
+<PRE>
+javax.swing.JLabel <B>labelErrorStatus</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+labelSelectedToken</H3>
+<PRE>
+javax.swing.JLabel <B>labelSelectedToken</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+labelTokenValue</H3>
+<PRE>
+javax.swing.JLabel <B>labelTokenValue</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+labelTokenType</H3>
+<PRE>
+javax.swing.JLabel <B>labelTokenType</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<P>
+<A NAME="maze.gui.StatViewPage"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="maze/gui/StatViewPage.html" title="class in maze.gui">maze.gui.StatViewPage</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
 </TR>
 </TABLE>
 
@@ -1272,11 +1416,11 @@ mCurrentTemplate</H3>
 </DL>
 
 <P>
-<A NAME="maze.gui.mazeeditor.MazeEditor"><!-- --></A>
+<A NAME="maze.gui.mazeeditor.MazeEditorPage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="maze/gui/mazeeditor/MazeEditor.html" title="class in maze.gui.mazeeditor">maze.gui.mazeeditor.MazeEditor</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
+<B>Class <A HREF="maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">maze.gui.mazeeditor.MazeEditorPage</A> extends javax.swing.JPanel implements Serializable</B></FONT></TH>
 </TR>
 </TABLE>
 
@@ -1460,6 +1604,69 @@ java.lang.String <B>mSelection</B></PRE>
 </TABLE>
 
 <P>
+<A NAME="maze.model.CellSizeModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="maze/model/CellSizeModel.html" title="class in maze.model">maze.model.CellSizeModel</A> extends java.util.Observable implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+cellWidth</H3>
+<PRE>
+int <B>cellWidth</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+cellHeight</H3>
+<PRE>
+int <B>cellHeight</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallWidth</H3>
+<PRE>
+int <B>wallWidth</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+wallHeight</H3>
+<PRE>
+int <B>wallHeight</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+forceEven</H3>
+<PRE>
+boolean <B>forceEven</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<P>
 <A NAME="maze.model.MazeCell"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
@@ -1467,6 +1674,9 @@ java.lang.String <B>mSelection</B></PRE>
 <B>Class <A HREF="maze/model/MazeCell.html" title="class in maze.model">maze.model.MazeCell</A> extends java.lang.Object implements Serializable</B></FONT></TH>
 </TR>
 </TABLE>
+
+<P>
+<B>serialVersionUID:&nbsp;</B>-3456709665929349825L
 
 <P>
 <A NAME="serializedForm"><!-- --></A>
@@ -1496,6 +1706,68 @@ int <B>y</B></PRE>
 <DL>
 <DD>The row or Y coordinate where this cell lives in the maze, starting from
  the top with 1.
+<P>
+<DL>
+</DL>
+</DL>
+
+<P>
+<A NAME="maze.model.MazeModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="maze/model/MazeModel.html" title="class in maze.model">maze.model.MazeModel</A> extends <A HREF="maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>&lt;<A HREF="maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&gt; implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+cwalls</H3>
+<PRE>
+java.util.BitSet <B>cwalls</B></PRE>
+<DL>
+<DD>Column walls.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+height</H3>
+<PRE>
+int <B>height</B></PRE>
+<DL>
+<DD>Number of rows or height of this maze.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+rwalls</H3>
+<PRE>
+java.util.BitSet <B>rwalls</B></PRE>
+<DL>
+<DD>Row walls.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+width</H3>
+<PRE>
+int <B>width</B></PRE>
+<DL>
+<DD>Number of columns or width of this maze.
 <P>
 <DL>
 </DL>

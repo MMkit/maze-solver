@@ -98,7 +98,7 @@ java.lang.Object
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.18"><B>MazeTemplate</B></A><DT>extends java.lang.Object</DL>
+<DT><PRE>public abstract class <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.17"><B>MazeTemplate</B></A><DT>extends java.lang.Object</DL>
 </PRE>
 
 <P>
@@ -133,22 +133,6 @@ java.lang.Object
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;java.awt.Paint</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#mWallPaint">mWallPaint</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected static&nbsp;java.awt.Color</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#PEG_COLOR">PEG_COLOR</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
 </TABLE>
 &nbsp;
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -178,23 +162,25 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)">draw</A></B>(java.awt.Graphics2D&nbsp;g,
-         <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</CODE>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)">draw</A></B>(java.awt.Graphics2D&nbsp;g,
+         <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;csm,
+         <A HREF="../../../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>&nbsp;painter)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Draw the maze template on top of the maze view.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.TreeSet, java.awt.Graphics2D, maze.gui.CellSize, java.awt.Point)">drawPeg</A></B>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
-               java.util.TreeSet&lt;<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&gt;&nbsp;visited,
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.Set, java.awt.Graphics2D, maze.model.CellSizeModel, java.awt.Point, maze.gui.MazePainter)">drawPeg</A></B>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
+               java.util.Set&lt;<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&gt;&nbsp;visited,
                java.awt.Graphics2D&nbsp;g,
-               <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size,
-               java.awt.Point&nbsp;origin)</CODE>
+               <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size,
+               java.awt.Point&nbsp;origin,
+               <A HREF="../../../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>&nbsp;painter)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recursive method used to draw pegs and walls.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -207,7 +193,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>abstract &nbsp;java.awt.Point[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.gui.CellSize)">getCenterPoints</A></B>(<A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</CODE>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#getCenterPoints(maze.model.CellSizeModel)">getCenterPoints</A></B>(<A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -263,8 +249,8 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#updatePosition(java.awt.Point, maze.gui.CellSize)">updatePosition</A></B>(java.awt.Point&nbsp;p,
-                             <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</CODE>
+<TD><CODE><B><A HREF="../../../maze/gui/mazeeditor/MazeTemplate.html#updatePosition(java.awt.Point, maze.model.CellSizeModel)">updatePosition</A></B>(java.awt.Point&nbsp;p,
+                             <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -292,30 +278,10 @@ java.lang.Object
 </TR>
 </TABLE>
 
-<A NAME="mWallPaint"><!-- --></A><H3>
-mWallPaint</H3>
-<PRE>
-protected java.awt.Paint <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.20"><B>mWallPaint</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="PEG_COLOR"><!-- --></A><H3>
-PEG_COLOR</H3>
-<PRE>
-protected static final java.awt.Color <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.21"><B>PEG_COLOR</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
 <A NAME="mIcon"><!-- --></A><H3>
 mIcon</H3>
 <PRE>
-protected javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.22"><B>mIcon</B></A></PRE>
+protected javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.19"><B>mIcon</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -325,7 +291,7 @@ protected javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/M
 <A NAME="mDesc"><!-- --></A><H3>
 mDesc</H3>
 <PRE>
-protected java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.23"><B>mDesc</B></A></PRE>
+protected java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.20"><B>mDesc</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -344,7 +310,7 @@ protected java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTe
 <A NAME="MazeTemplate()"><!-- --></A><H3>
 MazeTemplate</H3>
 <PRE>
-public <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.18"><B>MazeTemplate</B></A>()</PRE>
+public <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.17"><B>MazeTemplate</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -361,7 +327,7 @@ public <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.18"
 <A NAME="getCenterPegs()"><!-- --></A><H3>
 getCenterPegs</H3>
 <PRE>
-public abstract <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>[] <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.25"><B>getCenterPegs</B></A>()</PRE>
+public abstract <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>[] <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.22"><B>getCenterPegs</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -369,10 +335,10 @@ public abstract <A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="c
 </DL>
 <HR>
 
-<A NAME="getCenterPoints(maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="getCenterPoints(maze.model.CellSizeModel)"><!-- --></A><H3>
 getCenterPoints</H3>
 <PRE>
-public abstract java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.26"><B>getCenterPoints</B></A>(<A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</PRE>
+public abstract java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.24"><B>getCenterPoints</B></A>(<A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -380,11 +346,11 @@ public abstract java.awt.Point[] <A HREF="../../../src-html/maze/gui/mazeeditor/
 </DL>
 <HR>
 
-<A NAME="updatePosition(java.awt.Point, maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="updatePosition(java.awt.Point, maze.model.CellSizeModel)"><!-- --></A><H3>
 updatePosition</H3>
 <PRE>
-public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.27"><B>updatePosition</B></A>(java.awt.Point&nbsp;p,
-                                    <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</PRE>
+public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.26"><B>updatePosition</B></A>(java.awt.Point&nbsp;p,
+                                    <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -406,7 +372,7 @@ public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate
 <A NAME="grow()"><!-- --></A><H3>
 grow</H3>
 <PRE>
-public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.29"><B>grow</B></A>()</PRE>
+public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.30"><B>grow</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -417,7 +383,7 @@ public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate
 <A NAME="shrink()"><!-- --></A><H3>
 shrink</H3>
 <PRE>
-public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.30"><B>shrink</B></A>()</PRE>
+public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.32"><B>shrink</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -425,14 +391,18 @@ public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate
 </DL>
 <HR>
 
-<A NAME="draw(java.awt.Graphics2D, maze.gui.CellSize)"><!-- --></A><H3>
+<A NAME="draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)"><!-- --></A><H3>
 draw</H3>
 <PRE>
-public void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.31"><B>draw</B></A>(java.awt.Graphics2D&nbsp;g,
-                 <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size)</PRE>
+public void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.41"><B>draw</B></A>(java.awt.Graphics2D&nbsp;g,
+                 <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;csm,
+                 <A HREF="../../../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>&nbsp;painter)</PRE>
 <DL>
+<DD>Draw the maze template on top of the maze view.
+<P>
 <DD><DL>
-</DL>
+<DT><B>Parameters:</B><DD><CODE>g</CODE> - What to draw on.<DD><CODE>csm</CODE> - The model used to give us the sizes of cells, walls, and pegs.<DD><CODE>painter</CODE> - The maze painter used to do the actual drawing of the pegs
+           and wall segments.</DL>
 </DD>
 </DL>
 <HR>
@@ -440,7 +410,7 @@ public void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#lin
 <A NAME="reset()"><!-- --></A><H3>
 reset</H3>
 <PRE>
-public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.51"><B>reset</B></A>()</PRE>
+public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.56"><B>reset</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -451,7 +421,7 @@ public abstract void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate
 <A NAME="getTemplateIcon()"><!-- --></A><H3>
 getTemplateIcon</H3>
 <PRE>
-public javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.53"><B>getTemplateIcon</B></A>()</PRE>
+public javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.58"><B>getTemplateIcon</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -462,7 +432,7 @@ public javax.swing.ImageIcon <A HREF="../../../src-html/maze/gui/mazeeditor/Maze
 <A NAME="getTemplateDescription()"><!-- --></A><H3>
 getTemplateDescription</H3>
 <PRE>
-public java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.57"><B>getTemplateDescription</B></A>()</PRE>
+public java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.63"><B>getTemplateDescription</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -470,17 +440,20 @@ public java.lang.String <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTempl
 </DL>
 <HR>
 
-<A NAME="drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.TreeSet, java.awt.Graphics2D, maze.gui.CellSize, java.awt.Point)"><!-- --></A><H3>
+<A NAME="drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.Set, java.awt.Graphics2D, maze.model.CellSizeModel, java.awt.Point, maze.gui.MazePainter)"><!-- --></A><H3>
 drawPeg</H3>
 <PRE>
-protected void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.62"><B>drawPeg</B></A>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
-                       java.util.TreeSet&lt;<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&gt;&nbsp;visited,
+protected void <A HREF="../../../src-html/maze/gui/mazeeditor/MazeTemplate.html#line.77"><B>drawPeg</B></A>(<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&nbsp;peg,
+                       java.util.Set&lt;<A HREF="../../../maze/gui/mazeeditor/TemplatePeg.html" title="class in maze.gui.mazeeditor">TemplatePeg</A>&gt;&nbsp;visited,
                        java.awt.Graphics2D&nbsp;g,
-                       <A HREF="../../../maze/gui/CellSize.html" title="class in maze.gui">CellSize</A>&nbsp;size,
-                       java.awt.Point&nbsp;origin)</PRE>
+                       <A HREF="../../../maze/model/CellSizeModel.html" title="class in maze.model">CellSizeModel</A>&nbsp;size,
+                       java.awt.Point&nbsp;origin,
+                       <A HREF="../../../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>&nbsp;painter)</PRE>
 <DL>
+<DD>Recursive method used to draw pegs and walls.
+<P>
 <DD><DL>
-</DL>
+<DT><B>Parameters:</B><DD><CODE>peg</CODE> - Current peg to draw.<DD><CODE>visited</CODE> - Pegs we have drawn.<DD><CODE>g</CODE> - What to draw on.<DD><CODE>size</CODE> - Gives us the size of pegs and walls.<DD><CODE>origin</CODE> - The current location of what we are drawing.<DD><CODE>painter</CODE> - Maze painting delegate.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

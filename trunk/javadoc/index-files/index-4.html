@@ -80,9 +80,12 @@ function windowTitle()
 <A NAME="_D_"><!-- --></A><H2>
 <B>D</B></H2>
 <DL>
+<DT><A HREF="../maze/gui/PrimaryFrame.html#DEFAULT_SIZE"><B>DEFAULT_SIZE</B></A> - 
+Static variable in class maze.gui.<A HREF="../maze/gui/PrimaryFrame.html" title="class in maze.gui">PrimaryFrame</A>
+<DD>&nbsp;
 <DT><A HREF="../maze/model/MazeModel.html#DEFAULT_SIZE"><B>DEFAULT_SIZE</B></A> - 
 Static variable in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
-<DD>&nbsp;
+<DD>A maze is generally 16 x 16
 <DT><A HREF="../maze/util/ListenerSubject.html#delayedListener"><B>delayedListener</B></A> - 
 Variable in class maze.util.<A HREF="../maze/util/ListenerSubject.html" title="class in maze.util">ListenerSubject</A>
 <DD>Stores listeners that should be notified in a delayed manner.
@@ -98,8 +101,8 @@ Variable in class maze.model.<A HREF="../maze/model/RobotModelMaster.html" title
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#directions"><B>directions</B></A> - 
 Variable in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/StatViewPanel.html#displayStats()"><B>displayStats()</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/StatViewPanel.html" title="class in maze.gui">StatViewPanel</A>
+<DT><A HREF="../maze/gui/StatViewPage.html#displayStats()"><B>displayStats()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/StatViewPage.html" title="class in maze.gui">StatViewPage</A>
 <DD>Set values in the statistics table model.
 <DT><A HREF="../maze/gui/HelpInfo.html#displayURL(java.net.URL)"><B>displayURL(URL)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/HelpInfo.html" title="class in maze.gui">HelpInfo</A>
@@ -110,13 +113,17 @@ Variable in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in ma
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#distance"><B>distance</B></A> - 
 Variable in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)"><B>draw(Graphics2D, CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/PrimaryFrame.html#doOpenFile()"><B>doOpenFile()</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/PrimaryFrame.html" title="class in maze.gui">PrimaryFrame</A>
+<DD>Bring up the open file dialog and based on the file type selected hand it
+ off to the appropriate panel.
+<DT><A HREF="../maze/gui/mazeeditor/GappedTemplate.html#draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)"><B>draw(Graphics2D, CellSizeModel, MazePainter)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/GappedTemplate.html" title="class in maze.gui.mazeeditor">GappedTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)"><B>draw(Graphics2D, CellSize)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)"><B>draw(Graphics2D, CellSizeModel, MazePainter)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#draw(java.awt.Graphics2D, maze.gui.CellSize)"><B>draw(Graphics2D, CellSize)</B></A> - 
+<DD>Draw the maze template on top of the maze view.
+<DT><A HREF="../maze/gui/mazeeditor/RungTemplate.html#draw(java.awt.Graphics2D, maze.model.CellSizeModel, maze.gui.MazePainter)"><B>draw(Graphics2D, CellSizeModel, MazePainter)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/RungTemplate.html" title="class in maze.gui.mazeeditor">RungTemplate</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)"><B>drawArrow(Graphics2D, Direction, int, int)</B></A> - 
@@ -186,9 +193,9 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DT><A HREF="../maze/gui/MazeView2.html#drawPathFirst"><B>drawPathFirst</B></A> - 
 Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.TreeSet, java.awt.Graphics2D, maze.gui.CellSize, java.awt.Point)"><B>drawPeg(TemplatePeg, TreeSet&lt;TemplatePeg&gt;, Graphics2D, CellSize, Point)</B></A> - 
+<DT><A HREF="../maze/gui/mazeeditor/MazeTemplate.html#drawPeg(maze.gui.mazeeditor.TemplatePeg, java.util.Set, java.awt.Graphics2D, maze.model.CellSizeModel, java.awt.Point, maze.gui.MazePainter)"><B>drawPeg(TemplatePeg, Set&lt;TemplatePeg&gt;, Graphics2D, CellSizeModel, Point, MazePainter)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/MazeTemplate.html" title="class in maze.gui.mazeeditor">MazeTemplate</A>
-<DD>&nbsp;
+<DD>Recursive method used to draw pegs and walls.
 <DT><A HREF="../maze/gui/MazePainter.html#drawPeg(java.awt.Graphics2D, java.awt.Rectangle)"><B>drawPeg(Graphics2D, Rectangle)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
@@ -216,8 +223,8 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in 
 <DT><A HREF="../maze/gui/MazeView2.html#drawUnderstanding(java.awt.Graphics2D)"><B>drawUnderstanding(Graphics2D)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Draws the arrows and numbers on the maze.
-<DT><A HREF="../maze/gui/MazeViewerPanel.html#drawUnderstandingAction"><B>drawUnderstandingAction</B></A> - 
-Variable in class maze.gui.<A HREF="../maze/gui/MazeViewerPanel.html" title="class in maze.gui">MazeViewerPanel</A>
+<DT><A HREF="../maze/gui/MazeViewerPage.html#drawUnderstandingAction"><B>drawUnderstandingAction</B></A> - 
+Variable in class maze.gui.<A HREF="../maze/gui/MazeViewerPage.html" title="class in maze.gui">MazeViewerPage</A>
 <DD>Used to create a check box for toggling on/off whether or not to draw the
  understanding information.
 <DT><A HREF="../maze/gui/MazePainter.html#drawWallEmpty(java.awt.Graphics2D, java.awt.Rectangle)"><B>drawWallEmpty(Graphics2D, Rectangle)</B></A> - 
