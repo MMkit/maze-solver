@@ -2,63 +2,81 @@ package maze.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.TreeSet;
 
 import javax.swing.AbstractButton;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
 import maze.Main;
-import maze.gui.mazeeditor.MazeEditor;
-import maze.model.MazeInfo;
+import maze.gui.mazeeditor.MazeEditorPage;
 import maze.model.MazeInfoModel;
 
 /**
  * This is the primary frame for the application.
  */
-public final class PrimaryFrame extends JFrame implements WindowListener
+public final class PrimaryFrame extends JFrame
 {
    private final MazeInfoModel mMazeInfoModel = new MazeInfoModel();
-   private MazeViewerPanel mazeViewer;
-   private MazeEditor mazeEditor;
-   private CodeEditingPanel codeEditorPanel;
+   private MazeViewerPage mazeViewer;
+   private MazeEditorPage mazeEditor;
+   private ScriptEditorPage codeEditorPanel;
    private final JTabbedPane mainTabs = new JTabbedPane();
    private final JMenu fileMenu = new JMenu("File");
+   private static final Dimension DEFAULT_SIZE = new Dimension(1024, 768);
 
    /**
     * Initializes the contents of this frame.
     */
    public void init()
    {
+      // Set up the application close procedure.
+      this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      this.addWindowListener(new WindowAdapter()
+      {
+         @Override
+         public void windowClosing(WindowEvent e)
+         {
+            exit();
+         }
+      });
+
       this.setMinimumSize(new Dimension(750, 550)); // Set minimum to fit on an 800x600 screen.
-      this.setSize(1000, 720); // Set for an 1024x768 screen.
-      this.mazeViewer = new MazeViewerPanel();
-      this.codeEditorPanel = new CodeEditingPanel();
+      // If the screen is small then maximize the frame.
+      DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+      if (dm.getWidth() <= DEFAULT_SIZE.width || dm.getHeight() <= DEFAULT_SIZE.height + 25)
+      {
+         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      }
+      else
+      {
+         this.setSize(DEFAULT_SIZE);
+         // Center the frame on the screen.
+         this.setLocation(dm.getWidth() / 2 - DEFAULT_SIZE.width / 2, dm.getHeight() /
+                                                                      2 -
+                                                                      DEFAULT_SIZE.height /
+                                                                      2);
+      }
 
       this.setTitle("Micro Mouse Maze Editor and Simulator");
       this.setIconImage(Main.getImageResource("gui/images/logo.png").getImage());
@@ -153,7 +171,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            PrimaryFrame.this.dispose();
+            exit();
          }
       });
 
@@ -223,6 +241,7 @@ public final class PrimaryFrame extends JFrame implements WindowListener
             try
             {
                Properties prop = new Properties();
+               // This properties file is created by Ant during the build process.
                prop.load(Main.class.getResourceAsStream("build.properties"));
                buildDate = prop.getProperty("date", buildDate);
                revision = prop.getProperty("revision", revision);
@@ -247,14 +266,16 @@ public final class PrimaryFrame extends JFrame implements WindowListener
                                           JOptionPane.INFORMATION_MESSAGE);
          }
       });
+      this.mazeViewer = new MazeViewerPage();
+      this.codeEditorPanel = new ScriptEditorPage();
+      this.mazeEditor = new MazeEditorPage();
 
       this.add(mainTabs);
       mainTabs.add("Micro Mouse Simulator", this.mazeViewer);
-      mainTabs.add("Maze Editor", mazeEditor = new MazeEditor());
+      mainTabs.add("Maze Editor", this.mazeEditor);
       mainTabs.add("AI Script Editor", this.codeEditorPanel);
-      mainTabs.add("Statistics Display", new StatViewPanel());
+      mainTabs.add("Statistics Display", new StatViewPage());
 
-      this.addWindowListener(this);
       try
       {
          UIManager.setLookAndFeel(defaultLAF);
@@ -392,146 +413,27 @@ public final class PrimaryFrame extends JFrame implements WindowListener
    }
 
    /**
-    * Save a maze.
-    * @param mi To save.
-    * @return The saved maze or null.
+    * Exits the application.
     */
-   public MazeInfo saveMaze(MazeInfo mi)
+   public void exit()
    {
-      DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
-      TreeSet<String> paths = new TreeSet<String>();
-      for (int i = 0; i < cbm.getSize(); i++)
+      if (this.canExitingApplication())
       {
-         String path = ((MazeInfo) cbm.getElementAt(i)).getPath();
-         if (!path.equals(""))
-            paths.add(path.toLowerCase());
+         this.setVisible(false);
+         System.exit(0);
       }
-      if (mi.isDirty())
-      {
-         MazeInfo toSave = mi;
-         if (!mi.isMutable())
-         {
-            toSave = mi.getMutableClone();
-            Box box = new Box(BoxLayout.Y_AXIS);
-            JLabel label = new JLabel("What would you like to call the" + " maze?");
-            JTextField field = new JTextField();
-            box.add(label);
-            box.add(field);
-            String newName = null;
-            while (true)
-            {
-               int result = JOptionPane.showConfirmDialog(PrimaryFrame.this,
-                                                          box,
-                                                          "Maze Name",
-                                                          JOptionPane.OK_CANCEL_OPTION,
-                                                          JOptionPane.QUESTION_MESSAGE);
-               if (result == JOptionPane.OK_OPTION)
-               {
-                  if (field.getText().length() > 0)
-                  {
-                     newName = field.getText();
-                     break;
-                  }
-               }
-               else
-                  break;
-            }
-            if (newName == null)
-               return null;
-            mi.clearDirty();
-            toSave.setName(newName);
-            toSave.setPath("");
-            mMazeInfoModel.addMaze(toSave);
-            saveMaze(toSave);
-            return toSave;
-         }
-         else if (mi.getPath() == null || mi.getPath().equals(""))
-         {
-            JFileChooser chooser = new JFileChooser();
-            while (true)
-            {
-               if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-               {
-                  File file = chooser.getSelectedFile();
-                  try
-                  {
-                     if (paths.contains(file.getCanonicalPath().toLowerCase()))
-                     {
-                        JOptionPane.showMessageDialog(this,
-                                                      "That file is being used by another maze",
-                                                      "Error",
-                                                      JOptionPane.ERROR_MESSAGE);
-                     }
-                     else
-                     {
-                        mi.setPath(file.getCanonicalPath());
-                        break;
-                     }
-                  }
-                  catch (IOException ex)
-                  {
-                     JOptionPane.showMessageDialog(this,
-                                                   "Invalid Save File",
-                                                   "Error",
-                                                   JOptionPane.ERROR_MESSAGE);
-                  }
-               } // if (chooser.showSaveDialog(this) ==
-               //  JFileChooser.APPROVE_OPTION)
-               else
-                  break;
-            } // while (true)
-         } // if (mi.getPath().equals(""))
-         mi.store();
-      } // if (mi.isDirty())
-      return mi;
    }
 
-   @Override
-   public void windowOpened(WindowEvent e)
-   {}
-
-   @Override
-   public void windowClosing(WindowEvent e)
+   /**
+    * Called when the application is closed. Perform application exit
+    * cleanup.This gives us a chance to cleanup and prompt to save things.
+    * @return true if it is OK for the application to exit. false if the
+    *         application should about the exit.
+    */
+   private boolean canExitingApplication()
    {
-      DefaultComboBoxModel cbm = mMazeInfoModel.getMazeInfoComboBoxModel();
-      for (int i = 0; i < cbm.getSize(); i++)
-      {
-         MazeInfo mi = (MazeInfo) cbm.getElementAt(i);
-         if (mi.isDirty())
-         {
-            int result;
-            result = JOptionPane.showConfirmDialog(this,
-                                                   "Would you like to save \"" +
-                                                         mi.getName() +
-                                                         "\"",
-                                                   "Save Maze?",
-                                                   JOptionPane.YES_NO_OPTION,
-                                                   JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_NO_OPTION)
-               saveMaze(mi);
-         }
-      } // for (int i = 0; i < cbm.getSize(); i++)
+      return this.mazeEditor.canExit() && this.codeEditorPanel.canExit();
    }
-
-   @Override
-   public void windowClosed(WindowEvent e)
-   {}
-
-   @Override
-   public void windowIconified(WindowEvent e)
-   {}
-
-   @Override
-   public void windowDeiconified(WindowEvent e)
-   {}
-
-   @Override
-   public void windowActivated(WindowEvent e)
-   {}
-
-   @Override
-   public void windowDeactivated(WindowEvent e)
-   {}
 
    /**
     * Tells the primary frame if a simulation is currently running or not. We

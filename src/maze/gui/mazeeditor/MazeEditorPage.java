@@ -16,6 +16,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -31,6 +32,7 @@ import javax.swing.KeyStroke;
 import maze.Main;
 import maze.gui.MazeList;
 import maze.gui.MenuControlled;
+import maze.gui.PrimaryFrame;
 import maze.model.MazeInfo;
 import maze.model.MazeInfoModel;
 import maze.model.MazeModel;
@@ -39,7 +41,7 @@ import maze.model.MazeModel;
  * This panel creates a GUI to edit mazes.
  * @author John Smith
  */
-public class MazeEditor extends JPanel implements MenuControlled
+public class MazeEditorPage extends JPanel implements MenuControlled
 {
    private static final String NEXT_ORIENTATION_ACTION_KEY = "nextOrientation";
    private static final String TOP_HELP = "Left-Click: Add walls, Right-Click: "
@@ -63,7 +65,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       new RungTemplate(), new GappedTemplate()
    };
 
-   public MazeEditor()
+   public MazeEditorPage()
    {
       buildPanel();
    }
@@ -83,7 +85,7 @@ public class MazeEditor extends JPanel implements MenuControlled
          MazeInfo newMi = mim.createNew("New Maze " + mLastNew, false);
          if (newMi == null)
          {
-            JOptionPane.showMessageDialog(MazeEditor.this,
+            JOptionPane.showMessageDialog(MazeEditorPage.this,
                                           "Unable to create new maze",
                                           "Maze Creation Error",
                                           JOptionPane.OK_OPTION);
@@ -96,7 +98,7 @@ public class MazeEditor extends JPanel implements MenuControlled
          MazeInfo newMi = mim.createNew(dialog.getText(), true);
          if (newMi == null)
          {
-            JOptionPane.showMessageDialog(MazeEditor.this,
+            JOptionPane.showMessageDialog(MazeEditorPage.this,
                                           "Unable to create new maze",
                                           "Maze Creation Error",
                                           JOptionPane.OK_OPTION);
@@ -270,7 +272,7 @@ public class MazeEditor extends JPanel implements MenuControlled
       MazeInfo mi = (MazeInfo) mOpenMazes.getList().getSelectedValue();
       if (mi != null)
       {
-         mi = Main.getPrimaryFrameInstance().saveMaze(mi);
+         mi = mi.saveMaze();
          mOpenMazes.getList().setSelectedValue(mi, true);
       }
    }
@@ -324,19 +326,17 @@ public class MazeEditor extends JPanel implements MenuControlled
             mCurrentTemplate.updatePosition(e.getPoint(), mMazeView.getCellSizeModel());
             mMazeView.repaint();
          }
-      } // public void mouseMoved(MouseEvent e)
+      }
 
       @Override
       public void mouseDragged(MouseEvent e)
       {
          if (mMazeView.getModel() != null && mCurrentTemplate != null)
          {
-            //boolean left = SwingUtilities.isLeftMouseButton(e);
-            //boolean right = SwingUtilities.isRightMouseButton(e);
             mMazeView.repaint();
          }
          mOpenMazes.repaint();
-      } // public void mouseDragged(MouseEvent e)
+      }
 
       @Override
       public void mousePressed(MouseEvent e)
@@ -352,7 +352,7 @@ public class MazeEditor extends JPanel implements MenuControlled
             mMazeView.repaint();
          }
          mOpenMazes.repaint();
-      } // public void mousePressed(MouseEvent e)
+      }
 
       @Override
       public void mouseWheelMoved(MouseWheelEvent e)
@@ -400,4 +400,35 @@ public class MazeEditor extends JPanel implements MenuControlled
                                              "</html", "Maze Open Error", JOptionPane.ERROR_MESSAGE);
 
    }
+
+   /**
+    * Prompt the user to save any dirty mazes.
+    */
+   @Override
+   public boolean canExit()
+   {
+      final PrimaryFrame primary = Main.getPrimaryFrameInstance();
+      DefaultComboBoxModel cbm = primary.getMazeInfoModel().getMazeInfoComboBoxModel();
+      for (int i = 0; i < cbm.getSize(); i++)
+      {
+         MazeInfo mi = (MazeInfo) cbm.getElementAt(i);
+         if (mi.isDirty())
+         {
+            int result;
+            result = JOptionPane.showConfirmDialog(this,
+                                                   "Would you like to save \"" +
+                                                         mi.getName() +
+                                                         "\"",
+                                                   "Save Maze?",
+                                                   JOptionPane.YES_NO_OPTION,
+                                                   JOptionPane.QUESTION_MESSAGE);
+            if (result == JOptionPane.YES_OPTION)
+               mi.saveMaze();
+            else if (result != JOptionPane.NO_OPTION)
+               return false; // Abort exit if canceled.
+         }
+      }
+      return true;
+   }
+
 }

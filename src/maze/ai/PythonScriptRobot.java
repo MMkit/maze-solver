@@ -1,12 +1,12 @@
 package maze.ai;
 
-import maze.gui.CodeEditorPane;
+import maze.gui.ScriptEditor;
 
 public final class PythonScriptRobot extends RobotBase
 {
-   private final CodeEditorPane codeEditor;
+   private final ScriptEditor codeEditor;
 
-   public PythonScriptRobot(CodeEditorPane codeEditor)
+   public PythonScriptRobot(ScriptEditor codeEditor)
    {
       this.codeEditor = codeEditor;
    }

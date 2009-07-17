@@ -36,7 +36,7 @@ import maze.gui.RobotAnimator.AnimationStates;
  * the micro mouse animation is run.
  * @author Luke Last
  */
-public final class MazeViewerPanel extends JPanel
+public final class MazeViewerPage extends JPanel
 {
    private static final int SIDEBAR_WIDTH = 150;
    private static final int SPEED_STEPS = 25;
@@ -57,7 +57,7 @@ public final class MazeViewerPanel extends JPanel
    /**
     * Constructor. Builds the Swing components for this panel.
     */
-   public MazeViewerPanel()
+   public MazeViewerPage()
    {
       this.setLayout(new BorderLayout());
       this.add(this.myMazeView);
