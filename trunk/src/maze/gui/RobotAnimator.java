@@ -17,14 +17,40 @@ import maze.model.RobotModelMaster;
 public final class RobotAnimator implements Runnable
 {
    /**
-    * the maze view that this animator is attached to and updates with each
-    * animation frame.
+    * Represents the possible states that a robot animator can be in.
     */
-   private MazeView view;
+   public static enum AnimationStates
+   {
+      Paused,
+      Running,
+      Stopped,
+   }
+
    /**
-    * The controller used to simulate the AI algorithm.
+    * Transforms one fraction into another in a non-linear fashion to provide
+    * for acceleration and the deceleration. If the input is a linear sequence
+    * the output will be a sequence that accelerates from 0 to .5 and the
+    * decelerates from .5 to 1.
+    * @param input A value between 0 and 1.
+    * @return A transformed value between 0 and 1.
     */
-   private RobotController robot;
+   private static final double accelerationTransform(double input)
+   {
+      double result = 0;
+      if (input < .5)
+      {
+         result = input * input * 2;
+      }
+      else
+      {
+         result = .5 + (input - .5) * (2.5 - input);
+      }
+      // Make sure the result is between 0 and 1.
+      result = (result > 1.0) ? 1.0 : result;
+      result = (result < 0) ? 0 : result;
+      return result;
+   }
+
    /**
     * The state that this animator is currently in.
     */
@@ -33,11 +59,6 @@ public final class RobotAnimator implements Runnable
     * A call back method which is run after the animator is stopped.
     */
    private Runnable finishedCallback;
-   /**
-    * The time to sleep between rendering frames.
-    */
-   private int sleepTime = 1000 / 50;
-
    /**
     * Number of frames of animation to display between steps.
     */
@@ -49,33 +70,45 @@ public final class RobotAnimator implements Runnable
    private Thread processingThread;
 
    /**
-    * Start and initialize this.
-    * @param mazeView The view to be controlled by this animator.
-    * @param robotAlgorithm The AI algorithm to use for the animation.
-    * @param finishedCallback This is called after the animation is stopped.
+    * The controller used to simulate the AI algorithm.
     */
-   public void start(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
+   private RobotController robot;
+
+   /**
+    * The time to sleep between rendering frames.
+    */
+   private int sleepTime = 1000 / 50;
+
+   /**
+    * the maze view that this animator is attached to and updates with each
+    * animation frame.
+    */
+   private MazeView view;
+
+   /**
+    * The maximum frames per second this animator is trying to put out.
+    * @return FPS
+    */
+   public int getFPS()
    {
-      if (this.processingThread != null && this.processingThread.isAlive())
-      {
-         this.setState(AnimationStates.Stopped);
-         //Make sure the thread is finished before continuing.
-         try
-         {
-            this.processingThread.join();
-         }
-         catch (InterruptedException e)
-         {
-            e.printStackTrace();
-         }
-      }
-      this.view = mazeView;
-      this.finishedCallback = finishedCallback;
-      this.robot = new RobotController(this.view.getModel(), robotAlgorithm);
-      this.processingThread = new Thread(this, "Robot Animator");
-      this.processingThread.setDaemon(true);
-      this.currentState = AnimationStates.Running;
-      this.processingThread.start();
+      return 1000 / this.sleepTime;
+   }
+
+   /**
+    * Get the number of intermediate frames of animation that take place between
+    * each step of the robot.
+    */
+   public int getMovesPerStep()
+   {
+      return movesPerStep;
+   }
+
+   /**
+    * Get the current state that this robot animator is in.
+    */
+   public AnimationStates getState()
+   {
+      return this.currentState;
    }
 
    /**
@@ -113,32 +146,15 @@ public final class RobotAnimator implements Runnable
             else
                destRotation = srcRotation; //Didn't rotate.
 
-            final int acceleration = 4 / this.movesPerStep;
-            int velocity = acceleration;
-
-            double rotationPercentage = 0;
-
             //Increment is fraction at a time to the destination position.
             for (int inc = 1; inc <= this.movesPerStep; inc++)
             {
                final double percentage = (double) inc / this.movesPerStep;
                int x = (int) (srcLocation.x + (destLocation.x - srcLocation.x) * percentage);
                int y = (int) (srcLocation.y + (destLocation.y - srcLocation.y) * percentage);
-               // Are in the first half acceleration phase.
-               if (inc < this.movesPerStep / 2)
-               {
-                  rotationPercentage += velocity;
-                  velocity += acceleration;
-                  rotationPercentage = inc * (4 / (double) inc) / 2;
-               }
-               else
-               {
-                  rotationPercentage -= velocity;
-                  velocity -= acceleration;
-               }
                double rot = srcRotation +
                             (destRotation - srcRotation) *
-                            this.accelerationTransform(percentage);
+                            accelerationTransform(percentage);
                this.view.setRobotPosition(new Point(x, y), rot);
                Thread.sleep(this.sleepTime);
             }
@@ -176,46 +192,19 @@ public final class RobotAnimator implements Runnable
    }
 
    /**
-    * Transforms one fraction into another in a non-linear fashion to provide
-    * for acceleration and the deceleration. If the input is a linear sequence
-    * the output will be a sequence that accelerates from 0 to .5 and the
-    * decelerates from .5 to 1.
-    * @param input A value between 0 and 1.
-    * @return A transformed value between 0 and 1.
+    * The animator will try and render at most this many frames per second.
     */
-   private double accelerationTransform(double input)
+   public void setFPS(int framesPerSecond)
    {
-      double result = 0;
-      if (input < .5)
-      {
-         result = input * input * 2;
-      }
+      this.sleepTime = 1000 / framesPerSecond;
+   }
+
+   public void setMovesPerStep(int movesPerStep)
+   {
+      if (movesPerStep < 1)
+         this.movesPerStep = 1;
       else
-      {
-         result = .5 + (input - .5) * (2.5 - input);
-      }
-      // Make sure the result is between 0 and 1.
-      result = (result > 1.0) ? 1.0 : result;
-      result = (result < 0) ? 0 : result;
-      return result;
-   }
-
-   /**
-    * Loads information from the AI algorithm in the controller to the view for
-    * drawing.
-    */
-   private void setViewAttributes()
-   {
-      this.view.loadUnderstanding(this.robot.getUnderstandingInt());
-      this.view.loadUnderstandingDir(this.robot.getUnderstandingDir());
-   }
-
-   /**
-    * Get the current state that this robot animator is in.
-    */
-   public AnimationStates getState()
-   {
-      return this.currentState;
+         this.movesPerStep = movesPerStep;
    }
 
    /**
@@ -237,47 +226,43 @@ public final class RobotAnimator implements Runnable
    }
 
    /**
-    * The maximum frames per second this animator is trying to put out.
-    * @return FPS
+    * Loads information from the AI algorithm in the controller to the view for
+    * drawing.
     */
-   public int getFPS()
+   private void setViewAttributes()
    {
-      return 1000 / this.sleepTime;
+      this.view.loadUnderstanding(this.robot.getUnderstandingInt());
+      this.view.loadUnderstandingDir(this.robot.getUnderstandingDir());
    }
 
    /**
-    * The animator will try and render at most this many frames per second.
+    * Start and initialize this.
+    * @param mazeView The view to be controlled by this animator.
+    * @param robotAlgorithm The AI algorithm to use for the animation.
+    * @param finishedCallback This is called after the animation is stopped.
     */
-   public void setFPS(int framesPerSecond)
+   public void start(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
-      this.sleepTime = 1000 / framesPerSecond;
-   }
-
-   /**
-    * Get the number of intermediate frames of animation that take place between
-    * each step of the robot.
-    */
-   public int getMovesPerStep()
-   {
-      return movesPerStep;
-   }
-
-   public void setMovesPerStep(int movesPerStep)
-   {
-      if (movesPerStep < 1)
-         this.movesPerStep = 1;
-      else
-         this.movesPerStep = movesPerStep;
-   }
-
-   /**
-    * Represents the possible states that a robot animator can be in.
-    */
-   public static enum AnimationStates
-   {
-      Running,
-      Paused,
-      Stopped,
+      if (this.processingThread != null && this.processingThread.isAlive())
+      {
+         this.setState(AnimationStates.Stopped);
+         //Make sure the thread is finished before continuing.
+         try
+         {
+            this.processingThread.join();
+         }
+         catch (InterruptedException e)
+         {
+            e.printStackTrace();
+         }
+      }
+      this.view = mazeView;
+      this.finishedCallback = finishedCallback;
+      this.robot = new RobotController(this.view.getModel(), robotAlgorithm);
+      this.processingThread = new Thread(this, "Robot Animator");
+      this.processingThread.setDaemon(true);
+      this.currentState = AnimationStates.Running;
+      this.processingThread.start();
    }
 
 }
