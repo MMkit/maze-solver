@@ -124,8 +124,8 @@ Variable in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class 
 <DT><A HREF="../maze/gui/ScriptInfoPanel.html" title="class in maze.gui"><B>ScriptInfoPanel</B></A> - Class in <A HREF="../maze/gui/package-summary.html">maze.gui</A><DD>Creates a panel to display information about the current python script.<DT><A HREF="../maze/gui/ScriptInfoPanel.html#ScriptInfoPanel()"><B>ScriptInfoPanel()</B></A> - 
 Constructor for class maze.gui.<A HREF="../maze/gui/ScriptInfoPanel.html" title="class in maze.gui">ScriptInfoPanel</A>
 <DD>Constructor, build the panel.
-<DT><A HREF="../maze/gui/MazeView2.html#serialVersionUID"><B>serialVersionUID</B></A> - 
-Static variable in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#serialVersionUID"><B>serialVersionUID</B></A> - 
+Static variable in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/model/MazeCell.html#serialVersionUID"><B>serialVersionUID</B></A> - 
 Static variable in class maze.model.<A HREF="../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>
@@ -133,6 +133,10 @@ Static variable in class maze.model.<A HREF="../maze/model/MazeCell.html" title=
 <DT><A HREF="../maze/model/MazeModel.MazeWall.html#set(boolean)"><B>set(boolean)</B></A> - 
 Method in interface maze.model.<A HREF="../maze/model/MazeModel.MazeWall.html" title="interface in maze.model">MazeModel.MazeWall</A>
 <DD>&nbsp;
+<DT><A HREF="../maze/gui/mazeeditor/EditableMazeView.html#setActiveWall(maze.model.MazeCell, maze.model.Direction)"><B>setActiveWall(MazeCell, Direction)</B></A> - 
+Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/EditableMazeView.html" title="class in maze.gui.mazeeditor">EditableMazeView</A>
+<DD>The wall that the mouse is hovering over should be set active so it can be
+ highlighted.
 <DT><A HREF="../maze/model/MazeModel.html#setAllWalls()"><B>setAllWalls()</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeModel.html" title="class in maze.model">MazeModel</A>
 <DD>Set/Enable every wall in the maze.
@@ -189,40 +193,26 @@ Method in class maze.ai.<A HREF="../maze/ai/Floodfill.html" title="class in maze
 <DT><A HREF="../maze/ai/ModifiedFloodfill.html#setDistance(maze.model.MazeCell, int)"><B>setDistance(MazeCell, int)</B></A> - 
 Method in class maze.ai.<A HREF="../maze/ai/ModifiedFloodfill.html" title="class in maze.ai">ModifiedFloodfill</A>
 <DD>Sets the distance of the desired MazeCell to the value provided
-<DT><A HREF="../maze/gui/MazeView.html#setDrawBestRun(boolean)"><B>setDrawBestRun(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView.html#setDrawCurrentRun(boolean)"><B>setDrawCurrentRun(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView.html#setDrawFirstRun(boolean)"><B>setDrawFirstRun(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#setDrawFog(boolean)"><B>setDrawFog(boolean)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setDrawFog(boolean)"><B>setDrawFog(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setDrawPathBest(boolean)"><B>setDrawPathBest(boolean)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setDrawPathBest(boolean)"><B>setDrawPathBest(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setDrawPathCurrent(boolean)"><B>setDrawPathCurrent(boolean)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setDrawPathCurrent(boolean)"><B>setDrawPathCurrent(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setDrawPathFirst(boolean)"><B>setDrawPathFirst(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setDrawPathFirst(boolean)"><B>setDrawPathFirst(boolean)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>&nbsp;
 <DT><A HREF="../maze/gui/MazeView.html#setDrawUnderstanding(boolean)"><B>setDrawUnderstanding(boolean)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setDrawUnderstanding(boolean)"><B>setDrawUnderstanding(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Set whether or not this view should draw/display understanding information
  from the AI algorithm.
-<DT><A HREF="../maze/gui/MazeView.html#setEditable(boolean)"><B>setEditable(boolean)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>Sets whether this MazeView can modify its underlying MazeModel.
+<DT><A HREF="../maze/gui/mazeeditor/EditableMazeView.html#setEditable(boolean)"><B>setEditable(boolean)</B></A> - 
+Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/EditableMazeView.html" title="class in maze.gui.mazeeditor">EditableMazeView</A>
+<DD>Sets whether this MazeView allows mouse interactions to modify its
+ underlying MazeModel.
 <DT><A HREF="../maze/util/ListenerSubject.DelayedNotifier.html#setEventObject(T)"><B>setEventObject(T)</B></A> - 
 Method in class maze.util.<A HREF="../maze/util/ListenerSubject.DelayedNotifier.html" title="class in maze.util">ListenerSubject.DelayedNotifier</A>
 <DD>&nbsp;
@@ -251,12 +241,6 @@ Method in class maze.gui.<A HREF="../maze/gui/MazePainterDefault.html" title="cl
 <DT><A HREF="../maze/gui/MazeView.html#setModel(maze.model.MazeModel)"><B>setModel(MazeModel)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Set the maze model to use for this view.
-<DT><A HREF="../maze/gui/MazeView2.html#setModel(maze.model.MazeModel)"><B>setModel(MazeModel)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
-<DD>Set the maze model to use for this view.
-<DT><A HREF="../maze/gui/MazeViewInterface.html#setModel(maze.model.MazeModel)"><B>setModel(MazeModel)</B></A> - 
-Method in interface maze.gui.<A HREF="../maze/gui/MazeViewInterface.html" title="interface in maze.gui">MazeViewInterface</A>
-<DD>&nbsp;
 <DT><A HREF="../maze/gui/RobotAnimator.html#setMovesPerStep(int)"><B>setMovesPerStep(int)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/RobotAnimator.html" title="class in maze.gui">RobotAnimator</A>
 <DD>&nbsp;
@@ -266,8 +250,8 @@ Method in class maze.model.<A HREF="../maze/model/MazeInfo.html" title="class in
 <DT><A HREF="../maze/gui/mazeeditor/NewMazeDialog.html#setOpsEnabled(boolean)"><B>setOpsEnabled(boolean)</B></A> - 
 Method in class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/NewMazeDialog.html" title="class in maze.gui.mazeeditor">NewMazeDialog</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setPainterDelegate(maze.gui.MazePainter)"><B>setPainterDelegate(MazePainter)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setPainterDelegate(maze.gui.MazePainter)"><B>setPainterDelegate(MazePainter)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Set a new maze painting delegate for this maze view to use when drawing.
 <DT><A HREF="../maze/model/MazeInfo.html#setPath(java.lang.String)"><B>setPath(String)</B></A> - 
 Method in class maze.model.<A HREF="../maze/model/MazeInfo.html" title="class in maze.model">MazeInfo</A>
@@ -281,11 +265,11 @@ Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in 
 <DT><A HREF="../maze/gui/MazePainter.html#setPegValid(java.awt.Paint)"><B>setPegValid(Paint)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setRenderingQualityHigh(java.awt.Graphics2D)"><B>setRenderingQualityHigh(Graphics2D)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setRenderingQualityHigh(java.awt.Graphics2D)"><B>setRenderingQualityHigh(Graphics2D)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Set the rendering hints to high quality.
-<DT><A HREF="../maze/gui/MazeView2.html#setRenderingQualityLow(java.awt.Graphics2D)"><B>setRenderingQualityLow(Graphics2D)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setRenderingQualityLow(java.awt.Graphics2D)"><B>setRenderingQualityLow(Graphics2D)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Set the rendering hints to low quality.
 <DT><A HREF="../maze/gui/MazePainter.html#setRobotImage(javax.swing.ImageIcon)"><B>setRobotImage(ImageIcon)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazePainter.html" title="class in maze.gui">MazePainter</A>
@@ -305,16 +289,12 @@ Method in class maze.ai.<A HREF="../maze/ai/RobotBase.html" title="class in maze
 <DT><A HREF="../maze/gui/ScriptEditor.html#setRobotModel(maze.model.RobotModel)"><B>setRobotModel(RobotModel)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/ScriptEditor.html" title="class in maze.gui">ScriptEditor</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/MazeView2.html#setRobotPathModel(maze.model.RobotPathModel)"><B>setRobotPathModel(RobotPathModel)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
+<DT><A HREF="../maze/gui/MazeView.html#setRobotPathModel(maze.model.RobotPathModel)"><B>setRobotPathModel(RobotPathModel)</B></A> - 
+Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
 <DD>Set the robot path model that this view should use to draw information
  about the robots path.
 <DT><A HREF="../maze/gui/MazeView.html#setRobotPosition(java.awt.Point, double)"><B>setRobotPosition(Point, double)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>
-<DD>Sets a new position for the robot and then sets the view to repaint
- itself.
-<DT><A HREF="../maze/gui/MazeView2.html#setRobotPosition(java.awt.Point, double)"><B>setRobotPosition(Point, double)</B></A> - 
-Method in class maze.gui.<A HREF="../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>
 <DD>Sets a new position for the robot and then sets the view to repaint
  itself.
 <DT><A HREF="../maze/gui/MazePainter.html#setRunBest(java.awt.Paint)"><B>setRunBest(Paint)</B></A> - 
@@ -456,7 +436,7 @@ Variable in class maze.gui.<A HREF="../maze/gui/MazeViewerPage.html" title="clas
 <DT><A HREF="../maze/gui/mazeeditor/StaggeredTemplate.html" title="class in maze.gui.mazeeditor"><B>StaggeredTemplate</B></A> - Class in <A HREF="../maze/gui/mazeeditor/package-summary.html">maze.gui.mazeeditor</A><DD>&nbsp;<DT><A HREF="../maze/gui/mazeeditor/StaggeredTemplate.html#StaggeredTemplate()"><B>StaggeredTemplate()</B></A> - 
 Constructor for class maze.gui.mazeeditor.<A HREF="../maze/gui/mazeeditor/StaggeredTemplate.html" title="class in maze.gui.mazeeditor">StaggeredTemplate</A>
 <DD>&nbsp;
-<DT><A HREF="../maze/gui/RobotAnimator.html#start(maze.gui.MazeView2, maze.ai.RobotBase, java.lang.Runnable)"><B>start(MazeView2, RobotBase, Runnable)</B></A> - 
+<DT><A HREF="../maze/gui/RobotAnimator.html#start(maze.gui.MazeView, maze.ai.RobotBase, java.lang.Runnable)"><B>start(MazeView, RobotBase, Runnable)</B></A> - 
 Method in class maze.gui.<A HREF="../maze/gui/RobotAnimator.html" title="class in maze.gui">RobotAnimator</A>
 <DD>Start and initialize this.
 <DT><A HREF="../maze/model/RobotPathModel.html#startCell"><B>startCell</B></A> - 

@@ -180,6 +180,14 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#getMazeCell()">getMazeCell</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the maze cell that this peg belongs to.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/model/MazeCellPeg.html#getX()">getX</A></B>()</CODE>
 
@@ -254,24 +262,24 @@ private final int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.6"><B
 </TR>
 </TABLE>
 
+<A NAME="MazeCellPeg(int, int)"><!-- --></A><H3>
+MazeCellPeg</H3>
+<PRE>
+public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.8"><B>MazeCellPeg</B></A>(int&nbsp;x,
+                   int&nbsp;y)</PRE>
+<DL>
+</DL>
+<HR>
+
 <A NAME="MazeCellPeg(maze.model.MazeCell)"><!-- --></A><H3>
 MazeCellPeg</H3>
 <PRE>
-public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.12"><B>MazeCellPeg</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
+public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.18"><B>MazeCellPeg</B></A>(<A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</PRE>
 <DL>
 <DD>Creates a Peg of the North-West Peg of the Cell.
 <P>
 <DL>
 <DT><B>Parameters:</B><DD><CODE>cell</CODE> - The Maze Cell to create a Peg from.</DL>
-</DL>
-<HR>
-
-<A NAME="MazeCellPeg(int, int)"><!-- --></A><H3>
-MazeCellPeg</H3>
-<PRE>
-public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.18"><B>MazeCellPeg</B></A>(int&nbsp;x,
-                   int&nbsp;y)</PRE>
-<DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -284,10 +292,55 @@ public <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.18"><B>MazeCellP
 </TR>
 </TABLE>
 
+<A NAME="compareTo(maze.model.MazeCellPeg)"><!-- --></A><H3>
+compareTo</H3>
+<PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.25"><B>compareTo</B></A>(<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&nbsp;o)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE>compareTo</CODE> in interface <CODE>java.lang.Comparable&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public boolean <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.34"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getMazeCell()"><!-- --></A><H3>
+getMazeCell</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A> <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.54"><B>getMazeCell</B></A>()</PRE>
+<DL>
+<DD>Get the maze cell that this peg belongs to.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>The maze cell that has this peg as its South-West peg.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getX()"><!-- --></A><H3>
 getX</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.24"><B>getX</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.66"><B>getX</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -301,24 +354,10 @@ public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.24"><B>getX<
 <A NAME="getY()"><!-- --></A><H3>
 getY</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.29"><B>getY</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.71"><B>getY</B></A>()</PRE>
 <DL>
 <DD><DL>
 </DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="compareTo(maze.model.MazeCellPeg)"><!-- --></A><H3>
-compareTo</H3>
-<PRE>
-public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.35"><B>compareTo</B></A>(<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&nbsp;o)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE>compareTo</CODE> in interface <CODE>java.lang.Comparable&lt;<A HREF="../../maze/model/MazeCellPeg.html" title="class in maze.model">MazeCellPeg</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -329,24 +368,10 @@ public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.35"><B>compa
 <A NAME="hashCode()"><!-- --></A><H3>
 hashCode</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.44"><B>hashCode</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.77"><B>hashCode</B></A>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
-equals</H3>
-<PRE>
-public boolean <A HREF="../../src-html/maze/model/MazeCellPeg.html#line.50"><B>equals</B></A>(java.lang.Object&nbsp;obj)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Overrides:</B><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DL>
 </DD>
 <DD><DL>
 </DL>

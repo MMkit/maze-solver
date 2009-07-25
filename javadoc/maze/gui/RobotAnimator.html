@@ -188,7 +188,7 @@ Animates a MicroMouse robot against a maze view.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A></CODE></FONT></TD>
+<CODE>private &nbsp;<A HREF="../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/RobotAnimator.html#view">view</A></B></CODE>
 
 <BR>
@@ -299,7 +299,7 @@ Animates a MicroMouse robot against a maze view.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../maze/gui/RobotAnimator.html#start(maze.gui.MazeView2, maze.ai.RobotBase, java.lang.Runnable)">start</A></B>(<A HREF="../../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>&nbsp;mazeView,
+<TD><CODE><B><A HREF="../../maze/gui/RobotAnimator.html#start(maze.gui.MazeView, maze.ai.RobotBase, java.lang.Runnable)">start</A></B>(<A HREF="../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>&nbsp;mazeView,
            <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;robotAlgorithm,
            java.lang.Runnable&nbsp;finishedCallback)</CODE>
 
@@ -332,7 +332,7 @@ Animates a MicroMouse robot against a maze view.
 <A NAME="view"><!-- --></A><H3>
 view</H3>
 <PRE>
-private <A HREF="../../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A> <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.23"><B>view</B></A></PRE>
+private <A HREF="../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A> <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.23"><B>view</B></A></PRE>
 <DL>
 <DD>the maze view that this animator is attached to and updates with each
  animation frame.
@@ -405,7 +405,7 @@ private int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.44"><B>move
 <A NAME="processingThread"><!-- --></A><H3>
 processingThread</H3>
 <PRE>
-private volatile java.lang.Thread <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.49"><B>processingThread</B></A></PRE>
+private java.lang.Thread <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.49"><B>processingThread</B></A></PRE>
 <DL>
 <DD>The thread running our animation loop.
 <P>
@@ -440,10 +440,10 @@ public <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.17"><B>RobotAnim
 </TR>
 </TABLE>
 
-<A NAME="start(maze.gui.MazeView2, maze.ai.RobotBase, java.lang.Runnable)"><!-- --></A><H3>
+<A NAME="start(maze.gui.MazeView, maze.ai.RobotBase, java.lang.Runnable)"><!-- --></A><H3>
 start</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.57"><B>start</B></A>(<A HREF="../../maze/gui/MazeView2.html" title="class in maze.gui">MazeView2</A>&nbsp;mazeView,
+public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.57"><B>start</B></A>(<A HREF="../../maze/gui/MazeView.html" title="class in maze.gui">MazeView</A>&nbsp;mazeView,
                   <A HREF="../../maze/ai/RobotBase.html" title="class in maze.ai">RobotBase</A>&nbsp;robotAlgorithm,
                   java.lang.Runnable&nbsp;finishedCallback)</PRE>
 <DL>
@@ -461,7 +461,7 @@ public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.57"><B>star
 <A NAME="run()"><!-- --></A><H3>
 run</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.81"><B>run</B></A>()</PRE>
+public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.85"><B>run</B></A>()</PRE>
 <DL>
 <DD>This runs in a background thread and handles the animation loop.
 <P>
@@ -477,7 +477,7 @@ public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.81"><B>run<
 <A NAME="accelerationTransform(double)"><!-- --></A><H3>
 accelerationTransform</H3>
 <PRE>
-private double <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.182"><B>accelerationTransform</B></A>(double&nbsp;input)</PRE>
+private double <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.186"><B>accelerationTransform</B></A>(double&nbsp;input)</PRE>
 <DL>
 <DD>Transforms one fraction into another in a non-linear fashion to provide
  for acceleration and the deceleration. If the input is a linear sequence
@@ -497,7 +497,7 @@ private double <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.182"><B>
 <A NAME="setViewAttributes()"><!-- --></A><H3>
 setViewAttributes</H3>
 <PRE>
-private void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.203"><B>setViewAttributes</B></A>()</PRE>
+private void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.207"><B>setViewAttributes</B></A>()</PRE>
 <DL>
 <DD>Loads information from the AI algorithm in the controller to the view for
  drawing.
@@ -514,7 +514,7 @@ private void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.203"><B>se
 <A NAME="getState()"><!-- --></A><H3>
 getState</H3>
 <PRE>
-public <A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui">RobotAnimator.AnimationStates</A> <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.212"><B>getState</B></A>()</PRE>
+public <A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui">RobotAnimator.AnimationStates</A> <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.216"><B>getState</B></A>()</PRE>
 <DL>
 <DD>Get the current state that this robot animator is in.
 <P>
@@ -530,7 +530,7 @@ public <A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum i
 <A NAME="setState(maze.gui.RobotAnimator.AnimationStates)"><!-- --></A><H3>
 setState</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.223"><B>setState</B></A>(<A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui">RobotAnimator.AnimationStates</A>&nbsp;state)</PRE>
+public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.227"><B>setState</B></A>(<A HREF="../../maze/gui/RobotAnimator.AnimationStates.html" title="enum in maze.gui">RobotAnimator.AnimationStates</A>&nbsp;state)</PRE>
 <DL>
 <DD>Change the state of this robot animator. If the current state is
  <code>Stopped</code> you cannot change it here, you must use the
@@ -548,7 +548,7 @@ public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.223"><B>set
 <A NAME="getFPS()"><!-- --></A><H3>
 getFPS</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.239"><B>getFPS</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.243"><B>getFPS</B></A>()</PRE>
 <DL>
 <DD>The maximum frames per second this animator is trying to put out.
 <P>
@@ -565,7 +565,7 @@ public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.239"><B>getF
 <A NAME="setFPS(int)"><!-- --></A><H3>
 setFPS</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.247"><B>setFPS</B></A>(int&nbsp;framesPerSecond)</PRE>
+public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.251"><B>setFPS</B></A>(int&nbsp;framesPerSecond)</PRE>
 <DL>
 <DD>The animator will try and render at most this many frames per second.
 <P>
@@ -581,7 +581,7 @@ public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.247"><B>set
 <A NAME="getMovesPerStep()"><!-- --></A><H3>
 getMovesPerStep</H3>
 <PRE>
-public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.256"><B>getMovesPerStep</B></A>()</PRE>
+public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.260"><B>getMovesPerStep</B></A>()</PRE>
 <DL>
 <DD>Get the number of intermediate frames of animation that take place between
  each step of the robot.
@@ -598,7 +598,7 @@ public int <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.256"><B>getM
 <A NAME="setMovesPerStep(int)"><!-- --></A><H3>
 setMovesPerStep</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.261"><B>setMovesPerStep</B></A>(int&nbsp;movesPerStep)</PRE>
+public void <A HREF="../../src-html/maze/gui/RobotAnimator.html#line.265"><B>setMovesPerStep</B></A>(int&nbsp;movesPerStep)</PRE>
 <DL>
 <DD><DL>
 </DL>

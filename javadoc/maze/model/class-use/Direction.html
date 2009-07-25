@@ -96,6 +96,10 @@ Packages that use <A HREF="../../../maze/model/Direction.html" title="enum in ma
 <TD>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#maze.gui.mazeeditor"><B>maze.gui.mazeeditor</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#maze.model"><B>maze.model</B></A></TD>
 <TD>&nbsp;&nbsp;</TD>
 </TR>
@@ -336,35 +340,10 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]</CODE></FONT></TD>
-<TD><CODE><B>MazeView2.</B><B><A HREF="../../../maze/gui/MazeView2.html#understandingDir">understandingDir</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]</CODE></FONT></TD>
 <TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#understandingDir">understandingDir</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../maze/gui/package-summary.html">maze.gui</A> that return <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A></CODE></FONT></TD>
-<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#getWallDirection(maze.model.MazeCell, java.awt.Point)">getWallDirection</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
-                                 java.awt.Point&nbsp;mouseLocation)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to translate a point into the wall it is located in.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -377,7 +356,7 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;java.util.EnumSet&lt;<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B>MazeView2.</B><B><A HREF="../../../maze/gui/MazeView2.html#getAdjacentDirections(maze.model.MazeCell)">getAdjacentDirections</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</CODE>
+<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#getAdjacentDirections(maze.model.MazeCell)">getAdjacentDirections</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gets a direction for each adjacent cell that exists.</TD>
@@ -393,7 +372,7 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>MazeView2.</B><B><A HREF="../../../maze/gui/MazeView2.html#drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)">drawArrow</A></B>(java.awt.Graphics2D&nbsp;g,
+<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)">drawArrow</A></B>(java.awt.Graphics2D&nbsp;g,
                    <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;local,
                    int&nbsp;x,
                    int&nbsp;y)</CODE>
@@ -403,19 +382,8 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#drawArrow(java.awt.Graphics2D, maze.model.Direction, int, int)">drawArrow</A></B>(java.awt.Graphics2D&nbsp;g,
-                   <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;local,
-                   int&nbsp;x,
-                   int&nbsp;y)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;java.awt.Rectangle</CODE></FONT></TD>
-<TD><CODE><B>MazeView2.</B><B><A HREF="../../../maze/gui/MazeView2.html#getWallArea(maze.model.MazeCell, maze.model.Direction)">getWallArea</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
+<CODE>protected &nbsp;java.awt.Rectangle</CODE></FONT></TD>
+<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#getWallArea(maze.model.MazeCell, maze.model.Direction)">getWallArea</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
                        <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;wall)</CODE>
 
 <BR>
@@ -423,26 +391,8 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>private &nbsp;java.awt.Rectangle</CODE></FONT></TD>
-<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#getWallLocation(maze.model.MazeCell, maze.model.Direction)">getWallLocation</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;cell,
-                               <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;wall)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a rectangle covering the wall segment with component relative
- coordinates.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>MazeView2.</B><B><A HREF="../../../maze/gui/MazeView2.html#loadUnderstandingDir(maze.model.Direction[][])">loadUnderstandingDir</A></B>(<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]&nbsp;arrows)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#loadUnderstandingDir(maze.model.Direction[][])">loadUnderstandingDir</A></B>(<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]&nbsp;understandingDir)</CODE>
+<TD><CODE><B>MazeView.</B><B><A HREF="../../../maze/gui/MazeView.html#loadUnderstandingDir(maze.model.Direction[][])">loadUnderstandingDir</A></B>(<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>[][]&nbsp;arrows)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -464,6 +414,49 @@ Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="maze.gui.mazeeditor"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A> in <A HREF="../../../maze/gui/mazeeditor/package-summary.html">maze.gui.mazeeditor</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Fields in <A HREF="../../../maze/gui/mazeeditor/package-summary.html">maze.gui.mazeeditor</A> declared as <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;<A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A></CODE></FONT></TD>
+<TD><CODE><B>EditableMazeView.</B><B><A HREF="../../../maze/gui/mazeeditor/EditableMazeView.html#activeWallDir">activeWallDir</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../maze/gui/mazeeditor/package-summary.html">maze.gui.mazeeditor</A> with parameters of type <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>EditableMazeView.</B><B><A HREF="../../../maze/gui/mazeeditor/EditableMazeView.html#setActiveWall(maze.model.MazeCell, maze.model.Direction)">setActiveWall</A></B>(<A HREF="../../../maze/model/MazeCell.html" title="class in maze.model">MazeCell</A>&nbsp;newCell,
+                           <A HREF="../../../maze/model/Direction.html" title="enum in maze.model">Direction</A>&nbsp;newDir)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The wall that the mouse is hovering over should be set active so it can be
+ highlighted.</TD>
 </TR>
 </TABLE>
 &nbsp;

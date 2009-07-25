@@ -33,7 +33,7 @@ import maze.util.Listener;
  * different themes to be used.
  * @author Luke Last
  */
-public class MazeView extends JComponent implements Listener<MazeCell>, MazeViewInterface
+public class MazeView extends JComponent implements Listener<MazeCell>
 {
    private static final boolean PRINT_DEBUG = false;
    private static final long serialVersionUID = 3249468255178771818L;
@@ -846,8 +846,8 @@ public class MazeView extends JComponent implements Listener<MazeCell>, MazeView
 
    /**
     * Set the maze model to use for this view.
+    * @param model The new model to back this view.
     */
-   @Override
    public void setModel(final MazeModel model)
    {
       if (this.model != model)

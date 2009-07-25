@@ -3,937 +3,966 @@
 <PRE>
 <FONT color="green">001</FONT>    package maze.gui;<a name="line.1"></a>
 <FONT color="green">002</FONT>    <a name="line.2"></a>
-<FONT color="green">003</FONT>    import java.awt.AlphaComposite;<a name="line.3"></a>
-<FONT color="green">004</FONT>    import java.awt.Color;<a name="line.4"></a>
-<FONT color="green">005</FONT>    import java.awt.Dimension;<a name="line.5"></a>
-<FONT color="green">006</FONT>    import java.awt.Graphics;<a name="line.6"></a>
-<FONT color="green">007</FONT>    import java.awt.Graphics2D;<a name="line.7"></a>
-<FONT color="green">008</FONT>    import java.awt.Point;<a name="line.8"></a>
-<FONT color="green">009</FONT>    import java.awt.Rectangle;<a name="line.9"></a>
-<FONT color="green">010</FONT>    import java.awt.event.ComponentEvent;<a name="line.10"></a>
-<FONT color="green">011</FONT>    import java.awt.event.ComponentListener;<a name="line.11"></a>
-<FONT color="green">012</FONT>    import java.awt.event.MouseAdapter;<a name="line.12"></a>
-<FONT color="green">013</FONT>    import java.awt.event.MouseEvent;<a name="line.13"></a>
-<FONT color="green">014</FONT>    import java.awt.geom.AffineTransform;<a name="line.14"></a>
-<FONT color="green">015</FONT>    import java.awt.image.BufferedImage;<a name="line.15"></a>
-<FONT color="green">016</FONT>    import java.util.List;<a name="line.16"></a>
-<FONT color="green">017</FONT>    import java.util.Set;<a name="line.17"></a>
+<FONT color="green">003</FONT>    import java.awt.Color;<a name="line.3"></a>
+<FONT color="green">004</FONT>    import java.awt.Dimension;<a name="line.4"></a>
+<FONT color="green">005</FONT>    import java.awt.Graphics;<a name="line.5"></a>
+<FONT color="green">006</FONT>    import java.awt.Graphics2D;<a name="line.6"></a>
+<FONT color="green">007</FONT>    import java.awt.Point;<a name="line.7"></a>
+<FONT color="green">008</FONT>    import java.awt.Rectangle;<a name="line.8"></a>
+<FONT color="green">009</FONT>    import java.awt.RenderingHints;<a name="line.9"></a>
+<FONT color="green">010</FONT>    import java.awt.event.ComponentAdapter;<a name="line.10"></a>
+<FONT color="green">011</FONT>    import java.awt.event.ComponentEvent;<a name="line.11"></a>
+<FONT color="green">012</FONT>    import java.awt.image.BufferedImage;<a name="line.12"></a>
+<FONT color="green">013</FONT>    import java.util.EnumSet;<a name="line.13"></a>
+<FONT color="green">014</FONT>    import java.util.Iterator;<a name="line.14"></a>
+<FONT color="green">015</FONT>    import java.util.List;<a name="line.15"></a>
+<FONT color="green">016</FONT>    import java.util.Set;<a name="line.16"></a>
+<FONT color="green">017</FONT>    import java.util.TreeSet;<a name="line.17"></a>
 <FONT color="green">018</FONT>    <a name="line.18"></a>
-<FONT color="green">019</FONT>    import javax.swing.ImageIcon;<a name="line.19"></a>
-<FONT color="green">020</FONT>    import javax.swing.JComponent;<a name="line.20"></a>
-<FONT color="green">021</FONT>    import javax.swing.SwingUtilities;<a name="line.21"></a>
-<FONT color="green">022</FONT>    <a name="line.22"></a>
-<FONT color="green">023</FONT>    import maze.Main;<a name="line.23"></a>
-<FONT color="green">024</FONT>    import maze.model.CellSizeModel;<a name="line.24"></a>
-<FONT color="green">025</FONT>    import maze.model.Direction;<a name="line.25"></a>
-<FONT color="green">026</FONT>    import maze.model.MazeCell;<a name="line.26"></a>
-<FONT color="green">027</FONT>    import maze.model.MazeModel;<a name="line.27"></a>
-<FONT color="green">028</FONT>    import maze.model.PegLocation;<a name="line.28"></a>
-<FONT color="green">029</FONT>    import maze.model.MazeModel.MazeWall;<a name="line.29"></a>
-<FONT color="green">030</FONT>    <a name="line.30"></a>
-<FONT color="green">031</FONT>    /**<a name="line.31"></a>
-<FONT color="green">032</FONT>     * A view of the maze model. This swing component will render a GUI of a maze<a name="line.32"></a>
-<FONT color="green">033</FONT>     * model displaying the maze, allowing the maze to be edited, and animating the<a name="line.33"></a>
-<FONT color="green">034</FONT>     * robot in the maze.<a name="line.34"></a>
-<FONT color="green">035</FONT>     * @author Luke Last<a name="line.35"></a>
-<FONT color="green">036</FONT>     */<a name="line.36"></a>
-<FONT color="green">037</FONT>    public class MazeView extends JComponent implements ComponentListener, MazeViewInterface<a name="line.37"></a>
-<FONT color="green">038</FONT>    {<a name="line.38"></a>
-<FONT color="green">039</FONT>       private static final int WALL_SIZE_DIVIDER = 6;<a name="line.39"></a>
-<FONT color="green">040</FONT>       /**<a name="line.40"></a>
-<FONT color="green">041</FONT>        * The maze model that stores the configuration of the maze.<a name="line.41"></a>
-<FONT color="green">042</FONT>        */<a name="line.42"></a>
-<FONT color="green">043</FONT>       protected MazeModel model;<a name="line.43"></a>
-<FONT color="green">044</FONT>       /**<a name="line.44"></a>
-<FONT color="green">045</FONT>        * This holds the sizes of the cells and walls.<a name="line.45"></a>
-<FONT color="green">046</FONT>        */<a name="line.46"></a>
-<FONT color="green">047</FONT>       protected final CellSizeModel csm = new CellSizeModel(true);<a name="line.47"></a>
-<FONT color="green">048</FONT>       /**<a name="line.48"></a>
-<FONT color="green">049</FONT>        * Holds the active cell that the mouse is hovering over.<a name="line.49"></a>
-<FONT color="green">050</FONT>        */<a name="line.50"></a>
-<FONT color="green">051</FONT>       private MazeCell active;<a name="line.51"></a>
-<FONT color="green">052</FONT>       /**<a name="line.52"></a>
-<FONT color="green">053</FONT>        * True if this MazeView object can edit it's model, false otherwise<a name="line.53"></a>
-<FONT color="green">054</FONT>        */<a name="line.54"></a>
-<FONT color="green">055</FONT>       private boolean editable = false;<a name="line.55"></a>
-<FONT color="green">056</FONT>       /**<a name="line.56"></a>
-<FONT color="green">057</FONT>        * Holds the pre-rendered background<a name="line.57"></a>
-<FONT color="green">058</FONT>        */<a name="line.58"></a>
-<FONT color="green">059</FONT>       private BufferedImage background = null;<a name="line.59"></a>
-<FONT color="green">060</FONT>       /**<a name="line.60"></a>
-<FONT color="green">061</FONT>        * Reference to the MouseAdapter object that handles mouse listener events.<a name="line.61"></a>
-<FONT color="green">062</FONT>        * Used to remove MouseListeners.<a name="line.62"></a>
-<FONT color="green">063</FONT>        */<a name="line.63"></a>
-<FONT color="green">064</FONT>       private MouseAdapter mouseAdapter = null;<a name="line.64"></a>
-<FONT color="green">065</FONT>       /**<a name="line.65"></a>
-<FONT color="green">066</FONT>        * The location of the robot image in graphics coordinates.<a name="line.66"></a>
-<FONT color="green">067</FONT>        */<a name="line.67"></a>
-<FONT color="green">068</FONT>       private volatile Point robotLocation = null;<a name="line.68"></a>
-<FONT color="green">069</FONT>       /**<a name="line.69"></a>
-<FONT color="green">070</FONT>        * The current rotation of the robot in radians.<a name="line.70"></a>
-<FONT color="green">071</FONT>        */<a name="line.71"></a>
-<FONT color="green">072</FONT>       private volatile double robotRotation = 0.0;<a name="line.72"></a>
-<FONT color="green">073</FONT>       /**<a name="line.73"></a>
-<FONT color="green">074</FONT>        * The image for the micro mouse aviator that moves around the maze.<a name="line.74"></a>
-<FONT color="green">075</FONT>        */<a name="line.75"></a>
-<FONT color="green">076</FONT>       private final ImageIcon robotImage = Main.getImageResource("gui/images/mouse.png");<a name="line.76"></a>
-<FONT color="green">077</FONT>    <a name="line.77"></a>
-<FONT color="green">078</FONT>       protected final MazePainter paints = new MazePainterDefault();<a name="line.78"></a>
-<FONT color="green">079</FONT>    <a name="line.79"></a>
-<FONT color="green">080</FONT>       private boolean drawFog = false;<a name="line.80"></a>
-<FONT color="green">081</FONT>       private Set&lt;MazeCell&gt; unexplored;<a name="line.81"></a>
-<FONT color="green">082</FONT>    <a name="line.82"></a>
-<FONT color="green">083</FONT>       private boolean drawFirstRun = false;<a name="line.83"></a>
-<FONT color="green">084</FONT>       private List&lt;MazeCell&gt; firstRun;<a name="line.84"></a>
-<FONT color="green">085</FONT>    <a name="line.85"></a>
-<FONT color="green">086</FONT>       private boolean drawBestRun = false;<a name="line.86"></a>
-<FONT color="green">087</FONT>       private List&lt;MazeCell&gt; bestRun;<a name="line.87"></a>
-<FONT color="green">088</FONT>    <a name="line.88"></a>
-<FONT color="green">089</FONT>       private boolean drawCurrentRun = false;<a name="line.89"></a>
-<FONT color="green">090</FONT>       private List&lt;MazeCell&gt; currentRun;<a name="line.90"></a>
-<FONT color="green">091</FONT>    <a name="line.91"></a>
-<FONT color="green">092</FONT>       private boolean drawUnderstanding = false;<a name="line.92"></a>
-<FONT color="green">093</FONT>       private int[][] understandingInt = null;<a name="line.93"></a>
-<FONT color="green">094</FONT>       private Direction[][] understandingDir = null;<a name="line.94"></a>
-<FONT color="green">095</FONT>    <a name="line.95"></a>
-<FONT color="green">096</FONT>       /**<a name="line.96"></a>
-<FONT color="green">097</FONT>        * Constructor.<a name="line.97"></a>
-<FONT color="green">098</FONT>        */<a name="line.98"></a>
-<FONT color="green">099</FONT>       public MazeView()<a name="line.99"></a>
-<FONT color="green">100</FONT>       {<a name="line.100"></a>
-<FONT color="green">101</FONT>          this.addComponentListener(this);<a name="line.101"></a>
-<FONT color="green">102</FONT>       }<a name="line.102"></a>
-<FONT color="green">103</FONT>    <a name="line.103"></a>
-<FONT color="green">104</FONT>       /**<a name="line.104"></a>
-<FONT color="green">105</FONT>        * Get the maze model being used for this view.<a name="line.105"></a>
-<FONT color="green">106</FONT>        */<a name="line.106"></a>
-<FONT color="green">107</FONT>       public MazeModel getModel()<a name="line.107"></a>
-<FONT color="green">108</FONT>       {<a name="line.108"></a>
-<FONT color="green">109</FONT>          return model;<a name="line.109"></a>
-<FONT color="green">110</FONT>       }<a name="line.110"></a>
-<FONT color="green">111</FONT>    <a name="line.111"></a>
-<FONT color="green">112</FONT>       /**<a name="line.112"></a>
-<FONT color="green">113</FONT>        * Set the maze model to use for this view.<a name="line.113"></a>
-<FONT color="green">114</FONT>        */<a name="line.114"></a>
-<FONT color="green">115</FONT>       public void setModel(MazeModel model)<a name="line.115"></a>
-<FONT color="green">116</FONT>       {<a name="line.116"></a>
-<FONT color="green">117</FONT>          this.model = model;<a name="line.117"></a>
-<FONT color="green">118</FONT>    <a name="line.118"></a>
-<FONT color="green">119</FONT>          componentResized(null);<a name="line.119"></a>
-<FONT color="green">120</FONT>          repaint();<a name="line.120"></a>
-<FONT color="green">121</FONT>       }<a name="line.121"></a>
-<FONT color="green">122</FONT>    <a name="line.122"></a>
-<FONT color="green">123</FONT>       /**<a name="line.123"></a>
-<FONT color="green">124</FONT>        * Get the current location of the robot in absolute view coordinates.<a name="line.124"></a>
-<FONT color="green">125</FONT>        */<a name="line.125"></a>
-<FONT color="green">126</FONT>       public Point getRobotLocation()<a name="line.126"></a>
-<FONT color="green">127</FONT>       {<a name="line.127"></a>
-<FONT color="green">128</FONT>          return this.robotLocation;<a name="line.128"></a>
-<FONT color="green">129</FONT>       }<a name="line.129"></a>
-<FONT color="green">130</FONT>    <a name="line.130"></a>
-<FONT color="green">131</FONT>       /**<a name="line.131"></a>
-<FONT color="green">132</FONT>        * Get the current rotation of the robot in Radians.<a name="line.132"></a>
-<FONT color="green">133</FONT>        */<a name="line.133"></a>
-<FONT color="green">134</FONT>       public double getRobotRotation()<a name="line.134"></a>
-<FONT color="green">135</FONT>       {<a name="line.135"></a>
-<FONT color="green">136</FONT>          return this.robotRotation;<a name="line.136"></a>
-<FONT color="green">137</FONT>       }<a name="line.137"></a>
-<FONT color="green">138</FONT>    <a name="line.138"></a>
-<FONT color="green">139</FONT>       /**<a name="line.139"></a>
-<FONT color="green">140</FONT>        * Sets a new position for the robot and then sets the view to repaint<a name="line.140"></a>
-<FONT color="green">141</FONT>        * itself.<a name="line.141"></a>
-<FONT color="green">142</FONT>        * @param newLocation The new location for the robot in absolute view<a name="line.142"></a>
-<FONT color="green">143</FONT>        *           coordinates.<a name="line.143"></a>
-<FONT color="green">144</FONT>        * @param newRotation The new rotation of the robot in Radians.<a name="line.144"></a>
-<FONT color="green">145</FONT>        */<a name="line.145"></a>
-<FONT color="green">146</FONT>       public void setRobotPosition(Point newLocation, double newRotation)<a name="line.146"></a>
-<FONT color="green">147</FONT>       {<a name="line.147"></a>
-<FONT color="green">148</FONT>          this.robotLocation = newLocation;<a name="line.148"></a>
-<FONT color="green">149</FONT>          this.robotRotation = newRotation;<a name="line.149"></a>
-<FONT color="green">150</FONT>          this.repaint();<a name="line.150"></a>
-<FONT color="green">151</FONT>       }<a name="line.151"></a>
-<FONT color="green">152</FONT>    <a name="line.152"></a>
-<FONT color="green">153</FONT>       /**<a name="line.153"></a>
-<FONT color="green">154</FONT>        * This is where the graphics of this component gets painted.<a name="line.154"></a>
-<FONT color="green">155</FONT>        */<a name="line.155"></a>
-<FONT color="green">156</FONT>       @Override<a name="line.156"></a>
-<FONT color="green">157</FONT>       protected void paintComponent(final Graphics arg)<a name="line.157"></a>
-<FONT color="green">158</FONT>       {<a name="line.158"></a>
-<FONT color="green">159</FONT>          if (model != null)<a name="line.159"></a>
-<FONT color="green">160</FONT>          {<a name="line.160"></a>
-<FONT color="green">161</FONT>             final Graphics2D g = (Graphics2D) arg;<a name="line.161"></a>
-<FONT color="green">162</FONT>             this.redrawAll(g);<a name="line.162"></a>
-<FONT color="green">163</FONT>          }<a name="line.163"></a>
-<FONT color="green">164</FONT>          else<a name="line.164"></a>
-<FONT color="green">165</FONT>             super.paintComponent(arg);<a name="line.165"></a>
-<FONT color="green">166</FONT>       }<a name="line.166"></a>
-<FONT color="green">167</FONT>    <a name="line.167"></a>
-<FONT color="green">168</FONT>       /**<a name="line.168"></a>
-<FONT color="green">169</FONT>        * Get the size of the maze in pixels.<a name="line.169"></a>
-<FONT color="green">170</FONT>        */<a name="line.170"></a>
-<FONT color="green">171</FONT>       protected Dimension getMazeSize()<a name="line.171"></a>
-<FONT color="green">172</FONT>       {<a name="line.172"></a>
-<FONT color="green">173</FONT>          return new Dimension(this.model.getSize().width * this.csm.getCellWidth(),<a name="line.173"></a>
-<FONT color="green">174</FONT>                               this.model.getSize().height * this.csm.getCellHeight());<a name="line.174"></a>
-<FONT color="green">175</FONT>       }<a name="line.175"></a>
-<FONT color="green">176</FONT>    <a name="line.176"></a>
-<FONT color="green">177</FONT>       /**<a name="line.177"></a>
-<FONT color="green">178</FONT>        * Draws the entire maze onto the given graphics device.<a name="line.178"></a>
-<FONT color="green">179</FONT>        */<a name="line.179"></a>
-<FONT color="green">180</FONT>       private void redrawAll(final Graphics2D g)<a name="line.180"></a>
-<FONT color="green">181</FONT>       {<a name="line.181"></a>
-<FONT color="green">182</FONT>          final int mazeWidth = this.model.getSize().width * this.csm.getCellWidth();<a name="line.182"></a>
-<FONT color="green">183</FONT>          final int mazeHeight = this.model.getSize().height * this.csm.getCellHeight();<a name="line.183"></a>
-<FONT color="green">184</FONT>          final Dimension modelSize = this.model.getSize();<a name="line.184"></a>
-<FONT color="green">185</FONT>    <a name="line.185"></a>
-<FONT color="green">186</FONT>          //Hopefully it won't hurt to always have this on.<a name="line.186"></a>
-<FONT color="green">187</FONT>          g.setComposite(AlphaComposite.SrcOver);<a name="line.187"></a>
-<FONT color="green">188</FONT>    <a name="line.188"></a>
-<FONT color="green">189</FONT>          //Enabling this line will turn off transparency which will look ugly but allows a performance comparison.<a name="line.189"></a>
-<FONT color="green">190</FONT>          //g.setComposite(AlphaComposite.Src);<a name="line.190"></a>
-<FONT color="green">191</FONT>    <a name="line.191"></a>
-<FONT color="green">192</FONT>          this.paints.setMazeSize(this.getMazeSize());<a name="line.192"></a>
-<FONT color="green">193</FONT>    <a name="line.193"></a>
-<FONT color="green">194</FONT>          if (this.background == null)<a name="line.194"></a>
-<FONT color="green">195</FONT>          {<a name="line.195"></a>
-<FONT color="green">196</FONT>             this.background = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);<a name="line.196"></a>
-<FONT color="green">197</FONT>             Graphics2D bgg = (Graphics2D) this.background.getGraphics();<a name="line.197"></a>
-<FONT color="green">198</FONT>             // Fill in the background color.<a name="line.198"></a>
-<FONT color="green">199</FONT>             bgg.setColor(Color.white);<a name="line.199"></a>
-<FONT color="green">200</FONT>             bgg.fillRect(0, 0, super.getWidth(), super.getHeight());<a name="line.200"></a>
-<FONT color="green">201</FONT>             //Paint the gradient maze background.<a name="line.201"></a>
-<FONT color="green">202</FONT>             bgg.setPaint(this.paints.getCellBackground());<a name="line.202"></a>
-<FONT color="green">203</FONT>             bgg.fillRect(0, 0, mazeWidth, mazeHeight);<a name="line.203"></a>
+<FONT color="green">019</FONT>    import javax.swing.JComponent;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import maze.model.CellSizeModel;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import maze.model.Direction;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import maze.model.MazeCell;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import maze.model.MazeModel;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import maze.model.RobotPathModel;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import maze.util.Listener;<a name="line.26"></a>
+<FONT color="green">027</FONT>    <a name="line.27"></a>
+<FONT color="green">028</FONT>    /**<a name="line.28"></a>
+<FONT color="green">029</FONT>     * This swing component displays a graphical view of a maze. It also has the<a name="line.29"></a>
+<FONT color="green">030</FONT>     * capability to draw different things onto the maze like an image for the<a name="line.30"></a>
+<FONT color="green">031</FONT>     * robots location.&lt;br /&gt;<a name="line.31"></a>
+<FONT color="green">032</FONT>     * Painting is handled by a UI delegate {@link maze.gui.MazePainter} that allows<a name="line.32"></a>
+<FONT color="green">033</FONT>     * different themes to be used.<a name="line.33"></a>
+<FONT color="green">034</FONT>     * @author Luke Last<a name="line.34"></a>
+<FONT color="green">035</FONT>     */<a name="line.35"></a>
+<FONT color="green">036</FONT>    public class MazeView extends JComponent implements Listener&lt;MazeCell&gt;<a name="line.36"></a>
+<FONT color="green">037</FONT>    {<a name="line.37"></a>
+<FONT color="green">038</FONT>       private static final boolean PRINT_DEBUG = false;<a name="line.38"></a>
+<FONT color="green">039</FONT>       private static final long serialVersionUID = 3249468255178771818L;<a name="line.39"></a>
+<FONT color="green">040</FONT>       private static final int WALL_SIZE_DIVIDER = 6;<a name="line.40"></a>
+<FONT color="green">041</FONT>       private static final int MAX_CELLS_TO_DRAW = 64;<a name="line.41"></a>
+<FONT color="green">042</FONT>       /**<a name="line.42"></a>
+<FONT color="green">043</FONT>        * Determines the size of the walls relative to the cell size.<a name="line.43"></a>
+<FONT color="green">044</FONT>        */<a name="line.44"></a>
+<FONT color="green">045</FONT>       protected int wallSizeDivider = WALL_SIZE_DIVIDER;<a name="line.45"></a>
+<FONT color="green">046</FONT>       /**<a name="line.46"></a>
+<FONT color="green">047</FONT>        * The maze model that stores the configuration of the maze.<a name="line.47"></a>
+<FONT color="green">048</FONT>        */<a name="line.48"></a>
+<FONT color="green">049</FONT>       protected MazeModel model;<a name="line.49"></a>
+<FONT color="green">050</FONT>       /**<a name="line.50"></a>
+<FONT color="green">051</FONT>        * The background image holds the rendered maze cells. When cells are<a name="line.51"></a>
+<FONT color="green">052</FONT>        * invalidated they are redrawn on this background image. When the screen is<a name="line.52"></a>
+<FONT color="green">053</FONT>        * resized that reference is set to null so a newly sized image can be<a name="line.53"></a>
+<FONT color="green">054</FONT>        * created.<a name="line.54"></a>
+<FONT color="green">055</FONT>        */<a name="line.55"></a>
+<FONT color="green">056</FONT>       private BufferedImage backgroundImage;<a name="line.56"></a>
+<FONT color="green">057</FONT>       /**<a name="line.57"></a>
+<FONT color="green">058</FONT>        * Stores a reference to the graphics object for the background image. This<a name="line.58"></a>
+<FONT color="green">059</FONT>        * prevents is from having to request it from the image every time.<a name="line.59"></a>
+<FONT color="green">060</FONT>        */<a name="line.60"></a>
+<FONT color="green">061</FONT>       private Graphics2D backgroundGraphics;<a name="line.61"></a>
+<FONT color="green">062</FONT>       /**<a name="line.62"></a>
+<FONT color="green">063</FONT>        * Stores the sizes of a cell and its walls.<a name="line.63"></a>
+<FONT color="green">064</FONT>        */<a name="line.64"></a>
+<FONT color="green">065</FONT>       protected final CellSizeModel csm = new CellSizeModel(false);<a name="line.65"></a>
+<FONT color="green">066</FONT>       /**<a name="line.66"></a>
+<FONT color="green">067</FONT>        * UI delegate used for drawing each maze component.<a name="line.67"></a>
+<FONT color="green">068</FONT>        */<a name="line.68"></a>
+<FONT color="green">069</FONT>       protected MazePainter painter = new MazePainterDefault();<a name="line.69"></a>
+<FONT color="green">070</FONT>       /**<a name="line.70"></a>
+<FONT color="green">071</FONT>        * The current location of the robot while it is animating.<a name="line.71"></a>
+<FONT color="green">072</FONT>        */<a name="line.72"></a>
+<FONT color="green">073</FONT>       private volatile Point robotLocation = null;<a name="line.73"></a>
+<FONT color="green">074</FONT>       /**<a name="line.74"></a>
+<FONT color="green">075</FONT>        * The current rotation of the robot in radians.<a name="line.75"></a>
+<FONT color="green">076</FONT>        */<a name="line.76"></a>
+<FONT color="green">077</FONT>       private volatile double robotRotation = 0.0;<a name="line.77"></a>
+<FONT color="green">078</FONT>       /**<a name="line.78"></a>
+<FONT color="green">079</FONT>        * This is null unless an animation is running and then the<a name="line.79"></a>
+<FONT color="green">080</FONT>        * &lt;code&gt;RobotAnimator&lt;/code&gt; will populate it. This stores information about<a name="line.80"></a>
+<FONT color="green">081</FONT>        * the robots paths and history.<a name="line.81"></a>
+<FONT color="green">082</FONT>        */<a name="line.82"></a>
+<FONT color="green">083</FONT>       private RobotPathModel robotPathModel;<a name="line.83"></a>
+<FONT color="green">084</FONT>       /**<a name="line.84"></a>
+<FONT color="green">085</FONT>        * A flag for redrawing everything. When set true this tells us we are<a name="line.85"></a>
+<FONT color="green">086</FONT>        * redrawing the whole view which means we must draw the outside walls.<a name="line.86"></a>
+<FONT color="green">087</FONT>        * @see MazeView#invalidateAllCells()<a name="line.87"></a>
+<FONT color="green">088</FONT>        * @see MazeView#paintComponent(Graphics)<a name="line.88"></a>
+<FONT color="green">089</FONT>        */<a name="line.89"></a>
+<FONT color="green">090</FONT>       private boolean repaintAll = true;<a name="line.90"></a>
+<FONT color="green">091</FONT>       /**<a name="line.91"></a>
+<FONT color="green">092</FONT>        * Stores a set of maze cells that have been invalidated and need to be<a name="line.92"></a>
+<FONT color="green">093</FONT>        * redrawn. ALL access to this set should be synchronized on the object<a name="line.93"></a>
+<FONT color="green">094</FONT>        * itself.<a name="line.94"></a>
+<FONT color="green">095</FONT>        */<a name="line.95"></a>
+<FONT color="green">096</FONT>       private final Set&lt;MazeCell&gt; invalidatedCells = new TreeSet&lt;MazeCell&gt;();<a name="line.96"></a>
+<FONT color="green">097</FONT>    <a name="line.97"></a>
+<FONT color="green">098</FONT>       private int[][] understandingInt = null;<a name="line.98"></a>
+<FONT color="green">099</FONT>       private Direction[][] understandingDir = null;<a name="line.99"></a>
+<FONT color="green">100</FONT>    <a name="line.100"></a>
+<FONT color="green">101</FONT>       private boolean drawPathCurrent = true;<a name="line.101"></a>
+<FONT color="green">102</FONT>       private boolean drawPathFirst = true;<a name="line.102"></a>
+<FONT color="green">103</FONT>       private boolean drawPathBest = true;<a name="line.103"></a>
+<FONT color="green">104</FONT>       private boolean drawUnderstanding = true;<a name="line.104"></a>
+<FONT color="green">105</FONT>       private boolean drawFog = true;<a name="line.105"></a>
+<FONT color="green">106</FONT>    <a name="line.106"></a>
+<FONT color="green">107</FONT>       /**<a name="line.107"></a>
+<FONT color="green">108</FONT>        * Constructor.<a name="line.108"></a>
+<FONT color="green">109</FONT>        */<a name="line.109"></a>
+<FONT color="green">110</FONT>       public MazeView()<a name="line.110"></a>
+<FONT color="green">111</FONT>       {<a name="line.111"></a>
+<FONT color="green">112</FONT>          // We maintain our own background image buffer so we can turn this off.<a name="line.112"></a>
+<FONT color="green">113</FONT>          this.setDoubleBuffered(false);<a name="line.113"></a>
+<FONT color="green">114</FONT>          // For catching resize events.<a name="line.114"></a>
+<FONT color="green">115</FONT>          this.addComponentListener(new ComponentAdapter()<a name="line.115"></a>
+<FONT color="green">116</FONT>          {<a name="line.116"></a>
+<FONT color="green">117</FONT>             /**<a name="line.117"></a>
+<FONT color="green">118</FONT>              * When the component is resized we have to resize the cells and walls<a name="line.118"></a>
+<FONT color="green">119</FONT>              * and resize the background image.<a name="line.119"></a>
+<FONT color="green">120</FONT>              */<a name="line.120"></a>
+<FONT color="green">121</FONT>             @Override<a name="line.121"></a>
+<FONT color="green">122</FONT>             public void componentResized(ComponentEvent e)<a name="line.122"></a>
+<FONT color="green">123</FONT>             {<a name="line.123"></a>
+<FONT color="green">124</FONT>                updateViewSize();<a name="line.124"></a>
+<FONT color="green">125</FONT>             }<a name="line.125"></a>
+<FONT color="green">126</FONT>          });<a name="line.126"></a>
+<FONT color="green">127</FONT>       }<a name="line.127"></a>
+<FONT color="green">128</FONT>    <a name="line.128"></a>
+<FONT color="green">129</FONT>       /**<a name="line.129"></a>
+<FONT color="green">130</FONT>        * Draws an arrow graphic.<a name="line.130"></a>
+<FONT color="green">131</FONT>        * @param g What do draw on.<a name="line.131"></a>
+<FONT color="green">132</FONT>        * @param local Direction to point the arrow.<a name="line.132"></a>
+<FONT color="green">133</FONT>        * @param x Horizontal pixel location to draw arrow.<a name="line.133"></a>
+<FONT color="green">134</FONT>        * @param y Vertical pixel location to draw arrow.<a name="line.134"></a>
+<FONT color="green">135</FONT>        */<a name="line.135"></a>
+<FONT color="green">136</FONT>       private void drawArrow(final Graphics2D g, final Direction local, final int x, final int y)<a name="line.136"></a>
+<FONT color="green">137</FONT>       {<a name="line.137"></a>
+<FONT color="green">138</FONT>          //Draws an arrow in the direction of "local" centered on the point (x,y)<a name="line.138"></a>
+<FONT color="green">139</FONT>          if (local.equals(Direction.North))<a name="line.139"></a>
+<FONT color="green">140</FONT>          {<a name="line.140"></a>
+<FONT color="green">141</FONT>             final int[] ys =<a name="line.141"></a>
+<FONT color="green">142</FONT>             {<a name="line.142"></a>
+<FONT color="green">143</FONT>                y + this.csm.getCellHeight() * 3 / 8, y, y, y - this.csm.getCellHeight() * 3 / 8, y, y<a name="line.143"></a>
+<FONT color="green">144</FONT>             };<a name="line.144"></a>
+<FONT color="green">145</FONT>             final int[] xs =<a name="line.145"></a>
+<FONT color="green">146</FONT>             {<a name="line.146"></a>
+<FONT color="green">147</FONT>                x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,<a name="line.147"></a>
+<FONT color="green">148</FONT>                x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8<a name="line.148"></a>
+<FONT color="green">149</FONT>             };<a name="line.149"></a>
+<FONT color="green">150</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.150"></a>
+<FONT color="green">151</FONT>          }<a name="line.151"></a>
+<FONT color="green">152</FONT>          if (local.equals(Direction.South))<a name="line.152"></a>
+<FONT color="green">153</FONT>          {<a name="line.153"></a>
+<FONT color="green">154</FONT>             final int[] ys =<a name="line.154"></a>
+<FONT color="green">155</FONT>             {<a name="line.155"></a>
+<FONT color="green">156</FONT>                y - this.csm.getCellHeight() * 3 / 8, y, y, y + this.csm.getCellHeight() * 3 / 8, y, y<a name="line.156"></a>
+<FONT color="green">157</FONT>             };<a name="line.157"></a>
+<FONT color="green">158</FONT>             final int[] xs =<a name="line.158"></a>
+<FONT color="green">159</FONT>             {<a name="line.159"></a>
+<FONT color="green">160</FONT>                x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,<a name="line.160"></a>
+<FONT color="green">161</FONT>                x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8<a name="line.161"></a>
+<FONT color="green">162</FONT>             };<a name="line.162"></a>
+<FONT color="green">163</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.163"></a>
+<FONT color="green">164</FONT>          }<a name="line.164"></a>
+<FONT color="green">165</FONT>          if (local.equals(Direction.West))<a name="line.165"></a>
+<FONT color="green">166</FONT>          {<a name="line.166"></a>
+<FONT color="green">167</FONT>             final int[] xs =<a name="line.167"></a>
+<FONT color="green">168</FONT>             {<a name="line.168"></a>
+<FONT color="green">169</FONT>                x + this.csm.getCellWidth() * 3 / 8, x, x, x - this.csm.getCellWidth() * 3 / 8, x, x<a name="line.169"></a>
+<FONT color="green">170</FONT>             };<a name="line.170"></a>
+<FONT color="green">171</FONT>             final int[] ys =<a name="line.171"></a>
+<FONT color="green">172</FONT>             {<a name="line.172"></a>
+<FONT color="green">173</FONT>                y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,<a name="line.173"></a>
+<FONT color="green">174</FONT>                y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8<a name="line.174"></a>
+<FONT color="green">175</FONT>             };<a name="line.175"></a>
+<FONT color="green">176</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.176"></a>
+<FONT color="green">177</FONT>          }<a name="line.177"></a>
+<FONT color="green">178</FONT>          if (local.equals(Direction.East))<a name="line.178"></a>
+<FONT color="green">179</FONT>          {<a name="line.179"></a>
+<FONT color="green">180</FONT>             final int[] xs =<a name="line.180"></a>
+<FONT color="green">181</FONT>             {<a name="line.181"></a>
+<FONT color="green">182</FONT>                x - this.csm.getCellWidth() * 3 / 8, x, x, x + this.csm.getCellWidth() * 3 / 8, x, x<a name="line.182"></a>
+<FONT color="green">183</FONT>             };<a name="line.183"></a>
+<FONT color="green">184</FONT>             final int[] ys =<a name="line.184"></a>
+<FONT color="green">185</FONT>             {<a name="line.185"></a>
+<FONT color="green">186</FONT>                y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,<a name="line.186"></a>
+<FONT color="green">187</FONT>                y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8<a name="line.187"></a>
+<FONT color="green">188</FONT>             };<a name="line.188"></a>
+<FONT color="green">189</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.189"></a>
+<FONT color="green">190</FONT>          }<a name="line.190"></a>
+<FONT color="green">191</FONT>       }<a name="line.191"></a>
+<FONT color="green">192</FONT>    <a name="line.192"></a>
+<FONT color="green">193</FONT>       /**<a name="line.193"></a>
+<FONT color="green">194</FONT>        * The primary draw method for a cell. This should draw all aspects of a<a name="line.194"></a>
+<FONT color="green">195</FONT>        * cell.<a name="line.195"></a>
+<FONT color="green">196</FONT>        * @param g Where to draw.<a name="line.196"></a>
+<FONT color="green">197</FONT>        * @param cell The cell in question.<a name="line.197"></a>
+<FONT color="green">198</FONT>        */<a name="line.198"></a>
+<FONT color="green">199</FONT>       protected void drawCell(final Graphics2D g, final MazeCell cell)<a name="line.199"></a>
+<FONT color="green">200</FONT>       {<a name="line.200"></a>
+<FONT color="green">201</FONT>          if (PRINT_DEBUG)<a name="line.201"></a>
+<FONT color="green">202</FONT>             System.out.println(System.currentTimeMillis() + " Drawing Cell: " + cell);<a name="line.202"></a>
+<FONT color="green">203</FONT>          this.painter.drawCellBackground(g, this.getCellAreaInner(cell));<a name="line.203"></a>
 <FONT color="green">204</FONT>    <a name="line.204"></a>
-<FONT color="green">205</FONT>             // Draw inactive walls<a name="line.205"></a>
-<FONT color="green">206</FONT>             bgg.setPaint(this.paints.getWallEmpty());<a name="line.206"></a>
-<FONT color="green">207</FONT>             for (int i = 0; i &lt; modelSize.width + 1; i++)<a name="line.207"></a>
-<FONT color="green">208</FONT>             {<a name="line.208"></a>
-<FONT color="green">209</FONT>                //Draw vertical walls.<a name="line.209"></a>
-<FONT color="green">210</FONT>                bgg.fillRect(i * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),<a name="line.210"></a>
-<FONT color="green">211</FONT>                             0,<a name="line.211"></a>
-<FONT color="green">212</FONT>                             this.csm.getWallWidth(),<a name="line.212"></a>
-<FONT color="green">213</FONT>                             mazeHeight);<a name="line.213"></a>
-<FONT color="green">214</FONT>             }<a name="line.214"></a>
-<FONT color="green">215</FONT>             for (int i = 0; i &lt; modelSize.height + 1; i++)<a name="line.215"></a>
-<FONT color="green">216</FONT>             {<a name="line.216"></a>
-<FONT color="green">217</FONT>                //Draw horizontal walls.<a name="line.217"></a>
-<FONT color="green">218</FONT>                bgg.fillRect(0,<a name="line.218"></a>
-<FONT color="green">219</FONT>                             i * this.csm.getCellHeight() - this.csm.getWallHeightHalf(),<a name="line.219"></a>
-<FONT color="green">220</FONT>                             mazeWidth,<a name="line.220"></a>
-<FONT color="green">221</FONT>                             this.csm.getWallHeight());<a name="line.221"></a>
-<FONT color="green">222</FONT>             }<a name="line.222"></a>
-<FONT color="green">223</FONT>    <a name="line.223"></a>
-<FONT color="green">224</FONT>             // Draw outer walls<a name="line.224"></a>
-<FONT color="green">225</FONT>             bgg.setPaint(this.paints.getWallSet());<a name="line.225"></a>
-<FONT color="green">226</FONT>             bgg.fillRect(-csm.getWallWidthHalf(),<a name="line.226"></a>
-<FONT color="green">227</FONT>                          -csm.getWallHeightHalf(),<a name="line.227"></a>
-<FONT color="green">228</FONT>                          mazeWidth,<a name="line.228"></a>
-<FONT color="green">229</FONT>                          csm.getWallHeight());<a name="line.229"></a>
-<FONT color="green">230</FONT>             bgg.fillRect(-csm.getWallWidthHalf(),<a name="line.230"></a>
-<FONT color="green">231</FONT>                          -csm.getWallHeightHalf(),<a name="line.231"></a>
-<FONT color="green">232</FONT>                          csm.getWallWidth(),<a name="line.232"></a>
-<FONT color="green">233</FONT>                          mazeHeight);<a name="line.233"></a>
-<FONT color="green">234</FONT>             bgg.fillRect(0, mazeHeight - csm.getWallHeightHalf(), mazeWidth, csm.getWallHeight());<a name="line.234"></a>
-<FONT color="green">235</FONT>             bgg.fillRect(mazeWidth - csm.getWallWidthHalf(), 0, csm.getWallWidth(), mazeHeight);<a name="line.235"></a>
-<FONT color="green">236</FONT>    <a name="line.236"></a>
-<FONT color="green">237</FONT>             // Draw pegs<a name="line.237"></a>
-<FONT color="green">238</FONT>             bgg.setPaint(this.paints.getPeg());<a name="line.238"></a>
-<FONT color="green">239</FONT>             for (int i = 1; i &lt;= modelSize.width + 1; i++)<a name="line.239"></a>
-<FONT color="green">240</FONT>                for (int j = 1; j &lt;= modelSize.height + 1; j++)<a name="line.240"></a>
-<FONT color="green">241</FONT>                   bgg.fill(this.getPegRegion(new MazeCell(i, j), PegLocation.TopLeft));<a name="line.241"></a>
-<FONT color="green">242</FONT>          } //End update background image.<a name="line.242"></a>
-<FONT color="green">243</FONT>    <a name="line.243"></a>
-<FONT color="green">244</FONT>          g.drawImage(background, 0, 0, null);<a name="line.244"></a>
-<FONT color="green">245</FONT>    <a name="line.245"></a>
-<FONT color="green">246</FONT>          //Loop through each cell in the maze.<a name="line.246"></a>
-<FONT color="green">247</FONT>          for (int x = 1; x &lt;= modelSize.width; x++)<a name="line.247"></a>
-<FONT color="green">248</FONT>          {<a name="line.248"></a>
-<FONT color="green">249</FONT>             for (int y = 1; y &lt;= modelSize.height; y++)<a name="line.249"></a>
-<FONT color="green">250</FONT>             {<a name="line.250"></a>
-<FONT color="green">251</FONT>                final MazeCell cell = new MazeCell(x, y);<a name="line.251"></a>
-<FONT color="green">252</FONT>    <a name="line.252"></a>
-<FONT color="green">253</FONT>                g.setPaint(this.paints.getWallSet());<a name="line.253"></a>
-<FONT color="green">254</FONT>                if (this.model.getWall(cell, Direction.South).isSet())<a name="line.254"></a>
-<FONT color="green">255</FONT>                   g.fill(this.getWallLocation(cell, Direction.South));<a name="line.255"></a>
-<FONT color="green">256</FONT>                if (this.model.getWall(cell, Direction.East).isSet())<a name="line.256"></a>
-<FONT color="green">257</FONT>                   g.fill(this.getWallLocation(cell, Direction.East));<a name="line.257"></a>
-<FONT color="green">258</FONT>    <a name="line.258"></a>
-<FONT color="green">259</FONT>             } //End y loop.<a name="line.259"></a>
-<FONT color="green">260</FONT>          } //End x loop.<a name="line.260"></a>
-<FONT color="green">261</FONT>    <a name="line.261"></a>
-<FONT color="green">262</FONT>          //Draw the yellow hover box. This could get axed.<a name="line.262"></a>
-<FONT color="green">263</FONT>          if (this.active != null)<a name="line.263"></a>
-<FONT color="green">264</FONT>          {<a name="line.264"></a>
-<FONT color="green">265</FONT>             g.setPaint(this.paints.getHover());<a name="line.265"></a>
-<FONT color="green">266</FONT>             g.fillRect(active.getXZeroBased() * this.csm.getCellWidth() + this.csm.getWallWidthHalf(),<a name="line.266"></a>
-<FONT color="green">267</FONT>                        active.getYZeroBased() *<a name="line.267"></a>
-<FONT color="green">268</FONT>                              this.csm.getCellHeight() +<a name="line.268"></a>
-<FONT color="green">269</FONT>                              this.csm.getWallHeightHalf(),<a name="line.269"></a>
-<FONT color="green">270</FONT>                        this.csm.getCellWidth() - this.csm.getWallWidth(),<a name="line.270"></a>
-<FONT color="green">271</FONT>                        this.csm.getCellHeight() - this.csm.getWallHeight());<a name="line.271"></a>
-<FONT color="green">272</FONT>          }<a name="line.272"></a>
-<FONT color="green">273</FONT>    <a name="line.273"></a>
-<FONT color="green">274</FONT>          if (drawFog == true)<a name="line.274"></a>
-<FONT color="green">275</FONT>          {<a name="line.275"></a>
-<FONT color="green">276</FONT>             drawFog(g);<a name="line.276"></a>
-<FONT color="green">277</FONT>          }<a name="line.277"></a>
-<FONT color="green">278</FONT>    <a name="line.278"></a>
-<FONT color="green">279</FONT>          if (drawFirstRun == true)<a name="line.279"></a>
-<FONT color="green">280</FONT>          {<a name="line.280"></a>
-<FONT color="green">281</FONT>             drawFirstRun(g);<a name="line.281"></a>
-<FONT color="green">282</FONT>          }<a name="line.282"></a>
-<FONT color="green">283</FONT>    <a name="line.283"></a>
-<FONT color="green">284</FONT>          if (drawBestRun == true)<a name="line.284"></a>
-<FONT color="green">285</FONT>          {<a name="line.285"></a>
-<FONT color="green">286</FONT>             drawBestRun(g);<a name="line.286"></a>
-<FONT color="green">287</FONT>          }<a name="line.287"></a>
-<FONT color="green">288</FONT>    <a name="line.288"></a>
-<FONT color="green">289</FONT>          if (drawCurrentRun == true)<a name="line.289"></a>
-<FONT color="green">290</FONT>          {<a name="line.290"></a>
-<FONT color="green">291</FONT>             drawCurrentRun(g);<a name="line.291"></a>
-<FONT color="green">292</FONT>          }<a name="line.292"></a>
-<FONT color="green">293</FONT>    <a name="line.293"></a>
-<FONT color="green">294</FONT>          if (drawUnderstanding == true)<a name="line.294"></a>
-<FONT color="green">295</FONT>          {<a name="line.295"></a>
-<FONT color="green">296</FONT>             drawUnderstanding(g);<a name="line.296"></a>
-<FONT color="green">297</FONT>          }<a name="line.297"></a>
-<FONT color="green">298</FONT>    <a name="line.298"></a>
-<FONT color="green">299</FONT>          // Draw the robot onto the maze.<a name="line.299"></a>
-<FONT color="green">300</FONT>          if (this.editable == false &amp;&amp; this.robotLocation != null)<a name="line.300"></a>
-<FONT color="green">301</FONT>          {<a name="line.301"></a>
-<FONT color="green">302</FONT>             //We have to translate our coordinate system to make the image rotation easier.<a name="line.302"></a>
-<FONT color="green">303</FONT>             g.translate(this.robotLocation.x, this.robotLocation.y);<a name="line.303"></a>
-<FONT color="green">304</FONT>    <a name="line.304"></a>
-<FONT color="green">305</FONT>             //Back up the current graphics state.<a name="line.305"></a>
-<FONT color="green">306</FONT>             final AffineTransform oldTransform = g.getTransform();<a name="line.306"></a>
-<FONT color="green">307</FONT>             //We add half a PI to the rotation because the top of the image is forward.<a name="line.307"></a>
-<FONT color="green">308</FONT>             final AffineTransform transform = AffineTransform.getRotateInstance(this.robotRotation +<a name="line.308"></a>
-<FONT color="green">309</FONT>                                                                                 Math.PI /<a name="line.309"></a>
-<FONT color="green">310</FONT>                                                                                 2);<a name="line.310"></a>
-<FONT color="green">311</FONT>             //Set the image rotation transformation.<a name="line.311"></a>
-<FONT color="green">312</FONT>             g.transform(transform);<a name="line.312"></a>
-<FONT color="green">313</FONT>             //Get the size of half the final image. Based on smallest cell dimension.<a name="line.313"></a>
-<FONT color="green">314</FONT>             final int size = Math.min(this.csm.getCellWidth() - this.csm.getWallWidth(),<a name="line.314"></a>
-<FONT color="green">315</FONT>                                       this.csm.getCellHeight() - this.csm.getWallHeight()) / 2;<a name="line.315"></a>
-<FONT color="green">316</FONT>             //Draw the image to scale. The point 0,0 is the center of the image.<a name="line.316"></a>
-<FONT color="green">317</FONT>             g.drawImage(this.robotImage.getImage(),<a name="line.317"></a>
-<FONT color="green">318</FONT>                         -size,<a name="line.318"></a>
-<FONT color="green">319</FONT>                         -size,<a name="line.319"></a>
-<FONT color="green">320</FONT>                         size,<a name="line.320"></a>
-<FONT color="green">321</FONT>                         size,<a name="line.321"></a>
-<FONT color="green">322</FONT>                         0,<a name="line.322"></a>
-<FONT color="green">323</FONT>                         0,<a name="line.323"></a>
-<FONT color="green">324</FONT>                         this.robotImage.getIconWidth(),<a name="line.324"></a>
-<FONT color="green">325</FONT>                         this.robotImage.getIconHeight(),<a name="line.325"></a>
-<FONT color="green">326</FONT>                         null);<a name="line.326"></a>
-<FONT color="green">327</FONT>             //Restore the original graphics state.<a name="line.327"></a>
-<FONT color="green">328</FONT>             g.setTransform(oldTransform);<a name="line.328"></a>
-<FONT color="green">329</FONT>             g.translate(-this.robotLocation.x, -this.robotLocation.y);<a name="line.329"></a>
-<FONT color="green">330</FONT>          }<a name="line.330"></a>
-<FONT color="green">331</FONT>    <a name="line.331"></a>
-<FONT color="green">332</FONT>       } //End method.<a name="line.332"></a>
-<FONT color="green">333</FONT>    <a name="line.333"></a>
-<FONT color="green">334</FONT>       /**<a name="line.334"></a>
-<FONT color="green">335</FONT>        * Turns a maze cell into global coordinates for the center of the cell.<a name="line.335"></a>
-<FONT color="green">336</FONT>        */<a name="line.336"></a>
-<FONT color="green">337</FONT>       protected Point getCellCenter(MazeCell cell)<a name="line.337"></a>
-<FONT color="green">338</FONT>       {<a name="line.338"></a>
-<FONT color="green">339</FONT>          return new Point( (cell.getXZeroBased() * this.csm.getCellWidth()) +<a name="line.339"></a>
-<FONT color="green">340</FONT>                                 this.csm.getCellWidthHalf(),<a name="line.340"></a>
-<FONT color="green">341</FONT>                           (cell.getYZeroBased() * this.csm.getCellHeight()) +<a name="line.341"></a>
-<FONT color="green">342</FONT>                                 this.csm.getCellHeightHalf());<a name="line.342"></a>
-<FONT color="green">343</FONT>       }<a name="line.343"></a>
-<FONT color="green">344</FONT>    <a name="line.344"></a>
-<FONT color="green">345</FONT>       /**<a name="line.345"></a>
-<FONT color="green">346</FONT>        * Get a rectangle covering the wall segment with component relative<a name="line.346"></a>
-<FONT color="green">347</FONT>        * coordinates.<a name="line.347"></a>
-<FONT color="green">348</FONT>        */<a name="line.348"></a>
-<FONT color="green">349</FONT>       private Rectangle getWallLocation(MazeCell cell, Direction wall)<a name="line.349"></a>
-<FONT color="green">350</FONT>       {<a name="line.350"></a>
-<FONT color="green">351</FONT>          Point center = this.getCellCenter(cell);<a name="line.351"></a>
-<FONT color="green">352</FONT>          if (wall == Direction.North)<a name="line.352"></a>
-<FONT color="green">353</FONT>          {<a name="line.353"></a>
-<FONT color="green">354</FONT>             return new Rectangle(center.x -<a name="line.354"></a>
-<FONT color="green">355</FONT>                                        (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),<a name="line.355"></a>
-<FONT color="green">356</FONT>                                  center.y -<a name="line.356"></a>
-<FONT color="green">357</FONT>                                        (this.csm.getCellHeightHalf() + this.csm.getWallHeightHalf()),<a name="line.357"></a>
-<FONT color="green">358</FONT>                                  this.csm.getCellWidth() - this.csm.getWallWidth(),<a name="line.358"></a>
-<FONT color="green">359</FONT>                                  this.csm.getWallHeight());<a name="line.359"></a>
-<FONT color="green">360</FONT>          }<a name="line.360"></a>
-<FONT color="green">361</FONT>          else if (wall == Direction.South)<a name="line.361"></a>
-<FONT color="green">362</FONT>          {<a name="line.362"></a>
-<FONT color="green">363</FONT>             return new Rectangle(center.x -<a name="line.363"></a>
-<FONT color="green">364</FONT>                                        (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),<a name="line.364"></a>
-<FONT color="green">365</FONT>                                  center.y +<a name="line.365"></a>
-<FONT color="green">366</FONT>                                        (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),<a name="line.366"></a>
-<FONT color="green">367</FONT>                                  this.csm.getCellWidth() - this.csm.getWallWidth(),<a name="line.367"></a>
-<FONT color="green">368</FONT>                                  this.csm.getWallHeight());<a name="line.368"></a>
-<FONT color="green">369</FONT>          }<a name="line.369"></a>
-<FONT color="green">370</FONT>          else if (wall == Direction.East)<a name="line.370"></a>
-<FONT color="green">371</FONT>          {<a name="line.371"></a>
-<FONT color="green">372</FONT>             return new Rectangle(center.x +<a name="line.372"></a>
-<FONT color="green">373</FONT>                                        (this.csm.getCellWidthHalf() - this.csm.getWallWidthHalf()),<a name="line.373"></a>
-<FONT color="green">374</FONT>                                  center.y -<a name="line.374"></a>
-<FONT color="green">375</FONT>                                        (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),<a name="line.375"></a>
-<FONT color="green">376</FONT>                                  this.csm.getWallWidth(),<a name="line.376"></a>
-<FONT color="green">377</FONT>                                  this.csm.getCellHeight() - this.csm.getWallHeight());<a name="line.377"></a>
-<FONT color="green">378</FONT>          }<a name="line.378"></a>
-<FONT color="green">379</FONT>          else if (wall == Direction.West)<a name="line.379"></a>
-<FONT color="green">380</FONT>          {<a name="line.380"></a>
-<FONT color="green">381</FONT>             return new Rectangle(center.x -<a name="line.381"></a>
-<FONT color="green">382</FONT>                                        (this.csm.getCellWidthHalf() + this.csm.getWallWidthHalf()),<a name="line.382"></a>
-<FONT color="green">383</FONT>                                  center.y -<a name="line.383"></a>
-<FONT color="green">384</FONT>                                        (this.csm.getCellHeightHalf() - this.csm.getWallHeightHalf()),<a name="line.384"></a>
-<FONT color="green">385</FONT>                                  this.csm.getWallWidth(),<a name="line.385"></a>
-<FONT color="green">386</FONT>                                  this.csm.getCellHeight() - this.csm.getWallHeight());<a name="line.386"></a>
-<FONT color="green">387</FONT>          }<a name="line.387"></a>
-<FONT color="green">388</FONT>          return new Rectangle(); //should never get here.<a name="line.388"></a>
-<FONT color="green">389</FONT>       }<a name="line.389"></a>
-<FONT color="green">390</FONT>    <a name="line.390"></a>
-<FONT color="green">391</FONT>       /**<a name="line.391"></a>
-<FONT color="green">392</FONT>        * Get the absolute region of a peg with respect to the given maze cell.<a name="line.392"></a>
-<FONT color="green">393</FONT>        */<a name="line.393"></a>
-<FONT color="green">394</FONT>       protected Rectangle getPegRegion(MazeCell cell, PegLocation peg)<a name="line.394"></a>
-<FONT color="green">395</FONT>       {<a name="line.395"></a>
-<FONT color="green">396</FONT>          if (peg == PegLocation.TopLeft)<a name="line.396"></a>
-<FONT color="green">397</FONT>          {<a name="line.397"></a>
-<FONT color="green">398</FONT>             return new Rectangle( (cell.getX() * this.csm.getCellWidth()) -<a name="line.398"></a>
-<FONT color="green">399</FONT>                                        this.csm.getWallWidthHalf() -<a name="line.399"></a>
-<FONT color="green">400</FONT>                                        this.csm.getCellWidth(),<a name="line.400"></a>
-<FONT color="green">401</FONT>                                  (cell.getY() * this.csm.getCellHeight()) -<a name="line.401"></a>
-<FONT color="green">402</FONT>                                        this.csm.getCellHeight() -<a name="line.402"></a>
-<FONT color="green">403</FONT>                                        this.csm.getWallHeightHalf(),<a name="line.403"></a>
-<FONT color="green">404</FONT>                                  this.csm.getWallWidth(),<a name="line.404"></a>
-<FONT color="green">405</FONT>                                  this.csm.getWallHeight());<a name="line.405"></a>
-<FONT color="green">406</FONT>          }<a name="line.406"></a>
-<FONT color="green">407</FONT>          else if (peg == PegLocation.TopRight)<a name="line.407"></a>
-<FONT color="green">408</FONT>          {<a name="line.408"></a>
-<FONT color="green">409</FONT>             return new Rectangle(cell.getX() * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),<a name="line.409"></a>
-<FONT color="green">410</FONT>                                  (cell.getY() * this.csm.getCellHeight()) -<a name="line.410"></a>
-<FONT color="green">411</FONT>                                        this.csm.getCellHeight() -<a name="line.411"></a>
-<FONT color="green">412</FONT>                                        this.csm.getWallHeightHalf(),<a name="line.412"></a>
-<FONT color="green">413</FONT>                                  this.csm.getWallWidth(),<a name="line.413"></a>
-<FONT color="green">414</FONT>                                  this.csm.getWallHeight());<a name="line.414"></a>
-<FONT color="green">415</FONT>          }<a name="line.415"></a>
-<FONT color="green">416</FONT>          else if (peg == PegLocation.BottomRight)<a name="line.416"></a>
-<FONT color="green">417</FONT>          {<a name="line.417"></a>
-<FONT color="green">418</FONT>             return new Rectangle(cell.getX() * this.csm.getCellWidth() - this.csm.getWallWidthHalf(),<a name="line.418"></a>
-<FONT color="green">419</FONT>                                  cell.getY() * this.csm.getCellHeight() - this.csm.getWallHeightHalf(),<a name="line.419"></a>
-<FONT color="green">420</FONT>                                  this.csm.getWallWidth(),<a name="line.420"></a>
-<FONT color="green">421</FONT>                                  this.csm.getWallHeight());<a name="line.421"></a>
-<FONT color="green">422</FONT>          }<a name="line.422"></a>
-<FONT color="green">423</FONT>          else if (peg == PegLocation.BottomLeft)<a name="line.423"></a>
-<FONT color="green">424</FONT>          {<a name="line.424"></a>
-<FONT color="green">425</FONT>             return new Rectangle(cell.getXZeroBased() *<a name="line.425"></a>
-<FONT color="green">426</FONT>                                        this.csm.getCellWidth() -<a name="line.426"></a>
-<FONT color="green">427</FONT>                                        this.csm.getWallWidthHalf(),<a name="line.427"></a>
-<FONT color="green">428</FONT>                                  cell.getY() * this.csm.getCellHeight() - this.csm.getWallHeightHalf(),<a name="line.428"></a>
-<FONT color="green">429</FONT>                                  this.csm.getWallWidth(),<a name="line.429"></a>
-<FONT color="green">430</FONT>                                  this.csm.getWallHeight());<a name="line.430"></a>
-<FONT color="green">431</FONT>          }<a name="line.431"></a>
-<FONT color="green">432</FONT>          return new Rectangle(); //Should never get here.<a name="line.432"></a>
-<FONT color="green">433</FONT>       }<a name="line.433"></a>
-<FONT color="green">434</FONT>    <a name="line.434"></a>
-<FONT color="green">435</FONT>       /**<a name="line.435"></a>
-<FONT color="green">436</FONT>        * Converts a mouse pointer position into the maze cell that it is in.<a name="line.436"></a>
-<FONT color="green">437</FONT>        * @throws Exception If the pointer location is not within the maze.<a name="line.437"></a>
-<FONT color="green">438</FONT>        */<a name="line.438"></a>
-<FONT color="green">439</FONT>       protected MazeCell getHostMazeCell(Point pointerLocation) throws Exception<a name="line.439"></a>
-<FONT color="green">440</FONT>       {<a name="line.440"></a>
-<FONT color="green">441</FONT>          MazeCell cell = new MazeCell( (pointerLocation.x / this.csm.getCellWidth()) + 1,<a name="line.441"></a>
-<FONT color="green">442</FONT>                                       (pointerLocation.y / this.csm.getCellHeight()) + 1);<a name="line.442"></a>
-<FONT color="green">443</FONT>          if (cell.isInRange(this.model.getSize()))<a name="line.443"></a>
-<FONT color="green">444</FONT>          {<a name="line.444"></a>
-<FONT color="green">445</FONT>             return cell;<a name="line.445"></a>
-<FONT color="green">446</FONT>          }<a name="line.446"></a>
-<FONT color="green">447</FONT>          else<a name="line.447"></a>
-<FONT color="green">448</FONT>          {<a name="line.448"></a>
-<FONT color="green">449</FONT>             throw new Exception("The pointer location is outside of the current maze.");<a name="line.449"></a>
-<FONT color="green">450</FONT>          }<a name="line.450"></a>
-<FONT color="green">451</FONT>       }<a name="line.451"></a>
-<FONT color="green">452</FONT>    <a name="line.452"></a>
-<FONT color="green">453</FONT>       /**<a name="line.453"></a>
-<FONT color="green">454</FONT>        * Used to translate a point into the wall it is located in.<a name="line.454"></a>
-<FONT color="green">455</FONT>        * @param cell Cell to look int.<a name="line.455"></a>
-<FONT color="green">456</FONT>        * @param mouseLocation The location of the mouse cursor or other point.<a name="line.456"></a>
-<FONT color="green">457</FONT>        * @return The direction of the wall found.<a name="line.457"></a>
-<FONT color="green">458</FONT>        * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.<a name="line.458"></a>
-<FONT color="green">459</FONT>        */<a name="line.459"></a>
-<FONT color="green">460</FONT>       private Direction getWallDirection(MazeCell cell, Point mouseLocation) throws Exception<a name="line.460"></a>
-<FONT color="green">461</FONT>       {<a name="line.461"></a>
-<FONT color="green">462</FONT>          for (Direction direction : Direction.values())<a name="line.462"></a>
-<FONT color="green">463</FONT>          {<a name="line.463"></a>
-<FONT color="green">464</FONT>             if (getWallLocation(cell, direction).contains(mouseLocation))<a name="line.464"></a>
-<FONT color="green">465</FONT>             {<a name="line.465"></a>
-<FONT color="green">466</FONT>                return direction;<a name="line.466"></a>
-<FONT color="green">467</FONT>             }<a name="line.467"></a>
-<FONT color="green">468</FONT>          }<a name="line.468"></a>
-<FONT color="green">469</FONT>          throw new Exception("Not inside a wall.");<a name="line.469"></a>
-<FONT color="green">470</FONT>       }<a name="line.470"></a>
-<FONT color="green">471</FONT>    <a name="line.471"></a>
-<FONT color="green">472</FONT>       /**<a name="line.472"></a>
-<FONT color="green">473</FONT>        * Converts a mouse pointer location into an actual maze wall object.<a name="line.473"></a>
-<FONT color="green">474</FONT>        * @param mouseLocation Cursor location or other point.<a name="line.474"></a>
-<FONT color="green">475</FONT>        * @return The maze wall that can be checked or changed.<a name="line.475"></a>
-<FONT color="green">476</FONT>        * @throws java.lang.Exception If the mouse pointer isn't actually on a wall.<a name="line.476"></a>
-<FONT color="green">477</FONT>        */<a name="line.477"></a>
-<FONT color="green">478</FONT>       protected MazeWall getWall(Point mouseLocation) throws Exception<a name="line.478"></a>
-<FONT color="green">479</FONT>       {<a name="line.479"></a>
-<FONT color="green">480</FONT>          final MazeCell cell = getHostMazeCell(mouseLocation);<a name="line.480"></a>
-<FONT color="green">481</FONT>          return model.getWall(cell, getWallDirection(cell, mouseLocation));<a name="line.481"></a>
-<FONT color="green">482</FONT>       }<a name="line.482"></a>
-<FONT color="green">483</FONT>    <a name="line.483"></a>
-<FONT color="green">484</FONT>       /**<a name="line.484"></a>
-<FONT color="green">485</FONT>        * Notifies the MazeView that it has been resized.<a name="line.485"></a>
-<FONT color="green">486</FONT>        * @param e Event object.<a name="line.486"></a>
-<FONT color="green">487</FONT>        */<a name="line.487"></a>
-<FONT color="green">488</FONT>       @Override<a name="line.488"></a>
-<FONT color="green">489</FONT>       public void componentResized(ComponentEvent e)<a name="line.489"></a>
-<FONT color="green">490</FONT>       {<a name="line.490"></a>
-<FONT color="green">491</FONT>          if (model != null)<a name="line.491"></a>
-<FONT color="green">492</FONT>          {<a name="line.492"></a>
-<FONT color="green">493</FONT>             background = null;<a name="line.493"></a>
-<FONT color="green">494</FONT>             this.csm.setCellWidth(this.getWidth() / this.model.getSize().width);<a name="line.494"></a>
-<FONT color="green">495</FONT>             this.csm.setCellHeight(this.getHeight() / this.model.getSize().height);<a name="line.495"></a>
-<FONT color="green">496</FONT>    <a name="line.496"></a>
-<FONT color="green">497</FONT>             final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;<a name="line.497"></a>
-<FONT color="green">498</FONT>             this.csm.setWallWidth(wallSize);<a name="line.498"></a>
-<FONT color="green">499</FONT>             this.csm.setWallHeight(wallSize);<a name="line.499"></a>
-<FONT color="green">500</FONT>          }<a name="line.500"></a>
-<FONT color="green">501</FONT>       }<a name="line.501"></a>
-<FONT color="green">502</FONT>    <a name="line.502"></a>
-<FONT color="green">503</FONT>       @Override<a name="line.503"></a>
-<FONT color="green">504</FONT>       public void componentMoved(ComponentEvent e)<a name="line.504"></a>
-<FONT color="green">505</FONT>       {}<a name="line.505"></a>
-<FONT color="green">506</FONT>    <a name="line.506"></a>
-<FONT color="green">507</FONT>       @Override<a name="line.507"></a>
-<FONT color="green">508</FONT>       public void componentShown(ComponentEvent e)<a name="line.508"></a>
-<FONT color="green">509</FONT>       {}<a name="line.509"></a>
-<FONT color="green">510</FONT>    <a name="line.510"></a>
-<FONT color="green">511</FONT>       @Override<a name="line.511"></a>
-<FONT color="green">512</FONT>       public void componentHidden(ComponentEvent e)<a name="line.512"></a>
-<FONT color="green">513</FONT>       {}<a name="line.513"></a>
-<FONT color="green">514</FONT>    <a name="line.514"></a>
-<FONT color="green">515</FONT>       /**<a name="line.515"></a>
-<FONT color="green">516</FONT>        * Sets whether this MazeView can modify its underlying MazeModel.<a name="line.516"></a>
-<FONT color="green">517</FONT>        * @param b true if the MazeModel should be editable, false otherwise<a name="line.517"></a>
-<FONT color="green">518</FONT>        */<a name="line.518"></a>
-<FONT color="green">519</FONT>       public void setEditable(boolean b)<a name="line.519"></a>
-<FONT color="green">520</FONT>       {<a name="line.520"></a>
-<FONT color="green">521</FONT>          if (b == editable)<a name="line.521"></a>
-<FONT color="green">522</FONT>             return;<a name="line.522"></a>
-<FONT color="green">523</FONT>    <a name="line.523"></a>
-<FONT color="green">524</FONT>          editable = b;<a name="line.524"></a>
-<FONT color="green">525</FONT>          if (editable)<a name="line.525"></a>
-<FONT color="green">526</FONT>          {<a name="line.526"></a>
-<FONT color="green">527</FONT>             //Create an event handler to handle mouse events.<a name="line.527"></a>
-<FONT color="green">528</FONT>             mouseAdapter = new MouseAdapter()<a name="line.528"></a>
-<FONT color="green">529</FONT>             {<a name="line.529"></a>
-<FONT color="green">530</FONT>                @Override<a name="line.530"></a>
-<FONT color="green">531</FONT>                public void mouseMoved(MouseEvent e)<a name="line.531"></a>
-<FONT color="green">532</FONT>                {<a name="line.532"></a>
-<FONT color="green">533</FONT>                   if (model != null)<a name="line.533"></a>
-<FONT color="green">534</FONT>                   {<a name="line.534"></a>
-<FONT color="green">535</FONT>                      try<a name="line.535"></a>
-<FONT color="green">536</FONT>                      {<a name="line.536"></a>
-<FONT color="green">537</FONT>                         active = getHostMazeCell(e.getPoint());<a name="line.537"></a>
-<FONT color="green">538</FONT>                         repaint();<a name="line.538"></a>
-<FONT color="green">539</FONT>                      }<a name="line.539"></a>
-<FONT color="green">540</FONT>                      catch (Exception ex)<a name="line.540"></a>
-<FONT color="green">541</FONT>                      {}<a name="line.541"></a>
-<FONT color="green">542</FONT>                   }<a name="line.542"></a>
-<FONT color="green">543</FONT>                } // public void mouseMoved(MouseEvent e)<a name="line.543"></a>
-<FONT color="green">544</FONT>    <a name="line.544"></a>
-<FONT color="green">545</FONT>                @Override<a name="line.545"></a>
-<FONT color="green">546</FONT>                public void mouseDragged(MouseEvent e)<a name="line.546"></a>
-<FONT color="green">547</FONT>                {<a name="line.547"></a>
-<FONT color="green">548</FONT>                   if (model != null)<a name="line.548"></a>
-<FONT color="green">549</FONT>                   {<a name="line.549"></a>
-<FONT color="green">550</FONT>                      try<a name="line.550"></a>
-<FONT color="green">551</FONT>                      {<a name="line.551"></a>
-<FONT color="green">552</FONT>                         active = getHostMazeCell(e.getPoint());<a name="line.552"></a>
-<FONT color="green">553</FONT>                         MazeWall wall = getWall(e.getPoint());<a name="line.553"></a>
-<FONT color="green">554</FONT>                         if (SwingUtilities.isLeftMouseButton(e))<a name="line.554"></a>
-<FONT color="green">555</FONT>                            wall.set(true);<a name="line.555"></a>
-<FONT color="green">556</FONT>                         else if (SwingUtilities.isRightMouseButton(e))<a name="line.556"></a>
-<FONT color="green">557</FONT>                            wall.set(false);<a name="line.557"></a>
-<FONT color="green">558</FONT>                         repaint();<a name="line.558"></a>
-<FONT color="green">559</FONT>                      }<a name="line.559"></a>
-<FONT color="green">560</FONT>                      catch (Exception ex)<a name="line.560"></a>
-<FONT color="green">561</FONT>                      {}<a name="line.561"></a>
-<FONT color="green">562</FONT>                   }<a name="line.562"></a>
-<FONT color="green">563</FONT>                } // public void mouseDragged(MouseEvent e)<a name="line.563"></a>
+<FONT color="green">205</FONT>          if (this.model.getWall(cell, Direction.East).isSet())<a name="line.205"></a>
+<FONT color="green">206</FONT>          {<a name="line.206"></a>
+<FONT color="green">207</FONT>             this.painter.drawWallSet(g, this.getWallArea(cell, Direction.East));<a name="line.207"></a>
+<FONT color="green">208</FONT>          }<a name="line.208"></a>
+<FONT color="green">209</FONT>          else<a name="line.209"></a>
+<FONT color="green">210</FONT>          {<a name="line.210"></a>
+<FONT color="green">211</FONT>             this.painter.drawWallEmpty(g, this.getWallArea(cell, Direction.East));<a name="line.211"></a>
+<FONT color="green">212</FONT>          }<a name="line.212"></a>
+<FONT color="green">213</FONT>          if (this.model.getWall(cell, Direction.South).isSet())<a name="line.213"></a>
+<FONT color="green">214</FONT>          {<a name="line.214"></a>
+<FONT color="green">215</FONT>             this.painter.drawWallSet(g, this.getWallArea(cell, Direction.South));<a name="line.215"></a>
+<FONT color="green">216</FONT>          }<a name="line.216"></a>
+<FONT color="green">217</FONT>          else<a name="line.217"></a>
+<FONT color="green">218</FONT>          {<a name="line.218"></a>
+<FONT color="green">219</FONT>             this.painter.drawWallEmpty(g, this.getWallArea(cell, Direction.South));<a name="line.219"></a>
+<FONT color="green">220</FONT>          }<a name="line.220"></a>
+<FONT color="green">221</FONT>          this.painter.drawPeg(g, this.getPegArea(cell));<a name="line.221"></a>
+<FONT color="green">222</FONT>          if (this.robotPathModel != null)<a name="line.222"></a>
+<FONT color="green">223</FONT>          {<a name="line.223"></a>
+<FONT color="green">224</FONT>             //Draw the fog of war.<a name="line.224"></a>
+<FONT color="green">225</FONT>             if (this.drawFog &amp;&amp; !this.robotPathModel.hasCellBeenVisited(cell))<a name="line.225"></a>
+<FONT color="green">226</FONT>             {<a name="line.226"></a>
+<FONT color="green">227</FONT>                final Rectangle area = this.getCellArea(cell);<a name="line.227"></a>
+<FONT color="green">228</FONT>                final MazeCell east = cell.neighbor(Direction.East);<a name="line.228"></a>
+<FONT color="green">229</FONT>                final MazeCell south = cell.neighbor(Direction.South);<a name="line.229"></a>
+<FONT color="green">230</FONT>                if (east.isInRange(this.model.getSize()) &amp;&amp;<a name="line.230"></a>
+<FONT color="green">231</FONT>                    this.robotPathModel.hasCellBeenVisited(east))<a name="line.231"></a>
+<FONT color="green">232</FONT>                {<a name="line.232"></a>
+<FONT color="green">233</FONT>                   area.width -= this.csm.getWallWidth();<a name="line.233"></a>
+<FONT color="green">234</FONT>                }<a name="line.234"></a>
+<FONT color="green">235</FONT>                if (south.isInRange(this.model.getSize()) &amp;&amp;<a name="line.235"></a>
+<FONT color="green">236</FONT>                    this.robotPathModel.hasCellBeenVisited(south))<a name="line.236"></a>
+<FONT color="green">237</FONT>                {<a name="line.237"></a>
+<FONT color="green">238</FONT>                   area.height -= this.csm.getWallHeight();<a name="line.238"></a>
+<FONT color="green">239</FONT>                }<a name="line.239"></a>
+<FONT color="green">240</FONT>                this.painter.drawFog(g, area);<a name="line.240"></a>
+<FONT color="green">241</FONT>             }<a name="line.241"></a>
+<FONT color="green">242</FONT>             // Draw a current path of dots.<a name="line.242"></a>
+<FONT color="green">243</FONT>             /*<a name="line.243"></a>
+<FONT color="green">244</FONT>             if (this.drawPathCurrent &amp;&amp; this.robotPathModel.getPathRecent().contains(cell))<a name="line.244"></a>
+<FONT color="green">245</FONT>             {<a name="line.245"></a>
+<FONT color="green">246</FONT>                final EnumSet&lt;Direction&gt; directions = EnumSet.noneOf(Direction.class);<a name="line.246"></a>
+<FONT color="green">247</FONT>                for (final Direction dir : this.getAdjacentDirections(cell))<a name="line.247"></a>
+<FONT color="green">248</FONT>                {<a name="line.248"></a>
+<FONT color="green">249</FONT>                   if (!this.model.getWall(cell, dir).isSet() &amp;&amp;<a name="line.249"></a>
+<FONT color="green">250</FONT>                       this.robotPathModel.getPathRecent().contains(cell.neighbor(dir)))<a name="line.250"></a>
+<FONT color="green">251</FONT>                   {<a name="line.251"></a>
+<FONT color="green">252</FONT>                      directions.add(dir);<a name="line.252"></a>
+<FONT color="green">253</FONT>                   }<a name="line.253"></a>
+<FONT color="green">254</FONT>                }<a name="line.254"></a>
+<FONT color="green">255</FONT>                this.painter.drawRunCurrent(g, this.getCellAreaInner(cell), directions);<a name="line.255"></a>
+<FONT color="green">256</FONT>             }<a name="line.256"></a>
+<FONT color="green">257</FONT>             */<a name="line.257"></a>
+<FONT color="green">258</FONT>          }<a name="line.258"></a>
+<FONT color="green">259</FONT>       }<a name="line.259"></a>
+<FONT color="green">260</FONT>    <a name="line.260"></a>
+<FONT color="green">261</FONT>       /**<a name="line.261"></a>
+<FONT color="green">262</FONT>        * Draws cells that have been invalidated. We only draw a limited number of<a name="line.262"></a>
+<FONT color="green">263</FONT>        * cells per call and if not all invalidated cells were drawn repaint() is<a name="line.263"></a>
+<FONT color="green">264</FONT>        * called.<a name="line.264"></a>
+<FONT color="green">265</FONT>        * @param g Where to draw.<a name="line.265"></a>
+<FONT color="green">266</FONT>        */<a name="line.266"></a>
+<FONT color="green">267</FONT>       private void drawInvalidatedCells(final Graphics2D g)<a name="line.267"></a>
+<FONT color="green">268</FONT>       {<a name="line.268"></a>
+<FONT color="green">269</FONT>          final boolean notDone;<a name="line.269"></a>
+<FONT color="green">270</FONT>          synchronized (this.invalidatedCells)<a name="line.270"></a>
+<FONT color="green">271</FONT>          {<a name="line.271"></a>
+<FONT color="green">272</FONT>             final Iterator&lt;MazeCell&gt; itr = this.invalidatedCells.iterator();<a name="line.272"></a>
+<FONT color="green">273</FONT>             int limit = MAX_CELLS_TO_DRAW;<a name="line.273"></a>
+<FONT color="green">274</FONT>             while (itr.hasNext() &amp;&amp; 0 &lt; limit--)<a name="line.274"></a>
+<FONT color="green">275</FONT>             {<a name="line.275"></a>
+<FONT color="green">276</FONT>                this.drawCell(g, itr.next());<a name="line.276"></a>
+<FONT color="green">277</FONT>                itr.remove();<a name="line.277"></a>
+<FONT color="green">278</FONT>             }<a name="line.278"></a>
+<FONT color="green">279</FONT>             notDone = this.invalidatedCells.isEmpty() ? false : true;<a name="line.279"></a>
+<FONT color="green">280</FONT>          }<a name="line.280"></a>
+<FONT color="green">281</FONT>          if (notDone)<a name="line.281"></a>
+<FONT color="green">282</FONT>             this.repaint();<a name="line.282"></a>
+<FONT color="green">283</FONT>       }<a name="line.283"></a>
+<FONT color="green">284</FONT>    <a name="line.284"></a>
+<FONT color="green">285</FONT>       /**<a name="line.285"></a>
+<FONT color="green">286</FONT>        * Draws the top and left outside walls as these don't fall inside of any<a name="line.286"></a>
+<FONT color="green">287</FONT>        * cells.<a name="line.287"></a>
+<FONT color="green">288</FONT>        * @param g Where to draw.<a name="line.288"></a>
+<FONT color="green">289</FONT>        */<a name="line.289"></a>
+<FONT color="green">290</FONT>       private void drawOutsideWalls(final Graphics2D g)<a name="line.290"></a>
+<FONT color="green">291</FONT>       {<a name="line.291"></a>
+<FONT color="green">292</FONT>          if (this.model != null &amp;&amp; this.painter != null)<a name="line.292"></a>
+<FONT color="green">293</FONT>          {<a name="line.293"></a>
+<FONT color="green">294</FONT>             final Rectangle pegArea = new Rectangle(0,<a name="line.294"></a>
+<FONT color="green">295</FONT>                                                     0,<a name="line.295"></a>
+<FONT color="green">296</FONT>                                                     this.csm.getWallWidth(),<a name="line.296"></a>
+<FONT color="green">297</FONT>                                                     this.csm.getWallHeight());<a name="line.297"></a>
+<FONT color="green">298</FONT>             final Rectangle wallArea = new Rectangle(this.csm.getWallWidth(),<a name="line.298"></a>
+<FONT color="green">299</FONT>                                                      0,<a name="line.299"></a>
+<FONT color="green">300</FONT>                                                      this.csm.getCellWidthInner(),<a name="line.300"></a>
+<FONT color="green">301</FONT>                                                      this.csm.getWallHeight());<a name="line.301"></a>
+<FONT color="green">302</FONT>    <a name="line.302"></a>
+<FONT color="green">303</FONT>             for (int i = 0; i &lt;= this.model.getSize().width; i++)<a name="line.303"></a>
+<FONT color="green">304</FONT>             {<a name="line.304"></a>
+<FONT color="green">305</FONT>                this.painter.drawPeg(g, pegArea);<a name="line.305"></a>
+<FONT color="green">306</FONT>                pegArea.x += this.csm.getCellWidth();<a name="line.306"></a>
+<FONT color="green">307</FONT>                // We draw more pegs than walls.<a name="line.307"></a>
+<FONT color="green">308</FONT>                if (i == 0)<a name="line.308"></a>
+<FONT color="green">309</FONT>                {<a name="line.309"></a>
+<FONT color="green">310</FONT>                   continue;<a name="line.310"></a>
+<FONT color="green">311</FONT>                }<a name="line.311"></a>
+<FONT color="green">312</FONT>                this.painter.drawWallSet(g, wallArea);<a name="line.312"></a>
+<FONT color="green">313</FONT>                wallArea.x += this.csm.getCellWidth();<a name="line.313"></a>
+<FONT color="green">314</FONT>             }<a name="line.314"></a>
+<FONT color="green">315</FONT>    <a name="line.315"></a>
+<FONT color="green">316</FONT>             pegArea.setLocation(0, this.csm.getCellHeight());<a name="line.316"></a>
+<FONT color="green">317</FONT>             wallArea.setSize(this.csm.getWallWidth(), this.csm.getCellHeightInner());<a name="line.317"></a>
+<FONT color="green">318</FONT>             wallArea.setLocation(0, this.csm.getWallHeight());<a name="line.318"></a>
+<FONT color="green">319</FONT>             // Draw the left side column of pegs and walls.<a name="line.319"></a>
+<FONT color="green">320</FONT>             for (int i = 1; i &lt;= this.model.getSize().height; i++)<a name="line.320"></a>
+<FONT color="green">321</FONT>             {<a name="line.321"></a>
+<FONT color="green">322</FONT>                this.painter.drawPeg(g, pegArea);<a name="line.322"></a>
+<FONT color="green">323</FONT>                pegArea.y += this.csm.getCellHeight();<a name="line.323"></a>
+<FONT color="green">324</FONT>                this.painter.drawWallSet(g, wallArea);<a name="line.324"></a>
+<FONT color="green">325</FONT>                wallArea.y += this.csm.getCellHeight();<a name="line.325"></a>
+<FONT color="green">326</FONT>             }<a name="line.326"></a>
+<FONT color="green">327</FONT>          }<a name="line.327"></a>
+<FONT color="green">328</FONT>       }<a name="line.328"></a>
+<FONT color="green">329</FONT>    <a name="line.329"></a>
+<FONT color="green">330</FONT>       /**<a name="line.330"></a>
+<FONT color="green">331</FONT>        * Draw a robot path onto the maze. The path will have the width of the cell<a name="line.331"></a>
+<FONT color="green">332</FONT>        * walls.<a name="line.332"></a>
+<FONT color="green">333</FONT>        * @param g Where to draw.<a name="line.333"></a>
+<FONT color="green">334</FONT>        * @param path The cell to cell path to draw.<a name="line.334"></a>
+<FONT color="green">335</FONT>        * @param offset Shift the path by the given amount so that you can draw<a name="line.335"></a>
+<FONT color="green">336</FONT>        *           multiple paths without them overlapping. A value of 0 draws to<a name="line.336"></a>
+<FONT color="green">337</FONT>        *           the center of the cell.<a name="line.337"></a>
+<FONT color="green">338</FONT>        * @param trimTail If set to true the tail of the path will be trimmed to the<a name="line.338"></a>
+<FONT color="green">339</FONT>        *           location of the robot. This allows the current path to finish<a name="line.339"></a>
+<FONT color="green">340</FONT>        *           right on the current robot position.<a name="line.340"></a>
+<FONT color="green">341</FONT>        */<a name="line.341"></a>
+<FONT color="green">342</FONT>       private void drawPath(final Graphics2D g, final List&lt;MazeCell&gt; path, final int offset,<a name="line.342"></a>
+<FONT color="green">343</FONT>             boolean trimTail)<a name="line.343"></a>
+<FONT color="green">344</FONT>       {<a name="line.344"></a>
+<FONT color="green">345</FONT>          if (path != null &amp;&amp; !path.isEmpty())<a name="line.345"></a>
+<FONT color="green">346</FONT>          {<a name="line.346"></a>
+<FONT color="green">347</FONT>             MazeCell here = path.get(0);<a name="line.347"></a>
+<FONT color="green">348</FONT>             MazeCell there;<a name="line.348"></a>
+<FONT color="green">349</FONT>             int x, y;<a name="line.349"></a>
+<FONT color="green">350</FONT>             int width, height;<a name="line.350"></a>
+<FONT color="green">351</FONT>             for (int i = 1; i &lt; path.size(); i++)<a name="line.351"></a>
+<FONT color="green">352</FONT>             {<a name="line.352"></a>
+<FONT color="green">353</FONT>                there = path.get(i);<a name="line.353"></a>
+<FONT color="green">354</FONT>                // Check for a rare case where a lack of thread safety changes the list while in use.<a name="line.354"></a>
+<FONT color="green">355</FONT>                if (there == null)<a name="line.355"></a>
+<FONT color="green">356</FONT>                   return;<a name="line.356"></a>
+<FONT color="green">357</FONT>                final Point center = this.getCellCenterInner(here);<a name="line.357"></a>
+<FONT color="green">358</FONT>                if (here.getX() &lt; there.getX())<a name="line.358"></a>
+<FONT color="green">359</FONT>                {<a name="line.359"></a>
+<FONT color="green">360</FONT>                   //here is west of there, going east.<a name="line.360"></a>
+<FONT color="green">361</FONT>                   x = center.x + this.csm.getWallWidthHalf();<a name="line.361"></a>
+<FONT color="green">362</FONT>                   y = center.y - this.csm.getWallHeightHalf();<a name="line.362"></a>
+<FONT color="green">363</FONT>                   width = this.csm.getCellWidth();<a name="line.363"></a>
+<FONT color="green">364</FONT>                   height = this.csm.getWallHeight();<a name="line.364"></a>
+<FONT color="green">365</FONT>                }<a name="line.365"></a>
+<FONT color="green">366</FONT>                else if (here.getX() &gt; there.getX())<a name="line.366"></a>
+<FONT color="green">367</FONT>                {<a name="line.367"></a>
+<FONT color="green">368</FONT>                   //here is east of there, going west.<a name="line.368"></a>
+<FONT color="green">369</FONT>                   x = center.x - this.csm.getWallWidthHalf() - this.csm.getCellWidth();<a name="line.369"></a>
+<FONT color="green">370</FONT>                   y = center.y - this.csm.getWallHeightHalf();<a name="line.370"></a>
+<FONT color="green">371</FONT>                   width = this.csm.getCellWidth();<a name="line.371"></a>
+<FONT color="green">372</FONT>                   height = this.csm.getWallHeight();<a name="line.372"></a>
+<FONT color="green">373</FONT>                }<a name="line.373"></a>
+<FONT color="green">374</FONT>                else if (here.getY() &gt; there.getY())<a name="line.374"></a>
+<FONT color="green">375</FONT>                {<a name="line.375"></a>
+<FONT color="green">376</FONT>                   //here is south of there, going north.<a name="line.376"></a>
+<FONT color="green">377</FONT>                   x = center.x - this.csm.getWallWidthHalf();<a name="line.377"></a>
+<FONT color="green">378</FONT>                   y = center.y - this.csm.getWallHeightHalf() - this.csm.getCellHeight();<a name="line.378"></a>
+<FONT color="green">379</FONT>                   width = this.csm.getWallWidth();<a name="line.379"></a>
+<FONT color="green">380</FONT>                   height = this.csm.getCellHeight();<a name="line.380"></a>
+<FONT color="green">381</FONT>                }<a name="line.381"></a>
+<FONT color="green">382</FONT>                else<a name="line.382"></a>
+<FONT color="green">383</FONT>                {<a name="line.383"></a>
+<FONT color="green">384</FONT>                   //here is north of there, going south.<a name="line.384"></a>
+<FONT color="green">385</FONT>                   x = center.x - this.csm.getWallWidthHalf();<a name="line.385"></a>
+<FONT color="green">386</FONT>                   y = center.y + this.csm.getWallHeightHalf();<a name="line.386"></a>
+<FONT color="green">387</FONT>                   width = this.csm.getWallWidth();<a name="line.387"></a>
+<FONT color="green">388</FONT>                   height = this.csm.getCellHeight();<a name="line.388"></a>
+<FONT color="green">389</FONT>                }<a name="line.389"></a>
+<FONT color="green">390</FONT>                // If we are at the last cell and we are trimming the tail up to the robot.<a name="line.390"></a>
+<FONT color="green">391</FONT>                if (i == path.size() - 1 &amp;&amp; trimTail &amp;&amp; this.robotLocation != null)<a name="line.391"></a>
+<FONT color="green">392</FONT>                {<a name="line.392"></a>
+<FONT color="green">393</FONT>                   if (here.getX() &lt; there.getX())<a name="line.393"></a>
+<FONT color="green">394</FONT>                   {<a name="line.394"></a>
+<FONT color="green">395</FONT>                      //here is west of there, going east.<a name="line.395"></a>
+<FONT color="green">396</FONT>                      width = Math.abs(x - this.robotLocation.x);<a name="line.396"></a>
+<FONT color="green">397</FONT>                   }<a name="line.397"></a>
+<FONT color="green">398</FONT>                   else if (here.getX() &gt; there.getX())<a name="line.398"></a>
+<FONT color="green">399</FONT>                   {<a name="line.399"></a>
+<FONT color="green">400</FONT>                      //here is east of there, going west.<a name="line.400"></a>
+<FONT color="green">401</FONT>                      width -= this.robotLocation.x - x;<a name="line.401"></a>
+<FONT color="green">402</FONT>                      x = this.robotLocation.x;<a name="line.402"></a>
+<FONT color="green">403</FONT>    <a name="line.403"></a>
+<FONT color="green">404</FONT>                   }<a name="line.404"></a>
+<FONT color="green">405</FONT>                   else if (here.getY() &gt; there.getY())<a name="line.405"></a>
+<FONT color="green">406</FONT>                   {<a name="line.406"></a>
+<FONT color="green">407</FONT>                      //here is south of there, going north.<a name="line.407"></a>
+<FONT color="green">408</FONT>                      height -= this.robotLocation.y - y;<a name="line.408"></a>
+<FONT color="green">409</FONT>                      y = this.robotLocation.y;<a name="line.409"></a>
+<FONT color="green">410</FONT>                   }<a name="line.410"></a>
+<FONT color="green">411</FONT>                   else<a name="line.411"></a>
+<FONT color="green">412</FONT>                   {<a name="line.412"></a>
+<FONT color="green">413</FONT>                      //here is north of there, going south.<a name="line.413"></a>
+<FONT color="green">414</FONT>                      height = this.robotLocation.y - y;<a name="line.414"></a>
+<FONT color="green">415</FONT>                   }<a name="line.415"></a>
+<FONT color="green">416</FONT>                }<a name="line.416"></a>
+<FONT color="green">417</FONT>                g.fillRect(x - offset, y + offset, width, height);<a name="line.417"></a>
+<FONT color="green">418</FONT>                here = there;<a name="line.418"></a>
+<FONT color="green">419</FONT>             }<a name="line.419"></a>
+<FONT color="green">420</FONT>          }<a name="line.420"></a>
+<FONT color="green">421</FONT>       }<a name="line.421"></a>
+<FONT color="green">422</FONT>    <a name="line.422"></a>
+<FONT color="green">423</FONT>       /**<a name="line.423"></a>
+<FONT color="green">424</FONT>        * Draws the very top of the maze view. This is the most frequently called<a name="line.424"></a>
+<FONT color="green">425</FONT>        * draw method and is called every time the view is repainted. Because of<a name="line.425"></a>
+<FONT color="green">426</FONT>        * this it should run as fast as possible. It is much better to draw in the<a name="line.426"></a>
+<FONT color="green">427</FONT>        * &lt;code&gt;drawCell()&lt;/code&gt; method.<a name="line.427"></a>
+<FONT color="green">428</FONT>        * @param g What to draw on.<a name="line.428"></a>
+<FONT color="green">429</FONT>        */<a name="line.429"></a>
+<FONT color="green">430</FONT>       private void drawTopLayer(final Graphics2D g)<a name="line.430"></a>
+<FONT color="green">431</FONT>       {<a name="line.431"></a>
+<FONT color="green">432</FONT>          this.setRenderingQualityLow(g);<a name="line.432"></a>
+<FONT color="green">433</FONT>          final RobotPathModel pathModel = this.robotPathModel;<a name="line.433"></a>
+<FONT color="green">434</FONT>          if (pathModel != null)<a name="line.434"></a>
+<FONT color="green">435</FONT>          {<a name="line.435"></a>
+<FONT color="green">436</FONT>             if (this.drawPathFirst)<a name="line.436"></a>
+<FONT color="green">437</FONT>             {<a name="line.437"></a>
+<FONT color="green">438</FONT>                g.setPaint(this.painter.getRunFirst());<a name="line.438"></a>
+<FONT color="green">439</FONT>                this.drawPath(g, pathModel.getPathFirst(), this.csm.getWallWidth(), false);<a name="line.439"></a>
+<FONT color="green">440</FONT>             }<a name="line.440"></a>
+<FONT color="green">441</FONT>             if (this.drawPathBest)<a name="line.441"></a>
+<FONT color="green">442</FONT>             {<a name="line.442"></a>
+<FONT color="green">443</FONT>                g.setPaint(this.painter.getRunBest());<a name="line.443"></a>
+<FONT color="green">444</FONT>                this.drawPath(g, pathModel.getPathBest(), -this.csm.getWallWidth(), false);<a name="line.444"></a>
+<FONT color="green">445</FONT>             }<a name="line.445"></a>
+<FONT color="green">446</FONT>             if (this.drawPathCurrent)<a name="line.446"></a>
+<FONT color="green">447</FONT>             {<a name="line.447"></a>
+<FONT color="green">448</FONT>                g.setPaint(this.painter.getRunCurrent());<a name="line.448"></a>
+<FONT color="green">449</FONT>                this.drawPath(g, pathModel.getPathRecent(), 0, true);<a name="line.449"></a>
+<FONT color="green">450</FONT>             }<a name="line.450"></a>
+<FONT color="green">451</FONT>          }<a name="line.451"></a>
+<FONT color="green">452</FONT>          if (this.drawUnderstanding)<a name="line.452"></a>
+<FONT color="green">453</FONT>          {<a name="line.453"></a>
+<FONT color="green">454</FONT>             this.drawUnderstanding(g);<a name="line.454"></a>
+<FONT color="green">455</FONT>          }<a name="line.455"></a>
+<FONT color="green">456</FONT>          if (this.getRobotLocation() != null)<a name="line.456"></a>
+<FONT color="green">457</FONT>          {<a name="line.457"></a>
+<FONT color="green">458</FONT>             this.setRenderingQualityHigh(g);<a name="line.458"></a>
+<FONT color="green">459</FONT>             this.painter.drawRobot(g,<a name="line.459"></a>
+<FONT color="green">460</FONT>                                    this.getRobotLocation(),<a name="line.460"></a>
+<FONT color="green">461</FONT>                                    this.getRobotRotation(),<a name="line.461"></a>
+<FONT color="green">462</FONT>                                    this.csm.getCellWidthInner(),<a name="line.462"></a>
+<FONT color="green">463</FONT>                                    this.csm.getCellHeightInner());<a name="line.463"></a>
+<FONT color="green">464</FONT>          }<a name="line.464"></a>
+<FONT color="green">465</FONT>       }<a name="line.465"></a>
+<FONT color="green">466</FONT>    <a name="line.466"></a>
+<FONT color="green">467</FONT>       /**<a name="line.467"></a>
+<FONT color="green">468</FONT>        * Draws the arrows and numbers on the maze.<a name="line.468"></a>
+<FONT color="green">469</FONT>        * @param g What to draw on.<a name="line.469"></a>
+<FONT color="green">470</FONT>        */<a name="line.470"></a>
+<FONT color="green">471</FONT>       private void drawUnderstanding(final Graphics2D g)<a name="line.471"></a>
+<FONT color="green">472</FONT>       {<a name="line.472"></a>
+<FONT color="green">473</FONT>          MazeCell here;<a name="line.473"></a>
+<FONT color="green">474</FONT>          if (understandingInt != null)<a name="line.474"></a>
+<FONT color="green">475</FONT>          {<a name="line.475"></a>
+<FONT color="green">476</FONT>             int local;<a name="line.476"></a>
+<FONT color="green">477</FONT>             for (int i = 1; i &lt;= model.getSize().width; i++)<a name="line.477"></a>
+<FONT color="green">478</FONT>             {<a name="line.478"></a>
+<FONT color="green">479</FONT>                for (int j = 1; j &lt;= model.getSize().height; j++)<a name="line.479"></a>
+<FONT color="green">480</FONT>                {<a name="line.480"></a>
+<FONT color="green">481</FONT>                   here = new MazeCell(i, j);<a name="line.481"></a>
+<FONT color="green">482</FONT>                   g.setColor(Color.BLACK);<a name="line.482"></a>
+<FONT color="green">483</FONT>                   final Point center = this.getCellCenterInner(here);<a name="line.483"></a>
+<FONT color="green">484</FONT>                   local = understandingInt[i - 1][j - 1];<a name="line.484"></a>
+<FONT color="green">485</FONT>                   g.drawString(String.valueOf(local), center.x - 6, center.y + 2);<a name="line.485"></a>
+<FONT color="green">486</FONT>                }<a name="line.486"></a>
+<FONT color="green">487</FONT>             }<a name="line.487"></a>
+<FONT color="green">488</FONT>          }<a name="line.488"></a>
+<FONT color="green">489</FONT>          else if (understandingDir != null)<a name="line.489"></a>
+<FONT color="green">490</FONT>          {<a name="line.490"></a>
+<FONT color="green">491</FONT>             Direction local;<a name="line.491"></a>
+<FONT color="green">492</FONT>             for (int i = 1; i &lt;= model.getSize().width; i++)<a name="line.492"></a>
+<FONT color="green">493</FONT>             {<a name="line.493"></a>
+<FONT color="green">494</FONT>                for (int j = 1; j &lt;= model.getSize().height; j++)<a name="line.494"></a>
+<FONT color="green">495</FONT>                {<a name="line.495"></a>
+<FONT color="green">496</FONT>                   here = new MazeCell(i, j);<a name="line.496"></a>
+<FONT color="green">497</FONT>                   final Point center = this.getCellCenterInner(here);<a name="line.497"></a>
+<FONT color="green">498</FONT>                   g.setColor(Color.BLACK);<a name="line.498"></a>
+<FONT color="green">499</FONT>                   local = understandingDir[i - 1][j - 1];<a name="line.499"></a>
+<FONT color="green">500</FONT>                   if (local != null)<a name="line.500"></a>
+<FONT color="green">501</FONT>                   {<a name="line.501"></a>
+<FONT color="green">502</FONT>                      drawArrow(g, local, center.x, center.y);<a name="line.502"></a>
+<FONT color="green">503</FONT>                   }<a name="line.503"></a>
+<FONT color="green">504</FONT>                }<a name="line.504"></a>
+<FONT color="green">505</FONT>             }<a name="line.505"></a>
+<FONT color="green">506</FONT>          }<a name="line.506"></a>
+<FONT color="green">507</FONT>       }<a name="line.507"></a>
+<FONT color="green">508</FONT>    <a name="line.508"></a>
+<FONT color="green">509</FONT>       /**<a name="line.509"></a>
+<FONT color="green">510</FONT>        * This event is triggered to invalidate a cell that needs to be repainted.<a name="line.510"></a>
+<FONT color="green">511</FONT>        */<a name="line.511"></a>
+<FONT color="green">512</FONT>       @Override<a name="line.512"></a>
+<FONT color="green">513</FONT>       public void eventFired(final MazeCell cell)<a name="line.513"></a>
+<FONT color="green">514</FONT>       {<a name="line.514"></a>
+<FONT color="green">515</FONT>          this.invalidateCell(cell);<a name="line.515"></a>
+<FONT color="green">516</FONT>       }<a name="line.516"></a>
+<FONT color="green">517</FONT>    <a name="line.517"></a>
+<FONT color="green">518</FONT>       /**<a name="line.518"></a>
+<FONT color="green">519</FONT>        * Gets all the cells that are adjacent to the given one.<a name="line.519"></a>
+<FONT color="green">520</FONT>        * @param cell The cell in question.<a name="line.520"></a>
+<FONT color="green">521</FONT>        * @return All adjacent or connecting cells.<a name="line.521"></a>
+<FONT color="green">522</FONT>        */<a name="line.522"></a>
+<FONT color="green">523</FONT>       @SuppressWarnings("unused")<a name="line.523"></a>
+<FONT color="green">524</FONT>       private MazeCell[] getAdjacentCells(final MazeCell cell)<a name="line.524"></a>
+<FONT color="green">525</FONT>       {<a name="line.525"></a>
+<FONT color="green">526</FONT>          final Direction[] dirs = this.getAdjacentDirections(cell).toArray(new Direction[0]);<a name="line.526"></a>
+<FONT color="green">527</FONT>          final MazeCell[] result = new MazeCell[dirs.length];<a name="line.527"></a>
+<FONT color="green">528</FONT>          for (int i = 0; i &lt; dirs.length; i++)<a name="line.528"></a>
+<FONT color="green">529</FONT>          {<a name="line.529"></a>
+<FONT color="green">530</FONT>             result[i] = cell.neighbor(dirs[i]);<a name="line.530"></a>
+<FONT color="green">531</FONT>          }<a name="line.531"></a>
+<FONT color="green">532</FONT>          return result;<a name="line.532"></a>
+<FONT color="green">533</FONT>       }<a name="line.533"></a>
+<FONT color="green">534</FONT>    <a name="line.534"></a>
+<FONT color="green">535</FONT>       /**<a name="line.535"></a>
+<FONT color="green">536</FONT>        * Gets a direction for each adjacent cell that exists. The only time one<a name="line.536"></a>
+<FONT color="green">537</FONT>        * doesn't exists is when the given cell is on the maze edge.<a name="line.537"></a>
+<FONT color="green">538</FONT>        * @param cell The cell in question.<a name="line.538"></a>
+<FONT color="green">539</FONT>        * @return A set of directions with each direction confirming the existence<a name="line.539"></a>
+<FONT color="green">540</FONT>        *         of a neighbor cell.<a name="line.540"></a>
+<FONT color="green">541</FONT>        */<a name="line.541"></a>
+<FONT color="green">542</FONT>       private EnumSet&lt;Direction&gt; getAdjacentDirections(final MazeCell cell)<a name="line.542"></a>
+<FONT color="green">543</FONT>       {<a name="line.543"></a>
+<FONT color="green">544</FONT>          // We start with all and then remove because it is less likely.<a name="line.544"></a>
+<FONT color="green">545</FONT>          final EnumSet&lt;Direction&gt; directions = EnumSet.allOf(Direction.class);<a name="line.545"></a>
+<FONT color="green">546</FONT>          if (cell.getX() == 1)<a name="line.546"></a>
+<FONT color="green">547</FONT>          {<a name="line.547"></a>
+<FONT color="green">548</FONT>             directions.remove(Direction.West);<a name="line.548"></a>
+<FONT color="green">549</FONT>    <a name="line.549"></a>
+<FONT color="green">550</FONT>          }<a name="line.550"></a>
+<FONT color="green">551</FONT>          if (cell.getY() == 1)<a name="line.551"></a>
+<FONT color="green">552</FONT>          {<a name="line.552"></a>
+<FONT color="green">553</FONT>             directions.remove(Direction.North);<a name="line.553"></a>
+<FONT color="green">554</FONT>    <a name="line.554"></a>
+<FONT color="green">555</FONT>          }<a name="line.555"></a>
+<FONT color="green">556</FONT>          if (cell.getX() == this.model.getSize().width)<a name="line.556"></a>
+<FONT color="green">557</FONT>          {<a name="line.557"></a>
+<FONT color="green">558</FONT>             directions.remove(Direction.East);<a name="line.558"></a>
+<FONT color="green">559</FONT>    <a name="line.559"></a>
+<FONT color="green">560</FONT>          }<a name="line.560"></a>
+<FONT color="green">561</FONT>          if (cell.getY() == this.model.getSize().height)<a name="line.561"></a>
+<FONT color="green">562</FONT>          {<a name="line.562"></a>
+<FONT color="green">563</FONT>             directions.remove(Direction.South);<a name="line.563"></a>
 <FONT color="green">564</FONT>    <a name="line.564"></a>
-<FONT color="green">565</FONT>                @Override<a name="line.565"></a>
-<FONT color="green">566</FONT>                public void mousePressed(MouseEvent e)<a name="line.566"></a>
-<FONT color="green">567</FONT>                {<a name="line.567"></a>
-<FONT color="green">568</FONT>                   if (model != null)<a name="line.568"></a>
-<FONT color="green">569</FONT>                   {<a name="line.569"></a>
-<FONT color="green">570</FONT>                      try<a name="line.570"></a>
-<FONT color="green">571</FONT>                      {<a name="line.571"></a>
-<FONT color="green">572</FONT>                         final MazeWall wall = getWall(e.getPoint());<a name="line.572"></a>
-<FONT color="green">573</FONT>                         //Flip the status of the wall.<a name="line.573"></a>
-<FONT color="green">574</FONT>                         wall.set(!wall.isSet());<a name="line.574"></a>
-<FONT color="green">575</FONT>                         repaint();<a name="line.575"></a>
-<FONT color="green">576</FONT>                      }<a name="line.576"></a>
-<FONT color="green">577</FONT>                      catch (Exception ex)<a name="line.577"></a>
-<FONT color="green">578</FONT>                      {}<a name="line.578"></a>
-<FONT color="green">579</FONT>                   }<a name="line.579"></a>
-<FONT color="green">580</FONT>                } // public void mousePressed(MouseEvent e)<a name="line.580"></a>
-<FONT color="green">581</FONT>             };<a name="line.581"></a>
-<FONT color="green">582</FONT>             this.addMouseListener(mouseAdapter);<a name="line.582"></a>
-<FONT color="green">583</FONT>             this.addMouseMotionListener(mouseAdapter);<a name="line.583"></a>
-<FONT color="green">584</FONT>          } // if (editable)<a name="line.584"></a>
-<FONT color="green">585</FONT>          else<a name="line.585"></a>
-<FONT color="green">586</FONT>          {<a name="line.586"></a>
-<FONT color="green">587</FONT>             active = null;<a name="line.587"></a>
-<FONT color="green">588</FONT>             this.removeMouseListener(mouseAdapter);<a name="line.588"></a>
-<FONT color="green">589</FONT>             this.removeMouseMotionListener(mouseAdapter);<a name="line.589"></a>
-<FONT color="green">590</FONT>             repaint();<a name="line.590"></a>
-<FONT color="green">591</FONT>          } // else<a name="line.591"></a>
-<FONT color="green">592</FONT>       }<a name="line.592"></a>
-<FONT color="green">593</FONT>    <a name="line.593"></a>
-<FONT color="green">594</FONT>       private void drawFog(Graphics2D g)<a name="line.594"></a>
-<FONT color="green">595</FONT>       {<a name="line.595"></a>
-<FONT color="green">596</FONT>          //Draw the box for fog<a name="line.596"></a>
-<FONT color="green">597</FONT>          if (unexplored != null)<a name="line.597"></a>
-<FONT color="green">598</FONT>          {<a name="line.598"></a>
-<FONT color="green">599</FONT>             g.setPaint(this.paints.getFog());<a name="line.599"></a>
-<FONT color="green">600</FONT>             for (MazeCell here : unexplored)<a name="line.600"></a>
-<FONT color="green">601</FONT>             {<a name="line.601"></a>
-<FONT color="green">602</FONT>                g.fillRect(here.getXZeroBased() * this.csm.getCellWidth(),<a name="line.602"></a>
-<FONT color="green">603</FONT>                           here.getYZeroBased() * this.csm.getCellHeight(),<a name="line.603"></a>
-<FONT color="green">604</FONT>                           this.csm.getCellWidth(),<a name="line.604"></a>
-<FONT color="green">605</FONT>                           this.csm.getCellHeight());<a name="line.605"></a>
-<FONT color="green">606</FONT>             }<a name="line.606"></a>
-<FONT color="green">607</FONT>          }<a name="line.607"></a>
-<FONT color="green">608</FONT>       }<a name="line.608"></a>
-<FONT color="green">609</FONT>    <a name="line.609"></a>
-<FONT color="green">610</FONT>       public void loadUnexplored(Set&lt;MazeCell&gt; set)<a name="line.610"></a>
-<FONT color="green">611</FONT>       {<a name="line.611"></a>
-<FONT color="green">612</FONT>          unexplored = set;<a name="line.612"></a>
-<FONT color="green">613</FONT>       }<a name="line.613"></a>
-<FONT color="green">614</FONT>    <a name="line.614"></a>
-<FONT color="green">615</FONT>       public void setDrawFog(boolean setter)<a name="line.615"></a>
-<FONT color="green">616</FONT>       {<a name="line.616"></a>
-<FONT color="green">617</FONT>          drawFog = setter;<a name="line.617"></a>
-<FONT color="green">618</FONT>       }<a name="line.618"></a>
-<FONT color="green">619</FONT>    <a name="line.619"></a>
-<FONT color="green">620</FONT>       private void drawFirstRun(Graphics2D g)<a name="line.620"></a>
-<FONT color="green">621</FONT>       {<a name="line.621"></a>
-<FONT color="green">622</FONT>          if (this.firstRun != null &amp;&amp; this.firstRun.isEmpty() == false)<a name="line.622"></a>
-<FONT color="green">623</FONT>          {<a name="line.623"></a>
-<FONT color="green">624</FONT>             g.setPaint(this.paints.getRunFirst());<a name="line.624"></a>
-<FONT color="green">625</FONT>    <a name="line.625"></a>
-<FONT color="green">626</FONT>             MazeCell here = firstRun.get(0);<a name="line.626"></a>
-<FONT color="green">627</FONT>             MazeCell there;<a name="line.627"></a>
-<FONT color="green">628</FONT>             Point center;<a name="line.628"></a>
-<FONT color="green">629</FONT>             int width, height;<a name="line.629"></a>
-<FONT color="green">630</FONT>             for (int i = 1; i &lt; firstRun.size(); i++)<a name="line.630"></a>
-<FONT color="green">631</FONT>             {<a name="line.631"></a>
-<FONT color="green">632</FONT>                there = firstRun.get(i);<a name="line.632"></a>
-<FONT color="green">633</FONT>                if (here.getX() &lt; there.getX())<a name="line.633"></a>
-<FONT color="green">634</FONT>                {<a name="line.634"></a>
-<FONT color="green">635</FONT>                   //here is west of there<a name="line.635"></a>
-<FONT color="green">636</FONT>                   center = this.getCellCenter(here);<a name="line.636"></a>
-<FONT color="green">637</FONT>                   center.x += this.csm.getCellWidth() / 4;<a name="line.637"></a>
-<FONT color="green">638</FONT>                   width = this.csm.getCellWidth();<a name="line.638"></a>
-<FONT color="green">639</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.639"></a>
-<FONT color="green">640</FONT>                }<a name="line.640"></a>
-<FONT color="green">641</FONT>                else if (here.getX() &gt; there.getX())<a name="line.641"></a>
-<FONT color="green">642</FONT>                {<a name="line.642"></a>
-<FONT color="green">643</FONT>                   //here is east of there<a name="line.643"></a>
-<FONT color="green">644</FONT>                   center = this.getCellCenter(there);<a name="line.644"></a>
-<FONT color="green">645</FONT>                   width = this.csm.getCellWidth();<a name="line.645"></a>
-<FONT color="green">646</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.646"></a>
-<FONT color="green">647</FONT>                }<a name="line.647"></a>
-<FONT color="green">648</FONT>                else if (here.getY() &gt; there.getY())<a name="line.648"></a>
-<FONT color="green">649</FONT>                {<a name="line.649"></a>
-<FONT color="green">650</FONT>                   //here is south of there<a name="line.650"></a>
-<FONT color="green">651</FONT>                   center = this.getCellCenter(there);<a name="line.651"></a>
-<FONT color="green">652</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.652"></a>
-<FONT color="green">653</FONT>                   height = this.csm.getCellHeight();<a name="line.653"></a>
-<FONT color="green">654</FONT>                }<a name="line.654"></a>
-<FONT color="green">655</FONT>                else<a name="line.655"></a>
-<FONT color="green">656</FONT>                {<a name="line.656"></a>
-<FONT color="green">657</FONT>                   //here is north of there<a name="line.657"></a>
-<FONT color="green">658</FONT>                   center = this.getCellCenter(here);<a name="line.658"></a>
-<FONT color="green">659</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.659"></a>
-<FONT color="green">660</FONT>                   height = this.csm.getCellHeight();<a name="line.660"></a>
-<FONT color="green">661</FONT>                }<a name="line.661"></a>
-<FONT color="green">662</FONT>                g.fillRect(center.x, center.y, width, height);<a name="line.662"></a>
-<FONT color="green">663</FONT>                here = there;<a name="line.663"></a>
-<FONT color="green">664</FONT>             }<a name="line.664"></a>
-<FONT color="green">665</FONT>          }<a name="line.665"></a>
-<FONT color="green">666</FONT>       }<a name="line.666"></a>
-<FONT color="green">667</FONT>    <a name="line.667"></a>
-<FONT color="green">668</FONT>       public void loadFirstRun(List&lt;MazeCell&gt; list)<a name="line.668"></a>
-<FONT color="green">669</FONT>       {<a name="line.669"></a>
-<FONT color="green">670</FONT>          firstRun = list;<a name="line.670"></a>
-<FONT color="green">671</FONT>       }<a name="line.671"></a>
-<FONT color="green">672</FONT>    <a name="line.672"></a>
-<FONT color="green">673</FONT>       public void setDrawFirstRun(boolean setter)<a name="line.673"></a>
-<FONT color="green">674</FONT>       {<a name="line.674"></a>
-<FONT color="green">675</FONT>          drawFirstRun = setter;<a name="line.675"></a>
-<FONT color="green">676</FONT>       }<a name="line.676"></a>
-<FONT color="green">677</FONT>    <a name="line.677"></a>
-<FONT color="green">678</FONT>       private void drawBestRun(Graphics2D g)<a name="line.678"></a>
+<FONT color="green">565</FONT>          }<a name="line.565"></a>
+<FONT color="green">566</FONT>          return directions;<a name="line.566"></a>
+<FONT color="green">567</FONT>       }<a name="line.567"></a>
+<FONT color="green">568</FONT>    <a name="line.568"></a>
+<FONT color="green">569</FONT>       /**<a name="line.569"></a>
+<FONT color="green">570</FONT>        * Get the graphics object that draws onto the background image. All drawing<a name="line.570"></a>
+<FONT color="green">571</FONT>        * onto the background image must use this.<a name="line.571"></a>
+<FONT color="green">572</FONT>        * @return The graphics object.<a name="line.572"></a>
+<FONT color="green">573</FONT>        */<a name="line.573"></a>
+<FONT color="green">574</FONT>       private Graphics2D getBackgroundGraphics()<a name="line.574"></a>
+<FONT color="green">575</FONT>       {<a name="line.575"></a>
+<FONT color="green">576</FONT>          if (this.backgroundImage == null)<a name="line.576"></a>
+<FONT color="green">577</FONT>          {<a name="line.577"></a>
+<FONT color="green">578</FONT>             // If creating a new background image make sure we paint it.<a name="line.578"></a>
+<FONT color="green">579</FONT>             this.backgroundGraphics = null;<a name="line.579"></a>
+<FONT color="green">580</FONT>             this.backgroundImage = new BufferedImage(getWidth(),<a name="line.580"></a>
+<FONT color="green">581</FONT>                                                      getHeight(),<a name="line.581"></a>
+<FONT color="green">582</FONT>                                                      BufferedImage.TYPE_INT_ARGB);<a name="line.582"></a>
+<FONT color="green">583</FONT>          }<a name="line.583"></a>
+<FONT color="green">584</FONT>          if (this.backgroundGraphics == null)<a name="line.584"></a>
+<FONT color="green">585</FONT>          {<a name="line.585"></a>
+<FONT color="green">586</FONT>             this.backgroundGraphics = this.backgroundImage.createGraphics();<a name="line.586"></a>
+<FONT color="green">587</FONT>             this.setRenderingQualityHigh(this.backgroundGraphics);<a name="line.587"></a>
+<FONT color="green">588</FONT>          }<a name="line.588"></a>
+<FONT color="green">589</FONT>          return this.backgroundGraphics;<a name="line.589"></a>
+<FONT color="green">590</FONT>       }<a name="line.590"></a>
+<FONT color="green">591</FONT>    <a name="line.591"></a>
+<FONT color="green">592</FONT>       /**<a name="line.592"></a>
+<FONT color="green">593</FONT>        * Get the pixel space of a cell.<a name="line.593"></a>
+<FONT color="green">594</FONT>        * @param cell The cell in question.<a name="line.594"></a>
+<FONT color="green">595</FONT>        * @return The location and area in pixels of where the cell is located.<a name="line.595"></a>
+<FONT color="green">596</FONT>        */<a name="line.596"></a>
+<FONT color="green">597</FONT>       protected Rectangle getCellArea(final MazeCell cell)<a name="line.597"></a>
+<FONT color="green">598</FONT>       {<a name="line.598"></a>
+<FONT color="green">599</FONT>          return new Rectangle(this.csm.getWallWidth() + cell.getXZeroBased() * this.csm.getCellWidth(),<a name="line.599"></a>
+<FONT color="green">600</FONT>                               this.csm.getWallHeight() +<a name="line.600"></a>
+<FONT color="green">601</FONT>                                     cell.getYZeroBased() *<a name="line.601"></a>
+<FONT color="green">602</FONT>                                     this.csm.getCellHeight(),<a name="line.602"></a>
+<FONT color="green">603</FONT>                               this.csm.getCellWidth(),<a name="line.603"></a>
+<FONT color="green">604</FONT>                               this.csm.getCellHeight());<a name="line.604"></a>
+<FONT color="green">605</FONT>       }<a name="line.605"></a>
+<FONT color="green">606</FONT>    <a name="line.606"></a>
+<FONT color="green">607</FONT>       /**<a name="line.607"></a>
+<FONT color="green">608</FONT>        * Similar to &lt;code&gt;getCellArea&lt;/code&gt; but just the inside of the cell<a name="line.608"></a>
+<FONT color="green">609</FONT>        * without the walls.<a name="line.609"></a>
+<FONT color="green">610</FONT>        * @param cell The cell in question.<a name="line.610"></a>
+<FONT color="green">611</FONT>        * @return Cell area minus the walls and corner peg.<a name="line.611"></a>
+<FONT color="green">612</FONT>        */<a name="line.612"></a>
+<FONT color="green">613</FONT>       protected Rectangle getCellAreaInner(final MazeCell cell)<a name="line.613"></a>
+<FONT color="green">614</FONT>       {<a name="line.614"></a>
+<FONT color="green">615</FONT>          return new Rectangle(this.csm.getWallWidth() + cell.getXZeroBased() * this.csm.getCellWidth(),<a name="line.615"></a>
+<FONT color="green">616</FONT>                               this.csm.getWallHeight() +<a name="line.616"></a>
+<FONT color="green">617</FONT>                                     cell.getYZeroBased() *<a name="line.617"></a>
+<FONT color="green">618</FONT>                                     this.csm.getCellHeight(),<a name="line.618"></a>
+<FONT color="green">619</FONT>                               this.csm.getCellWidthInner(),<a name="line.619"></a>
+<FONT color="green">620</FONT>                               this.csm.getCellHeightInner());<a name="line.620"></a>
+<FONT color="green">621</FONT>       }<a name="line.621"></a>
+<FONT color="green">622</FONT>    <a name="line.622"></a>
+<FONT color="green">623</FONT>       /**<a name="line.623"></a>
+<FONT color="green">624</FONT>        * Get the center of the inner cell part without the walls.<a name="line.624"></a>
+<FONT color="green">625</FONT>        * @param cell The cell in question.<a name="line.625"></a>
+<FONT color="green">626</FONT>        * @return The point in pixel coordinates.<a name="line.626"></a>
+<FONT color="green">627</FONT>        */<a name="line.627"></a>
+<FONT color="green">628</FONT>       Point getCellCenterInner(final MazeCell cell)<a name="line.628"></a>
+<FONT color="green">629</FONT>       {<a name="line.629"></a>
+<FONT color="green">630</FONT>          return new Point(this.csm.getWallWidth() +<a name="line.630"></a>
+<FONT color="green">631</FONT>                                 (cell.getXZeroBased() * this.csm.getCellWidth()) +<a name="line.631"></a>
+<FONT color="green">632</FONT>                                 (this.csm.getCellWidthInner() / 2),<a name="line.632"></a>
+<FONT color="green">633</FONT>                           this.csm.getWallHeight() +<a name="line.633"></a>
+<FONT color="green">634</FONT>                                 (cell.getYZeroBased() * this.csm.getCellHeight()) +<a name="line.634"></a>
+<FONT color="green">635</FONT>                                 (this.csm.getCellHeightInner() / 2));<a name="line.635"></a>
+<FONT color="green">636</FONT>       }<a name="line.636"></a>
+<FONT color="green">637</FONT>    <a name="line.637"></a>
+<FONT color="green">638</FONT>       /**<a name="line.638"></a>
+<FONT color="green">639</FONT>        * Get the size of the maze in pixels.<a name="line.639"></a>
+<FONT color="green">640</FONT>        */<a name="line.640"></a>
+<FONT color="green">641</FONT>       private Dimension getMazeSize()<a name="line.641"></a>
+<FONT color="green">642</FONT>       {<a name="line.642"></a>
+<FONT color="green">643</FONT>          if (this.model != null)<a name="line.643"></a>
+<FONT color="green">644</FONT>          {<a name="line.644"></a>
+<FONT color="green">645</FONT>             return new Dimension(this.model.getSize().width * this.csm.getCellWidth(),<a name="line.645"></a>
+<FONT color="green">646</FONT>                                  this.model.getSize().height * this.csm.getCellHeight());<a name="line.646"></a>
+<FONT color="green">647</FONT>          }<a name="line.647"></a>
+<FONT color="green">648</FONT>          else<a name="line.648"></a>
+<FONT color="green">649</FONT>          {<a name="line.649"></a>
+<FONT color="green">650</FONT>             return new Dimension();<a name="line.650"></a>
+<FONT color="green">651</FONT>          }<a name="line.651"></a>
+<FONT color="green">652</FONT>       }<a name="line.652"></a>
+<FONT color="green">653</FONT>    <a name="line.653"></a>
+<FONT color="green">654</FONT>       /**<a name="line.654"></a>
+<FONT color="green">655</FONT>        * Get the maze model being used for this view.<a name="line.655"></a>
+<FONT color="green">656</FONT>        */<a name="line.656"></a>
+<FONT color="green">657</FONT>       public MazeModel getModel()<a name="line.657"></a>
+<FONT color="green">658</FONT>       {<a name="line.658"></a>
+<FONT color="green">659</FONT>          return model;<a name="line.659"></a>
+<FONT color="green">660</FONT>       }<a name="line.660"></a>
+<FONT color="green">661</FONT>    <a name="line.661"></a>
+<FONT color="green">662</FONT>       /**<a name="line.662"></a>
+<FONT color="green">663</FONT>        * Get the area of the peg of a cell.<a name="line.663"></a>
+<FONT color="green">664</FONT>        * @param cell The cell in question.<a name="line.664"></a>
+<FONT color="green">665</FONT>        * @return The location and size of the peg.<a name="line.665"></a>
+<FONT color="green">666</FONT>        */<a name="line.666"></a>
+<FONT color="green">667</FONT>       protected Rectangle getPegArea(final MazeCell cell)<a name="line.667"></a>
+<FONT color="green">668</FONT>       {<a name="line.668"></a>
+<FONT color="green">669</FONT>          return new Rectangle(cell.getX() * this.csm.getCellWidth(),<a name="line.669"></a>
+<FONT color="green">670</FONT>                               cell.getY() * this.csm.getCellHeight(),<a name="line.670"></a>
+<FONT color="green">671</FONT>                               this.csm.getWallWidth(),<a name="line.671"></a>
+<FONT color="green">672</FONT>                               this.csm.getWallHeight());<a name="line.672"></a>
+<FONT color="green">673</FONT>       }<a name="line.673"></a>
+<FONT color="green">674</FONT>    <a name="line.674"></a>
+<FONT color="green">675</FONT>       /**<a name="line.675"></a>
+<FONT color="green">676</FONT>        * Get the current location of the robot in absolute view coordinates.<a name="line.676"></a>
+<FONT color="green">677</FONT>        */<a name="line.677"></a>
+<FONT color="green">678</FONT>       public Point getRobotLocation()<a name="line.678"></a>
 <FONT color="green">679</FONT>       {<a name="line.679"></a>
-<FONT color="green">680</FONT>          if (this.bestRun != null &amp;&amp; this.bestRun.isEmpty() == false)<a name="line.680"></a>
-<FONT color="green">681</FONT>          {<a name="line.681"></a>
-<FONT color="green">682</FONT>             g.setPaint(this.paints.getRunBest());<a name="line.682"></a>
-<FONT color="green">683</FONT>    <a name="line.683"></a>
-<FONT color="green">684</FONT>             MazeCell here = bestRun.get(0);<a name="line.684"></a>
-<FONT color="green">685</FONT>             MazeCell there;<a name="line.685"></a>
-<FONT color="green">686</FONT>             int x, y;<a name="line.686"></a>
-<FONT color="green">687</FONT>             int width, height;<a name="line.687"></a>
-<FONT color="green">688</FONT>             for (int i = 1; i &lt; bestRun.size(); i++)<a name="line.688"></a>
-<FONT color="green">689</FONT>             {<a name="line.689"></a>
-<FONT color="green">690</FONT>                there = bestRun.get(i);<a name="line.690"></a>
-<FONT color="green">691</FONT>                if (here.getX() &lt; there.getX())<a name="line.691"></a>
-<FONT color="green">692</FONT>                {<a name="line.692"></a>
-<FONT color="green">693</FONT>                   //here is west of there<a name="line.693"></a>
-<FONT color="green">694</FONT>                   x = (here.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;<a name="line.694"></a>
-<FONT color="green">695</FONT>                   y = (here.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;<a name="line.695"></a>
-<FONT color="green">696</FONT>                   width = 5 * this.csm.getCellWidth() / 4;<a name="line.696"></a>
-<FONT color="green">697</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.697"></a>
-<FONT color="green">698</FONT>                }<a name="line.698"></a>
-<FONT color="green">699</FONT>                else if (here.getX() &gt; there.getX())<a name="line.699"></a>
-<FONT color="green">700</FONT>                {<a name="line.700"></a>
-<FONT color="green">701</FONT>                   //here is east of there<a name="line.701"></a>
-<FONT color="green">702</FONT>                   x = (there.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;<a name="line.702"></a>
-<FONT color="green">703</FONT>                   y = (there.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;<a name="line.703"></a>
-<FONT color="green">704</FONT>                   width = 5 * this.csm.getCellWidth() / 4;<a name="line.704"></a>
-<FONT color="green">705</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.705"></a>
-<FONT color="green">706</FONT>                }<a name="line.706"></a>
-<FONT color="green">707</FONT>                else if (here.getY() &gt; there.getY())<a name="line.707"></a>
-<FONT color="green">708</FONT>                {<a name="line.708"></a>
-<FONT color="green">709</FONT>                   //here is south of there<a name="line.709"></a>
-<FONT color="green">710</FONT>                   x = (there.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;<a name="line.710"></a>
-<FONT color="green">711</FONT>                   y = (there.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;<a name="line.711"></a>
-<FONT color="green">712</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.712"></a>
-<FONT color="green">713</FONT>                   height = this.csm.getCellHeight();<a name="line.713"></a>
-<FONT color="green">714</FONT>                }<a name="line.714"></a>
-<FONT color="green">715</FONT>                else<a name="line.715"></a>
-<FONT color="green">716</FONT>                {<a name="line.716"></a>
-<FONT color="green">717</FONT>                   //here is north of there<a name="line.717"></a>
-<FONT color="green">718</FONT>                   x = (here.getX() - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 4;<a name="line.718"></a>
-<FONT color="green">719</FONT>                   y = (here.getY() - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 4;<a name="line.719"></a>
-<FONT color="green">720</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.720"></a>
-<FONT color="green">721</FONT>                   height = this.csm.getCellHeight();<a name="line.721"></a>
-<FONT color="green">722</FONT>                }<a name="line.722"></a>
-<FONT color="green">723</FONT>                g.fillRect(x, y, width, height);<a name="line.723"></a>
-<FONT color="green">724</FONT>                here = there;<a name="line.724"></a>
-<FONT color="green">725</FONT>             }<a name="line.725"></a>
-<FONT color="green">726</FONT>          }<a name="line.726"></a>
-<FONT color="green">727</FONT>       }<a name="line.727"></a>
-<FONT color="green">728</FONT>    <a name="line.728"></a>
-<FONT color="green">729</FONT>       public void loadBestRun(List&lt;MazeCell&gt; list)<a name="line.729"></a>
-<FONT color="green">730</FONT>       {<a name="line.730"></a>
-<FONT color="green">731</FONT>          bestRun = list;<a name="line.731"></a>
-<FONT color="green">732</FONT>       }<a name="line.732"></a>
-<FONT color="green">733</FONT>    <a name="line.733"></a>
-<FONT color="green">734</FONT>       public void setDrawBestRun(boolean setter)<a name="line.734"></a>
-<FONT color="green">735</FONT>       {<a name="line.735"></a>
-<FONT color="green">736</FONT>          drawBestRun = setter;<a name="line.736"></a>
-<FONT color="green">737</FONT>       }<a name="line.737"></a>
-<FONT color="green">738</FONT>    <a name="line.738"></a>
-<FONT color="green">739</FONT>       private void drawCurrentRun(Graphics2D g)<a name="line.739"></a>
-<FONT color="green">740</FONT>       {<a name="line.740"></a>
-<FONT color="green">741</FONT>          if (this.currentRun != null &amp;&amp; this.currentRun.isEmpty() == false)<a name="line.741"></a>
-<FONT color="green">742</FONT>          {<a name="line.742"></a>
-<FONT color="green">743</FONT>             g.setPaint(this.paints.getRunCurrent());<a name="line.743"></a>
-<FONT color="green">744</FONT>    <a name="line.744"></a>
-<FONT color="green">745</FONT>             MazeCell here = currentRun.get(0);<a name="line.745"></a>
-<FONT color="green">746</FONT>             MazeCell there;<a name="line.746"></a>
-<FONT color="green">747</FONT>             int x, y;<a name="line.747"></a>
-<FONT color="green">748</FONT>             int width, height;<a name="line.748"></a>
-<FONT color="green">749</FONT>             for (int i = 1; i &lt; currentRun.size(); i++)<a name="line.749"></a>
-<FONT color="green">750</FONT>             {<a name="line.750"></a>
-<FONT color="green">751</FONT>                there = currentRun.get(i);<a name="line.751"></a>
-<FONT color="green">752</FONT>                if (here.getX() &lt; there.getX())<a name="line.752"></a>
-<FONT color="green">753</FONT>                {<a name="line.753"></a>
-<FONT color="green">754</FONT>                   //here is west of there<a name="line.754"></a>
-<FONT color="green">755</FONT>                   x = here.getXZeroBased() * this.csm.getCellWidth() + 5 * this.csm.getCellWidth() / 8;<a name="line.755"></a>
-<FONT color="green">756</FONT>                   y = here.getYZeroBased() *<a name="line.756"></a>
-<FONT color="green">757</FONT>                       this.csm.getCellHeight() +<a name="line.757"></a>
-<FONT color="green">758</FONT>                       3 *<a name="line.758"></a>
-<FONT color="green">759</FONT>                       this.csm.getCellHeight() /<a name="line.759"></a>
-<FONT color="green">760</FONT>                       8;<a name="line.760"></a>
-<FONT color="green">761</FONT>                   //width = 5 * this.csm.getCellWidth() / 4;<a name="line.761"></a>
-<FONT color="green">762</FONT>                   width = this.csm.getCellWidth();<a name="line.762"></a>
-<FONT color="green">763</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.763"></a>
-<FONT color="green">764</FONT>                }<a name="line.764"></a>
-<FONT color="green">765</FONT>                else if (here.getX() &gt; there.getX())<a name="line.765"></a>
-<FONT color="green">766</FONT>                {<a name="line.766"></a>
-<FONT color="green">767</FONT>                   //here is east of there<a name="line.767"></a>
-<FONT color="green">768</FONT>                   x = (there.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;<a name="line.768"></a>
-<FONT color="green">769</FONT>                   y = (there.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;<a name="line.769"></a>
-<FONT color="green">770</FONT>                   //width = 5 * this.csm.getCellWidth() / 4;<a name="line.770"></a>
-<FONT color="green">771</FONT>                   width = this.csm.getCellWidth();<a name="line.771"></a>
-<FONT color="green">772</FONT>                   height = this.csm.getCellHeight() / 4;<a name="line.772"></a>
-<FONT color="green">773</FONT>                }<a name="line.773"></a>
-<FONT color="green">774</FONT>                else if (here.getY() &gt; there.getY())<a name="line.774"></a>
-<FONT color="green">775</FONT>                {<a name="line.775"></a>
-<FONT color="green">776</FONT>                   //here is south of there<a name="line.776"></a>
-<FONT color="green">777</FONT>                   x = (there.getX() - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;<a name="line.777"></a>
-<FONT color="green">778</FONT>                   y = (there.getY() - 1) * this.csm.getCellHeight() + 3 * this.csm.getCellHeight() / 8;<a name="line.778"></a>
-<FONT color="green">779</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.779"></a>
-<FONT color="green">780</FONT>                   height = this.csm.getCellHeight();<a name="line.780"></a>
-<FONT color="green">781</FONT>                }<a name="line.781"></a>
-<FONT color="green">782</FONT>                else<a name="line.782"></a>
-<FONT color="green">783</FONT>                {<a name="line.783"></a>
-<FONT color="green">784</FONT>                   //here is north of there<a name="line.784"></a>
-<FONT color="green">785</FONT>                   x = here.getXZeroBased() * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;<a name="line.785"></a>
-<FONT color="green">786</FONT>                   y = here.getYZeroBased() *<a name="line.786"></a>
-<FONT color="green">787</FONT>                       this.csm.getCellHeight() +<a name="line.787"></a>
-<FONT color="green">788</FONT>                       5 *<a name="line.788"></a>
-<FONT color="green">789</FONT>                       this.csm.getCellHeight() /<a name="line.789"></a>
-<FONT color="green">790</FONT>                       8;<a name="line.790"></a>
-<FONT color="green">791</FONT>                   width = this.csm.getCellWidth() / 4;<a name="line.791"></a>
-<FONT color="green">792</FONT>                   height = this.csm.getCellHeight();<a name="line.792"></a>
-<FONT color="green">793</FONT>                }<a name="line.793"></a>
-<FONT color="green">794</FONT>                g.fillRect(x, y, width, height);<a name="line.794"></a>
-<FONT color="green">795</FONT>                here = there;<a name="line.795"></a>
-<FONT color="green">796</FONT>             }<a name="line.796"></a>
-<FONT color="green">797</FONT>          }<a name="line.797"></a>
-<FONT color="green">798</FONT>       }<a name="line.798"></a>
-<FONT color="green">799</FONT>    <a name="line.799"></a>
-<FONT color="green">800</FONT>       public void loadCurrentRun(List&lt;MazeCell&gt; list)<a name="line.800"></a>
-<FONT color="green">801</FONT>       {<a name="line.801"></a>
-<FONT color="green">802</FONT>          currentRun = list;<a name="line.802"></a>
-<FONT color="green">803</FONT>       }<a name="line.803"></a>
-<FONT color="green">804</FONT>    <a name="line.804"></a>
-<FONT color="green">805</FONT>       public void setDrawCurrentRun(boolean setter)<a name="line.805"></a>
+<FONT color="green">680</FONT>          return this.robotLocation;<a name="line.680"></a>
+<FONT color="green">681</FONT>       }<a name="line.681"></a>
+<FONT color="green">682</FONT>    <a name="line.682"></a>
+<FONT color="green">683</FONT>       /**<a name="line.683"></a>
+<FONT color="green">684</FONT>        * Get the current rotation of the robot in Radians.<a name="line.684"></a>
+<FONT color="green">685</FONT>        */<a name="line.685"></a>
+<FONT color="green">686</FONT>       public double getRobotRotation()<a name="line.686"></a>
+<FONT color="green">687</FONT>       {<a name="line.687"></a>
+<FONT color="green">688</FONT>          return this.robotRotation;<a name="line.688"></a>
+<FONT color="green">689</FONT>       }<a name="line.689"></a>
+<FONT color="green">690</FONT>    <a name="line.690"></a>
+<FONT color="green">691</FONT>       /**<a name="line.691"></a>
+<FONT color="green">692</FONT>        * Get the area of a cell wall.<a name="line.692"></a>
+<FONT color="green">693</FONT>        * @param cell The cell in question.<a name="line.693"></a>
+<FONT color="green">694</FONT>        * @param wall Which wall do you want. Must be East or South.<a name="line.694"></a>
+<FONT color="green">695</FONT>        * @return The absolute coordinates of the area.<a name="line.695"></a>
+<FONT color="green">696</FONT>        */<a name="line.696"></a>
+<FONT color="green">697</FONT>       protected Rectangle getWallArea(final MazeCell cell, final Direction wall)<a name="line.697"></a>
+<FONT color="green">698</FONT>       {<a name="line.698"></a>
+<FONT color="green">699</FONT>          switch (wall)<a name="line.699"></a>
+<FONT color="green">700</FONT>          {<a name="line.700"></a>
+<FONT color="green">701</FONT>             case East :<a name="line.701"></a>
+<FONT color="green">702</FONT>                return new Rectangle(cell.getX() * this.csm.getCellWidth(),<a name="line.702"></a>
+<FONT color="green">703</FONT>                                     this.csm.getWallHeight() +<a name="line.703"></a>
+<FONT color="green">704</FONT>                                           cell.getYZeroBased() *<a name="line.704"></a>
+<FONT color="green">705</FONT>                                           this.csm.getCellHeight(),<a name="line.705"></a>
+<FONT color="green">706</FONT>                                     this.csm.getWallWidth(),<a name="line.706"></a>
+<FONT color="green">707</FONT>                                     this.csm.getCellHeightInner());<a name="line.707"></a>
+<FONT color="green">708</FONT>             case South :<a name="line.708"></a>
+<FONT color="green">709</FONT>                return new Rectangle(this.csm.getWallWidth() +<a name="line.709"></a>
+<FONT color="green">710</FONT>                                           cell.getXZeroBased() *<a name="line.710"></a>
+<FONT color="green">711</FONT>                                           this.csm.getCellWidth(),<a name="line.711"></a>
+<FONT color="green">712</FONT>                                     cell.getY() * this.csm.getCellHeight(),<a name="line.712"></a>
+<FONT color="green">713</FONT>                                     this.csm.getCellWidthInner(),<a name="line.713"></a>
+<FONT color="green">714</FONT>                                     this.csm.getWallHeight());<a name="line.714"></a>
+<FONT color="green">715</FONT>             default :<a name="line.715"></a>
+<FONT color="green">716</FONT>                throw new IllegalArgumentException("Non supported direction: " + wall);<a name="line.716"></a>
+<FONT color="green">717</FONT>          }<a name="line.717"></a>
+<FONT color="green">718</FONT>       }<a name="line.718"></a>
+<FONT color="green">719</FONT>    <a name="line.719"></a>
+<FONT color="green">720</FONT>       /**<a name="line.720"></a>
+<FONT color="green">721</FONT>        * Invalidate and repaint all cells.<a name="line.721"></a>
+<FONT color="green">722</FONT>        */<a name="line.722"></a>
+<FONT color="green">723</FONT>       public void invalidateAllCells()<a name="line.723"></a>
+<FONT color="green">724</FONT>       {<a name="line.724"></a>
+<FONT color="green">725</FONT>          this.repaintAll = true;<a name="line.725"></a>
+<FONT color="green">726</FONT>          synchronized (this.invalidatedCells)<a name="line.726"></a>
+<FONT color="green">727</FONT>          {<a name="line.727"></a>
+<FONT color="green">728</FONT>             // We clear it first because it might have cells that are out of the current size.<a name="line.728"></a>
+<FONT color="green">729</FONT>             this.invalidatedCells.clear();<a name="line.729"></a>
+<FONT color="green">730</FONT>             for (int x = 1; x &lt;= this.model.getSize().width; x++)<a name="line.730"></a>
+<FONT color="green">731</FONT>             {<a name="line.731"></a>
+<FONT color="green">732</FONT>                for (int y = 1; y &lt;= this.model.getSize().height; y++)<a name="line.732"></a>
+<FONT color="green">733</FONT>                {<a name="line.733"></a>
+<FONT color="green">734</FONT>                   this.invalidatedCells.add(new MazeCell(x, y));<a name="line.734"></a>
+<FONT color="green">735</FONT>                }<a name="line.735"></a>
+<FONT color="green">736</FONT>             }<a name="line.736"></a>
+<FONT color="green">737</FONT>          }<a name="line.737"></a>
+<FONT color="green">738</FONT>          this.repaint();<a name="line.738"></a>
+<FONT color="green">739</FONT>       }<a name="line.739"></a>
+<FONT color="green">740</FONT>    <a name="line.740"></a>
+<FONT color="green">741</FONT>       /**<a name="line.741"></a>
+<FONT color="green">742</FONT>        * Invalidate a cell and mark it to be redrawn.<a name="line.742"></a>
+<FONT color="green">743</FONT>        * @param cell The cell to be redrawn.<a name="line.743"></a>
+<FONT color="green">744</FONT>        */<a name="line.744"></a>
+<FONT color="green">745</FONT>       protected void invalidateCell(final MazeCell cell)<a name="line.745"></a>
+<FONT color="green">746</FONT>       {<a name="line.746"></a>
+<FONT color="green">747</FONT>          if (cell != null &amp;&amp; this.model != null &amp;&amp; cell.isInRange(this.model.getSize()))<a name="line.747"></a>
+<FONT color="green">748</FONT>          {<a name="line.748"></a>
+<FONT color="green">749</FONT>             if (PRINT_DEBUG)<a name="line.749"></a>
+<FONT color="green">750</FONT>                System.out.println(System.currentTimeMillis() + " Invalidating Cell: " + cell);<a name="line.750"></a>
+<FONT color="green">751</FONT>             synchronized (this.invalidatedCells)<a name="line.751"></a>
+<FONT color="green">752</FONT>             {<a name="line.752"></a>
+<FONT color="green">753</FONT>                this.invalidatedCells.add(cell);<a name="line.753"></a>
+<FONT color="green">754</FONT>             }<a name="line.754"></a>
+<FONT color="green">755</FONT>             super.repaint();<a name="line.755"></a>
+<FONT color="green">756</FONT>          }<a name="line.756"></a>
+<FONT color="green">757</FONT>       }<a name="line.757"></a>
+<FONT color="green">758</FONT>    <a name="line.758"></a>
+<FONT color="green">759</FONT>       public void loadUnderstanding(final int[][] understandingInt)<a name="line.759"></a>
+<FONT color="green">760</FONT>       {<a name="line.760"></a>
+<FONT color="green">761</FONT>          this.understandingInt = understandingInt;<a name="line.761"></a>
+<FONT color="green">762</FONT>       }<a name="line.762"></a>
+<FONT color="green">763</FONT>    <a name="line.763"></a>
+<FONT color="green">764</FONT>       public void loadUnderstandingDir(final Direction[][] arrows)<a name="line.764"></a>
+<FONT color="green">765</FONT>       {<a name="line.765"></a>
+<FONT color="green">766</FONT>          this.understandingDir = arrows;<a name="line.766"></a>
+<FONT color="green">767</FONT>       }<a name="line.767"></a>
+<FONT color="green">768</FONT>    <a name="line.768"></a>
+<FONT color="green">769</FONT>       /**<a name="line.769"></a>
+<FONT color="green">770</FONT>        * Master starting point for the custom painting. We want to draw as little<a name="line.770"></a>
+<FONT color="green">771</FONT>        * as we can to keep performance up.<a name="line.771"></a>
+<FONT color="green">772</FONT>        */<a name="line.772"></a>
+<FONT color="green">773</FONT>       @Override<a name="line.773"></a>
+<FONT color="green">774</FONT>       protected void paintComponent(final Graphics arg)<a name="line.774"></a>
+<FONT color="green">775</FONT>       {<a name="line.775"></a>
+<FONT color="green">776</FONT>          if (PRINT_DEBUG)<a name="line.776"></a>
+<FONT color="green">777</FONT>             System.out.println(System.currentTimeMillis() + " Painting Component");<a name="line.777"></a>
+<FONT color="green">778</FONT>          final Graphics2D bgg = this.getBackgroundGraphics();<a name="line.778"></a>
+<FONT color="green">779</FONT>          if (this.repaintAll)<a name="line.779"></a>
+<FONT color="green">780</FONT>          {<a name="line.780"></a>
+<FONT color="green">781</FONT>             this.repaintAll = false;<a name="line.781"></a>
+<FONT color="green">782</FONT>             this.drawOutsideWalls(bgg);<a name="line.782"></a>
+<FONT color="green">783</FONT>          }<a name="line.783"></a>
+<FONT color="green">784</FONT>          this.drawInvalidatedCells(bgg);<a name="line.784"></a>
+<FONT color="green">785</FONT>          final Graphics2D g = (Graphics2D) arg;<a name="line.785"></a>
+<FONT color="green">786</FONT>          g.drawImage(this.backgroundImage, null, 0, 0);<a name="line.786"></a>
+<FONT color="green">787</FONT>          this.drawTopLayer(g);<a name="line.787"></a>
+<FONT color="green">788</FONT>       }<a name="line.788"></a>
+<FONT color="green">789</FONT>    <a name="line.789"></a>
+<FONT color="green">790</FONT>       /**<a name="line.790"></a>
+<FONT color="green">791</FONT>        * @param drawFog the drawFog to set<a name="line.791"></a>
+<FONT color="green">792</FONT>        */<a name="line.792"></a>
+<FONT color="green">793</FONT>       public void setDrawFog(boolean drawFog)<a name="line.793"></a>
+<FONT color="green">794</FONT>       {<a name="line.794"></a>
+<FONT color="green">795</FONT>          if (this.drawFog != drawFog)<a name="line.795"></a>
+<FONT color="green">796</FONT>          {<a name="line.796"></a>
+<FONT color="green">797</FONT>             this.drawFog = drawFog;<a name="line.797"></a>
+<FONT color="green">798</FONT>             this.invalidateAllCells();<a name="line.798"></a>
+<FONT color="green">799</FONT>          }<a name="line.799"></a>
+<FONT color="green">800</FONT>       }<a name="line.800"></a>
+<FONT color="green">801</FONT>    <a name="line.801"></a>
+<FONT color="green">802</FONT>       /**<a name="line.802"></a>
+<FONT color="green">803</FONT>        * @param drawPathBest the drawPathBest to set<a name="line.803"></a>
+<FONT color="green">804</FONT>        */<a name="line.804"></a>
+<FONT color="green">805</FONT>       public void setDrawPathBest(final boolean drawPathBest)<a name="line.805"></a>
 <FONT color="green">806</FONT>       {<a name="line.806"></a>
-<FONT color="green">807</FONT>          drawCurrentRun = setter;<a name="line.807"></a>
+<FONT color="green">807</FONT>          this.drawPathBest = drawPathBest;<a name="line.807"></a>
 <FONT color="green">808</FONT>       }<a name="line.808"></a>
 <FONT color="green">809</FONT>    <a name="line.809"></a>
-<FONT color="green">810</FONT>       private void drawUnderstanding(Graphics2D g)<a name="line.810"></a>
-<FONT color="green">811</FONT>       {<a name="line.811"></a>
-<FONT color="green">812</FONT>          MazeCell here;<a name="line.812"></a>
-<FONT color="green">813</FONT>          int x, y;<a name="line.813"></a>
-<FONT color="green">814</FONT>          if (understandingInt != null)<a name="line.814"></a>
-<FONT color="green">815</FONT>          {<a name="line.815"></a>
-<FONT color="green">816</FONT>             int local;<a name="line.816"></a>
-<FONT color="green">817</FONT>             for (int i = 1; i &lt;= model.getSize().width; i++)<a name="line.817"></a>
-<FONT color="green">818</FONT>             {<a name="line.818"></a>
-<FONT color="green">819</FONT>                for (int j = 1; j &lt;= model.getSize().height; j++)<a name="line.819"></a>
-<FONT color="green">820</FONT>                {<a name="line.820"></a>
-<FONT color="green">821</FONT>                   here = new MazeCell(i, j);<a name="line.821"></a>
-<FONT color="green">822</FONT>                   if (unexplored.contains(here))<a name="line.822"></a>
-<FONT color="green">823</FONT>                   {<a name="line.823"></a>
-<FONT color="green">824</FONT>                      g.setColor(Color.WHITE);<a name="line.824"></a>
-<FONT color="green">825</FONT>                   }<a name="line.825"></a>
-<FONT color="green">826</FONT>                   else<a name="line.826"></a>
-<FONT color="green">827</FONT>                   {<a name="line.827"></a>
-<FONT color="green">828</FONT>                      g.setColor(Color.BLACK);<a name="line.828"></a>
-<FONT color="green">829</FONT>                   }<a name="line.829"></a>
-<FONT color="green">830</FONT>                   x = (i - 1) * this.csm.getCellWidth() + 3 * this.csm.getCellWidth() / 8;<a name="line.830"></a>
-<FONT color="green">831</FONT>                   y = (j - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 2;<a name="line.831"></a>
-<FONT color="green">832</FONT>                   local = understandingInt[i - 1][j - 1];<a name="line.832"></a>
-<FONT color="green">833</FONT>                   g.drawString(String.valueOf(local), x, y);<a name="line.833"></a>
-<FONT color="green">834</FONT>                }<a name="line.834"></a>
-<FONT color="green">835</FONT>             }<a name="line.835"></a>
-<FONT color="green">836</FONT>          }<a name="line.836"></a>
-<FONT color="green">837</FONT>          else if (understandingDir != null)<a name="line.837"></a>
+<FONT color="green">810</FONT>       /**<a name="line.810"></a>
+<FONT color="green">811</FONT>        * @param drawPathCurrent the drawPathCurrent to set<a name="line.811"></a>
+<FONT color="green">812</FONT>        */<a name="line.812"></a>
+<FONT color="green">813</FONT>       public void setDrawPathCurrent(final boolean drawPathCurrent)<a name="line.813"></a>
+<FONT color="green">814</FONT>       {<a name="line.814"></a>
+<FONT color="green">815</FONT>          if (this.drawPathCurrent != drawPathCurrent)<a name="line.815"></a>
+<FONT color="green">816</FONT>          {<a name="line.816"></a>
+<FONT color="green">817</FONT>             this.drawPathCurrent = drawPathCurrent;<a name="line.817"></a>
+<FONT color="green">818</FONT>             this.invalidateAllCells();<a name="line.818"></a>
+<FONT color="green">819</FONT>          }<a name="line.819"></a>
+<FONT color="green">820</FONT>       }<a name="line.820"></a>
+<FONT color="green">821</FONT>    <a name="line.821"></a>
+<FONT color="green">822</FONT>       /**<a name="line.822"></a>
+<FONT color="green">823</FONT>        * @param drawPathFirst the drawPathFirst to set<a name="line.823"></a>
+<FONT color="green">824</FONT>        */<a name="line.824"></a>
+<FONT color="green">825</FONT>       public void setDrawPathFirst(final boolean drawPathFirst)<a name="line.825"></a>
+<FONT color="green">826</FONT>       {<a name="line.826"></a>
+<FONT color="green">827</FONT>          this.drawPathFirst = drawPathFirst;<a name="line.827"></a>
+<FONT color="green">828</FONT>       }<a name="line.828"></a>
+<FONT color="green">829</FONT>    <a name="line.829"></a>
+<FONT color="green">830</FONT>       /**<a name="line.830"></a>
+<FONT color="green">831</FONT>        * Set whether or not this view should draw/display understanding information<a name="line.831"></a>
+<FONT color="green">832</FONT>        * from the AI algorithm.<a name="line.832"></a>
+<FONT color="green">833</FONT>        * @param draw Setter value.<a name="line.833"></a>
+<FONT color="green">834</FONT>        */<a name="line.834"></a>
+<FONT color="green">835</FONT>       public void setDrawUnderstanding(final boolean draw)<a name="line.835"></a>
+<FONT color="green">836</FONT>       {<a name="line.836"></a>
+<FONT color="green">837</FONT>          if (this.drawUnderstanding != draw)<a name="line.837"></a>
 <FONT color="green">838</FONT>          {<a name="line.838"></a>
-<FONT color="green">839</FONT>             Direction local;<a name="line.839"></a>
-<FONT color="green">840</FONT>             for (int i = 1; i &lt;= model.getSize().width; i++)<a name="line.840"></a>
+<FONT color="green">839</FONT>             this.drawUnderstanding = draw;<a name="line.839"></a>
+<FONT color="green">840</FONT>             if (this.understandingInt != null || this.understandingDir != null)<a name="line.840"></a>
 <FONT color="green">841</FONT>             {<a name="line.841"></a>
-<FONT color="green">842</FONT>                for (int j = 1; j &lt;= model.getSize().height; j++)<a name="line.842"></a>
-<FONT color="green">843</FONT>                {<a name="line.843"></a>
-<FONT color="green">844</FONT>                   here = new MazeCell(i, j);<a name="line.844"></a>
-<FONT color="green">845</FONT>                   if (unexplored.contains(here))<a name="line.845"></a>
-<FONT color="green">846</FONT>                   {<a name="line.846"></a>
-<FONT color="green">847</FONT>                      g.setColor(Color.WHITE);<a name="line.847"></a>
-<FONT color="green">848</FONT>                   }<a name="line.848"></a>
-<FONT color="green">849</FONT>                   else<a name="line.849"></a>
-<FONT color="green">850</FONT>                   {<a name="line.850"></a>
-<FONT color="green">851</FONT>                      g.setColor(Color.BLACK);<a name="line.851"></a>
-<FONT color="green">852</FONT>                   }<a name="line.852"></a>
-<FONT color="green">853</FONT>                   x = (i - 1) * this.csm.getCellWidth() + this.csm.getCellWidth() / 2;<a name="line.853"></a>
-<FONT color="green">854</FONT>                   y = (j - 1) * this.csm.getCellHeight() + this.csm.getCellHeight() / 2;<a name="line.854"></a>
-<FONT color="green">855</FONT>                   local = understandingDir[i - 1][j - 1];<a name="line.855"></a>
-<FONT color="green">856</FONT>                   drawArrow(g, local, x, y);<a name="line.856"></a>
-<FONT color="green">857</FONT>                }<a name="line.857"></a>
+<FONT color="green">842</FONT>                this.invalidateAllCells();<a name="line.842"></a>
+<FONT color="green">843</FONT>             }<a name="line.843"></a>
+<FONT color="green">844</FONT>          }<a name="line.844"></a>
+<FONT color="green">845</FONT>       }<a name="line.845"></a>
+<FONT color="green">846</FONT>    <a name="line.846"></a>
+<FONT color="green">847</FONT>       /**<a name="line.847"></a>
+<FONT color="green">848</FONT>        * Set the maze model to use for this view.<a name="line.848"></a>
+<FONT color="green">849</FONT>        * @param model The new model to back this view.<a name="line.849"></a>
+<FONT color="green">850</FONT>        */<a name="line.850"></a>
+<FONT color="green">851</FONT>       public void setModel(final MazeModel model)<a name="line.851"></a>
+<FONT color="green">852</FONT>       {<a name="line.852"></a>
+<FONT color="green">853</FONT>          if (this.model != model)<a name="line.853"></a>
+<FONT color="green">854</FONT>          {<a name="line.854"></a>
+<FONT color="green">855</FONT>             if (this.model != null)<a name="line.855"></a>
+<FONT color="green">856</FONT>             {<a name="line.856"></a>
+<FONT color="green">857</FONT>                this.model.removeListener(this);<a name="line.857"></a>
 <FONT color="green">858</FONT>             }<a name="line.858"></a>
-<FONT color="green">859</FONT>          }<a name="line.859"></a>
-<FONT color="green">860</FONT>       }<a name="line.860"></a>
-<FONT color="green">861</FONT>    <a name="line.861"></a>
-<FONT color="green">862</FONT>       private void drawArrow(Graphics2D g, Direction local, int x, int y)<a name="line.862"></a>
-<FONT color="green">863</FONT>       {<a name="line.863"></a>
-<FONT color="green">864</FONT>          //Draws an arrow in the direction of "local" centered on the point (x,y)<a name="line.864"></a>
-<FONT color="green">865</FONT>          if (local.equals(Direction.North))<a name="line.865"></a>
-<FONT color="green">866</FONT>          {<a name="line.866"></a>
-<FONT color="green">867</FONT>             int[] ys =<a name="line.867"></a>
-<FONT color="green">868</FONT>             {<a name="line.868"></a>
-<FONT color="green">869</FONT>                y + this.csm.getCellHeight() * 3 / 8, y, y, y - this.csm.getCellHeight() * 3 / 8, y, y<a name="line.869"></a>
-<FONT color="green">870</FONT>             };<a name="line.870"></a>
-<FONT color="green">871</FONT>             int[] xs =<a name="line.871"></a>
-<FONT color="green">872</FONT>             {<a name="line.872"></a>
-<FONT color="green">873</FONT>                x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,<a name="line.873"></a>
-<FONT color="green">874</FONT>                x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8<a name="line.874"></a>
-<FONT color="green">875</FONT>             };<a name="line.875"></a>
-<FONT color="green">876</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.876"></a>
-<FONT color="green">877</FONT>          }<a name="line.877"></a>
-<FONT color="green">878</FONT>          if (local.equals(Direction.South))<a name="line.878"></a>
-<FONT color="green">879</FONT>          {<a name="line.879"></a>
-<FONT color="green">880</FONT>             int[] ys =<a name="line.880"></a>
-<FONT color="green">881</FONT>             {<a name="line.881"></a>
-<FONT color="green">882</FONT>                y - this.csm.getCellHeight() * 3 / 8, y, y, y + this.csm.getCellHeight() * 3 / 8, y, y<a name="line.882"></a>
-<FONT color="green">883</FONT>             };<a name="line.883"></a>
-<FONT color="green">884</FONT>             int[] xs =<a name="line.884"></a>
-<FONT color="green">885</FONT>             {<a name="line.885"></a>
-<FONT color="green">886</FONT>                x, x - this.csm.getCellWidth() / 8, x - this.csm.getCellWidth() / 4, x,<a name="line.886"></a>
-<FONT color="green">887</FONT>                x + this.csm.getCellWidth() / 4, x + this.csm.getCellWidth() / 8<a name="line.887"></a>
-<FONT color="green">888</FONT>             };<a name="line.888"></a>
-<FONT color="green">889</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.889"></a>
-<FONT color="green">890</FONT>          }<a name="line.890"></a>
-<FONT color="green">891</FONT>          if (local.equals(Direction.West))<a name="line.891"></a>
-<FONT color="green">892</FONT>          {<a name="line.892"></a>
-<FONT color="green">893</FONT>             int[] xs =<a name="line.893"></a>
-<FONT color="green">894</FONT>             {<a name="line.894"></a>
-<FONT color="green">895</FONT>                x + this.csm.getCellWidth() * 3 / 8, x, x, x - this.csm.getCellWidth() * 3 / 8, x, x<a name="line.895"></a>
-<FONT color="green">896</FONT>             };<a name="line.896"></a>
-<FONT color="green">897</FONT>             int[] ys =<a name="line.897"></a>
-<FONT color="green">898</FONT>             {<a name="line.898"></a>
-<FONT color="green">899</FONT>                y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,<a name="line.899"></a>
-<FONT color="green">900</FONT>                y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8<a name="line.900"></a>
-<FONT color="green">901</FONT>             };<a name="line.901"></a>
-<FONT color="green">902</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.902"></a>
-<FONT color="green">903</FONT>          }<a name="line.903"></a>
-<FONT color="green">904</FONT>          if (local.equals(Direction.East))<a name="line.904"></a>
-<FONT color="green">905</FONT>          {<a name="line.905"></a>
-<FONT color="green">906</FONT>             int[] xs =<a name="line.906"></a>
-<FONT color="green">907</FONT>             {<a name="line.907"></a>
-<FONT color="green">908</FONT>                x - this.csm.getCellWidth() * 3 / 8, x, x, x + this.csm.getCellWidth() * 3 / 8, x, x<a name="line.908"></a>
-<FONT color="green">909</FONT>             };<a name="line.909"></a>
-<FONT color="green">910</FONT>             int[] ys =<a name="line.910"></a>
-<FONT color="green">911</FONT>             {<a name="line.911"></a>
-<FONT color="green">912</FONT>                y, y - this.csm.getCellHeight() / 8, y - this.csm.getCellHeight() / 4, y,<a name="line.912"></a>
-<FONT color="green">913</FONT>                y + this.csm.getCellHeight() / 4, y + this.csm.getCellHeight() / 8<a name="line.913"></a>
-<FONT color="green">914</FONT>             };<a name="line.914"></a>
-<FONT color="green">915</FONT>             g.drawPolygon(xs, ys, 6);<a name="line.915"></a>
-<FONT color="green">916</FONT>          }<a name="line.916"></a>
-<FONT color="green">917</FONT>       }<a name="line.917"></a>
-<FONT color="green">918</FONT>    <a name="line.918"></a>
-<FONT color="green">919</FONT>       public void setDrawUnderstanding(boolean setter)<a name="line.919"></a>
-<FONT color="green">920</FONT>       {<a name="line.920"></a>
-<FONT color="green">921</FONT>          drawUnderstanding = setter;<a name="line.921"></a>
-<FONT color="green">922</FONT>       }<a name="line.922"></a>
-<FONT color="green">923</FONT>    <a name="line.923"></a>
-<FONT color="green">924</FONT>       public void loadUnderstanding(int[][] understandingInt)<a name="line.924"></a>
-<FONT color="green">925</FONT>       {<a name="line.925"></a>
-<FONT color="green">926</FONT>          this.understandingInt = understandingInt;<a name="line.926"></a>
-<FONT color="green">927</FONT>       }<a name="line.927"></a>
-<FONT color="green">928</FONT>    <a name="line.928"></a>
-<FONT color="green">929</FONT>       public void loadUnderstandingDir(Direction[][] understandingDir)<a name="line.929"></a>
-<FONT color="green">930</FONT>       {<a name="line.930"></a>
-<FONT color="green">931</FONT>          this.understandingDir = understandingDir;<a name="line.931"></a>
-<FONT color="green">932</FONT>       }<a name="line.932"></a>
-<FONT color="green">933</FONT>    }<a name="line.933"></a>
+<FONT color="green">859</FONT>             this.model = model;<a name="line.859"></a>
+<FONT color="green">860</FONT>             if (this.model != null)<a name="line.860"></a>
+<FONT color="green">861</FONT>             {<a name="line.861"></a>
+<FONT color="green">862</FONT>                this.model.addListener(this);<a name="line.862"></a>
+<FONT color="green">863</FONT>             }<a name="line.863"></a>
+<FONT color="green">864</FONT>             this.updateViewSize();<a name="line.864"></a>
+<FONT color="green">865</FONT>          }<a name="line.865"></a>
+<FONT color="green">866</FONT>       }<a name="line.866"></a>
+<FONT color="green">867</FONT>    <a name="line.867"></a>
+<FONT color="green">868</FONT>       /**<a name="line.868"></a>
+<FONT color="green">869</FONT>        * Set a new maze painting delegate for this maze view to use when drawing.<a name="line.869"></a>
+<FONT color="green">870</FONT>        * @param newPainterDelegate The new delegate to do drawing for this view.<a name="line.870"></a>
+<FONT color="green">871</FONT>        */<a name="line.871"></a>
+<FONT color="green">872</FONT>       public void setPainterDelegate(MazePainter newPainterDelegate)<a name="line.872"></a>
+<FONT color="green">873</FONT>       {<a name="line.873"></a>
+<FONT color="green">874</FONT>          if (newPainterDelegate != null &amp;&amp; this.painter != newPainterDelegate)<a name="line.874"></a>
+<FONT color="green">875</FONT>          {<a name="line.875"></a>
+<FONT color="green">876</FONT>             this.painter = newPainterDelegate;<a name="line.876"></a>
+<FONT color="green">877</FONT>             // When changing the painter we want to redraw everything.<a name="line.877"></a>
+<FONT color="green">878</FONT>             this.updateViewSize();<a name="line.878"></a>
+<FONT color="green">879</FONT>          }<a name="line.879"></a>
+<FONT color="green">880</FONT>       }<a name="line.880"></a>
+<FONT color="green">881</FONT>    <a name="line.881"></a>
+<FONT color="green">882</FONT>       /**<a name="line.882"></a>
+<FONT color="green">883</FONT>        * Set the rendering hints to high quality.<a name="line.883"></a>
+<FONT color="green">884</FONT>        * @param g The graphics object to set the rendering hints on.<a name="line.884"></a>
+<FONT color="green">885</FONT>        */<a name="line.885"></a>
+<FONT color="green">886</FONT>       private void setRenderingQualityHigh(Graphics2D g)<a name="line.886"></a>
+<FONT color="green">887</FONT>       {<a name="line.887"></a>
+<FONT color="green">888</FONT>          g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);<a name="line.888"></a>
+<FONT color="green">889</FONT>          g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);<a name="line.889"></a>
+<FONT color="green">890</FONT>       }<a name="line.890"></a>
+<FONT color="green">891</FONT>    <a name="line.891"></a>
+<FONT color="green">892</FONT>       /**<a name="line.892"></a>
+<FONT color="green">893</FONT>        * Set the rendering hints to low quality.<a name="line.893"></a>
+<FONT color="green">894</FONT>        * @param g The graphics object to set the rendering hints on.<a name="line.894"></a>
+<FONT color="green">895</FONT>        */<a name="line.895"></a>
+<FONT color="green">896</FONT>       private void setRenderingQualityLow(Graphics2D g)<a name="line.896"></a>
+<FONT color="green">897</FONT>       {<a name="line.897"></a>
+<FONT color="green">898</FONT>          g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);<a name="line.898"></a>
+<FONT color="green">899</FONT>          g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);<a name="line.899"></a>
+<FONT color="green">900</FONT>       }<a name="line.900"></a>
+<FONT color="green">901</FONT>    <a name="line.901"></a>
+<FONT color="green">902</FONT>       /**<a name="line.902"></a>
+<FONT color="green">903</FONT>        * Set the robot path model that this view should use to draw information<a name="line.903"></a>
+<FONT color="green">904</FONT>        * about the robots path. This should be set while an animation is running<a name="line.904"></a>
+<FONT color="green">905</FONT>        * and then set to null after and when no animation is running.<a name="line.905"></a>
+<FONT color="green">906</FONT>        * @param model The model to set.<a name="line.906"></a>
+<FONT color="green">907</FONT>        */<a name="line.907"></a>
+<FONT color="green">908</FONT>       public void setRobotPathModel(final RobotPathModel model)<a name="line.908"></a>
+<FONT color="green">909</FONT>       {<a name="line.909"></a>
+<FONT color="green">910</FONT>          if (this.robotPathModel != model)<a name="line.910"></a>
+<FONT color="green">911</FONT>          {<a name="line.911"></a>
+<FONT color="green">912</FONT>             if (this.robotPathModel != null)<a name="line.912"></a>
+<FONT color="green">913</FONT>             {<a name="line.913"></a>
+<FONT color="green">914</FONT>                this.robotPathModel.removeListener(this);<a name="line.914"></a>
+<FONT color="green">915</FONT>             }<a name="line.915"></a>
+<FONT color="green">916</FONT>             this.robotPathModel = model;<a name="line.916"></a>
+<FONT color="green">917</FONT>             if (this.robotPathModel != null)<a name="line.917"></a>
+<FONT color="green">918</FONT>             {<a name="line.918"></a>
+<FONT color="green">919</FONT>                this.robotPathModel.addListener(this);<a name="line.919"></a>
+<FONT color="green">920</FONT>             }<a name="line.920"></a>
+<FONT color="green">921</FONT>             this.invalidateAllCells();<a name="line.921"></a>
+<FONT color="green">922</FONT>          }<a name="line.922"></a>
+<FONT color="green">923</FONT>       }<a name="line.923"></a>
+<FONT color="green">924</FONT>    <a name="line.924"></a>
+<FONT color="green">925</FONT>       /**<a name="line.925"></a>
+<FONT color="green">926</FONT>        * Sets a new position for the robot and then sets the view to repaint<a name="line.926"></a>
+<FONT color="green">927</FONT>        * itself.<a name="line.927"></a>
+<FONT color="green">928</FONT>        * @param newLocation The new location for the robot in absolute view<a name="line.928"></a>
+<FONT color="green">929</FONT>        *           coordinates.<a name="line.929"></a>
+<FONT color="green">930</FONT>        * @param newRotation The new rotation of the robot in Radians.<a name="line.930"></a>
+<FONT color="green">931</FONT>        */<a name="line.931"></a>
+<FONT color="green">932</FONT>       public void setRobotPosition(final Point newLocation, final double newRotation)<a name="line.932"></a>
+<FONT color="green">933</FONT>       {<a name="line.933"></a>
+<FONT color="green">934</FONT>          this.robotLocation = newLocation;<a name="line.934"></a>
+<FONT color="green">935</FONT>          this.robotRotation = newRotation;<a name="line.935"></a>
+<FONT color="green">936</FONT>          this.repaint();<a name="line.936"></a>
+<FONT color="green">937</FONT>       }<a name="line.937"></a>
+<FONT color="green">938</FONT>    <a name="line.938"></a>
+<FONT color="green">939</FONT>       /**<a name="line.939"></a>
+<FONT color="green">940</FONT>        * Recalculates the sizes of the cells and walls from the current size of the<a name="line.940"></a>
+<FONT color="green">941</FONT>        * component. We also delete the background image buffer so it can be<a name="line.941"></a>
+<FONT color="green">942</FONT>        * recreated at the new size. We also invalidate all cells so they can be<a name="line.942"></a>
+<FONT color="green">943</FONT>        * redrawn. This method itself returns quickly but it triggers some expensive<a name="line.943"></a>
+<FONT color="green">944</FONT>        * operations.<a name="line.944"></a>
+<FONT color="green">945</FONT>        */<a name="line.945"></a>
+<FONT color="green">946</FONT>       private void updateViewSize()<a name="line.946"></a>
+<FONT color="green">947</FONT>       {<a name="line.947"></a>
+<FONT color="green">948</FONT>          if (model != null)<a name="line.948"></a>
+<FONT color="green">949</FONT>          {<a name="line.949"></a>
+<FONT color="green">950</FONT>             this.backgroundImage = null; // Trigger creation of a new buffer image.<a name="line.950"></a>
+<FONT color="green">951</FONT>             csm.setCellWidth( (getWidth() - csm.getWallWidth()) / model.getSize().width);<a name="line.951"></a>
+<FONT color="green">952</FONT>             csm.setCellHeight( (getHeight() - csm.getWallHeight()) / model.getSize().height);<a name="line.952"></a>
+<FONT color="green">953</FONT>             final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) /<a name="line.953"></a>
+<FONT color="green">954</FONT>                                  this.wallSizeDivider;<a name="line.954"></a>
+<FONT color="green">955</FONT>             this.csm.setWallWidth(wallSize);<a name="line.955"></a>
+<FONT color="green">956</FONT>             this.csm.setWallHeight(wallSize);<a name="line.956"></a>
+<FONT color="green">957</FONT>             this.painter.setMazeSize(getMazeSize());<a name="line.957"></a>
+<FONT color="green">958</FONT>             // Have everything repainted.<a name="line.958"></a>
+<FONT color="green">959</FONT>             this.invalidateAllCells();<a name="line.959"></a>
+<FONT color="green">960</FONT>          }<a name="line.960"></a>
+<FONT color="green">961</FONT>       }<a name="line.961"></a>
+<FONT color="green">962</FONT>    }<a name="line.962"></a>
 
 
 

@@ -253,7 +253,7 @@ public final class EditableMazeView extends MazeView
    /**
     * Get the cell that the given point is located in. This gives us a means to
     * translate between coordinate positions and cells.
-    * @param location A coordinate point in the maze area.
+    * @param pointerLocation A coordinate point in the maze area.
     * @return The cell or null if the point is not inside a valid cell.
     */
    protected MazeCell getHostMazeCell(Point pointerLocation)
