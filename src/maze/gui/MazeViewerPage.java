@@ -40,7 +40,7 @@ public final class MazeViewerPage extends JPanel
 {
    private static final int SIDEBAR_WIDTH = 150;
    private static final int SPEED_STEPS = 25;
-   private final MazeView2 myMazeView = new MazeView2();
+   private final MazeView myMazeView = new MazeView();
    private final MazeList mazeList = new MazeList(this.myMazeView);
    private final JList aiList = new JList();
    private final RobotAnimator animator = new RobotAnimator();

@@ -20,7 +20,7 @@ public final class RobotAnimator implements Runnable
     * the maze view that this animator is attached to and updates with each
     * animation frame.
     */
-   private MazeView2 view;
+   private MazeView view;
    /**
     * The controller used to simulate the AI algorithm.
     */
@@ -54,7 +54,7 @@ public final class RobotAnimator implements Runnable
     * @param robotAlgorithm The AI algorithm to use for the animation.
     * @param finishedCallback This is called after the animation is stopped.
     */
-   public void start(MazeView2 mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
+   public void start(MazeView mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
       if (this.processingThread != null && this.processingThread.isAlive())
       {

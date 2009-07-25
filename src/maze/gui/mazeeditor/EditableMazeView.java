@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
-import maze.gui.MazeView2;
+import maze.gui.MazeView;
 import maze.model.CellSizeModel;
 import maze.model.Direction;
 import maze.model.MazeCell;
@@ -23,7 +23,7 @@ import maze.model.MazeModel.MazeWall;
  * that will be applied.
  * @author Johnathan Smith
  */
-public final class EditableMazeView extends MazeView2
+public final class EditableMazeView extends MazeView
 {
    private static final int WALL_SIZE_DIVIDER = 3;
    private MazeCell activeCell;

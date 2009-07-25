@@ -33,7 +33,7 @@ import maze.util.Listener;
  * different themes to be used.
  * @author Luke Last
  */
-public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeViewInterface
+public class MazeView extends JComponent implements Listener<MazeCell>, MazeViewInterface
 {
    private static final boolean PRINT_DEBUG = false;
    private static final long serialVersionUID = 3249468255178771818L;
@@ -84,8 +84,8 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    /**
     * A flag for redrawing everything. When set true this tells us we are
     * redrawing the whole view which means we must draw the outside walls.
-    * @see MazeView2#invalidateAllCells()
-    * @see MazeView2#paintComponent(Graphics)
+    * @see MazeView#invalidateAllCells()
+    * @see MazeView#paintComponent(Graphics)
     */
    private boolean repaintAll = true;
    /**
@@ -107,7 +107,7 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    /**
     * Constructor.
     */
-   public MazeView2()
+   public MazeView()
    {
       // We maintain our own background image buffer so we can turn this off.
       this.setDoubleBuffered(false);
