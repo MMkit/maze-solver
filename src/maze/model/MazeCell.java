@@ -31,6 +31,8 @@ public final class MazeCell implements Comparable<MazeCell>, Serializable
     *           the left.
     * @param yCoordinate The Y/vertical cell coordinate starting with 1 from the
     *           top.
+    * @throws IllegalArgumentException If a given coordinate value is less than
+    *            1.
     */
    public MazeCell(int xCoordinate, int yCoordinate)
    {

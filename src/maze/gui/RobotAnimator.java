@@ -46,7 +46,7 @@ public final class RobotAnimator implements Runnable
    /**
     * The thread running our animation loop.
     */
-   private volatile Thread processingThread;
+   private Thread processingThread;
 
    /**
     * Start and initialize this.
@@ -56,13 +56,17 @@ public final class RobotAnimator implements Runnable
     */
    public void start(MazeView2 mazeView, RobotBase robotAlgorithm, Runnable finishedCallback)
    {
-      if (this.processingThread != null)
+      if (this.processingThread != null && this.processingThread.isAlive())
       {
          this.setState(AnimationStates.Stopped);
          //Make sure the thread is finished before continuing.
-         while (this.processingThread != null)
+         try
          {
-            Thread.yield();
+            this.processingThread.join();
+         }
+         catch (InterruptedException e)
+         {
+            e.printStackTrace();
          }
       }
       this.view = mazeView;
@@ -125,7 +129,7 @@ public final class RobotAnimator implements Runnable
                {
                   rotationPercentage += velocity;
                   velocity += acceleration;
-                  rotationPercentage = inc * (4 / (double)inc) / 2;
+                  rotationPercentage = inc * (4 / (double) inc) / 2;
                }
                else
                {

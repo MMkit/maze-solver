@@ -277,7 +277,7 @@ public class ScriptEditorPage extends JSplitPane implements MenuControlled
          {
             int result = JOptionPane.showConfirmDialog(Main.getPrimaryFrameInstance(),
                                                        "You have an unsaved AI script open.\nAre you sure you want to EXIT?",
-                                                       "Continue to exit?",
+                                                       "Continue to Exit?",
                                                        JOptionPane.YES_NO_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);
             if (result != JOptionPane.YES_OPTION)

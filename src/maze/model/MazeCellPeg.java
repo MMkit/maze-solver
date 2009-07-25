@@ -5,6 +5,12 @@ public final class MazeCellPeg implements Comparable<MazeCellPeg>
    private final int x;
    private final int y;
 
+   public MazeCellPeg(int x, int y)
+   {
+      this.x = x;
+      this.y = y;
+   }
+
    /**
     * Creates a Peg of the North-West Peg of the Cell.
     * @param cell The Maze Cell to create a Peg from.
@@ -15,22 +21,6 @@ public final class MazeCellPeg implements Comparable<MazeCellPeg>
       this.y = cell.getY();
    }
 
-   public MazeCellPeg(int x, int y)
-   {
-      this.x = x;
-      this.y = y;
-   }
-
-   public int getX()
-   {
-      return x;
-   }
-
-   public int getY()
-   {
-      return y;
-   }
-
    @Override
    public int compareTo(MazeCellPeg o)
    {
@@ -38,12 +28,6 @@ public final class MazeCellPeg implements Comparable<MazeCellPeg>
          return this.y - o.y;
       else
          return this.x - o.x;
-   }
-
-   @Override
-   public int hashCode()
-   {
-      return 31 * this.x + (y << 16);
    }
 
    @Override
@@ -63,4 +47,35 @@ public final class MazeCellPeg implements Comparable<MazeCellPeg>
       return true;
    }
 
+   /**
+    * Get the maze cell that this peg belongs to.
+    * @return The maze cell that has this peg as its South-West peg.
+    */
+   public MazeCell getMazeCell()
+   {
+      try
+      {
+         return new MazeCell(this.x, this.y);
+      }
+      catch (IllegalArgumentException e)
+      {
+         return new MazeCell(1, 1);
+      }
+   }
+
+   public int getX()
+   {
+      return x;
+   }
+
+   public int getY()
+   {
+      return y;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return this.x & (y << 16);
+   }
 }

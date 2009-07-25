@@ -15,7 +15,7 @@ public class MazeInfoModel
    private static final String[] NAMES =
    {
       "APEC2002.MAZ", "DEFAULT.MAZ", "HITEL01.MAZ", "HITEL02.MAZ", "LongPath.MAZ",
-      "MINOS03Final.MAZ", "MM03FINS.MAZ", "SEOUL01.MAZ", "SEOUL02.MAZ"
+      "MINOS03Final.MAZ", "MM03FINS.MAZ", "SEOUL01.MAZ", "SEOUL02.MAZ", "Large.mz2",
    };
    private static final String[] NAME_EXT =
    {

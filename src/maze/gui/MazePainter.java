@@ -72,6 +72,18 @@ public abstract class MazePainter implements Serializable
       g.fill(area);
    }
 
+   public void drawPegInvalid(Graphics2D g, Rectangle area)
+   {
+      g.setPaint(this.pegInvalid);
+      g.fill(area);
+   }
+
+   public void drawPegValid(Graphics2D g, Rectangle area)
+   {
+      g.setPaint(this.pegValid);
+      g.fill(area);
+   }
+
    public void drawRobot(Graphics2D g, Point location, double rotation, int cellWidth,
          int cellHeight)
    {

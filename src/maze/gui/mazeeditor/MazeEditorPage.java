@@ -10,8 +10,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.AbstractAction;
@@ -122,7 +120,6 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       splitPane.setOneTouchExpandable(true);
 
       mMazeView.setMinimumSize(new Dimension(400, 200));
-      mMazeView.setEditable(true);
       splitPane.setLeftComponent(mMazeView);
       mMazeView.setModel(null);
 
@@ -138,14 +135,6 @@ public class MazeEditorPage extends JPanel implements MenuControlled
 
       rightPanel.add(rightPanelButtons, BorderLayout.SOUTH);
       splitPane.setRightComponent(rightPanel);
-      splitPane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener()
-      {
-         @Override
-         public void propertyChange(PropertyChangeEvent evt)
-         {
-            mMazeView.componentResized(null);
-         }
-      }); // new PropertyChangeListener()
 
       add(splitPane, BorderLayout.CENTER);
       splitPane.setDividerLocation(.8);
@@ -160,11 +149,10 @@ public class MazeEditorPage extends JPanel implements MenuControlled
             if (notShown)
             {
                splitPane.setDividerLocation(.8);
-               mMazeView.componentResized(null);
                notShown = false;
-            } // if (notShown)
-         } // public void componentShown(ComponentEvent e)
-      }); // addComponentListener(new ComponentAdapter()
+            }
+         }
+      });
 
       JToolBar tBar = new JToolBar();
       tBar.setOrientation(JToolBar.VERTICAL);
@@ -222,7 +210,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
 
       mCurrentTemplate = mt;
       if (mCurrentTemplate == null)
+      {
          mMazeView.setEditable(true);
+      }
       else
       {
          mMazeView.setEditable(false);
