@@ -103,7 +103,7 @@ java.lang.Object
 </DL>
 <HR>
 <DL>
-<DT><PRE>public final class <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.38"><B>PrimaryFrame</B></A><DT>extends javax.swing.JFrame</DL>
+<DT><PRE>public final class <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.43"><B>PrimaryFrame</B></A><DT>extends javax.swing.JFrame</DL>
 </PRE>
 
 <P>
@@ -217,6 +217,14 @@ This is the primary frame for the application.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#LATEST_REVISION_URI">LATEST_REVISION_URI</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;javax.swing.JTabbedPane</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#mainTabs">mainTabs</A></B></CODE>
 
@@ -243,6 +251,14 @@ This is the primary frame for the application.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>private &nbsp;<A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#mMazeInfoModel">mMazeInfoModel</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#PROJECT_HOMEPAGE">PROJECT_HOMEPAGE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -345,6 +361,22 @@ This is the primary frame for the application.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#getApplicationBuildDate()">getApplicationBuildDate</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the date that this build was created on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#getApplicationRevision()">getApplicationRevision</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the subversion revision this application was built from.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#getMazeInfoModel()">getMazeInfoModel</A></B>()</CODE>
 
@@ -359,6 +391,32 @@ This is the primary frame for the application.
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Initializes the contents of this frame.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;javax.swing.JMenuItem</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#makeAboutMenuItem()">makeAboutMenuItem</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create the Help->About menu item.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;javax.swing.JMenuItem</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#makeUpdateCheckMenuItem()">makeUpdateCheckMenuItem</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a menu item that checks if you have the latest revision of the
+ application.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>private &nbsp;javax.swing.JMenuItem</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../maze/gui/PrimaryFrame.html#makeWebsiteMenuItem()">makeWebsiteMenuItem</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Help->Project Web-site menu item launches the project web site in the
+ system browser.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -445,30 +503,30 @@ This is the primary frame for the application.
 </TR>
 </TABLE>
 
-<A NAME="mMazeInfoModel"><!-- --></A><H3>
-mMazeInfoModel</H3>
+<A NAME="LATEST_REVISION_URI"><!-- --></A><H3>
+LATEST_REVISION_URI</H3>
 <PRE>
-private final <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.40"><B>mMazeInfoModel</B></A></PRE>
+private static final java.lang.String <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.45"><B>LATEST_REVISION_URI</B></A></PRE>
 <DL>
 <DL>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.PrimaryFrame.LATEST_REVISION_URI">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="mazeViewer"><!-- --></A><H3>
-mazeViewer</H3>
+<A NAME="PROJECT_HOMEPAGE"><!-- --></A><H3>
+PROJECT_HOMEPAGE</H3>
 <PRE>
-private <A HREF="../../maze/gui/MazeViewerPage.html" title="class in maze.gui">MazeViewerPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.41"><B>mazeViewer</B></A></PRE>
+private static final java.lang.String <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.46"><B>PROJECT_HOMEPAGE</B></A></PRE>
 <DL>
 <DL>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../constant-values.html#maze.gui.PrimaryFrame.PROJECT_HOMEPAGE">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="mazeEditor"><!-- --></A><H3>
-mazeEditor</H3>
+<A NAME="DEFAULT_SIZE"><!-- --></A><H3>
+DEFAULT_SIZE</H3>
 <PRE>
-private <A HREF="../../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.42"><B>mazeEditor</B></A></PRE>
+private static final java.awt.Dimension <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.66"><B>DEFAULT_SIZE</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -478,17 +536,7 @@ private <A HREF="../../maze/gui/mazeeditor/MazeEditorPage.html" title="class in 
 <A NAME="codeEditorPanel"><!-- --></A><H3>
 codeEditorPanel</H3>
 <PRE>
-private <A HREF="../../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.43"><B>codeEditorPanel</B></A></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-
-<A NAME="mainTabs"><!-- --></A><H3>
-mainTabs</H3>
-<PRE>
-private final javax.swing.JTabbedPane <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.44"><B>mainTabs</B></A></PRE>
+private <A HREF="../../maze/gui/ScriptEditorPage.html" title="class in maze.gui">ScriptEditorPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.67"><B>codeEditorPanel</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -498,17 +546,47 @@ private final javax.swing.JTabbedPane <A HREF="../../src-html/maze/gui/PrimaryFr
 <A NAME="fileMenu"><!-- --></A><H3>
 fileMenu</H3>
 <PRE>
-private final javax.swing.JMenu <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.45"><B>fileMenu</B></A></PRE>
+private final javax.swing.JMenu <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.68"><B>fileMenu</B></A></PRE>
 <DL>
 <DL>
 </DL>
 </DL>
 <HR>
 
-<A NAME="DEFAULT_SIZE"><!-- --></A><H3>
-DEFAULT_SIZE</H3>
+<A NAME="mainTabs"><!-- --></A><H3>
+mainTabs</H3>
 <PRE>
-private static final java.awt.Dimension <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.46"><B>DEFAULT_SIZE</B></A></PRE>
+private final javax.swing.JTabbedPane <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.69"><B>mainTabs</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="mazeEditor"><!-- --></A><H3>
+mazeEditor</H3>
+<PRE>
+private <A HREF="../../maze/gui/mazeeditor/MazeEditorPage.html" title="class in maze.gui.mazeeditor">MazeEditorPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.70"><B>mazeEditor</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="mazeViewer"><!-- --></A><H3>
+mazeViewer</H3>
+<PRE>
+private <A HREF="../../maze/gui/MazeViewerPage.html" title="class in maze.gui">MazeViewerPage</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.71"><B>mazeViewer</B></A></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="mMazeInfoModel"><!-- --></A><H3>
+mMazeInfoModel</H3>
+<PRE>
+private final <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.72"><B>mMazeInfoModel</B></A></PRE>
 <DL>
 <DL>
 </DL>
@@ -527,7 +605,7 @@ private static final java.awt.Dimension <A HREF="../../src-html/maze/gui/Primary
 <A NAME="PrimaryFrame()"><!-- --></A><H3>
 PrimaryFrame</H3>
 <PRE>
-public <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.38"><B>PrimaryFrame</B></A>()</PRE>
+public <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.43"><B>PrimaryFrame</B></A>()</PRE>
 <DL>
 </DL>
 
@@ -541,67 +619,10 @@ public <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.38"><B>PrimaryFra
 </TR>
 </TABLE>
 
-<A NAME="init()"><!-- --></A><H3>
-init</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.51"><B>init</B></A>()</PRE>
-<DL>
-<DD>Initializes the contents of this frame.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="doOpenFile()"><!-- --></A><H3>
-doOpenFile</H3>
-<PRE>
-private void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.296"><B>doOpenFile</B></A>()</PRE>
-<DL>
-<DD>Bring up the open file dialog and based on the file type selected hand it
- off to the appropriate panel. The 2 groups of files are AI scripts and
- maze files. AI scripts are python .py files and maze maps can be .maz or
- .mz2.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getMazeInfoModel()"><!-- --></A><H3>
-getMazeInfoModel</H3>
-<PRE>
-public <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.410"><B>getMazeInfoModel</B></A>()</PRE>
-<DL>
-<DD>Returns a MazeInfoModel object containing all of the currently loaded
- mazes.
-<P>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>said MazeInfoModel object.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="exit()"><!-- --></A><H3>
-exit</H3>
-<PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.418"><B>exit</B></A>()</PRE>
-<DL>
-<DD>Exits the application.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="canExitingApplication()"><!-- --></A><H3>
 canExitingApplication</H3>
 <PRE>
-private boolean <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.433"><B>canExitingApplication</B></A>()</PRE>
+private boolean <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.80"><B>canExitingApplication</B></A>()</PRE>
 <DL>
 <DD>Called when the application is closed. Perform application exit
  cleanup.This gives us a chance to cleanup and prompt to save things.
@@ -614,10 +635,139 @@ private boolean <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.433"><B>
 </DL>
 <HR>
 
+<A NAME="doOpenFile()"><!-- --></A><H3>
+doOpenFile</H3>
+<PRE>
+private void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.91"><B>doOpenFile</B></A>()</PRE>
+<DL>
+<DD>Bring up the open file dialog and based on the file type selected hand it
+ off to the appropriate panel. The 2 groups of files are AI scripts and
+ maze files. AI scripts are python .py files and maze maps can be .maz or
+ .mz2.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="exit()"><!-- --></A><H3>
+exit</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.203"><B>exit</B></A>()</PRE>
+<DL>
+<DD>Exits the application.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getApplicationBuildDate()"><!-- --></A><H3>
+getApplicationBuildDate</H3>
+<PRE>
+private java.lang.String <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.216"><B>getApplicationBuildDate</B></A>()</PRE>
+<DL>
+<DD>Get the date that this build was created on.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Date string or <code>Unknown</code>.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getApplicationRevision()"><!-- --></A><H3>
+getApplicationRevision</H3>
+<PRE>
+private int <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.250"><B>getApplicationRevision</B></A>()</PRE>
+<DL>
+<DD>Get the subversion revision this application was built from.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>The Subversion revision number or 0 if unknown.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getMazeInfoModel()"><!-- --></A><H3>
+getMazeInfoModel</H3>
+<PRE>
+public <A HREF="../../maze/model/MazeInfoModel.html" title="class in maze.model">MazeInfoModel</A> <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.288"><B>getMazeInfoModel</B></A>()</PRE>
+<DL>
+<DD>Returns a MazeInfoModel object containing all of the currently loaded
+ mazes.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>said MazeInfoModel object.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="init()"><!-- --></A><H3>
+init</H3>
+<PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.296"><B>init</B></A>()</PRE>
+<DL>
+<DD>Initializes the contents of this frame.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="makeAboutMenuItem()"><!-- --></A><H3>
+makeAboutMenuItem</H3>
+<PRE>
+private javax.swing.JMenuItem <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.507"><B>makeAboutMenuItem</B></A>()</PRE>
+<DL>
+<DD>Create the Help->About menu item.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Created item.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="makeUpdateCheckMenuItem()"><!-- --></A><H3>
+makeUpdateCheckMenuItem</H3>
+<PRE>
+private javax.swing.JMenuItem <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.540"><B>makeUpdateCheckMenuItem</B></A>()</PRE>
+<DL>
+<DD>Creates a menu item that checks if you have the latest revision of the
+ application.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Menu item.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="makeWebsiteMenuItem()"><!-- --></A><H3>
+makeWebsiteMenuItem</H3>
+<PRE>
+private javax.swing.JMenuItem <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.616"><B>makeWebsiteMenuItem</B></A>()</PRE>
+<DL>
+<DD>Help->Project Web-site menu item launches the project web site in the
+ system browser.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Menu item.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="setSimulation(boolean)"><!-- --></A><H3>
 setSimulation</H3>
 <PRE>
-public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.443"><B>setSimulation</B></A>(boolean&nbsp;simOn)</PRE>
+public void <A HREF="../../src-html/maze/gui/PrimaryFrame.html#line.635"><B>setSimulation</B></A>(boolean&nbsp;simOn)</PRE>
 <DL>
 <DD>Tells the primary frame if a simulation is currently running or not. We
  can then disable GUI elements while animating.
