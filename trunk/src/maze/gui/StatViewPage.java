@@ -36,7 +36,7 @@ public class StatViewPage extends JPanel
    private RobotBase algorithm;
    private final DefaultTableModel statTableModel;
    private final JComboBox algorithmCombo;
-   private final MazeView2 mazeView = new MazeView2();
+   private final MazeView mazeView = new MazeView();
    private final MazeList mazeList = new MazeList(this.mazeView);
 
    /**
