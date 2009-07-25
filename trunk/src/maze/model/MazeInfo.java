@@ -40,7 +40,10 @@ public class MazeInfo implements Listener<MazeCell>
       {
          MazeInfo mi = new MazeInfo();
          MazeModel maze = new MazeModel();
-         maze.loadMaze(in, false);
+         if (name != null && name.toLowerCase().endsWith(".mz2"))
+            maze.loadMaze(in, true); // Is v2 maze.
+         else
+            maze.loadMaze(in, false);
          mi.mPath = name;
          mi.isMutable = false;
          mi.mName = name;

@@ -35,13 +35,18 @@ import maze.util.Listener;
  */
 public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeViewInterface
 {
+   private static final boolean PRINT_DEBUG = false;
    private static final long serialVersionUID = 3249468255178771818L;
    private static final int WALL_SIZE_DIVIDER = 6;
    private static final int MAX_CELLS_TO_DRAW = 64;
    /**
+    * Determines the size of the walls relative to the cell size.
+    */
+   protected int wallSizeDivider = WALL_SIZE_DIVIDER;
+   /**
     * The maze model that stores the configuration of the maze.
     */
-   private MazeModel model;
+   protected MazeModel model;
    /**
     * The background image holds the rendered maze cells. When cells are
     * invalidated they are redrawn on this background image. When the screen is
@@ -57,11 +62,11 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    /**
     * Stores the sizes of a cell and its walls.
     */
-   private final CellSizeModel csm = new CellSizeModel(false);
+   protected final CellSizeModel csm = new CellSizeModel(false);
    /**
     * UI delegate used for drawing each maze component.
     */
-   private MazePainter painter = new MazePainterDefault();
+   protected MazePainter painter = new MazePainterDefault();
    /**
     * The current location of the robot while it is animating.
     */
@@ -191,8 +196,10 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
     * @param g Where to draw.
     * @param cell The cell in question.
     */
-   private void drawCell(final Graphics2D g, final MazeCell cell)
+   protected void drawCell(final Graphics2D g, final MazeCell cell)
    {
+      if (PRINT_DEBUG)
+         System.out.println(System.currentTimeMillis() + " Drawing Cell: " + cell);
       this.painter.drawCellBackground(g, this.getCellAreaInner(cell));
 
       if (this.model.getWall(cell, Direction.East).isSet())
@@ -344,6 +351,9 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
          for (int i = 1; i < path.size(); i++)
          {
             there = path.get(i);
+            // Check for a rare case where a lack of thread safety changes the list while in use.
+            if (there == null)
+               return;
             final Point center = this.getCellCenterInner(here);
             if (here.getX() < there.getX())
             {
@@ -420,22 +430,23 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    private void drawTopLayer(final Graphics2D g)
    {
       this.setRenderingQualityLow(g);
-      if (this.robotPathModel != null)
+      final RobotPathModel pathModel = this.robotPathModel;
+      if (pathModel != null)
       {
          if (this.drawPathFirst)
          {
             g.setPaint(this.painter.getRunFirst());
-            this.drawPath(g, this.robotPathModel.getPathFirst(), this.csm.getWallWidth(), false);
+            this.drawPath(g, pathModel.getPathFirst(), this.csm.getWallWidth(), false);
          }
          if (this.drawPathBest)
          {
             g.setPaint(this.painter.getRunBest());
-            this.drawPath(g, this.robotPathModel.getPathBest(), -this.csm.getWallWidth(), false);
+            this.drawPath(g, pathModel.getPathBest(), -this.csm.getWallWidth(), false);
          }
          if (this.drawPathCurrent)
          {
             g.setPaint(this.painter.getRunCurrent());
-            this.drawPath(g, this.robotPathModel.getPathRecent(), 0, true);
+            this.drawPath(g, pathModel.getPathRecent(), 0, true);
          }
       }
       if (this.drawUnderstanding)
@@ -583,7 +594,7 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
     * @param cell The cell in question.
     * @return The location and area in pixels of where the cell is located.
     */
-   private Rectangle getCellArea(final MazeCell cell)
+   protected Rectangle getCellArea(final MazeCell cell)
    {
       return new Rectangle(this.csm.getWallWidth() + cell.getXZeroBased() * this.csm.getCellWidth(),
                            this.csm.getWallHeight() +
@@ -599,7 +610,7 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
     * @param cell The cell in question.
     * @return Cell area minus the walls and corner peg.
     */
-   private Rectangle getCellAreaInner(final MazeCell cell)
+   protected Rectangle getCellAreaInner(final MazeCell cell)
    {
       return new Rectangle(this.csm.getWallWidth() + cell.getXZeroBased() * this.csm.getCellWidth(),
                            this.csm.getWallHeight() +
@@ -622,29 +633,6 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
                        this.csm.getWallHeight() +
                              (cell.getYZeroBased() * this.csm.getCellHeight()) +
                              (this.csm.getCellHeightInner() / 2));
-   }
-
-   /**
-    * Get the cell that the given point is located in. This gives us a means to
-    * translate between coordinate positions and cells.
-    * @param location A coordinate point in the maze area.
-    * @return The cell or null if the point is not inside a valid cell.
-    */
-   @SuppressWarnings("unused")
-   private MazeCell getHostCell(Point location)
-   {
-      try
-      {
-         MazeCell cell = new MazeCell( ( (location.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
-                                      ( (location.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
-         if (cell.isInRange(model.getSize()))
-         {
-            return cell;
-         }
-      }
-      catch (Exception e)
-      {}
-      return null;
    }
 
    /**
@@ -676,7 +664,7 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
     * @param cell The cell in question.
     * @return The location and size of the peg.
     */
-   private Rectangle getPegArea(final MazeCell cell)
+   protected Rectangle getPegArea(final MazeCell cell)
    {
       return new Rectangle(cell.getX() * this.csm.getCellWidth(),
                            cell.getY() * this.csm.getCellHeight(),
@@ -706,7 +694,7 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
     * @param wall Which wall do you want. Must be East or South.
     * @return The absolute coordinates of the area.
     */
-   private Rectangle getWallArea(final MazeCell cell, final Direction wall)
+   protected Rectangle getWallArea(final MazeCell cell, final Direction wall)
    {
       switch (wall)
       {
@@ -758,6 +746,8 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    {
       if (cell != null && this.model != null && cell.isInRange(this.model.getSize()))
       {
+         if (PRINT_DEBUG)
+            System.out.println(System.currentTimeMillis() + " Invalidating Cell: " + cell);
          synchronized (this.invalidatedCells)
          {
             this.invalidatedCells.add(cell);
@@ -783,6 +773,8 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
    @Override
    protected void paintComponent(final Graphics arg)
    {
+      if (PRINT_DEBUG)
+         System.out.println(System.currentTimeMillis() + " Painting Component");
       final Graphics2D bgg = this.getBackgroundGraphics();
       if (this.repaintAll)
       {
@@ -958,7 +950,8 @@ public class MazeView2 extends JComponent implements Listener<MazeCell>, MazeVie
          this.backgroundImage = null; // Trigger creation of a new buffer image.
          csm.setCellWidth( (getWidth() - csm.getWallWidth()) / model.getSize().width);
          csm.setCellHeight( (getHeight() - csm.getWallHeight()) / model.getSize().height);
-         final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
+         final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) /
+                              this.wallSizeDivider;
          this.csm.setWallWidth(wallSize);
          this.csm.setWallHeight(wallSize);
          this.painter.setMazeSize(getMazeSize());

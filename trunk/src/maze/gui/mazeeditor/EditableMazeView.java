@@ -1,14 +1,16 @@
 package maze.gui.mazeeditor;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import javax.swing.SwingUtilities;
+
+import maze.gui.MazeView2;
 import maze.model.CellSizeModel;
 import maze.model.Direction;
 import maze.model.MazeCell;
@@ -21,138 +23,100 @@ import maze.model.MazeModel.MazeWall;
  * that will be applied.
  * @author Johnathan Smith
  */
-public final class EditableMazeView extends maze.gui.MazeView
+public final class EditableMazeView extends MazeView2
 {
    private static final int WALL_SIZE_DIVIDER = 3;
+   private MazeCell activeCell;
+   private Direction activeWallDir;
    private MazeTemplate mCurrentTemplate = null;
 
-   /**
-    * Resizes the wall width and height of the maze based on the size of this
-    * MazeView panel when the panel is resized.
-    * @param e the ComponentEvent passed when this component is resized
-    */
-   @Override
-   public void componentResized(ComponentEvent e)
+   private final transient MouseAdapter mouseAdapter = new MouseAdapter()
    {
-      super.componentResized(e);
-      //We override the standard wall size here so it is easier to click on.
-      final int wallSize = Math.min(csm.getCellWidth(), csm.getCellHeight()) / WALL_SIZE_DIVIDER;
-      this.csm.setWallWidth(wallSize);
-      this.csm.setWallHeight(wallSize);
-   }
-
-   /**
-    * Get the cell size model.
-    * @return A copy of the model instance.
-    */
-   public CellSizeModel getCellSizeModel()
-   {
-      return this.csm.clone();
-   }
-
-   /**
-    * Paints the maze with a call to MazeView.paintComponent and paints the
-    * currently selected maze template if one is selected.
-    * @param arg the Graphics object that will be used for drawing operations
-    */
-   @Override
-   protected void paintComponent(Graphics arg)
-   {
-      super.paintComponent(arg);
-      final Graphics2D g2 = (Graphics2D) arg;
-      if (model != null)
+      @Override
+      public void mouseDragged(MouseEvent e)
       {
-         g2.setPaint(super.paints.getPegInvalid());
-         int cx, cy;
-         for (MazeCellPeg p : model.illegalPegs())
+         if (model != null)
          {
-            cx = p.getX() * csm.getCellWidth() - csm.getWallWidthHalf();
-            cy = p.getY() * csm.getCellHeight() - csm.getWallHeightHalf();
-            g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
+            setActiveWall(null, null);
+            final MazeCell cell = getHostMazeCell(e.getPoint());
+            if (cell != null)
+            {
+               final MazeWall wall = getWall(e.getPoint());
+               if (wall != null)
+               {
+                  if (SwingUtilities.isLeftMouseButton(e))
+                  {
+                     if (wall.isSet() == false)
+                     {
+                        wall.set(true);
+                        invalidateCell(cell);
+                     }
+                  }
+                  else if (SwingUtilities.isRightMouseButton(e))
+                  {
+                     if (wall.isSet())
+                     {
+                        wall.set(false);
+                        invalidateCell(cell);
+                     }
+                  }
+               }
+            }
          }
-         if (model.isCenterLegal())
-         {
-            g2.setColor(Color.GREEN);
-            Dimension size = model.getSize();
-            cx = size.width / 2 * csm.getCellWidth() - csm.getWallWidthHalf();
-            cy = size.height / 2 * csm.getCellHeight() - csm.getWallHeightHalf();
-            g2.fillRect(cx, cy, csm.getWallWidth(), csm.getWallHeight());
-         }
-
-         if (mCurrentTemplate != null)
-            mCurrentTemplate.draw(g2, this.getCellSizeModel(), this.paints);
       }
-   }
 
-   /**
-    * Sets the currently selected template to mt
-    * @param mt the new current template that will be used. May be null.
-    */
-   public void setTemplate(MazeTemplate mt)
-   {
-      mCurrentTemplate = mt;
-   }
-
-   /**
-    * Applied the currently selected template either setting walls or clearing
-    * walls based on the value of setWall. If setWall is true, the walls under
-    * the template will be set, otherwise they will be cleared.
-    * @param setWall true if the walls under the template should be set, false
-    *           if the walls under the template should be cleared
-    */
-   public void applyTemplate(boolean setWall)
-   {
-      if (model == null || mCurrentTemplate == null)
-         return;
-      TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
-      Point[] cp = mCurrentTemplate.getCenterPoints(this.getCellSizeModel());
-      Vector<MazeWall> walls = new Vector<MazeWall>();
-      TreeSet<TemplatePeg> applied = new TreeSet<TemplatePeg>();
-      for (int i = 0; i < Math.min(tp.length, cp.length); i++)
+      @Override
+      public void mouseMoved(MouseEvent e)
       {
-         if (applied.contains(tp[i]))
-            continue;
-
-         MazeCell hostCell;
-         try
+         if (model != null)
          {
-            hostCell = this.getHostMazeCell(cp[i]);
+            MazeCell newActive = getHostMazeCell(e.getPoint());
+            if (newActive != null)
+            {
+               if (getWallArea(newActive, Direction.East).contains(e.getPoint()) &&
+                   newActive.getX() < model.getSize().width)
+               {
+                  setActiveWall(newActive, Direction.East);
+               }
+               else if (getWallArea(newActive, Direction.South).contains(e.getPoint()) &&
+                        newActive.getY() < model.getSize().height)
+               {
+                  setActiveWall(newActive, Direction.South);
+               }
+               else
+               {
+                  setActiveWall(null, null);
+               }
+            }
+            else
+            {
+               setActiveWall(null, null);
+            }
          }
-         catch (Exception ex)
-         {
-            continue;
-         }
-
-         int[] coords =
-         {
-            hostCell.getXZeroBased(), hostCell.getYZeroBased()
-         };
-
-         int leftX = coords[0] * csm.getCellWidth();
-         int leftY = coords[1] * csm.getCellHeight();
-
-         if (cp[i].x > leftX + csm.getCellWidthHalf() / 2 &&
-             cp[i].x <= leftX + csm.getCellWidthHalf())
-            continue;
-         if (cp[i].y > leftY + csm.getCellHeightHalf() / 2 &&
-             cp[i].y <= leftY + csm.getCellHeightHalf())
-            continue;
-
-         int halfX = leftX + csm.getCellWidthHalf();
-         if (cp[i].x < halfX)
-            coords[0]--;
-
-         int halfY = leftY + csm.getCellHeightHalf();
-         if (cp[i].y < halfY)
-            coords[1]--;
-
-         TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-
-         applyPeg(tp[i], visited, walls, coords);
-         applied.addAll(visited);
       }
-      for (MazeWall ms : walls)
-         ms.set(setWall);
+
+      @Override
+      public void mousePressed(MouseEvent e)
+      {
+         if (model != null)
+         {
+            final MazeWall wall = getWall(e.getPoint());
+            if (wall != null)
+            {
+               //Flip the status of the wall.
+               wall.set(!wall.isSet());
+            }
+         }
+      }
+   };
+
+   /**
+    * Constructor.
+    */
+   public EditableMazeView()
+   {
+      super.wallSizeDivider = WALL_SIZE_DIVIDER;
+      this.setEditable(true);
    }
 
    /**
@@ -219,6 +183,195 @@ public final class EditableMazeView extends maze.gui.MazeView
          };
          applyPeg(peg.bottom.mLeftBottom, visited, walls, newCoords);
       }
-
    }
+
+   /**
+    * Applied the currently selected template either setting walls or clearing
+    * walls based on the value of setWall. If setWall is true, the walls under
+    * the template will be set, otherwise they will be cleared.
+    * @param setWall true if the walls under the template should be set, false
+    *           if the walls under the template should be cleared
+    */
+   public void applyTemplate(boolean setWall)
+   {
+      if (model == null || mCurrentTemplate == null)
+         return;
+      TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
+      Point[] cp = mCurrentTemplate.getCenterPoints(this.getCellSizeModel());
+      Vector<MazeWall> walls = new Vector<MazeWall>();
+      TreeSet<TemplatePeg> applied = new TreeSet<TemplatePeg>();
+      for (int i = 0; i < Math.min(tp.length, cp.length); i++)
+      {
+         if (applied.contains(tp[i]))
+            continue;
+
+         MazeCell hostCell = this.getHostMazeCell(cp[i]);
+         if (hostCell != null)
+         {
+            int[] coords =
+            {
+               hostCell.getXZeroBased(), hostCell.getYZeroBased()
+            };
+
+            int leftX = coords[0] * csm.getCellWidth();
+            int leftY = coords[1] * csm.getCellHeight();
+
+            if (cp[i].x > leftX + csm.getCellWidthHalf() / 2 &&
+                cp[i].x <= leftX + csm.getCellWidthHalf())
+               continue;
+            if (cp[i].y > leftY + csm.getCellHeightHalf() / 2 &&
+                cp[i].y <= leftY + csm.getCellHeightHalf())
+               continue;
+
+            int halfX = leftX + csm.getCellWidthHalf();
+            if (cp[i].x < halfX)
+               coords[0]--;
+
+            int halfY = leftY + csm.getCellHeightHalf();
+            if (cp[i].y < halfY)
+               coords[1]--;
+
+            TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
+
+            applyPeg(tp[i], visited, walls, coords);
+            applied.addAll(visited);
+         }
+      }
+      for (MazeWall ms : walls)
+         ms.set(setWall);
+   }
+
+   /**
+    * Get the cell size model.
+    * @return A copy of the model instance.
+    */
+   public CellSizeModel getCellSizeModel()
+   {
+      return this.csm.clone();
+   }
+
+   /**
+    * Get the cell that the given point is located in. This gives us a means to
+    * translate between coordinate positions and cells.
+    * @param location A coordinate point in the maze area.
+    * @return The cell or null if the point is not inside a valid cell.
+    */
+   protected MazeCell getHostMazeCell(Point pointerLocation)
+   {
+      try
+      {
+         // If the pointer is on the North or West border wall.
+         if (pointerLocation.x < csm.getWallWidth() || pointerLocation.y < csm.getWallHeight())
+            return null;
+         MazeCell cell = new MazeCell( ( (pointerLocation.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
+                                      ( (pointerLocation.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
+         if (cell.isInRange(this.model.getSize()))
+            return cell;
+      }
+      catch (IllegalArgumentException e)
+      {}
+      return null;
+   }
+
+   /**
+    * Converts a mouse pointer location into an actual maze wall object.
+    * @param pointerLocation Cursor location or other point.
+    * @return The maze wall that can be checked or changed, or null if the
+    *         pointer is not over a wall.
+    */
+   protected MazeWall getWall(Point pointerLocation)
+   {
+      final MazeCell cell = this.getHostMazeCell(pointerLocation);
+      if (cell != null)
+      {
+         if (super.getWallArea(cell, Direction.East).contains(pointerLocation))
+            return super.model.getWall(cell, Direction.East);
+         if (super.getWallArea(cell, Direction.South).contains(pointerLocation))
+            return super.model.getWall(cell, Direction.South);
+      }
+      return null;
+   }
+
+   /**
+    * Paints the currently selected maze template if one is selected. Also
+    * paints valid and invalid pegs.
+    * @param arg the Graphics object that will be used for drawing operations.
+    */
+   @Override
+   protected void paintComponent(Graphics arg)
+   {
+      super.paintComponent(arg);
+      final Graphics2D g2 = (Graphics2D) arg;
+      if (model != null)
+      {
+         //TODO: Pegs can be drawn in the base maze view class with better performance.
+         for (MazeCellPeg p : model.illegalPegs())
+         {
+            super.painter.drawPegInvalid(g2, super.getPegArea(p.getMazeCell()));
+         }
+         if (model.isCenterLegal())
+            super.painter.drawPegValid(g2, super.getPegArea(model.getWinningCells()[0]));
+
+         if (mCurrentTemplate != null)
+            mCurrentTemplate.draw(g2, this.getCellSizeModel(), this.painter);
+      }
+      if (this.activeCell != null && this.activeWallDir != null)
+      {
+         super.painter.drawCellHover(g2, super.getWallArea(this.activeCell, this.activeWallDir));
+      }
+   }
+
+   /**
+    * The wall that the mouse is hovering over should be set active so it can be
+    * highlighted.
+    * @param newCell Cell containing the active wall.
+    * @param newDir Which wall is active.
+    */
+   private void setActiveWall(MazeCell newCell, Direction newDir)
+   {
+      boolean repaint = false;
+      if ( (newCell == null && activeCell != null) ||
+          (newCell != null && newCell.equals(activeCell) == false))
+      {
+         activeCell = newCell;
+         repaint = true;
+      }
+      if (this.activeWallDir != newDir)
+      {
+         this.activeWallDir = newDir;
+         repaint = true;
+      }
+      if (repaint)
+         this.repaint();
+   }
+
+   /**
+    * Sets whether this MazeView allows mouse interactions to modify its
+    * underlying MazeModel.
+    * @param editable true to allow editing.
+    */
+   public void setEditable(boolean editable)
+   {
+      if (editable)
+      {
+         this.addMouseListener(this.mouseAdapter);
+         this.addMouseMotionListener(this.mouseAdapter);
+      }
+      else
+      {
+         this.removeMouseListener(this.mouseAdapter);
+         this.removeMouseMotionListener(this.mouseAdapter);
+         this.activeCell = null;
+      }
+   }
+
+   /**
+    * Sets the currently selected template to mt
+    * @param mt the new current template that will be used. May be null.
+    */
+   public void setTemplate(MazeTemplate mt)
+   {
+      mCurrentTemplate = mt;
+   }
+
 }

@@ -10,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.CharBuffer;
@@ -40,6 +42,7 @@ import maze.model.MazeInfoModel;
  */
 public final class PrimaryFrame extends JFrame
 {
+   private static final String LATEST_REVISION_URI = "http://maze-solver.googlecode.com/svn/wiki/LatestRevision.wiki";
    private static final String PROJECT_HOMEPAGE = "http://code.google.com/p/maze-solver/";
 
    /**
@@ -213,16 +216,30 @@ public final class PrimaryFrame extends JFrame
    private String getApplicationBuildDate()
    {
       final String unknown = "Unknown";
+      InputStream is = null;
       try
       {
          Properties prop = new Properties();
          // This properties file is created by Ant during the build process.
-         prop.load(Main.class.getResourceAsStream("build.properties"));
+         is = Main.class.getResourceAsStream("build.properties");
+         prop.load(is);
          return prop.getProperty("date", unknown);
       }
       catch (Exception e1)
       {
          return unknown;
+      }
+      finally
+      {
+         try
+         {
+            if (is != null)
+               is.close();
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
       }
    }
 
@@ -232,17 +249,35 @@ public final class PrimaryFrame extends JFrame
     */
    private int getApplicationRevision()
    {
+      InputStream is = null;
       try
       {
          Properties prop = new Properties();
          // This properties file is created by Ant during the build process.
-         prop.load(Main.class.getResourceAsStream("build.properties"));
-         return Integer.parseInt(prop.getProperty("revision", "0"));
+         is = Main.class.getResourceAsStream("build.properties");
+         if (is != null)
+         {
+            prop.load(is);
+            return Integer.parseInt(prop.getProperty("revision", "0"));
+         }
       }
-      catch (Exception e1)
+      catch (NumberFormatException e)
+      {}
+      catch (IOException e1)
+      {}
+      finally
       {
-         return 0;
+         try
+         {
+            if (is != null)
+               is.close();
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
       }
+      return 0; // On error.
    }
 
    /**
@@ -515,10 +550,11 @@ public final class PrimaryFrame extends JFrame
                @Override
                public void run()
                {
+                  Reader r = null;
                   try
                   {
-                     Reader r = new InputStreamReader(new java.net.URI("http://maze-solver.googlecode.com/svn/wiki/LatestRevision.wiki").toURL().openConnection().getInputStream(),
-                                                      "ASCII");
+                     r = new InputStreamReader(new java.net.URI(LATEST_REVISION_URI).toURL().openConnection().getInputStream(),
+                                               "ASCII");
                      CharBuffer cb = CharBuffer.allocate(1024);
                      r.read(cb);
                      cb.flip();
@@ -550,6 +586,18 @@ public final class PrimaryFrame extends JFrame
                      JOptionPane.showMessageDialog(PrimaryFrame.this,
                                                    "An error occured while checking for the latest version.\n" +
                                                          e.toString());
+                  }
+                  finally
+                  {
+                     try
+                     {
+                        if (r != null)
+                           r.close();
+                     }
+                     catch (IOException e)
+                     {
+                        e.printStackTrace();
+                     }
                   }
                }
             };

@@ -106,7 +106,7 @@ public final class MazePainterDefault extends MazePainter
 
       this.background = Color.WHITE;
       this.peg = new Color(0, 0, 0, 185); // Slightly transparent black.
-      this.pegValid = Color.BLACK;
+      this.pegValid = Color.GREEN;
       this.pegInvalid = new GradientPaint(0, 0, Color.RED, 2, 2, new Color(240, 0, 0), true);
       this.fog = new Color(0, 0, 0, 75);
       this.runFirst = new Color(0, 0, 255, 75);
