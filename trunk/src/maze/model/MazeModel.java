@@ -143,7 +143,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
          if (rwalls.get(y * width + x))
          {
             rwalls.clear(y * width + x);
-            super.notifyListeners(new MazeCell(x + 1, y + 1));
+            super.notifyListeners(MazeCell.valueOf(x + 1, y + 1));
          }
       }
       else
@@ -151,7 +151,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
          if (cwalls.get(x * height + y))
          {
             cwalls.clear(x * height + y);
-            super.notifyListeners(new MazeCell(x + 1, y + 1));
+            super.notifyListeners(MazeCell.valueOf(x + 1, y + 1));
          }
       }
    }
@@ -187,7 +187,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
       {
          for (int y = 1; y <= this.getSize().height; y++)
          {
-            final MazeCell cell = new MazeCell(x, y);
+            final MazeCell cell = MazeCell.valueOf(x, y);
             this.getWall(cell, Direction.East).set(rand.nextBoolean());
             this.getWall(cell, Direction.South).set(rand.nextBoolean());
          }
@@ -224,7 +224,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
     */
    public MazeCell getStartingCell()
    {
-      return new MazeCell(1, this.height);
+      return MazeCell.valueOf(1, this.height);
    }
 
    /**
@@ -322,8 +322,8 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
       final int centerX = width / 2;
       MazeCell[] result = new MazeCell[]
       {
-         new MazeCell(centerX, centerY), new MazeCell(centerX + 1, centerY),
-         new MazeCell(centerX, centerY + 1), new MazeCell(centerX + 1, centerY + 1)
+         MazeCell.valueOf(centerX, centerY), MazeCell.valueOf(centerX + 1, centerY),
+         MazeCell.valueOf(centerX, centerY + 1), MazeCell.valueOf(centerX + 1, centerY + 1)
       };
       Arrays.sort(result);
       return result;
@@ -598,7 +598,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
          {
             for (int j = 16; j > 0; j--)
             {
-               MazeCell cell = new MazeCell(i, j);
+               MazeCell cell = MazeCell.valueOf(i, j);
                byte cellWalls = 0;
                if (this.getWall(cell, Direction.North).isSet())
                {
@@ -728,7 +728,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
          if (!rwalls.get(y * width + x))
          {
             rwalls.set(y * width + x);
-            super.notifyListeners(new MazeCell(x + 1, y + 1));
+            super.notifyListeners(MazeCell.valueOf(x + 1, y + 1));
          }
       }
       else
@@ -736,7 +736,7 @@ public final class MazeModel extends ListenerSubject<MazeCell> implements Clonea
          if (!cwalls.get(x * height + y))
          {
             cwalls.set(x * height + y);
-            super.notifyListeners(new MazeCell(x + 1, y + 1));
+            super.notifyListeners(MazeCell.valueOf(x + 1, y + 1));
          }
       }
 

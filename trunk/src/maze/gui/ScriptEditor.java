@@ -230,7 +230,7 @@ public final class ScriptEditor extends RTextScrollPane implements ActionListene
       interp.set("Right", RobotStep.RotateRight);
       //We create and set a dummy maze variable so the user can analyze its methods.
       interp.set(ROBOT_MODEL_VAR_NAME, new RobotModel(new RobotModelMaster(new MazeModel(),
-                                                                           new MazeCell(1, 16),
+                                                                           MazeCell.valueOf(1, 16),
                                                                            Direction.North)));
       return interp;
    }

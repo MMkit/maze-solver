@@ -144,7 +144,7 @@ public final class EditableMazeView extends MazeView
              coords[0] < model.getSize().width &&
              coords[1] >= 0 &&
              coords[1] < model.getSize().height)
-            walls.add(model.getWall(new MazeCell(coords[0] + 1, coords[1] + 1), Direction.East));
+            walls.add(model.getWall(MazeCell.valueOf(coords[0] + 1, coords[1] + 1), Direction.East));
 
          int[] newCoords =
          {
@@ -159,7 +159,7 @@ public final class EditableMazeView extends MazeView
              coords[0] < model.getSize().width &&
              coords[1] >= 0 &&
              coords[1] < model.getSize().height)
-            walls.add(model.getWall(new MazeCell(coords[0] + 1, coords[1] + 1), Direction.South));
+            walls.add(model.getWall(MazeCell.valueOf(coords[0] + 1, coords[1] + 1), Direction.South));
 
          int[] newCoords =
          {
@@ -263,8 +263,8 @@ public final class EditableMazeView extends MazeView
          // If the pointer is on the North or West border wall.
          if (pointerLocation.x < csm.getWallWidth() || pointerLocation.y < csm.getWallHeight())
             return null;
-         MazeCell cell = new MazeCell( ( (pointerLocation.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
-                                      ( (pointerLocation.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
+         MazeCell cell = MazeCell.valueOf( ( (pointerLocation.x - csm.getWallWidth()) / csm.getCellWidth()) + 1,
+                                          ( (pointerLocation.y - csm.getWallHeight()) / csm.getCellHeight()) + 1);
          if (cell.isInRange(this.model.getSize()))
             return cell;
       }

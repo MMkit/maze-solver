@@ -55,11 +55,11 @@ public final class MazeCellPeg implements Comparable<MazeCellPeg>
    {
       try
       {
-         return new MazeCell(this.x, this.y);
+         return MazeCell.valueOf(this.x, this.y);
       }
       catch (IllegalArgumentException e)
       {
-         return new MazeCell(1, 1);
+         return MazeCell.valueOf(1, 1);
       }
    }
 

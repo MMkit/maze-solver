@@ -46,13 +46,13 @@ public class RobotModelMaster
 
       this.mazeModel = mazeModel;
       if (currentLocation == null)
-         currentLocation = new MazeCell(1, this.mazeModel.getSize().height);
+         currentLocation = MazeCell.valueOf(1, this.mazeModel.getSize().height);
       this.currentLocation = currentLocation;
       if (direction == null)
          direction = Direction.North;
       this.direction = direction;
 
-      MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
+      MazeCell startCell = MazeCell.valueOf(1, mazeModel.getSize().height);
 
       this.robotPathModel = new RobotPathModel(startCell);
       this.robotPathModel.addLocation(startCell);
@@ -148,7 +148,7 @@ public class RobotModelMaster
          }
          else
          { // First run was not empty.
-            MazeCell startCell = new MazeCell(1, mazeModel.getSize().height);
+            MazeCell startCell = MazeCell.valueOf(1, mazeModel.getSize().height);
             final List<MazeCell> pathTaken = this.robotPathModel.getPathCurrent();
             if ( (this.robotPathModel.pathBest.size()) > (pathTaken.size() - (pathTaken.lastIndexOf(startCell) + 1)))
             {
@@ -169,7 +169,7 @@ public class RobotModelMaster
       {
          for (int j = 1; j <= mazeModel.getSize().height; j++)
          {
-            MazeCell here = new MazeCell(i, j);
+            MazeCell here = MazeCell.valueOf(i, j);
             if (!this.robotPathModel.hasCellBeenVisited(here))
             {
                nonHistory.add(here);
@@ -200,7 +200,7 @@ public class RobotModelMaster
     */
    public boolean isAtStart()
    {
-      MazeCell start = new MazeCell(1, this.mazeModel.getSize().height);
+      MazeCell start = MazeCell.valueOf(1, this.mazeModel.getSize().height);
       if (this.currentLocation.equals(start))
       {
          return true;
@@ -214,8 +214,8 @@ public class RobotModelMaster
     */
    public boolean isAtCenter()
    {
-      MazeCell goal1 = new MazeCell(this.mazeModel.getSize().width / 2,
-                                    this.mazeModel.getSize().height / 2);
+      MazeCell goal1 = MazeCell.valueOf(this.mazeModel.getSize().width / 2,
+                                        this.mazeModel.getSize().height / 2);
       MazeCell goal2 = goal1.plusX(1);
       MazeCell goal3 = goal1.plusY(1);
       MazeCell goal4 = goal3.plusX(1);
