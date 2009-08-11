@@ -48,40 +48,40 @@ public abstract class MazePainter implements Serializable
       this.setDefaults();
    }
 
+   protected void drawRectangle(Graphics2D g, Paint paint, Rectangle area)
+   {
+      g.setPaint(paint);
+      g.fillRect(area.x, area.y, area.width, area.height);
+   }
+
    public void drawCellBackground(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.cellBackground);
-      g.fill(area);
+      this.drawRectangle(g, this.cellBackground, area);
    }
 
    public void drawCellHover(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.hover);
-      g.fill(area);
+      this.drawRectangle(g, this.hover, area);
    }
 
    public void drawFog(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.fog);
-      g.fill(area);
+      this.drawRectangle(g, this.fog, area);
    }
 
    public void drawPeg(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.peg);
-      g.fill(area);
+      this.drawRectangle(g, this.peg, area);
    }
 
    public void drawPegInvalid(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.pegInvalid);
-      g.fill(area);
+      this.drawRectangle(g, this.pegInvalid, area);
    }
 
    public void drawPegValid(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.pegValid);
-      g.fill(area);
+      this.drawRectangle(g, this.pegValid, area);
    }
 
    public void drawRobot(Graphics2D g, Point location, double rotation, int cellWidth,
@@ -143,14 +143,12 @@ public abstract class MazePainter implements Serializable
 
    public void drawWallEmpty(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.wallEmpty);
-      g.fill(area);
+      this.drawRectangle(g, this.wallEmpty, area);
    }
 
    public void drawWallSet(Graphics2D g, Rectangle area)
    {
-      g.setPaint(this.wallSet);
-      g.fill(area);
+      this.drawRectangle(g, this.wallSet, area);
    }
 
    /**

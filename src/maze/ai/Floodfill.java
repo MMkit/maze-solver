@@ -130,19 +130,19 @@ public class Floodfill extends RobotBase
       Dimension size = maze.getSize();
       if ( (direction == Direction.North) && (here.getY() != 1))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() - 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() - 1);
       }
       else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() + 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() + 1);
       }
       else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
       {
-         neighbor = new MazeCell(here.getX() + 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() + 1, here.getY());
       }
       else if ( (direction == Direction.West) && (here.getX() != 1))
       {
-         neighbor = new MazeCell(here.getX() - 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() - 1, here.getY());
       }
       else
       {
@@ -161,19 +161,19 @@ public class Floodfill extends RobotBase
       Dimension size = maze.getSize();
       if ( (direction == Direction.North) && (here.getY() != 1))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() - 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() - 1);
       }
       else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() + 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() + 1);
       }
       else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
       {
-         neighbor = new MazeCell(here.getX() + 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() + 1, here.getY());
       }
       else if ( (direction == Direction.West) && (here.getX() != 1))
       {
-         neighbor = new MazeCell(here.getX() - 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() - 1, here.getY());
       }
       else
       {
@@ -271,19 +271,19 @@ public class Floodfill extends RobotBase
       Dimension size = maze.getSize();
       if ( (direction == Direction.North) && (here.getY() != 1))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() - 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() - 1);
       }
       else if ( (direction == Direction.South) && (here.getY() != size.getHeight()))
       {
-         neighbor = new MazeCell(here.getX(), here.getY() + 1);
+         neighbor = MazeCell.valueOf(here.getX(), here.getY() + 1);
       }
       else if ( (direction == Direction.East) && (here.getX() != size.getWidth()))
       {
-         neighbor = new MazeCell(here.getX() + 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() + 1, here.getY());
       }
       else if ( (direction == Direction.West) && (here.getX() != 1))
       {
-         neighbor = new MazeCell(here.getX() - 1, here.getY());
+         neighbor = MazeCell.valueOf(here.getX() - 1, here.getY());
       }
       else
       {
@@ -321,13 +321,13 @@ public class Floodfill extends RobotBase
       {
          for (int j = 1; j <= size.height; j++)
          {
-            setDistance(new MazeCell(i, j), USELESS);
+            setDistance(MazeCell.valueOf(i, j), USELESS);
          }
       }
 
       if (goal == TO_START)
       {
-         cell = new MazeCell(1, size.height);
+         cell = MazeCell.valueOf(1, size.height);
          setDistance(cell, 0);
          queue.add(cell);
          speedy = false;
@@ -336,16 +336,16 @@ public class Floodfill extends RobotBase
       {
          int targetX = size.width / 2;
          int targetY = size.height / 2;
-         cell = new MazeCell(targetX, targetY);
+         cell = MazeCell.valueOf(targetX, targetY);
          setDistance(cell, 0);
          queue.add(cell);
-         cell = new MazeCell(targetX + 1, targetY);
+         cell = MazeCell.valueOf(targetX + 1, targetY);
          setDistance(cell, 0);
          queue.add(cell);
-         cell = new MazeCell(targetX, targetY + 1);
+         cell = MazeCell.valueOf(targetX, targetY + 1);
          setDistance(cell, 0);
          queue.add(cell);
-         cell = new MazeCell(targetX + 1, targetY + 1);
+         cell = MazeCell.valueOf(targetX + 1, targetY + 1);
          setDistance(cell, 0);
          queue.add(cell);
          if ( (speedRun == true) && (speedRunCapable == true))
@@ -438,10 +438,10 @@ public class Floodfill extends RobotBase
    private void blockOutCenter()
    {
       Dimension size = maze.getSize();
-      MazeCell cell1 = new MazeCell(size.width / 2, size.height / 2);
-      MazeCell cell2 = new MazeCell(size.width / 2 + 1, size.height / 2);
-      MazeCell cell3 = new MazeCell(size.width / 2, size.height / 2 + 1);
-      MazeCell cell4 = new MazeCell(size.width / 2 + 1, size.height / 2 + 1);
+      MazeCell cell1 = MazeCell.valueOf(size.width / 2, size.height / 2);
+      MazeCell cell2 = MazeCell.valueOf(size.width / 2 + 1, size.height / 2);
+      MazeCell cell3 = MazeCell.valueOf(size.width / 2, size.height / 2 + 1);
+      MazeCell cell4 = MazeCell.valueOf(size.width / 2 + 1, size.height / 2 + 1);
       MazeCell current = robotLocation.getCurrentLocation();
 
       if (cell1.equals(current) == false)

@@ -35,7 +35,7 @@ import maze.util.Listener;
  */
 public class MazeView extends JComponent implements Listener<MazeCell>
 {
-   private static final boolean PRINT_DEBUG = false;
+   private static final boolean PRINT_DEBUG = true;
    private static final long serialVersionUID = 3249468255178771818L;
    private static final int WALL_SIZE_DIVIDER = 6;
    private static final int MAX_CELLS_TO_DRAW = 64;
@@ -478,7 +478,7 @@ public class MazeView extends JComponent implements Listener<MazeCell>
          {
             for (int j = 1; j <= model.getSize().height; j++)
             {
-               here = new MazeCell(i, j);
+               here = MazeCell.valueOf(i, j);
                g.setColor(Color.BLACK);
                final Point center = this.getCellCenterInner(here);
                local = understandingInt[i - 1][j - 1];
@@ -493,7 +493,7 @@ public class MazeView extends JComponent implements Listener<MazeCell>
          {
             for (int j = 1; j <= model.getSize().height; j++)
             {
-               here = new MazeCell(i, j);
+               here = MazeCell.valueOf(i, j);
                final Point center = this.getCellCenterInner(here);
                g.setColor(Color.BLACK);
                local = understandingDir[i - 1][j - 1];
@@ -731,7 +731,7 @@ public class MazeView extends JComponent implements Listener<MazeCell>
          {
             for (int y = 1; y <= this.model.getSize().height; y++)
             {
-               this.invalidatedCells.add(new MazeCell(x, y));
+               this.invalidatedCells.add(MazeCell.valueOf(x, y));
             }
          }
       }
@@ -775,6 +775,7 @@ public class MazeView extends JComponent implements Listener<MazeCell>
    {
       if (PRINT_DEBUG)
          System.out.println(System.currentTimeMillis() + " Painting Component");
+
       final Graphics2D bgg = this.getBackgroundGraphics();
       if (this.repaintAll)
       {
