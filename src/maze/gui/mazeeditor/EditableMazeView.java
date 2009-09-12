@@ -3,10 +3,12 @@ package maze.gui.mazeeditor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
@@ -130,7 +132,7 @@ public final class EditableMazeView extends MazeView
     * @param coords the maze coordinates for peg which may be outside of the
     *           actual maze.
     */
-   private void applyPeg(TemplatePeg peg, TreeSet<TemplatePeg> visited, Vector<MazeWall> walls,
+   private void applyPeg(TemplatePeg peg, TreeSet<TemplatePeg> visited, List<MazeWall> walls,
          int[] coords)
    {
       if (visited.contains(peg))
@@ -196,49 +198,48 @@ public final class EditableMazeView extends MazeView
    {
       if (model == null || mCurrentTemplate == null)
          return;
-      TemplatePeg[] tp = mCurrentTemplate.getCenterPegs();
-      Point[] cp = mCurrentTemplate.getCenterPoints(this.getCellSizeModel());
-      Vector<MazeWall> walls = new Vector<MazeWall>();
-      TreeSet<TemplatePeg> applied = new TreeSet<TemplatePeg>();
-      for (int i = 0; i < Math.min(tp.length, cp.length); i++)
-      {
-         if (applied.contains(tp[i]))
-            continue;
 
-         MazeCell hostCell = this.getHostMazeCell(cp[i]);
+      final TemplatePeg[] centerPegs = mCurrentTemplate.getCenterPegs();
+      final Point[] centerPoints = mCurrentTemplate.getCenterPoints(this.getCellSizeModel());
+      final List<MazeWall> walls = new ArrayList<MazeWall>();
+      final TreeSet<TemplatePeg> appliedPegs = new TreeSet<TemplatePeg>();
+
+      for (int i = 0; i < Math.min(centerPegs.length, centerPoints.length) &&
+                      appliedPegs.contains(centerPegs[i]) == false; i++)
+      {
+         // Use the top left corner of the peg next to the center point.
+         final Point pegCorner = new Point(centerPoints[i].x - csm.getWallWidth(),
+                                           centerPoints[i].y - csm.getWallHeightHalf());
+         final MazeCell hostCell = this.getHostMazeCell(pegCorner);
          if (hostCell != null)
          {
-            int[] coords =
+            // The goal here is to check if the peg under the cursor is hovering over a peg on the maze.
+            final Rectangle cellAreaInner = super.getCellAreaInner(hostCell);
+            // The bottom right peg, take the top left corner, and move one wall height-width to the top-left direction.
+            final Point cellLimitPoint = new Point(cellAreaInner.x +
+                                                   cellAreaInner.width -
+                                                   csm.getWallWidth(), cellAreaInner.y +
+                                                                       cellAreaInner.height -
+                                                                       csm.getWallHeight());
+            // If in range of the peg then apply the template to the maze.
+            if (pegCorner.x > cellLimitPoint.x && pegCorner.y > cellLimitPoint.y)
             {
-               hostCell.getXZeroBased(), hostCell.getYZeroBased()
-            };
-
-            int leftX = coords[0] * csm.getCellWidth();
-            int leftY = coords[1] * csm.getCellHeight();
-
-            if (cp[i].x > leftX + csm.getCellWidthHalf() / 2 &&
-                cp[i].x <= leftX + csm.getCellWidthHalf())
-               continue;
-            if (cp[i].y > leftY + csm.getCellHeightHalf() / 2 &&
-                cp[i].y <= leftY + csm.getCellHeightHalf())
-               continue;
-
-            int halfX = leftX + csm.getCellWidthHalf();
-            if (cp[i].x < halfX)
-               coords[0]--;
-
-            int halfY = leftY + csm.getCellHeightHalf();
-            if (cp[i].y < halfY)
-               coords[1]--;
-
-            TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
-
-            applyPeg(tp[i], visited, walls, coords);
-            applied.addAll(visited);
+               final TreeSet<TemplatePeg> visited = new TreeSet<TemplatePeg>();
+               int[] coords =
+               {
+                  hostCell.getXZeroBased(), hostCell.getYZeroBased()
+               };
+               applyPeg(centerPegs[i], visited, walls, coords);
+               appliedPegs.addAll(visited);
+            }
          }
       }
+
+      // Set or clear the walls we determined to be under the template.
       for (MazeWall ms : walls)
+      {
          ms.set(setWall);
+      }
    }
 
    /**

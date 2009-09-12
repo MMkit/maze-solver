@@ -64,18 +64,7 @@ public class TemplatePeg implements Comparable<TemplatePeg>
    @Override
    public int hashCode()
    {
-      assert false; // Not to be used.
-      return 0;
+      throw new RuntimeException("Not supported");
    }
 
-   @Override
-   protected Object clone() throws CloneNotSupportedException
-   {
-      TemplatePeg cloned = new TemplatePeg();
-      cloned.top = top;
-      cloned.bottom = bottom;
-      cloned.left = left;
-      cloned.right = right;
-      return cloned;
-   }
 }
