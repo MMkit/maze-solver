@@ -35,7 +35,7 @@ import maze.util.Listener;
  */
 public class MazeView extends JComponent implements Listener<MazeCell>
 {
-   private static final boolean PRINT_DEBUG = true;
+   private static final boolean PRINT_DEBUG = false;
    private static final long serialVersionUID = 3249468255178771818L;
    private static final int WALL_SIZE_DIVIDER = 6;
    private static final int MAX_CELLS_TO_DRAW = 64;
@@ -625,7 +625,7 @@ public class MazeView extends JComponent implements Listener<MazeCell>
     * @param cell The cell in question.
     * @return The point in pixel coordinates.
     */
-   Point getCellCenterInner(final MazeCell cell)
+   protected Point getCellCenterInner(final MazeCell cell)
    {
       return new Point(this.csm.getWallWidth() +
                              (cell.getXZeroBased() * this.csm.getCellWidth()) +

@@ -63,11 +63,17 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       new RungTemplate(), new GappedTemplate()
    };
 
+   /**
+    * Constructor.
+    */
    public MazeEditorPage()
    {
       buildPanel();
    }
 
+   /**
+    * Bring up a dialog prompting the user to create a new maze.
+    */
    public void newMaze()
    {
       NewMazeDialog dialog;
@@ -88,9 +94,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
                                           "Maze Creation Error",
                                           JOptionPane.OK_OPTION);
             return;
-         } // if (newMi == null)
+         }
          mLastNew++;
-      } // if (result.equals(NewMazeDialog.MAZ))
+      }
       else if (result.equals(NewMazeDialog.MZ2))
       {
          MazeInfo newMi = mim.createNew(dialog.getText(), true);
@@ -101,12 +107,15 @@ public class MazeEditorPage extends JPanel implements MenuControlled
                                           "Maze Creation Error",
                                           JOptionPane.OK_OPTION);
             return;
-         } // if (newMi == null)
+         }
          MazeModel mm = newMi.getModel();
          mm.setSize(dialog.getMazeSize());
-      } // else if (result.equals(NewMazeDialog.MZ2))
+      }
    }
 
+   /**
+    * Creates the Swing GUI for this panel.
+    */
    private void buildPanel()
    {
       setLayout(new BorderLayout());
@@ -201,8 +210,12 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       mMazeView.addMouseListener(mMouseAdapter);
       mMazeView.addMouseMotionListener(mMouseAdapter);
       mMazeView.addMouseWheelListener(mMouseAdapter);
-   } // void buildPanel()
+   } // End building the panel.
 
+   /**
+    * Set the current template to be used by the maze editor.
+    * @param mt Template to set, or null to clear template.
+    */
    private void setTemplate(MazeTemplate mt)
    {
       if (mt == mCurrentTemplate)
@@ -221,6 +234,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       mMazeView.setTemplate(mt);
    }
 
+   /**
+    * Create button to add new maze.
+    */
    private JButton makeNewMazeButton()
    {
       JButton newMaze = new JButton("New Maze");
@@ -236,6 +252,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       return newMaze;
    }
 
+   /**
+    * Creates a button that randomizes all the walls of the current maze.
+    */
    private JButton makeRandomMazeButton()
    {
       JButton random = new JButton("Randomize Maze");
@@ -256,6 +275,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       return random;
    }
 
+   /**
+    * Save the current maze.
+    */
    @Override
    public void saveCurrent()
    {
@@ -267,6 +289,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       }
    }
 
+   /**
+    * Close the current maze.
+    */
    @Override
    public void close()
    {
@@ -290,7 +315,10 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       }
    }
 
-   class TemplateActionListener implements ActionListener
+   /**
+    * Sets the maze editor template when the action is performed.
+    */
+   private class TemplateActionListener implements ActionListener
    {
       private MazeTemplate mt;
 
@@ -306,6 +334,9 @@ public class MazeEditorPage extends JPanel implements MenuControlled
       }
    }
 
+   /**
+    * Handles all the mouse events for the maze editor templates.
+    */
    private class TemplateMouseAdapter extends MouseAdapter
    {
       @Override
@@ -361,14 +392,21 @@ public class MazeEditorPage extends JPanel implements MenuControlled
          }
          mMazeView.repaint();
       }
-   }
+   } // End class.
 
+   /**
+    * A description of the supported maze file types.
+    */
    @Override
    public String getFileTypeDescription()
    {
       return "Maze files (.maz, .mz2)";
    }
 
+   /**
+    * Checks if the given file is a supported maze file.
+    * @param file The file to check.
+    */
    @Override
    public boolean isMyFileType(File file)
    {
@@ -379,6 +417,10 @@ public class MazeEditorPage extends JPanel implements MenuControlled
          return false;
    }
 
+   /**
+    * Opens the given file as a maze.
+    * @param file The maze file to open. Should be a recognized format.
+    */
    @Override
    public void open(File file)
    {
