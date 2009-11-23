@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.nio.CharBuffer;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -553,8 +554,7 @@ public final class PrimaryFrame extends JFrame
                   Reader r = null;
                   try
                   {
-                     r = new InputStreamReader(new java.net.URI(LATEST_REVISION_URI).toURL().openConnection().getInputStream(),
-                                               "ASCII");
+                     r = new InputStreamReader(new URL(LATEST_REVISION_URI).openStream(), "ASCII");
                      CharBuffer cb = CharBuffer.allocate(1024);
                      r.read(cb);
                      cb.flip();
