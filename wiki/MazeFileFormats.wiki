@@ -66,7 +66,7 @@ The reason that both of the wall arrays have a multiple of 8 bytes is that the J
 
 The example below of a maze called "Test" shows what the bit values would be based on the walls in the example.  `R[M,N]` specifies the value of the Nth bit of the Mth byte of the row_wall_bits byte array.  `C[M,N]` specifies the value of the Nth bit of the Mth byte of the column_wall_bits byte array.
 
-This maze will produce a file with the following hex values.
+This maze will produce a file with the following hex values.<br/>
 <font color="red">00 04</font><font color="blue"> 54 65 73 74</font><font color="green"> 00 00 00 06</font><font color="magenta"> 00 00 00 06</font><font color="orange"> ac 02 76 20 00 00 00 00</font><font color="brown"> a5 17 72 05 00 00 00 00</font>
 
 <font color="red">Length of maze name</font><br/>
