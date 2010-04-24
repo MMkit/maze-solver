@@ -39,4 +39,41 @@ Each byte contains the following info bits. The 4 most significant bits are not 
 
 = MZ2 File Format =
 
-Sorry, at this time no formal description is written. You'll have to look at the code http://code.google.com/p/maze-solver/source/browse/trunk/src/maze/model/MazeModel.java#501
+The mz2 file is a binary file of the following format:
+
+*maze_name width height row_wall_bits column_wall_bits*
+
+*maze_name*
+a UTF-8 formatted string representing the name of the maze
+
+*width*
+a 32-bit signed big-endian integer representing the width of the maze in the number of horizontal cells.
+
+*height*
+a 32-bit signed big-endian integer representing the height of the maze in the number of vertical cells.
+
+*row_wall_bits*
+an array of bytes with individual bits specifying the existance of horizontal walls.  The first byte of the array specifies the existance of the first eight walls, the second byte the next eight and so on.  These bits specify the walls starting at the top left, running left to right, top to bottom.  The least significant bit of the first byte will be the first top left wall and the second LSB is the next wall immediately to the right.   The number of bytes in this array will always be a multiple of 8. The number of useful bits in this array is equal to
+`width * (height - 1)`
+
+*column_wall_bits*
+an array of bytes with individual bits specifying the existance of vertical walls.  The first byte of the array specifies the existance of the first eight walls, the second byte the next eight and so on.  These bits specify the walls starting at the top left, running top to bottom, left to right.  The least significant bit of the first byte will be the first top left wall and the second LSB is the next wall immediately below the first.   The number of bytes in this array will always be a multiple of 8. The number of useful bits in this array is equal to
+`height * (width - 1)`
+
+The reason that both of the wall arrays have a multiple of 8 bytes is that the Java BitSet class stores bits in an array of QWORDs or 64-bit longs.  It was not intentional to have these arrays be a multiple of 8 but was merely a side effect of the BitSet.size() method.
+
+==Example==
+
+The example below of a maze called "Test" shows what the bit values would be based on the walls in the example.  `R[M,N]` specifies the value of the Nth bit of the Mth byte of the row_wall_bits byte array.  `C[M,N]` specifies the value of the Nth bit of the Mth byte of the column_wall_bits byte array.
+
+This maze will produce a file with the following hex values.
+<font color="red">00 04</font><font color="blue"> 54 65 73 74</font><font color="green"> 00 00 00 06</font><font color="magenta"> 00 00 00 06</font><font color="orange"> ac 02 76 20 00 00 00 00</font><font color="brown"> a5 17 72 05 00 00 00 00</font>
+
+<font color="red">Length of maze name</font><br/>
+<font color="blue">The string "Test"</font><br/>
+<font color="green">The width of the maze in number of cells</font><br/>
+<font color="magenta">The height of the maze in number of cells</font><br/>
+<font color="orange">The array of horizontal wall bits</font><br/>
+<font color="brown">The array of vertical wall bits</font>
+
+http://maze-solver.googlecode.com/files/MZ2_Example.png
