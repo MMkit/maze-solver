@@ -57,10 +57,10 @@ an array of bytes with individual bits specifying the existance of horizontal wa
 `width * (height - 1)`
 
 *column_wall_bits*
-an array of bytes with individual bits specifying the existance of vertical walls.  The first byte of the array specifies the existance of the first eight walls, the second byte the next eight and so on.  These bits specify the walls starting at the top left, running top to bottom, left to right.  The least significant bit of the first byte will be the first top left wall and the second LSB is the next wall immediately below the first.   The number of bytes in this array will always be a multiple of 8. The number of useful bits in this array is equal to
+an array of bytes with individual bits specifying the existence of vertical walls.  The first byte of the array specifies the existence of the first eight walls, the second byte the next eight and so on.  These bits specify the walls starting at the top left, running top to bottom, left to right.  The least significant bit of the first byte will be the first top left wall and the second LSB is the next wall immediately below the first.   The number of bytes in this array will always be a multiple of 8. The number of useful bits in this array is equal to
 `height * (width - 1)`
 
-The reason that both of the wall arrays have a multiple of 8 bytes is that the Java BitSet class stores bits in an array of QWORDs or 64-bit longs.  It was not intentional to have these arrays be a multiple of 8 but was merely a side effect of the BitSet.size() method.
+The reason that both of the wall arrays have a multiple of 8 bytes is that the Java !BitSet class stores bits in an array of QWORDs or 64-bit longs.  It was not intentional to have these arrays be a multiple of 8 but was merely a side effect of the !BitSet.size() method.
 
 ==Example==
 
