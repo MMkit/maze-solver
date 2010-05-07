@@ -15,7 +15,7 @@ public final class MazeCell implements Comparable<MazeCell>, Serializable
     * Cache for commonly used objects. First index is the X coordinate, second
     * index is the Y coordinate.
     */
-   private static final MazeCell[][] cache = new MazeCell[16][16];
+   private static transient final MazeCell[][] cache = new MazeCell[16][16];
    private static final long serialVersionUID = -3456709665929349825L;
 
    static
