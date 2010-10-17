@@ -204,9 +204,13 @@ public final class EditableMazeView extends MazeView
       final List<MazeWall> walls = new ArrayList<MazeWall>();
       final TreeSet<TemplatePeg> appliedPegs = new TreeSet<TemplatePeg>();
 
-      for (int i = 0; i < Math.min(centerPegs.length, centerPoints.length) &&
-                      appliedPegs.contains(centerPegs[i]) == false; i++)
+      for (int i = 0; i < Math.min(centerPegs.length, centerPoints.length); i++)
       {
+         if (appliedPegs.contains(centerPegs[i]))
+         {
+           continue;
+         }
+        
          // Use the top left corner of the peg next to the center point.
          final Point pegCorner = new Point(centerPoints[i].x - csm.getWallWidth(),
                                            centerPoints[i].y - csm.getWallHeightHalf());
